@@ -12,9 +12,9 @@ Get where you're going, but walk past the good stuff. iPhone MVP; full spec in [
 
 ```sh
 ./scripts/test-engine.sh                 # RouteEngine tests (works with or without full Xcode)
-open App/Wander.xcodeproj                # needs Xcode 16+
+open App/Wander.xcodeproj                # needs Xcode 16+ (tested with 27.1)
 xcodebuild -project App/Wander.xcodeproj -scheme Wander \
-  -destination 'platform=iOS Simulator,name=iPhone 16' build
+  -destination 'generic/platform=iOS Simulator' build
 ```
 
 Map data © OpenStreetMap contributors (ODbL).
