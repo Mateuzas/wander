@@ -217,10 +217,10 @@ public struct PlannerConfig: Hashable, Sendable {
     public var minWaypointSpacing: Double = 150
     /// Waypoints of one category.
     public var maxPerCategory: Int = 2
-    /// Tighter per-category caps for variety: by default one food stop per walk,
-    /// so the same few top-scoring restaurants don't take two of three slots.
+    /// Tighter per-category caps for variety: by default one food stop and one
+    /// shop per walk, so a few top-scoring places don't fill the slots.
     /// Waived when the request's interests are only that category.
-    public var categoryLimits: [POICategory: Int] = [.food: 1]
+    public var categoryLimits: [POICategory: Int] = [.food: 1, .shop: 1]
     /// Degrees. A leg whose heading differs from the A→B heading by more than
     /// this counts as backtracking.
     public var maxLegDeviation: Double = 120

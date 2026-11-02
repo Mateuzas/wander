@@ -69,7 +69,7 @@ struct PlannerTests {
         #expect(explorer.waypoints.count == 5)
         // Five slots allow three of a category (food stays at one).
         for category in POICategory.allCases {
-            #expect(explorer.waypoints.filter { $0.category == category }.count <= (category == .food ? 1 : 3))
+            #expect(explorer.waypoints.filter { $0.category == category }.count <= (category == .photo ? 3 : 1))
         }
     }
 
@@ -128,6 +128,17 @@ struct PlannerTests {
         config.categoryLimits = [:]
         let unlimited = try await plan(food + sights, budget: 60 * 60, planner: Planner(config: config))
         #expect(unlimited.waypoints.filter { $0.category == .food }.count == 2)
+    }
+
+    @Test func atMostOneShopUnlessShopsOnly() async throws {
+        let shops = (0..<4).map { i in
+            Grid.poi("s\(i)", east: 300 + Double(i) * 450, north: 250, category: .shop, score: 95)
+        }
+        let sights = (0..<2).map { i in Grid.poi("p\(i)", east: 600 + Double(i) * 700, north: -250, score: 60) }
+        let mixed = try await plan(shops + sights, budget: 60 * 60)
+        #expect(mixed.waypoints.filter { $0.category == .shop }.count == 1)
+        let shopsOnly = try await plan(shops + sights, budget: 60 * 60, interests: [.shop])
+        #expect(shopsOnly.waypoints.filter { $0.category == .shop }.count == 2)
     }
 
     @Test func rejectsBacktracking() async throws {
