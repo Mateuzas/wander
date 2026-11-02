@@ -65,6 +65,19 @@ def size_m(el):
     return metres(b["minlat"], b["minlon"], b["maxlat"], b["maxlon"])
 
 
+def location(el):
+    """Point for an element. With `out center bb` Overpass returns only bounds for ways and
+    relations (no center), so use the middle of the bounds."""
+    if "lat" in el:
+        return {"lat": el["lat"], "lon": el["lon"]}
+    if "center" in el:
+        return el["center"]
+    b = el.get("bounds")
+    if b:
+        return {"lat": (b["minlat"] + b["maxlat"]) / 2, "lon": (b["minlon"] + b["maxlon"]) / 2}
+    return None
+
+
 def categorise(tags, size):
     """Return the category for an OSM element, or None to drop it."""
     tourism, historic, shop = tags.get("tourism"), tags.get("historic"), tags.get("shop")
@@ -121,7 +134,7 @@ def main():
     elements = raw.get("elements", [])
     print(f"  {len(elements)} raw elements")
 
-    pois, dropped = [], {"unnamed": 0, "filtered": 0}
+    pois, dropped = [], {"unnamed": 0, "filtered": 0, "no_location": 0}
     for el in elements:
         tags = el.get("tags", {})
         name = display_name(tags)
@@ -133,8 +146,9 @@ def main():
         if not category:
             dropped["filtered"] += 1
             continue
-        center = el.get("center") or {"lat": el.get("lat"), "lon": el.get("lon")}
-        if center["lat"] is None:
+        center = location(el)
+        if not center:
+            dropped["no_location"] += 1
             continue
         pois.append({
             "id": f"osm:{el['type']}:{el['id']}",
