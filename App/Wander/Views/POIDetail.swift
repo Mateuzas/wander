@@ -3,7 +3,8 @@ import RouteEngine
 import SwiftUI
 
 /// Shown in the sheet when a bead on the map is tapped: name, category, reason,
-/// and an add or remove action when there is a plan.
+/// "Directions" (the card's one primary action), and an add or remove action
+/// when there is a plan.
 struct POIDetail: View {
     enum Action: Equatable {
         /// No plan, so nothing to add to.
@@ -18,6 +19,8 @@ struct POIDetail: View {
     let action: Action
     let onAdd: () async -> PlannerModel.AddResult
     let onRemove: () -> Void
+    /// Plans a walk to this place, as if picked from "Where to?". Nil hides the button (while walking).
+    var onDirections: (() -> Void)?
     let onClose: () -> Void
 
     @State private var adding = false
@@ -65,6 +68,11 @@ struct POIDetail: View {
                 }
 
                 placeInfo
+                if let onDirections {
+                    Button("Directions", action: onDirections)
+                        .buttonStyle(.primary)
+                        .accessibilityLabel("Directions to \(poi.name)")
+                }
                 actionView
             }
             .padding(.horizontal, Layout.margin)

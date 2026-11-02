@@ -6,8 +6,9 @@ import SwiftUI
 /// sheet shows search, the plan, a tapped bead's details, or the walk. No tab or
 /// navigation bar.
 struct MapScreen: View {
-    /// Unplanned beads drawn at once; the highest-scoring POIs in view win.
-    private static let beadLimit = 40
+    /// Most ordinary (non-popular) beads drawn at once, for performance. The
+    /// 44 pt grid in `POIStore.beads` usually thins them well below this.
+    private static let beadLimit = 60
     /// §10 Motion: the Wander line draws in over ~0.9 s.
     private static let drawDuration = 0.9
 
@@ -21,6 +22,7 @@ struct MapScreen: View {
     @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var visiblePOIs: [POI] = []
+    @State private var mapSize: CGSize = .zero
     @State private var detent: PresentationDetent = .peek
     @State private var selectedPOI: POI?
     @State private var debugOverlay = false
@@ -164,12 +166,15 @@ struct MapScreen: View {
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
             search.region = context.region
-            visiblePOIs = store.top(in: context.region, limit: Self.beadLimit)
+            visiblePOIs = store.beads(in: context.region, viewSize: mapSize,
+                                      keeping: Set(visiblePOIs.map(\.id)), limit: Self.beadLimit)
         }
         #if DEBUG
         .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in debugOverlay.toggle() })
         #endif
         .ignoresSafeArea()
+        // Full-screen size, so the bead grid matches the region MapKit reports.
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { mapSize = $0 }
     }
 
     private struct BeadItem: Identifiable {
@@ -244,6 +249,8 @@ struct MapScreen: View {
                     planner.remove(poi)
                     selectedPOI = nil
                 },
+                // Hidden while walking (the walk sheet replaces the card anyway).
+                onDirections: walk == nil ? { directions(to: poi) } : nil,
                 onClose: { selectedPOI = nil })
         } else if let destination = planner.destination {
             planSheet(destination)
@@ -298,6 +305,14 @@ struct MapScreen: View {
         if location.access == .denied { planner.originUnavailable() }
         detent = .medium
         move(to: .camera(MapCamera(centerCoordinate: place.coordinate, distance: 2500)))
+    }
+
+    /// "Directions" on a place card: the same path as picking it from "Where to?"
+    /// (recents, plan sheet, all three modes, location-denied copy). Replaces any
+    /// destination already planned.
+    private func directions(to poi: POI) {
+        choose(Destination(name: poi.name, subtitle: poi.category.spokenName,
+                           coordinate: poi.coordinate.clLocation))
     }
 
     private func closePlan() {
