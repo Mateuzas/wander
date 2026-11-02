@@ -31,10 +31,12 @@ enum PlaceMatch {
         return short.count >= minContainedLength && long.contains(short)
     }
 
-    static func isMatch(poiName: String, poiCoordinate: Coordinate,
+    /// True when the result is within `maxDistance` and its name matches any of the
+    /// POI's names (display name and original local name).
+    static func isMatch(poiNames: [String], poiCoordinate: Coordinate,
                         itemName: String?, itemCoordinate: Coordinate) -> Bool {
         guard let itemName, poiCoordinate.distance(to: itemCoordinate) <= maxDistance else { return false }
-        return namesMatch(poiName, itemName)
+        return poiNames.contains { namesMatch($0, itemName) }
     }
 }
 
@@ -53,6 +55,12 @@ final class PlaceInfoService {
     /// so a later tap tries again.
     private var cache: [String: Entry] = [:]
 
+    /// Names to match against Apple's result, local name first. Apple's names are
+    /// in the place's own language, ours are English display names.
+    // TODO: add `poi.localName` (original OSM name) here once POI has it:
+    // `[poi.localName, poi.name].compactMap { $0 }`.
+    private func names(of poi: POI) -> [String] { [poi.name] }
+
     /// The matching place, or nil when there is none or we can't tell.
     func place(for poi: POI) async -> MKMapItem? {
         if let hit = cache[poi.id] {
@@ -61,7 +69,8 @@ final class PlaceInfoService {
         }
 
         let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = poi.name
+        let names = names(of: poi)
+        request.naturalLanguageQuery = names[0]
         request.resultTypes = .pointOfInterest
         request.region = MKCoordinateRegion(center: poi.coordinate.clLocation,
                                             latitudinalMeters: 300, longitudinalMeters: 300)
@@ -74,7 +83,7 @@ final class PlaceInfoService {
 
         let best = response.mapItems
             .filter { item in
-                PlaceMatch.isMatch(poiName: poi.name, poiCoordinate: poi.coordinate,
+                PlaceMatch.isMatch(poiNames: names, poiCoordinate: poi.coordinate,
                                    itemName: item.name,
                                    itemCoordinate: Coordinate(item.placemark.coordinate))
             }
