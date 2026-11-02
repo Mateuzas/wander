@@ -11,13 +11,13 @@ public struct Planner: Sendable {
     /// Builds a plan. Real routing goes only through `provider`; detours are
     /// estimated offline with `config.estimator`.
     public func plan(_ request: PlanRequest, provider: WalkingTimeProvider) async throws -> WanderPlan {
-        let scorer = Scorer(config: config, interests: request.interests)
+        let scorer = Scorer(config: config, interests: request.interests, weights: request.weights)
 
         // 1. Baseline.
         let baseline = try await provider.leg(from: request.origin, to: request.destination)
 
         // 2–3. Freebies and corridor.
-        let filtered = CandidateFilter(config: config).filter(request, baseline: baseline)
+        let filtered = CandidateFilter(config: config, scorer: scorer).filter(request, baseline: baseline)
 
         // 4. Greedy insertion on estimates.
         let inserted = GreedyInserter(config: config, scorer: scorer).run(

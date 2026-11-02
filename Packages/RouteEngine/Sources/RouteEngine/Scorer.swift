@@ -4,10 +4,17 @@ import Foundation
 struct Scorer {
     var config: PlannerConfig
     var interests: Set<POICategory>
+    var weights: SignalWeights?
 
-    /// `score × interestWeight`. Interests are on/off for now, so the weight is 1 or 0.
+    /// `Σ weight × signal × interestWeight`, using `score` when there are no
+    /// weights or no signals. Interests are on/off for now, so the interest
+    /// weight is 1 or 0.
     func value(_ poi: POI) -> Double {
-        interests.contains(poi.category) ? Double(poi.score) : 0
+        guard interests.contains(poi.category) else { return 0 }
+        if let weights, let signals = poi.signals, let value = weights.value(of: signals) {
+            return value
+        }
+        return Double(poi.score)
     }
 
     /// `value / extraTime`, with extra time floored so on-route POIs stay finite.

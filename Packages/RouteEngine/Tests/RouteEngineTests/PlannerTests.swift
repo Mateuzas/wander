@@ -7,9 +7,10 @@ struct PlannerTests {
     let provider = HaversineWalkingTime()
 
     func plan(_ pois: [POI], budget: TimeInterval, interests: Set<POICategory> = Set(POICategory.allCases),
+              weights: SignalWeights? = nil,
               planner: Planner = Planner(), provider: WalkingTimeProvider = HaversineWalkingTime()) async throws -> WanderPlan {
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination,
-                                  budget: budget, interests: interests, pois: pois)
+                                  budget: budget, interests: interests, weights: weights, pois: pois)
         return try await planner.plan(request, provider: provider)
     }
 
@@ -124,6 +125,47 @@ struct PlannerTests {
         config.maxWaypoints = 1
         let result = try await plan([close, far], budget: 30 * 60, planner: Planner(config: config))
         #expect(result.waypoints.map(\.id) == ["close"])
+    }
+
+    // MARK: Weights
+
+    @Test func weightsChooseBySignals() async throws {
+        var famous = Grid.poi("famous", east: 1000, north: 150, score: 50)
+        famous.signals = Signals(photos: 0.2, fame: 0.9, quality: 0.5, independent: false)
+        var photogenic = Grid.poi("photogenic", east: 1000, north: -150, score: 50)
+        photogenic.signals = Signals(photos: 0.9, fame: 0.1, quality: 0.5, independent: true)
+        var config = PlannerConfig()
+        config.maxWaypoints = 1
+        let one = Planner(config: config)
+
+        let photoHunter = try await plan([famous, photogenic], budget: 30 * 60,
+                                         weights: SignalWeights(photos: 1), planner: one)
+        #expect(photoHunter.waypoints.map(\.id) == ["photogenic"])
+        let sightseer = try await plan([famous, photogenic], budget: 30 * 60,
+                                       weights: SignalWeights(fame: 1), planner: one)
+        #expect(sightseer.waypoints.map(\.id) == ["famous"])
+    }
+
+    @Test func weightedValueScaleAndFallback() {
+        let weights = SignalWeights(photos: 0.5, fame: 0.25, independent: 0.25)
+        let signals = Signals(photos: 0.8, fame: 0.4, quality: 1, independent: true)
+        #expect(abs(weights.value(of: signals)! - 100 * (0.4 + 0.1 + 0.25)) < 1e-9)
+        #expect(SignalWeights().value(of: signals) == nil)
+
+        let scorer = Scorer(config: PlannerConfig(), interests: [.photo], weights: weights)
+        var withSignals = Grid.poi("a", east: 0, north: 0, score: 10)
+        withSignals.signals = signals
+        #expect(abs(scorer.value(withSignals) - 75) < 1e-9)
+        #expect(scorer.value(Grid.poi("b", east: 0, north: 0, score: 42)) == 42)
+        #expect(scorer.value(Grid.poi("c", east: 0, north: 0, category: .food, score: 42)) == 0)
+    }
+
+    @Test func zeroValueIsNeverAWaypoint() async throws {
+        var chain = Grid.poi("chain", east: 1000, north: 150, category: .food, score: 70)
+        chain.signals = Signals(photos: 0, fame: 0, quality: 0.5, independent: false)
+        let result = try await plan([chain], budget: 30 * 60, weights: SignalWeights(fame: 1, independent: 1))
+        #expect(result.waypoints.isEmpty)
+        #expect(result.candidates.first?.status == .rejected(.noValue))
     }
 
     // MARK: Budget

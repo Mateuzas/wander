@@ -27,25 +27,59 @@ public struct PlanRequest: Sendable {
     public var budget: TimeInterval
     /// Categories the user wants. Default: all.
     public var interests: Set<POICategory>
+    /// How to value POIs from their signals. Nil uses each POI's `score`.
+    public var weights: SignalWeights?
     public var pois: [POI]
     /// Local time of the walk. Accepted but not used yet: pois.json has no
     /// opening hours, so there is nothing to filter on (decided for Milestone 2).
     public var time: Date?
 
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
-                interests: Set<POICategory> = Set(POICategory.allCases), pois: [POI], time: Date? = nil) {
+                interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
+                pois: [POI], time: Date? = nil) {
         self.origin = origin
         self.destination = destination
         self.budget = max(0, budget)
         self.interests = interests
+        self.weights = weights
         self.pois = pois
         self.time = time
     }
 
     public init(origin: Coordinate, destination: Coordinate, mode: Mode,
-                interests: Set<POICategory> = Set(POICategory.allCases), pois: [POI], time: Date? = nil) {
+                interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
+                pois: [POI], time: Date? = nil) {
         self.init(origin: origin, destination: destination, budget: mode.budget,
-                  interests: interests, pois: pois, time: time)
+                  interests: interests, weights: weights, pois: pois, time: time)
+    }
+}
+
+/// Weights profile for valuing POIs from their `signals`, e.g. a photo hunter
+/// (photos high) or hidden gems (independent high, fame low or negative).
+///
+/// value = 100 × Σ weight × signal / Σ |weight|, with `independent` as 0 or 1.
+/// Dividing by the weight total keeps values on the 0–100 `score` scale, so
+/// POIs without signals (which fall back to `score`) compare fairly.
+public struct SignalWeights: Codable, Hashable, Sendable {
+    public var photos: Double
+    public var fame: Double
+    public var quality: Double
+    public var independent: Double
+
+    public init(photos: Double = 0, fame: Double = 0, quality: Double = 0, independent: Double = 0) {
+        self.photos = photos
+        self.fame = fame
+        self.quality = quality
+        self.independent = independent
+    }
+
+    /// Value 0–100 for `signals`, or nil when every weight is zero.
+    public func value(of signals: Signals) -> Double? {
+        let total = abs(photos) + abs(fame) + abs(quality) + abs(independent)
+        guard total > 0 else { return nil }
+        let sum = photos * signals.photos + fame * signals.fame + quality * signals.quality
+            + independent * (signals.independent ? 1 : 0)
+        return 100 * sum / total
     }
 }
 
@@ -77,6 +111,8 @@ public struct Highlight: Hashable, Sendable {
 public enum RejectionReason: String, Hashable, Sendable {
     /// Its category is not in the request's interests.
     case notInInterests
+    /// Value is zero or negative under the request's weights.
+    case noValue
     /// Budget is zero (Direct mode), so no detours are considered.
     case noBudget
     /// Fails the straight-line corridor check (PLAN.md section 6, step 3).
@@ -107,7 +143,7 @@ public enum CandidateStatus: Hashable, Sendable {
 /// Debug record for one POI, for the debug overlay (Milestone 4).
 public struct CandidateDebug: Hashable, Sendable {
     public var poi: POI
-    /// Value used for ranking: score × interest weight.
+    /// Value used for ranking: weighted signals (or score) × interest weight.
     public var value: Double
     /// Best estimated extra seconds for inserting it, when it was evaluated.
     public var estimatedExtraTime: TimeInterval?

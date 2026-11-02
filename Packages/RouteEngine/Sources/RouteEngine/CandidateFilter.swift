@@ -3,6 +3,7 @@ import Foundation
 /// Steps 2 and 3 of PLAN.md section 6: pass-by freebies and the corridor filter.
 struct CandidateFilter {
     var config: PlannerConfig
+    var scorer: Scorer
 
     struct Result {
         /// `passby` POIs already on the fast route, with their route position.
@@ -34,6 +35,10 @@ struct CandidateFilter {
             }
             guard request.budget > 0 else {
                 result.rejected[poi.id] = .noBudget
+                continue
+            }
+            guard scorer.value(poi) > 0 else {
+                result.rejected[poi.id] = .noValue
                 continue
             }
             let via = estimator.seconds(from: request.origin, to: poi.coordinate)
