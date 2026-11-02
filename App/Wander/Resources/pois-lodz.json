@@ -36,7 +36,7 @@
    "type": "castle",
    "localName": "Pałac Izraela Poznańskiego w Łodzi",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.691,
     "quality": 0.6,
     "independent": true
@@ -57,7 +57,7 @@
    "type": "church",
    "localName": "Archikatedra pw. Świętego Stanisława Kostki",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.793,
     "quality": 0.6,
     "independent": true
@@ -78,7 +78,7 @@
    "type": "attraction",
    "localName": "Famuły Księży Młyn",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.56,
     "quality": 0.2,
     "independent": true
@@ -99,7 +99,7 @@
    "type": "attraction",
    "localName": "Aleja Gwiazd w Łodzi",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.646,
     "quality": 0.4,
     "independent": true
@@ -162,7 +162,7 @@
    "type": "attraction",
    "localName": "Pasaż Róży",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -177,11 +177,11 @@
    "category": "photo",
    "score": 76,
    "kind": "passby",
-   "reason": "Well-known landmark, popular photo spot",
-   "type": "attraction",
+   "reason": "Concert hall of the Łódź Philharmonic",
+   "type": "theatre",
    "localName": "Filharmonia Łódzka",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.669,
     "quality": 0.4,
     "independent": true
@@ -265,7 +265,7 @@
    "type": "statue",
    "localName": "Ławeczka Tuwima",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.482,
     "quality": 0.2,
     "independent": true
@@ -286,7 +286,7 @@
    "type": "attraction",
    "localName": "Kamienica pod Gutenbergiem",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.482,
     "quality": 0.2,
     "independent": true
@@ -307,7 +307,7 @@
    "type": "museum",
    "localName": "Muzeum Pałac Herbsta",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.524,
     "quality": 0.8,
     "independent": true
@@ -328,7 +328,7 @@
    "type": "attraction",
    "localName": "Biała Fabryka Geyera",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.646,
     "quality": 0.2,
     "independent": true
@@ -408,7 +408,7 @@
    "reason": "Pancake restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -431,7 +431,7 @@
    "type": "museum",
    "localName": "Muzeum Kinematografii",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.482,
     "quality": 0.2,
     "independent": true
@@ -450,7 +450,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -473,7 +473,7 @@
    "type": "sculpture",
    "localName": "Fortepian Rubinsteina",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -493,7 +493,7 @@
    "type": "chapel",
    "localName": "Kaplica Rodziny Scheibler",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.62,
     "quality": 0.2,
     "independent": true
@@ -513,7 +513,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -535,7 +535,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -558,7 +558,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -580,7 +580,7 @@
    "reason": "Pasta restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -604,7 +604,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -627,7 +627,7 @@
    "type": "statue",
    "localName": "Fotel Jaracza",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -647,7 +647,7 @@
    "type": "attraction",
    "localName": "Napis Manufaktura",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -665,7 +665,7 @@
    "type": "church",
    "localName": "Kościół Wniebowzięcia Najświętszej Maryi Panny",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -685,7 +685,7 @@
    "type": "museum",
    "localName": "Muzeum Fabryki",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.433,
     "quality": 0.6,
     "independent": true
@@ -704,7 +704,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -727,7 +727,7 @@
    "type": "attraction",
    "localName": "Pałac Juliusza Kindermanna",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.482,
     "quality": 0.2,
     "independent": true
@@ -747,7 +747,7 @@
    "type": "attraction",
    "localName": "Dom Towarzystwa Akcyjnego Ludwika Geyera",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -767,7 +767,7 @@
    "type": "attraction",
    "localName": "Pałac Maksymiliana Goldfedera",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.524,
     "quality": 0.2,
     "independent": true
@@ -787,7 +787,7 @@
    "type": "mural",
    "localName": "Mural przy Piotrkowskiej",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -806,7 +806,7 @@
    "reason": "Mexican restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -828,7 +828,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -851,7 +851,7 @@
    "type": "attraction",
    "localName": "Pałac Juliusza Heinzla",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.56,
     "quality": 0.2,
     "independent": true
@@ -871,7 +871,7 @@
    "type": "attraction",
    "localName": "Dom firmy „Krusche - Ender”",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -890,7 +890,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -913,7 +913,7 @@
    "type": "monument",
    "localName": "Jan Paweł II",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -931,7 +931,7 @@
    "type": "statue",
    "localName": "Pomnik Lampiarza",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -951,7 +951,7 @@
    "type": "museum",
    "localName": "Muzeum Książki Artystycznej",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -994,6 +994,26 @@
     "quality": 0.6,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:102162512",
+   "name": "St Matthew's Church",
+   "lat": 51.7465,
+   "lon": 19.460387,
+   "category": "photo",
+   "score": 62,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "localName": "Kościół św. Mateusza",
+   "signals": {
+    "photos": 0.654,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "St. Matthew's Church in Łódź",
+   "commonsImage": "SM Łódź Kościół św Mateusza 2017 (2) ID 613039.jpg"
   },
   {
    "id": "osm:node:3782110659",
@@ -1052,7 +1072,7 @@
    "type": "attraction",
    "localName": "Kamienica Bechtoldów",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -1094,7 +1114,7 @@
    "type": "theatre",
    "localName": "Teatr Wielki",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.669,
     "quality": 0.8,
     "independent": true
@@ -1102,26 +1122,6 @@
    "popular": true,
    "commonsCategory": "Teatr Wielki w Łodzi",
    "commonsImage": "2012-06-02 Photo from tram trip 09.jpg"
-  },
-  {
-   "id": "osm:way:102162512",
-   "name": "St Matthew's Church",
-   "lat": 51.7465,
-   "lon": 19.460387,
-   "category": "photo",
-   "score": 61,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "localName": "Kościół św. Mateusza",
-   "signals": {
-    "photos": 0.652,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "St. Matthew's Church in Łódź",
-   "commonsImage": "SM Łódź Kościół św Mateusza 2017 (2) ID 613039.jpg"
   },
   {
    "id": "osm:node:8612304781",
@@ -1201,7 +1201,7 @@
    "type": "statue",
    "localName": "Miś Uszatek",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.187,
     "quality": 0.2,
     "independent": true
@@ -1221,7 +1221,7 @@
    "type": "attraction",
    "localName": "Kamienica A. Lubińskiego",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -1240,7 +1240,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1263,7 +1263,7 @@
    "type": "attraction",
    "localName": "Kamienica R. Rozenthala",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.296,
     "quality": 0.0,
     "independent": true
@@ -1282,7 +1282,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1306,7 +1306,7 @@
    "type": "monument",
    "localName": "Grób Nieznanego Żołnierza",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -1325,7 +1325,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1346,7 +1346,7 @@
    "reason": "European restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1367,7 +1367,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1388,7 +1388,7 @@
    "reason": "Pancake restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1409,7 +1409,7 @@
    "reason": "Grill restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1430,7 +1430,7 @@
    "reason": "Mediterranean restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1451,7 +1451,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -1472,7 +1472,7 @@
    "reason": "Seafood restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1494,7 +1494,7 @@
    "type": "statue",
    "localName": "Marszałek Józef Piłsudski",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -1513,7 +1513,7 @@
    "reason": "Japanese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1535,7 +1535,7 @@
    "type": "museum",
    "localName": "Muzeum Tradycji Niepodległościowych w Łodzi",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.373,
     "quality": 0.0,
     "independent": true
@@ -1572,7 +1572,7 @@
    "reason": "Jewish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -1595,7 +1595,7 @@
    "type": "bust",
    "localName": "Stanisław Moniuszko",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -1632,7 +1632,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1654,7 +1654,7 @@
    "type": "attraction",
    "localName": "Pałac Alfreda Biedermanna",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -1673,7 +1673,7 @@
    "reason": "Jewish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1694,7 +1694,7 @@
    "reason": "Bulgarian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1716,7 +1716,7 @@
    "type": "monument",
    "localName": "Pomnik Dekalogu",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -1736,7 +1736,7 @@
    "type": "park",
    "localName": "Park Helenów",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -1755,7 +1755,7 @@
    "reason": "European restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1777,7 +1777,7 @@
    "type": "sculpture",
    "localName": "Pomnik Ofiar Komunizmu",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -1797,7 +1797,7 @@
    "type": "attraction",
    "localName": "Pałac Scheiblerów",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.524,
     "quality": 0.2,
     "independent": true
@@ -1816,7 +1816,7 @@
    "reason": "Art shop",
    "type": "art",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1835,7 +1835,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1857,7 +1857,7 @@
    "type": "manor",
    "localName": "Dworek Ludwika Geyera",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -1913,7 +1913,7 @@
    "type": "museum",
    "localName": "Narodowe Centrum Kultury Filmowej EC1",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -1930,7 +1930,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -1952,7 +1952,7 @@
    "type": "attraction",
    "localName": "Willa Reinholda Richtera",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.56,
     "quality": 0.2,
     "independent": true
@@ -1972,7 +1972,7 @@
    "type": "church",
    "localName": "Kościół pw. Świętego Józefa Oblubieńca Najświętszej Maryi Panny",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -2009,7 +2009,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2067,7 +2067,7 @@
    "type": "tomb",
    "localName": "Mauzoleum małżonków Moenke",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -2159,7 +2159,7 @@
    "type": "gallery",
    "localName": "ASP",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2202,6 +2202,47 @@
    }
   },
   {
+   "id": "osm:node:3843952552",
+   "name": "August Härtig Palace",
+   "lat": 51.752434,
+   "lon": 19.460329,
+   "category": "photo",
+   "score": 54,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "localName": "Pałac Augusta Haertiga",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.482,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "August Härtig's palace",
+   "commonsImage": "Palac Haertiga Lodz.jpg"
+  },
+  {
+   "id": "osm:node:8612120284",
+   "name": "Chude Ciacho Manufaktura",
+   "lat": 51.77911,
+   "lon": 19.446811,
+   "category": "food",
+   "score": 54,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.711,
+    "fame": 0.0,
+    "quality": 0.8,
+    "independent": true
+   },
+   "cuisine": [
+    "dessert"
+   ],
+   "openingHours": "Mo-Su 10:00-20:00"
+  },
+  {
    "id": "osm:node:4035531850",
    "name": "EC1 Planetarium",
    "lat": 51.76815,
@@ -2213,7 +2254,7 @@
    "type": "museum",
    "localName": "Planetarium EC1",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -2231,7 +2272,7 @@
    "type": "monument",
    "localName": "Pomnik Chwały Żołnierzy Armii Łódź",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -2251,7 +2292,7 @@
    "type": "museum",
    "localName": "Muzeum dzieci polskich",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -2268,7 +2309,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2286,7 +2327,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2315,47 +2356,6 @@
    }
   },
   {
-   "id": "osm:node:3843952552",
-   "name": "August Härtig Palace",
-   "lat": 51.752434,
-   "lon": 19.460329,
-   "category": "photo",
-   "score": 53,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "localName": "Pałac Augusta Haertiga",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.482,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "August Härtig's palace",
-   "commonsImage": "Palac Haertiga Lodz.jpg"
-  },
-  {
-   "id": "osm:node:8612120284",
-   "name": "Chude Ciacho Manufaktura",
-   "lat": 51.77911,
-   "lon": 19.446811,
-   "category": "food",
-   "score": 53,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
-   "signals": {
-    "photos": 0.709,
-    "fame": 0.0,
-    "quality": 0.8,
-    "independent": true
-   },
-   "cuisine": [
-    "dessert"
-   ],
-   "openingHours": "Mo-Su 10:00-20:00"
-  },
-  {
    "id": "osm:node:13118789090",
    "name": "Fatamorgana",
    "lat": 51.755685,
@@ -2366,7 +2366,7 @@
    "reason": "Author's restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2389,7 +2389,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2448,7 +2448,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2471,7 +2471,7 @@
    "type": "statue",
    "localName": "Wróbelek Ćwirek",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -2506,7 +2506,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -2529,7 +2529,7 @@
    "type": "monument",
    "localName": "Zabytkowe urządzenia EC1",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2546,7 +2546,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2555,6 +2555,26 @@
     "italian"
    ],
    "openingHours": "Mo-Su 12:00-21:00"
+  },
+  {
+   "id": "osm:node:4148479534",
+   "name": "Ferdinand the Magnificent Statue",
+   "lat": 51.759487,
+   "lon": 19.463584,
+   "category": "photo",
+   "score": 52,
+   "kind": "passby",
+   "reason": "Fairytale trail: Łódź cartoon character",
+   "type": "statue",
+   "localName": "Ferdynand Wspaniały",
+   "signals": {
+    "photos": 0.711,
+    "fame": 0.187,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Ferdynand Wspaniały sculpture in Łódź",
+   "commonsImage": "Ferdynand Wspaniały (1).JPG"
   },
   {
    "id": "osm:node:13856980704",
@@ -2568,7 +2588,7 @@
    "type": "attraction",
    "localName": "Dawny dom bankowy Wilhelma Landaua",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2585,7 +2605,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2665,7 +2685,7 @@
    "type": "museum",
    "localName": "Skansen Łódzkiej Architektury Drewnianej",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -2684,7 +2704,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2705,7 +2725,7 @@
    "reason": "Author's restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2726,7 +2746,7 @@
    "reason": "Ramen restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2750,7 +2770,7 @@
    "reason": "Argentinian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2792,7 +2812,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2814,7 +2834,7 @@
    "type": "school",
    "localName": "Rektorat Uniwersytetu Łódzkiego",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2832,7 +2852,7 @@
    "type": "mural",
    "localName": "Łódź w pigułce — Zasłużeni dla Łodzi",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2849,7 +2869,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2859,26 +2879,6 @@
     "cake"
    ],
    "openingHours": "Mo-Fr 13:00-21:00"
-  },
-  {
-   "id": "osm:node:4148479534",
-   "name": "Ferdinand the Magnificent Statue",
-   "lat": 51.759487,
-   "lon": 19.463584,
-   "category": "photo",
-   "score": 51,
-   "kind": "passby",
-   "reason": "Fairytale trail: Łódź cartoon character",
-   "type": "statue",
-   "localName": "Ferdynand Wspaniały",
-   "signals": {
-    "photos": 0.709,
-    "fame": 0.187,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "Ferdynand Wspaniały sculpture in Łódź",
-   "commonsImage": "Ferdynand Wspaniały (1).JPG"
   },
   {
    "id": "osm:node:1989512941",
@@ -2892,7 +2892,7 @@
    "type": "statue",
    "localName": "Dziwny Świat Kota Filemona i Bonifacego",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -2910,7 +2910,7 @@
    "type": "monument",
    "localName": "Zabytkowy walczak",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2927,7 +2927,7 @@
    "reason": "Georgian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2948,7 +2948,7 @@
    "reason": "European restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2969,7 +2969,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -2991,7 +2991,7 @@
    "type": "attraction",
    "localName": "Kamienica R. Sachsa",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -3008,7 +3008,7 @@
    "reason": "Czech restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3029,7 +3029,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3047,7 +3047,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3068,7 +3068,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3090,7 +3090,7 @@
    "type": "attraction",
    "localName": "Kamienica Floriana Jarischa",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3108,7 +3108,7 @@
    "type": "yes",
    "localName": "Beczki Grohmana",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -3128,7 +3128,7 @@
    "type": "chapel",
    "localName": "Kaplica Rodziny Heinzlów",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -3148,7 +3148,7 @@
    "type": "monument",
    "localName": "Ignacy Skorupka",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -3165,7 +3165,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3184,7 +3184,7 @@
    "type": "attraction",
    "localName": "Dom Jana Petera",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3201,7 +3201,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3220,7 +3220,7 @@
    "type": "attraction",
    "localName": "Budynek elektrowni",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3237,7 +3237,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3259,7 +3259,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3278,7 +3278,7 @@
    "type": "mural",
    "localName": "Bieg ulicą Piotrkowską Rossmann Run",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3295,7 +3295,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3315,7 +3315,7 @@
    "reason": "International restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3338,7 +3338,7 @@
    "type": "attraction",
    "localName": "Kamienica Sendera Dyszkina",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3355,7 +3355,7 @@
    "reason": "Japanese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3376,7 +3376,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3397,7 +3397,7 @@
    "reason": "Barbecue restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3421,11 +3421,50 @@
    "type": "attraction",
    "localName": "Budynek Towarzystwa Kredytowego m. Łodzi",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:node:5743600967",
+   "name": "Angelo",
+   "lat": 51.768691,
+   "lon": 19.455101,
+   "category": "food",
+   "score": 49,
+   "kind": "stop",
+   "reason": "Italian restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.8,
+    "independent": true
+   },
+   "cuisine": [
+    "italian"
+   ],
+   "openingHours": "Mo-Th 12:00-22:00; Fr,Sa 12:00-23:00; Su 12:00-21:00"
+  },
+  {
+   "id": "osm:node:4289416730",
+   "name": "Cud Miód Fabryczna",
+   "lat": 51.768882,
+   "lon": 19.457376,
+   "category": "food",
+   "score": 49,
+   "kind": "stop",
+   "reason": "Restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.8,
+    "independent": true
+   },
+   "openingHours": "Mo-Th 08:00-24:00; Fr 08:00-01:00; Sa 09:00-01:00; Su 09:00-23:00"
   },
   {
    "id": "osm:way:103394461",
@@ -3439,7 +3478,7 @@
    "type": "attraction",
    "localName": "Dom Buta",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -3456,7 +3495,7 @@
    "reason": "Wine shop",
    "type": "wine",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3474,7 +3513,7 @@
    "reason": "Falafel restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -3495,7 +3534,7 @@
    "reason": "International restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -3517,7 +3556,7 @@
    "reason": "Burger restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3538,7 +3577,7 @@
    "type": "attraction",
    "localName": "Willa Gustawa Schreera",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -3557,7 +3596,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3578,7 +3617,7 @@
    "reason": "Japanese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3588,6 +3627,26 @@
     "sushi"
    ],
    "openingHours": "Mo-Th 11:00-22:00; Fr,Sa 11:00-22:30; Su 11:00-22:00"
+  },
+  {
+   "id": "osm:way:175721068",
+   "name": "Karol Poznański Palace",
+   "lat": 51.772896,
+   "lon": 19.448826,
+   "category": "photo",
+   "score": 49,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "building",
+   "localName": "Pałac Karola Poznańskiego",
+   "signals": {
+    "photos": 0.366,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Karol Poznański's palace",
+   "commonsImage": "Pałac K.Poznańskiego.jpg"
   },
   {
    "id": "osm:way:36894063",
@@ -3601,7 +3660,7 @@
    "type": "museum",
    "localName": "Muzeum Sztuki MS2",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.187,
     "quality": 0.4,
     "independent": true
@@ -3621,13 +3680,56 @@
    "type": "museum",
    "localName": "Muzeum Komunikacji Miejskiej MPK-Łódź",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.373,
     "quality": 0.6,
     "independent": true
    },
    "commonsCategory": "Museum of City Transport in Łódź",
    "commonsImage": "Muzeum Komunikacji Miejskiej Lodz.jpg"
+  },
+  {
+   "id": "osm:way:439650453",
+   "name": "Nowa Sukcesja",
+   "lat": 51.749645,
+   "lon": 19.448562,
+   "category": "shop",
+   "score": 49,
+   "kind": "stop",
+   "reason": "Shopping centre",
+   "type": "mall",
+   "signals": {
+    "photos": 0.841,
+    "fame": 0.296,
+    "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:7000671786",
+   "name": "Otwarte Drzwi",
+   "lat": 51.76298,
+   "lon": 19.458298,
+   "category": "food",
+   "score": 49,
+   "kind": "stop",
+   "reason": "Italian restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.8,
+    "independent": true
+   },
+   "cuisine": [
+    "italian",
+    "mediterranean",
+    "pasta",
+    "seafood",
+    "pizza",
+    "italian_pizza"
+   ],
+   "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-21:00"
   },
   {
    "id": "osm:node:8612171823",
@@ -3640,7 +3742,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -3661,7 +3763,7 @@
    "reason": "Burger restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 1.0,
     "independent": true
@@ -3684,7 +3786,7 @@
    "type": "gallery",
    "localName": "Galeria Re:Medium",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3701,7 +3803,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3710,6 +3812,27 @@
     "indian"
    ],
    "openingHours": "Mo off; Tu-Th,Su 12:00-22:00; Fr-Sa 12:00-23:00"
+  },
+  {
+   "id": "osm:node:783738142",
+   "name": "Soplicowo",
+   "lat": 51.756532,
+   "lon": 19.463321,
+   "category": "food",
+   "score": 49,
+   "kind": "stop",
+   "reason": "Polish restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.8,
+    "independent": true
+   },
+   "cuisine": [
+    "polish"
+   ],
+   "openingHours": "12:00+"
   },
   {
    "id": "osm:node:4148501938",
@@ -3723,7 +3846,7 @@
    "type": "statue",
    "localName": "Trzy Misie",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -3741,72 +3864,13 @@
    "type": "sculpture",
    "localName": "Pomnik Aleksandra Kamińskiego",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
    },
    "commonsCategory": "Aleksander Kamiński monument in Łódź",
    "commonsImage": "Łódź-Pomnik Aleksandra Kamińskiego w Parku Staromiejskim - panoramio.jpg"
-  },
-  {
-   "id": "osm:node:5743600967",
-   "name": "Angelo",
-   "lat": 51.768691,
-   "lon": 19.455101,
-   "category": "food",
-   "score": 48,
-   "kind": "stop",
-   "reason": "Italian restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.0,
-    "quality": 0.8,
-    "independent": true
-   },
-   "cuisine": [
-    "italian"
-   ],
-   "openingHours": "Mo-Th 12:00-22:00; Fr,Sa 12:00-23:00; Su 12:00-21:00"
-  },
-  {
-   "id": "osm:node:4289416730",
-   "name": "Cud Miód Fabryczna",
-   "lat": 51.768882,
-   "lon": 19.457376,
-   "category": "food",
-   "score": 48,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.0,
-    "quality": 0.8,
-    "independent": true
-   },
-   "openingHours": "Mo-Th 08:00-24:00; Fr 08:00-01:00; Sa 09:00-01:00; Su 09:00-23:00"
-  },
-  {
-   "id": "osm:way:175721068",
-   "name": "Karol Poznański Palace",
-   "lat": 51.772896,
-   "lon": 19.448826,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "building",
-   "localName": "Pałac Karola Poznańskiego",
-   "signals": {
-    "photos": 0.363,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "Karol Poznański's palace",
-   "commonsImage": "Pałac K.Poznańskiego.jpg"
   },
   {
    "id": "osm:node:11691016052",
@@ -3819,7 +3883,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3841,11 +3905,31 @@
    "type": "gallery",
    "localName": "Galeria Sztuki Kookaburra Studio",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:178179618",
+   "name": "Leopold Kindermann Art Nouveau Villa",
+   "lat": 51.769217,
+   "lon": 19.45165,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "localName": "Secesyjna willa Leopolda Kindermana",
+   "signals": {
+    "photos": 0.436,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Willa Leopolda Kindermanna",
+   "commonsImage": "Willa Leopolda Rudolfa Kindermanna Lodz.jpg"
   },
   {
    "id": "osm:node:8578986146",
@@ -3858,59 +3942,12 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
    },
    "openingHours": "Tu-Th 16:30-02:00, Fr-Sa 16:30-04:00"
-  },
-  {
-   "id": "osm:node:7000671786",
-   "name": "Otwarte Drzwi",
-   "lat": 51.76298,
-   "lon": 19.458298,
-   "category": "food",
-   "score": 48,
-   "kind": "stop",
-   "reason": "Italian restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.0,
-    "quality": 0.8,
-    "independent": true
-   },
-   "cuisine": [
-    "italian",
-    "mediterranean",
-    "pasta",
-    "seafood",
-    "pizza",
-    "italian_pizza"
-   ],
-   "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-21:00"
-  },
-  {
-   "id": "osm:node:783738142",
-   "name": "Soplicowo",
-   "lat": 51.756532,
-   "lon": 19.463321,
-   "category": "food",
-   "score": 48,
-   "kind": "stop",
-   "reason": "Polish restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.0,
-    "quality": 0.8,
-    "independent": true
-   },
-   "cuisine": [
-    "polish"
-   ],
-   "openingHours": "12:00+"
   },
   {
    "id": "osm:node:5752716230",
@@ -3923,7 +3960,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -3946,7 +3983,7 @@
    "type": "statue",
    "localName": "Władysław Reymont",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -3963,7 +4000,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -3984,7 +4021,7 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4003,7 +4040,7 @@
    "type": "attraction",
    "localName": "Willa Gustawa i Roberta Geyerów",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4021,33 +4058,13 @@
    "type": "attraction",
    "localName": "Willa Jakuba Kestenberga",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
    },
    "commonsCategory": "Jakub Kestenberg's palace",
    "commonsImage": "2005-09 Łódź - Sewertyna Sterlinga 26.jpg"
-  },
-  {
-   "id": "osm:way:178179618",
-   "name": "Leopold Kindermann Art Nouveau Villa",
-   "lat": 51.769217,
-   "lon": 19.45165,
-   "category": "photo",
-   "score": 47,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "localName": "Secesyjna willa Leopolda Kindermana",
-   "signals": {
-    "photos": 0.434,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "Willa Leopolda Kindermanna",
-   "commonsImage": "Willa Leopolda Rudolfa Kindermanna Lodz.jpg"
   },
   {
    "id": "osm:node:3782110660",
@@ -4060,7 +4077,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4078,7 +4095,7 @@
    "reason": "Italian pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4099,7 +4116,7 @@
    "reason": "Fusion restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4121,7 +4138,7 @@
    "type": "attraction",
    "localName": "Kuczka Chaskiela Pelca",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4139,7 +4156,7 @@
    "type": "museum",
    "localName": "Centrum Komiksu i Narracji Interaktywnej EC1",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -4157,7 +4174,7 @@
    "type": "attraction",
    "localName": "Zespół pałacowy Emmy i Roberta Schweikertów",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.4,
     "independent": true
@@ -4177,7 +4194,7 @@
    "type": "attraction",
    "localName": "dawny Rosyjski Bank Państwa (1906-08)",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4194,7 +4211,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4216,7 +4233,7 @@
    "type": "statue",
    "localName": "Halina Szwarc",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4233,7 +4250,7 @@
    "reason": "Thai restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4255,7 +4272,7 @@
    "type": "attraction",
    "localName": "Willa Józefa Richtera",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.4,
     "independent": true
@@ -4275,7 +4292,7 @@
    "type": "attraction",
    "localName": "Rekwizyty z filmu „Kingsajz”",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4293,7 +4310,7 @@
    "type": "attraction",
    "localName": "Kamienica Lejbusia Lewka Jakubowicza",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4310,7 +4327,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4332,7 +4349,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4349,7 +4366,7 @@
    "reason": "Mexican restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4371,7 +4388,7 @@
    "type": "museum",
    "localName": "Lapidarium detalu architektonicznego",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -4389,7 +4406,7 @@
    "type": "attraction",
    "localName": "Dom handlowy w Łodzi",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -4408,7 +4425,7 @@
    "reason": "Japanese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4429,7 +4446,7 @@
    "type": "attraction",
    "localName": "Kamienica Enderów",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4447,7 +4464,7 @@
    "type": "gallery",
    "localName": "Galeria Sztuki 33",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4465,7 +4482,7 @@
    "type": "monument",
    "localName": "Pomnik Katyński",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -4484,7 +4501,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4502,7 +4519,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4521,7 +4538,7 @@
    "type": "attraction",
    "localName": "Willa Rassalskich",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4539,7 +4556,7 @@
    "type": "attraction",
    "localName": "Elektrownia Scheiblera",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4557,7 +4574,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4575,7 +4592,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4593,7 +4610,7 @@
    "type": "sculpture",
    "localName": "Pomnik drzewo Solidarności",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -4634,7 +4651,7 @@
    "type": "attraction",
    "localName": "kamienica Tomaszowskiej Fabryki Sztucznego Jedwabiu",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.296,
     "quality": 0.4,
     "independent": true
@@ -4654,7 +4671,7 @@
    "type": "attraction",
    "localName": "Kamienica Traugota Lehmana z 1896 roku",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4671,7 +4688,7 @@
    "reason": "Chinese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4693,7 +4710,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4702,6 +4719,44 @@
     "polish"
    ],
    "openingHours": "Mo-Fr 11:00-20:00; Sa 11:00-18:00"
+  },
+  {
+   "id": "osm:node:7576135116",
+   "name": "Bookway",
+   "lat": 51.765916,
+   "lon": 19.460714,
+   "category": "shop",
+   "score": 44,
+   "kind": "stop",
+   "reason": "Bookshop",
+   "type": "books",
+   "signals": {
+    "photos": 0.654,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "Mo-Fr 11:00-18:00, Sa 11:00-15:00"
+  },
+  {
+   "id": "osm:node:4280398097",
+   "name": "Browar Księży Młyn",
+   "lat": 51.752729,
+   "lon": 19.47642,
+   "category": "food",
+   "score": 44,
+   "kind": "stop",
+   "reason": "International restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.654,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "cuisine": [
+    "international"
+   ]
   },
   {
    "id": "osm:way:103273339",
@@ -4715,7 +4770,7 @@
    "type": "church",
    "localName": "Kościół Najświętszego Imienia Jezus - Sanktuarium Najświętszego Imienia Jezus",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -4734,7 +4789,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4770,7 +4825,7 @@
    "reason": "International restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4791,7 +4846,7 @@
    "reason": "Burger restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4814,13 +4869,52 @@
    "type": "attraction",
    "localName": "Pałac Karola i Emila Steinertów",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
    },
    "commonsCategory": "Steinerts' palace",
    "commonsImage": "Palac Steinertow Lodz.jpg"
+  },
+  {
+   "id": "osm:node:1574399948",
+   "name": "Kawiarnia Palmiarnia",
+   "lat": 51.760292,
+   "lon": 19.479632,
+   "category": "food",
+   "score": 44,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.654,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "Tu-Fr: 12:00-18:00; Sa-Su: 10:00-18:00"
+  },
+  {
+   "id": "osm:node:14096393641",
+   "name": "Kiosk",
+   "lat": 51.763853,
+   "lon": 19.461829,
+   "category": "food",
+   "score": 44,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.654,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "cuisine": [
+    "coffee_shop"
+   ],
+   "openingHours": "Mo-Fr 07:30-20:00; Sa-Su 09:00-20:00"
   },
   {
    "id": "osm:way:1527892110",
@@ -4833,7 +4927,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4852,7 +4946,7 @@
    "type": "attraction",
    "localName": "Willa Ludwika Grohmana",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -4871,7 +4965,7 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -4890,7 +4984,7 @@
    "type": "attraction",
    "localName": "Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -4909,7 +5003,7 @@
    "reason": "Mural",
    "type": "mural",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -4968,7 +5062,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -4981,6 +5075,26 @@
    "openingHours": "Mo-Sa 11:30-21:00; Su 12:00-21:00"
   },
   {
+   "id": "osm:way:174955734",
+   "name": "Stefan Jaracz Theatre",
+   "lat": 51.772893,
+   "lon": 19.461842,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Theatre",
+   "type": "theatre",
+   "localName": "Teatr im. Stefana Jaracza",
+   "signals": {
+    "photos": 0.49,
+    "fame": 0.524,
+    "quality": 0.4,
+    "independent": true
+   },
+   "commonsCategory": "Stefan Jaracz Theatre in Łódź",
+   "commonsImage": "Teatr Jaracza Lodz.jpg"
+  },
+  {
    "id": "osm:node:7542285252",
    "name": "Surindustrialle",
    "lat": 51.776314,
@@ -4991,7 +5105,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -5039,44 +5153,6 @@
    }
   },
   {
-   "id": "osm:node:7576135116",
-   "name": "Bookway",
-   "lat": 51.765916,
-   "lon": 19.460714,
-   "category": "shop",
-   "score": 43,
-   "kind": "stop",
-   "reason": "Bookshop",
-   "type": "books",
-   "signals": {
-    "photos": 0.652,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "openingHours": "Mo-Fr 11:00-18:00, Sa 11:00-15:00"
-  },
-  {
-   "id": "osm:node:4280398097",
-   "name": "Browar Księży Młyn",
-   "lat": 51.752729,
-   "lon": 19.47642,
-   "category": "food",
-   "score": 43,
-   "kind": "stop",
-   "reason": "International restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.652,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "cuisine": [
-    "international"
-   ]
-  },
-  {
    "id": "osm:node:11573661850",
    "name": "Cafe Levante",
    "lat": 51.767499,
@@ -5087,7 +5163,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5105,50 +5181,29 @@
    "type": "building",
    "localName": "Willa Hermana Juliusza Milsza",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    }
   },
   {
-   "id": "osm:node:1574399948",
-   "name": "Kawiarnia Palmiarnia",
-   "lat": 51.760292,
-   "lon": 19.479632,
+   "id": "osm:node:2881409357",
+   "name": "Indeks",
+   "lat": 51.752049,
+   "lon": 19.452566,
    "category": "food",
    "score": 43,
    "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
+   "reason": "Pub",
+   "type": "pub",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
    },
-   "openingHours": "Tu-Fr: 12:00-18:00; Sa-Su: 10:00-18:00"
-  },
-  {
-   "id": "osm:node:14096393641",
-   "name": "Kiosk",
-   "lat": 51.763853,
-   "lon": 19.461829,
-   "category": "food",
-   "score": 43,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
-   "signals": {
-    "photos": 0.652,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "cuisine": [
-    "coffee_shop"
-   ],
-   "openingHours": "Mo-Fr 07:30-20:00; Sa-Su 09:00-20:00"
+   "openingHours": "Mo-Wd 10:00-00:00; 10:00-01:30; Fr 10:00-02:00, Sa12:00-02:00; Su 12:00-00:00"
   },
   {
    "id": "osm:node:12066508875",
@@ -5161,12 +5216,30 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-20:00"
+  },
+  {
+   "id": "osm:node:5752716213",
+   "name": "Ministerstwo Śledzia i Wódki",
+   "lat": 51.764068,
+   "lon": 19.457257,
+   "category": "food",
+   "score": 43,
+   "kind": "stop",
+   "reason": "Pub",
+   "type": "pub",
+   "signals": {
+    "photos": 0.618,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "\"od poniedziałku do niedzieli od dwunastej. Nie ma kiedy zamykają\""
   },
   {
    "id": "osm:node:1624531082",
@@ -5180,7 +5253,7 @@
    "type": "attraction",
    "localName": "Dawny budynek straży pożarnej",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5198,11 +5271,29 @@
    "type": "stone",
    "localName": "Pomnik i drzewo upamiętniające Piotra Szczęsnego",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:node:3618398439",
+   "name": "Spółdzielnia",
+   "lat": 51.761237,
+   "lon": 19.460574,
+   "category": "food",
+   "score": 43,
+   "kind": "stop",
+   "reason": "Restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.618,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "Mo-Th 09:30-22:00; Fr-Sa 09:30-00:00; Su 10:00-22:00"
   },
   {
    "id": "osm:way:108945966",
@@ -5216,7 +5307,7 @@
    "type": "church",
    "localName": "Kościół Świętej Anny",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -5236,7 +5327,7 @@
    "type": "statue",
    "localName": "St. Staszic",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5253,12 +5344,33 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "We,Th 11:00-19:00; Fr,Sa 11:00-21:00; Su 13:00-18:00"
+  },
+  {
+   "id": "osm:node:14096187918",
+   "name": "sztuki KAWAłek",
+   "lat": 51.763319,
+   "lon": 19.462267,
+   "category": "food",
+   "score": 43,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.618,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "cuisine": [
+    "coffee_shop"
+   ],
+   "openingHours": "Th-Su 11:00-18:00"
   },
   {
    "id": "osm:node:12066507672",
@@ -5271,7 +5383,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5289,7 +5401,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5308,29 +5420,11 @@
    "type": "attraction",
    "localName": "Kamienica Edmunda Stefanusa",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
-  },
-  {
-   "id": "osm:node:2881409357",
-   "name": "Indeks",
-   "lat": 51.752049,
-   "lon": 19.452566,
-   "category": "food",
-   "score": 42,
-   "kind": "stop",
-   "reason": "Pub",
-   "type": "pub",
-   "signals": {
-    "photos": 0.615,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "openingHours": "Mo-Wd 10:00-00:00; 10:00-01:30; Fr 10:00-02:00, Sa12:00-02:00; Su 12:00-00:00"
   },
   {
    "id": "osm:node:1913404161",
@@ -5344,29 +5438,11 @@
    "type": "statue",
    "localName": "Leon Schiller",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
-  },
-  {
-   "id": "osm:node:5752716213",
-   "name": "Ministerstwo Śledzia i Wódki",
-   "lat": 51.764068,
-   "lon": 19.457257,
-   "category": "food",
-   "score": 42,
-   "kind": "stop",
-   "reason": "Pub",
-   "type": "pub",
-   "signals": {
-    "photos": 0.615,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "openingHours": "\"od poniedziałku do niedzieli od dwunastej. Nie ma kiedy zamykają\""
   },
   {
    "id": "osm:node:6371021591",
@@ -5379,7 +5455,7 @@
    "reason": "Author's restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5401,7 +5477,7 @@
    "type": "attraction",
    "localName": "Kamienica \"Pod Sowami\" Zachariasza Warszawskiego (1900)",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5486,7 +5562,7 @@
    "reason": "Georgian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5508,7 +5584,7 @@
    "type": "statue",
    "localName": "Kufer Reymonta",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5526,29 +5602,11 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
-  },
-  {
-   "id": "osm:node:3618398439",
-   "name": "Spółdzielnia",
-   "lat": 51.761237,
-   "lon": 19.460574,
-   "category": "food",
-   "score": 42,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.615,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "openingHours": "Mo-Th 09:30-22:00; Fr-Sa 09:30-00:00; Su 10:00-22:00"
   },
   {
    "id": "osm:node:3099369137",
@@ -5562,7 +5620,7 @@
    "type": "statue",
    "localName": "Św. Faustyna Kowalska",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -5582,32 +5640,11 @@
    "type": "attraction",
    "localName": "Zegar Słoneczny",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
-  },
-  {
-   "id": "osm:node:14096187918",
-   "name": "sztuki KAWAłek",
-   "lat": 51.763319,
-   "lon": 19.462267,
-   "category": "food",
-   "score": 42,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
-   "signals": {
-    "photos": 0.615,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   },
-   "cuisine": [
-    "coffee_shop"
-   ],
-   "openingHours": "Th-Su 11:00-18:00"
   },
   {
    "id": "osm:node:8612251772",
@@ -5620,7 +5657,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5641,7 +5678,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5662,7 +5699,7 @@
    "reason": "International restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5684,7 +5721,7 @@
    "type": "museum",
    "localName": "Experymentarium",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5701,7 +5738,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5723,7 +5760,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -5740,7 +5777,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5759,7 +5796,7 @@
    "type": "statue",
    "localName": "Ciężar niewłaściwy",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5776,7 +5813,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5797,7 +5834,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -5815,7 +5852,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -5833,7 +5870,7 @@
    "reason": "Thai restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5854,7 +5891,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5875,7 +5912,7 @@
    "reason": "Japanese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5897,7 +5934,7 @@
    "type": "attraction",
    "localName": "Mural „Marek Edelman”",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5914,7 +5951,7 @@
    "reason": "Breakfast restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5939,7 +5976,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -5958,7 +5995,7 @@
    "type": "attraction",
    "localName": "Kamienica Nissena Rosenbluma",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -5975,7 +6012,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -5996,7 +6033,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.8,
     "independent": true
@@ -6005,6 +6042,26 @@
     "polish"
    ],
    "openingHours": "Tu-Sa 15:00-22:00, Mo off"
+  },
+  {
+   "id": "osm:way:27523408",
+   "name": "Survivors' Park",
+   "lat": 51.786275,
+   "lon": 19.472834,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "localName": "Park Ocalałych",
+   "signals": {
+    "photos": 0.436,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Park Ocalałych in Łódź",
+   "commonsImage": "Park Ocalałych Pomnik Łódź 2010.jpg"
   },
   {
    "id": "osm:node:12066788965",
@@ -6017,7 +6074,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6039,7 +6096,7 @@
    "type": "mural",
    "localName": "Wiedźmin",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6058,7 +6115,7 @@
    "type": "sculpture",
    "localName": "„Koń Tuwimowski”",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6075,7 +6132,7 @@
    "reason": "Polish restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6097,7 +6154,7 @@
    "type": "attraction",
    "localName": "Bielnik Kopischa",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -6117,7 +6174,7 @@
    "type": "sculpture",
    "localName": "Kochankowie z ulicy Kamiennej",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -6137,7 +6194,7 @@
    "type": "statue",
    "localName": "Pomnik Początków Miasta Łodzi",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -6154,7 +6211,7 @@
    "reason": "Kebab restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6175,7 +6232,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6194,31 +6251,11 @@
    "type": "statue",
    "localName": "Plastuś",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
    }
-  },
-  {
-   "id": "osm:way:27523408",
-   "name": "Survivors' Park",
-   "lat": 51.786275,
-   "lon": 19.472834,
-   "category": "photo",
-   "score": 40,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "localName": "Park Ocalałych",
-   "signals": {
-    "photos": 0.434,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   },
-   "commonsCategory": "Park Ocalałych in Łódź",
-   "commonsImage": "Park Ocalałych Pomnik Łódź 2010.jpg"
   },
   {
    "id": "osm:node:4312020526",
@@ -6231,7 +6268,7 @@
    "reason": "Chinese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6252,7 +6289,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6275,7 +6312,7 @@
    "type": "statue",
    "localName": "Miś Koralgol",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6292,7 +6329,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6311,7 +6348,7 @@
    "type": "attraction",
    "localName": "Willa Ludwika Meyera „Trianon”",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6350,7 +6387,7 @@
    "type": "park",
    "localName": "Park Moniuszki",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -6369,12 +6406,32 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "Su-Th 13:00-02:00, Th 13:00-02:00, Fr 13:00-05:00"
+  },
+  {
+   "id": "osm:node:5752715784",
+   "name": "Pini",
+   "lat": 51.7806,
+   "lon": 19.447416,
+   "category": "food",
+   "score": 39,
+   "kind": "stop",
+   "reason": "Grill restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.775,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   },
+   "cuisine": [
+    "grill"
+   ]
   },
   {
    "id": "osm:node:1861247905",
@@ -6387,7 +6444,7 @@
    "reason": "Art shop",
    "type": "art",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6405,7 +6462,7 @@
    "type": "mural",
    "localName": "Rubinstein",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6423,7 +6480,7 @@
    "type": "attraction",
    "localName": "Szkoła Powszechna K. Scheiblera",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6440,7 +6497,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6459,7 +6516,7 @@
    "type": "mural",
    "localName": "Fale",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6477,7 +6534,7 @@
    "type": "bust",
    "localName": "Władysław Reymont",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6494,7 +6551,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6516,7 +6573,7 @@
    "type": "attraction",
    "localName": "Kościół Świętej Rodziny",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.296,
     "quality": 0.0,
     "independent": true
@@ -6536,31 +6593,11 @@
    "type": "attraction",
    "localName": "Pałac Maurycego Poznańskiego",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
-  },
-  {
-   "id": "osm:node:5752715784",
-   "name": "Pini",
-   "lat": 51.7806,
-   "lon": 19.447416,
-   "category": "food",
-   "score": 38,
-   "kind": "stop",
-   "reason": "Grill restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.774,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   },
-   "cuisine": [
-    "grill"
-   ]
   },
   {
    "id": "osm:node:10033482766",
@@ -6573,7 +6610,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6591,7 +6628,7 @@
    "type": "monument",
    "localName": "Pomnik św. Józefa z XIX w.",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6608,7 +6645,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6627,7 +6664,7 @@
    "type": "park",
    "localName": "Park im. Księdza Biskupa Michała Klepacza",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.4,
     "independent": true
@@ -6646,7 +6683,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6664,7 +6701,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6685,7 +6722,7 @@
    "type": "attraction",
    "localName": "Fabryka Wyrobów Wełnianych Edwarda Häntschela",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6703,7 +6740,7 @@
    "type": "statue",
    "localName": "Rzeźba bohaterów filmu Zaczarowany ołówek",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.187,
     "quality": 0.0,
     "independent": true
@@ -6723,7 +6760,7 @@
    "type": "attraction",
    "localName": "Pałac Ewalda Kerna",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6741,7 +6778,7 @@
    "type": "attraction",
    "localName": "Dawna siedziba „Mitranzy”",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6759,7 +6796,7 @@
    "type": "building",
    "localName": "Dom Hilarego Majewskiego",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.4,
     "independent": true
@@ -6779,7 +6816,7 @@
    "type": "bust",
    "localName": "Józef Babicki",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6796,7 +6833,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6813,7 +6850,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6834,7 +6871,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -6857,7 +6894,7 @@
    "type": "stone",
    "localName": "Upamiętnienie deportacji Żydów z Hamburga do getta w Łodzi",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6874,7 +6911,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6892,7 +6929,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6911,7 +6948,7 @@
    "type": "relief",
    "localName": "Cisza",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6929,7 +6966,7 @@
    "type": "monument",
    "localName": "Pomnik Ofiar Katastrofy Smoleńskiej",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -6946,7 +6983,7 @@
    "reason": "Shawarma restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6966,7 +7003,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -6984,7 +7021,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7004,7 +7041,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7026,7 +7063,7 @@
    "type": "attraction",
    "localName": "Zespół willi Wilhelma Teschemachera",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7044,7 +7081,7 @@
    "type": "installation",
    "localName": "Twórczość czasu",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7062,7 +7099,7 @@
    "type": "attraction",
    "localName": "Kamienica Zygmunta Dejczmana",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7079,7 +7116,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7171,7 +7208,7 @@
    "type": "attraction",
    "localName": "Rudolf Keller's palace",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.373,
     "quality": 0.0,
     "independent": true
@@ -7191,7 +7228,7 @@
    "type": "park",
    "localName": "Park Sienkiewicza",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.433,
     "quality": 0.2,
     "independent": true
@@ -7211,7 +7248,7 @@
    "type": "mural",
    "localName": "Narodziny Dnia",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -7229,7 +7266,7 @@
    "type": "graduation_tower",
    "localName": "Tężnia solankowa",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -7246,7 +7283,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7269,7 +7306,7 @@
    "type": "church",
    "localName": "Kościół Matki Boskiej Zwycięskiej - Sanktuarium Matki Bożej Zwycięskiej",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -7288,7 +7325,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7309,7 +7346,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7332,7 +7369,7 @@
    "type": "attraction",
    "localName": "Budynek Dyrekcji Rzeźni Miejskiej",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7350,7 +7387,7 @@
    "type": "attraction",
    "localName": "Dawny Łódzki Bank Handlowy",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7367,7 +7404,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7389,7 +7426,7 @@
    "type": "attraction",
    "localName": "Szpital im. Heleny Wolf w Łodzi",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -7409,7 +7446,7 @@
    "type": "attraction",
    "localName": "Kamienica Jakuba Braunera",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7427,7 +7464,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7445,7 +7482,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7463,7 +7500,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7480,7 +7517,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7499,7 +7536,7 @@
    "type": "church",
    "localName": "Cerkiew Zaśnięcia Najświętszej Maryi Panny",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -7518,7 +7555,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7540,7 +7577,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7558,7 +7595,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7576,7 +7613,7 @@
    "reason": "Chocolate shop",
    "type": "chocolate",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -7595,7 +7632,7 @@
    "type": "attraction",
    "localName": "Mural Pamięci STELLA I SALOMEA Litzmannstadt Getto",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7612,7 +7649,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7648,7 +7685,7 @@
    "type": "museum",
    "localName": "Muzeum Monopolu Wódczanego",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7665,7 +7702,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7683,7 +7720,7 @@
    "type": "attraction",
    "localName": "Wójtowski Młyn",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7701,7 +7738,7 @@
    "type": "attraction",
    "localName": "Fabryka Zygmunta Richtera",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -7719,7 +7756,7 @@
    "type": "attraction",
    "localName": "Willa Zygmunta Richtera",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -7739,7 +7776,7 @@
    "type": "park",
    "localName": "Park Źródliska I",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.482,
     "quality": 0.2,
     "independent": true
@@ -7779,7 +7816,7 @@
    "reason": "International restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -7842,7 +7879,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7870,7 +7907,7 @@
    "reason": "Sweet shop",
    "type": "confectionery",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7889,7 +7926,7 @@
    "type": "attraction",
    "localName": "Kamienica K. Gelicha",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.187,
     "quality": 0.0,
     "independent": true
@@ -7950,7 +7987,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -7967,7 +8004,7 @@
    "reason": "Leather shop",
    "type": "leather",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8003,7 +8040,7 @@
    "type": "park",
    "localName": "Park Matejki",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -8023,7 +8060,7 @@
    "type": "gallery",
    "localName": "Galeria Odlot",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8104,7 +8141,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8158,7 +8195,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8199,7 +8236,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8216,7 +8253,7 @@
    "reason": "Gift shop",
    "type": "gift",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8235,7 +8272,7 @@
    "type": "church",
    "localName": "Kościół Niepokalanego Poczęcia Najświętszej Marii Panny",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.0,
     "independent": true
@@ -8254,7 +8291,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8274,7 +8311,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8291,7 +8328,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8312,7 +8349,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8335,7 +8372,7 @@
    "type": "attraction",
    "localName": "Willa Eugeniusza Glezera",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8352,7 +8389,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8370,7 +8407,7 @@
    "type": "attraction",
    "localName": "Pałac Floriana Jarischa",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8388,7 +8425,7 @@
    "type": "attraction",
    "localName": "Dawny kantor fabryki Silbersteinów",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8406,7 +8443,7 @@
    "type": "museum",
    "localName": "Muzeum Geologiczne WNG UŁ",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8424,7 +8461,7 @@
    "type": "attraction",
    "localName": "Łaźnia Geyera",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8441,7 +8478,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8458,7 +8495,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8476,7 +8513,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8499,7 +8536,7 @@
    "type": "bust",
    "localName": "Julian Tuwim",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8517,7 +8554,7 @@
    "type": "attraction",
    "localName": "Kamienica Karola Kretschmera",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8535,7 +8572,7 @@
    "type": "attraction",
    "localName": "Willa Karola Reisfelda",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8552,7 +8589,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8570,7 +8607,7 @@
    "reason": "Crepe restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8593,7 +8630,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8611,7 +8648,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8629,7 +8666,7 @@
    "type": "attraction",
    "localName": "Stary Cmentarz Ewangelicko-Augsburski",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8646,7 +8683,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8664,7 +8701,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.6,
     "independent": true
@@ -8682,7 +8719,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8701,7 +8738,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8719,11 +8756,30 @@
    "type": "mural",
    "localName": "Sobie",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:173485216",
+   "name": "Tulipan",
+   "lat": 51.765263,
+   "lon": 19.495557,
+   "category": "shop",
+   "score": 33,
+   "kind": "stop",
+   "reason": "Shopping centre",
+   "type": "mall",
+   "localName": "Centrum Handlowe Tulipan",
+   "signals": {
+    "photos": 0.267,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "Mo-Sa 09:00-21:00; Su 10:00-19:00"
   },
   {
    "id": "osm:node:4691979864",
@@ -8737,7 +8793,7 @@
    "type": "attraction",
    "localName": "Łódzki Manhattan",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -8754,7 +8810,7 @@
    "reason": "Crepe restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8774,7 +8830,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8791,7 +8847,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8808,7 +8864,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8829,7 +8885,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8848,7 +8904,7 @@
    "type": "attraction",
    "localName": "Kamienica Henryka Birnbauma (z 2 oficynami)",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8866,11 +8922,30 @@
    "type": "bench",
    "localName": "Ławeczka Jana Karskiego",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.187,
     "quality": 0.2,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:174638513",
+   "name": "Manufaktura",
+   "lat": 51.779031,
+   "lon": 19.443909,
+   "category": "shop",
+   "score": 32,
+   "kind": "stop",
+   "reason": "Shopping centre",
+   "type": "mall",
+   "localName": "Centrum Handlowo-Rozrywkowe Manufaktura",
+   "signals": {
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   },
+   "openingHours": "Mo-Sa 08:00-22:00; Su 10:00-21:00"
   },
   {
    "id": "osm:node:13234913701",
@@ -8883,12 +8958,30 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "Mo-Su 08:00-15:00"
+  },
+  {
+   "id": "osm:node:539397551",
+   "name": "Mały Theatre",
+   "lat": 51.78055,
+   "lon": 19.446204,
+   "category": "photo",
+   "score": 32,
+   "kind": "passby",
+   "reason": "Theatre",
+   "type": "theatre",
+   "localName": "Teatr Mały",
+   "signals": {
+    "photos": 0.436,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
   },
   {
    "id": "osm:way:1293137898",
@@ -8902,7 +8995,7 @@
    "type": "statue",
    "localName": "Podest po odrzutowcu MIG-21",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8919,7 +9012,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8941,7 +9034,7 @@
    "type": "museum",
    "localName": "Muzeum Przyrodnicze UŁ",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8958,7 +9051,7 @@
    "reason": "Kebab restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -8980,7 +9073,7 @@
    "reason": "Record shop",
    "type": "music",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -8998,7 +9091,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9015,7 +9108,7 @@
    "reason": "Thai restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9035,7 +9128,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9053,7 +9146,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9071,7 +9164,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9108,7 +9201,7 @@
    "reason": "Chinese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9128,7 +9221,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9149,7 +9242,7 @@
    "type": "attraction",
    "localName": "Fabryka Ewalda Kerna",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9167,11 +9260,29 @@
    "type": "wayside_cross",
    "localName": "Ks. Jerzego Popiełuszki",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:node:4311994755",
+   "name": "Impresja",
+   "lat": 51.751984,
+   "lon": 19.451899,
+   "category": "food",
+   "score": 31,
+   "kind": "stop",
+   "reason": "Restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.49,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   },
+   "openingHours": "Mo-Th 08:00-21:00; Fr-Sa 08:00-22:00; Su 12:00-20:00"
   },
   {
    "id": "osm:node:9229920569",
@@ -9185,7 +9296,7 @@
    "type": "mural",
    "localName": "Jan Kowalewski",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9203,7 +9314,7 @@
    "type": "monument",
    "localName": "Jocz",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9221,7 +9332,7 @@
    "type": "attraction",
    "localName": "Centrala Handlowa Karola Scheiblera",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9239,9 +9350,26 @@
    "type": "attraction",
    "localName": "Kamienica Karola Wutke",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:5064635968",
+   "name": "Kreatoora",
+   "lat": 51.755076,
+   "lon": 19.483332,
+   "category": "food",
+   "score": 31,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.49,
+    "fame": 0.0,
+    "quality": 0.4,
     "independent": true
    }
   },
@@ -9257,7 +9385,7 @@
    "type": "installation",
    "localName": "Miłość! Wolność! Pamięć! Życie!",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9275,7 +9403,7 @@
    "type": "attraction",
    "localName": "Zespół budynków fabryki Ludwika Geyera",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9292,7 +9420,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9309,7 +9437,7 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9328,7 +9456,7 @@
    "type": "monument",
    "localName": "Pomnik Polaków Ratujących Żydów podczas II wojny światowej",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9346,7 +9474,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9364,9 +9492,26 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:8612079858",
+   "name": "O To Chodzi",
+   "lat": 51.767135,
+   "lon": 19.454869,
+   "category": "food",
+   "score": 31,
+   "kind": "stop",
+   "reason": "Pub",
+   "type": "pub",
+   "signals": {
+    "photos": 0.49,
+    "fame": 0.0,
+    "quality": 0.4,
     "independent": true
    }
   },
@@ -9381,7 +9526,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9399,12 +9544,29 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    },
    "openingHours": "Mo-Sa 12:00-22:00; Su 13:00-22:00"
+  },
+  {
+   "id": "osm:node:9154308465",
+   "name": "Planszówkowi Astronauci",
+   "lat": 51.768919,
+   "lon": 19.457848,
+   "category": "food",
+   "score": 31,
+   "kind": "stop",
+   "reason": "Pub",
+   "type": "pub",
+   "signals": {
+    "photos": 0.49,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:12066587064",
@@ -9417,7 +9579,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9438,7 +9600,7 @@
    "type": "attraction",
    "localName": "Fabryka K. Scheiblera „Centrala”",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9456,7 +9618,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9473,7 +9635,7 @@
    "reason": "Gift shop",
    "type": "gift",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9492,7 +9654,7 @@
    "type": "mural",
    "localName": "Święty Dominik czyta Biblię",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9510,7 +9672,7 @@
    "type": "installation",
    "localName": "Drzewo Pokoleń",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9528,7 +9690,7 @@
    "type": "gallery",
    "localName": "Miejska Galeria Sztuki - Galeria Willa",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9546,7 +9708,7 @@
    "type": "monument",
    "localName": "Statua Orła Białego",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9564,7 +9726,7 @@
    "type": "mural",
    "localName": "Bielik",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -9581,7 +9743,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9600,11 +9762,30 @@
    "type": "attraction",
    "localName": "Łódzki Manhattan",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:node:3149657615",
+   "name": "Art Factory",
+   "lat": 51.748545,
+   "lon": 19.463431,
+   "category": "photo",
+   "score": 30,
+   "kind": "passby",
+   "reason": "Arts centre",
+   "type": "arts_centre",
+   "localName": "Fabryka Sztuki w Łodzi",
+   "signals": {
+    "photos": 0.267,
+    "fame": 0.296,
+    "quality": 0.8,
+    "independent": true
+   },
+   "commonsCategory": "Art Inkubator in Łódź"
   },
   {
    "id": "osm:node:11257428539",
@@ -9617,7 +9798,7 @@
    "reason": "Georgian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9638,31 +9819,13 @@
    "type": "attraction",
    "localName": "kamienica wielkomiejska",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.187,
     "quality": 0.0,
     "independent": true
    },
    "commonsCategory": "213 Piotrkowska Street in Łódź",
    "commonsImage": "Kamienica, Łódź, ul. Piotrkowska 213.jpg"
-  },
-  {
-   "id": "osm:node:4311994755",
-   "name": "Impresja",
-   "lat": 51.751984,
-   "lon": 19.451899,
-   "category": "food",
-   "score": 30,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.487,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   },
-   "openingHours": "Mo-Th 08:00-21:00; Fr-Sa 08:00-22:00; Su 12:00-20:00"
   },
   {
    "id": "osm:node:11257428538",
@@ -9675,29 +9838,12 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    },
    "openingHours": "Mo-Fr 06:00-18:00; Sa 06:00-14:00"
-  },
-  {
-   "id": "osm:node:5064635968",
-   "name": "Kreatoora",
-   "lat": 51.755076,
-   "lon": 19.483332,
-   "category": "food",
-   "score": 30,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
-   "signals": {
-    "photos": 0.487,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:11122914112",
@@ -9710,46 +9856,12 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    },
    "openingHours": "Mo-Fr 08:00-18:00; Sa 10:00-18:00"
-  },
-  {
-   "id": "osm:node:8612079858",
-   "name": "O To Chodzi",
-   "lat": 51.767135,
-   "lon": 19.454869,
-   "category": "food",
-   "score": 30,
-   "kind": "stop",
-   "reason": "Pub",
-   "type": "pub",
-   "signals": {
-    "photos": 0.487,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9154308465",
-   "name": "Planszówkowi Astronauci",
-   "lat": 51.768919,
-   "lon": 19.457848,
-   "category": "food",
-   "score": 30,
-   "kind": "stop",
-   "reason": "Pub",
-   "type": "pub",
-   "signals": {
-    "photos": 0.487,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:6172710659",
@@ -9762,7 +9874,7 @@
    "reason": "Poke restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9782,7 +9894,7 @@
    "reason": "Gift shop",
    "type": "gift",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9800,7 +9912,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9821,7 +9933,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9842,7 +9954,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9859,7 +9971,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9876,7 +9988,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9894,7 +10006,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9915,7 +10027,7 @@
    "reason": "Russian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9936,7 +10048,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -9956,7 +10068,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9974,7 +10086,7 @@
    "reason": "Arab restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -9994,7 +10106,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10012,7 +10124,7 @@
    "type": "attraction",
    "localName": "Fabryka Adolfa Daube",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10030,7 +10142,7 @@
    "type": "mural",
    "localName": "Anatomy of funny moments",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10048,7 +10160,7 @@
    "type": "attraction",
    "localName": "Kamienica Antona i Ewy Rybaków",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10065,7 +10177,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10084,7 +10196,7 @@
    "type": "mural",
    "localName": "Bocian Czarny",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10102,7 +10214,7 @@
    "type": "attraction",
    "localName": "Fabryka Ernesta Wevera",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10120,7 +10232,7 @@
    "type": "attraction",
    "localName": "Dawny szpital żydowski im. Izraela i Leonii Poznańskich",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10137,7 +10249,7 @@
    "reason": "Indian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10158,7 +10270,7 @@
    "type": "attraction",
    "localName": "Kamienica Judy Salomonowicza",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10176,7 +10288,7 @@
    "type": "statue",
    "localName": "Pomnik Juliana Tuwima w Łodzi",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10194,7 +10306,7 @@
    "type": "mural",
    "localName": "Love letter",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10212,7 +10324,7 @@
    "type": "palace",
    "localName": "Uniwersytet Medyczny w Łodzi Rektorat",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10230,7 +10342,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10248,7 +10360,7 @@
    "type": "mural",
    "localName": "Mural",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10266,7 +10378,7 @@
    "type": "mural",
    "localName": "Sąsiedzi",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10300,7 +10412,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -10317,7 +10429,7 @@
    "reason": "Noodle restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10337,7 +10449,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10357,7 +10469,7 @@
    "reason": "Sculpture",
    "type": "sculpture",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10374,7 +10486,7 @@
    "reason": "Tea shop",
    "type": "tea",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10393,7 +10505,7 @@
    "type": "attraction",
    "localName": "Zespół Zakładów Przemysłu Spirytusowego „Monopol Wódczany”",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10411,11 +10523,31 @@
    "type": "attraction",
    "localName": "Dom Tkaczy",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:103272394",
+   "name": "Łódź House of Culture",
+   "lat": 51.769391,
+   "lon": 19.462136,
+   "category": "photo",
+   "score": 28,
+   "kind": "passby",
+   "reason": "Arts centre",
+   "type": "arts_centre",
+   "localName": "Łódzki Dom Kultury",
+   "signals": {
+    "photos": 0.366,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Łódzki Dom Kultury",
+   "commonsImage": "ŁódzkimDomKultury.JPG"
   },
   {
    "id": "osm:node:6176484918",
@@ -10429,7 +10561,7 @@
    "type": "attraction",
    "localName": "Pałacyk Elektrowni Łódzkiej",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10446,7 +10578,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10464,7 +10596,7 @@
    "reason": "Sweet shop",
    "type": "confectionery",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10481,7 +10613,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10501,7 +10633,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10535,7 +10667,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10554,7 +10686,7 @@
    "type": "park",
    "localName": "Park Staromiejski",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -10573,7 +10705,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10591,7 +10723,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10610,7 +10742,7 @@
    "type": "park",
    "localName": "Park im. Władysława Reymonta",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.373,
     "quality": 0.2,
     "independent": true
@@ -10629,7 +10761,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10650,7 +10782,7 @@
    "reason": "Asian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10670,7 +10802,7 @@
    "reason": "Gift shop",
    "type": "gift",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -10688,7 +10820,7 @@
    "reason": "Meat restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10708,7 +10840,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10763,7 +10895,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10780,7 +10912,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10797,7 +10929,7 @@
    "reason": "Mexican restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10817,7 +10949,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10834,7 +10966,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10852,7 +10984,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10869,7 +11001,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10887,7 +11019,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.92,
+    "photos": 0.921,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10904,7 +11036,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10922,7 +11054,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10939,7 +11071,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -10956,7 +11088,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10973,7 +11105,7 @@
    "reason": "Gift shop",
    "type": "gift",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -10991,7 +11123,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -11008,7 +11140,7 @@
    "reason": "Sweet shop",
    "type": "confectionery",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -11026,12 +11158,32 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    },
    "openingHours": "Mo off; Tu-Su 10:00-21:00"
+  },
+  {
+   "id": "osm:node:11980340890",
+   "name": "Anatewka",
+   "lat": 51.770365,
+   "lon": 19.45476,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Jewish restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   },
+   "cuisine": [
+    "jewish"
+   ]
   },
   {
    "id": "osm:node:3775206152",
@@ -11044,7 +11196,7 @@
    "reason": "Sweet shop",
    "type": "confectionery",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11067,6 +11219,24 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 10:00-02:00; Sa 10:00-21:00"
+  },
+  {
+   "id": "osm:node:13734735269",
+   "name": "Cukiernia Barbarella",
+   "lat": 51.755712,
+   "lon": 19.457343,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Pastry shop",
+   "type": "pastry",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   },
+   "openingHours": "Mo-Fr 09:00-17:00; Sa 09:00-15:00"
   },
   {
    "id": "osm:node:12000805502",
@@ -11132,6 +11302,24 @@
    "openingHours": "Mo-Su 11:00-19:00"
   },
   {
+   "id": "osm:node:4305888005",
+   "name": "Gabi",
+   "lat": 51.77652,
+   "lon": 19.450797,
+   "category": "shop",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Second-hand shop",
+   "type": "second_hand",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   },
+   "openingHours": "Mo,We-Fr 09:00-17:00; Tu 09:00-15:00; Sa 09:00-14:00"
+  },
+  {
    "id": "osm:way:543115266",
    "name": "Igraszka",
    "lat": 51.778883,
@@ -11152,6 +11340,24 @@
    ]
   },
   {
+   "id": "osm:node:4502917495",
+   "name": "Jaś i Małgosia",
+   "lat": 51.777043,
+   "lon": 19.46188,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Bakery",
+   "type": "bakery",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   },
+   "openingHours": "Mo-Fr 06:00-18:00; Sa 06:00-15:00; Su off"
+  },
+  {
    "id": "osm:node:6172775129",
    "name": "Józef John Tenement House",
    "lat": 51.753565,
@@ -11163,7 +11369,24 @@
    "type": "attraction",
    "localName": "Kamienica Józefa Johna",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:7593261878",
+   "name": "Kawiarnia Plagiat",
+   "lat": 51.776563,
+   "lon": 19.45345,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -11181,7 +11404,7 @@
    "type": "attraction",
    "localName": "Willa Leona Allarta",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -11263,7 +11486,7 @@
    "type": "attraction",
    "localName": "Kamienica Michała Kippera",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -11280,7 +11503,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11308,6 +11531,24 @@
    "openingHours": "Mo-Su 11:00-19:00"
   },
   {
+   "id": "osm:way:173348997",
+   "name": "Pasaż Łódzki",
+   "lat": 51.749859,
+   "lon": 19.440563,
+   "category": "shop",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Shopping centre",
+   "type": "mall",
+   "signals": {
+    "photos": 0.0,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   },
+   "openingHours": "Mo-Sa 09:00-21:00; Su 10:00-20:00"
+  },
+  {
    "id": "osm:node:12061407769",
    "name": "Pizzeria Piwnica",
    "lat": 51.788998,
@@ -11327,6 +11568,24 @@
     "pizza"
    ],
    "openingHours": "We-Su 12:00-22:00"
+  },
+  {
+   "id": "osm:node:11691105259",
+   "name": "Quasą",
+   "lat": 51.761992,
+   "lon": 19.458155,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Pastry shop",
+   "type": "pastry",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   },
+   "openingHours": "Tu-Fr,Su 10:00-19:00"
   },
   {
    "id": "osm:node:12382253082",
@@ -11381,9 +11640,26 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.89,
+    "photos": 0.891,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:7850687748",
+   "name": "T.25 CAFE",
+   "lat": 51.753833,
+   "lon": 19.482333,
+   "category": "food",
+   "score": 25,
+   "kind": "stop",
+   "reason": "Café",
+   "type": "cafe",
+   "signals": {
+    "photos": 0.578,
+    "fame": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -11416,7 +11692,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11454,7 +11730,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11471,7 +11747,7 @@
    "reason": "Vietnamese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -11482,24 +11758,21 @@
    "openingHours": "Mo-Sa 09:00-21:00; Su 10:00-20:00; PH off"
   },
   {
-   "id": "osm:node:11980340890",
-   "name": "Anatewka",
-   "lat": 51.770365,
-   "lon": 19.45476,
+   "id": "osm:node:12269414478",
+   "name": "Air Czeburek",
+   "lat": 51.768739,
+   "lon": 19.455752,
    "category": "food",
    "score": 24,
    "kind": "stop",
-   "reason": "Jewish restaurant",
+   "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.841,
     "fame": 0.0,
-    "quality": 0.2,
+    "quality": 0.0,
     "independent": true
-   },
-   "cuisine": [
-    "jewish"
-   ]
+   }
   },
   {
    "id": "osm:node:11816366324",
@@ -11512,7 +11785,7 @@
    "reason": "Chinese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -11533,47 +11806,28 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:13734735269",
-   "name": "Cukiernia Barbarella",
-   "lat": 51.755712,
-   "lon": 19.457343,
-   "category": "food",
-   "score": 24,
-   "kind": "stop",
-   "reason": "Pastry shop",
-   "type": "pastry",
-   "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   },
-   "openingHours": "Mo-Fr 09:00-17:00; Sa 09:00-15:00"
-  },
-  {
-   "id": "osm:node:4305888005",
-   "name": "Gabi",
-   "lat": 51.77652,
-   "lon": 19.450797,
+   "id": "osm:way:39524935",
+   "name": "Galeria Łódzka",
+   "lat": 51.758869,
+   "lon": 19.464951,
    "category": "shop",
    "score": 24,
    "kind": "stop",
-   "reason": "Second-hand shop",
-   "type": "second_hand",
+   "reason": "Shopping centre",
+   "type": "mall",
    "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
+    "photos": 0.267,
+    "fame": 0.433,
+    "quality": 0.4,
     "independent": true
-   },
-   "openingHours": "Mo,We-Fr 09:00-17:00; Tu 09:00-15:00; Sa 09:00-14:00"
+   }
   },
   {
    "id": "osm:way:27747435",
@@ -11587,12 +11841,29 @@
    "type": "park",
    "localName": "Skwer Gdański",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
    },
    "commonsCategory": "Gardens and parks in Łódź"
+  },
+  {
+   "id": "osm:node:12862982799",
+   "name": "Imeruli Smak Gruzji",
+   "lat": 51.773735,
+   "lon": 19.455526,
+   "category": "food",
+   "score": 24,
+   "kind": "stop",
+   "reason": "Restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.841,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:10271571627",
@@ -11605,7 +11876,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
@@ -11623,30 +11894,12 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "Mo-Fr 06:00-19:00; Sa 06:00-18:00"
-  },
-  {
-   "id": "osm:node:4502917495",
-   "name": "Jaś i Małgosia",
-   "lat": 51.777043,
-   "lon": 19.46188,
-   "category": "food",
-   "score": 24,
-   "kind": "stop",
-   "reason": "Bakery",
-   "type": "bakery",
-   "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   },
-   "openingHours": "Mo-Fr 06:00-18:00; Sa 06:00-15:00; Su off"
   },
   {
    "id": "osm:way:164638956",
@@ -11659,28 +11912,30 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:7593261878",
-   "name": "Kawiarnia Plagiat",
-   "lat": 51.776563,
-   "lon": 19.45345,
-   "category": "food",
+   "id": "osm:way:1513476967",
+   "name": "Kazimierz Dejmek New Theatre",
+   "lat": 51.77268,
+   "lon": 19.451919,
+   "category": "photo",
    "score": 24,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
+   "kind": "passby",
+   "reason": "Theatre",
+   "type": "theatre",
+   "localName": "Teatr Nowy im. Kazimierza Dejmka w Łodzi",
    "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
+    "photos": 0.0,
+    "fame": 0.592,
+    "quality": 0.4,
     "independent": true
-   }
+   },
+   "commonsCategory": "Teatr Nowy in Łódź"
   },
   {
    "id": "osm:way:43653102",
@@ -11694,7 +11949,7 @@
    "type": "park",
    "localName": "Park im. Jana Kilińskiego",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
@@ -11714,7 +11969,24 @@
    "type": "park",
    "localName": "Skwer im. Leona Niemczyka",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:4312033445",
+   "name": "M-3",
+   "lat": 51.765338,
+   "lon": 19.455658,
+   "category": "food",
+   "score": 24,
+   "kind": "stop",
+   "reason": "Pub",
+   "type": "pub",
+   "signals": {
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11731,11 +12003,31 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
+  },
+  {
+   "id": "osm:way:175852462",
+   "name": "Musical Theatre",
+   "lat": 51.77994,
+   "lon": 19.473101,
+   "category": "photo",
+   "score": 24,
+   "kind": "passby",
+   "reason": "Theatre",
+   "type": "theatre",
+   "localName": "Teatr Muzyczny",
+   "signals": {
+    "photos": 0.267,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   },
+   "commonsCategory": "Teatr Muzyczny in Łódź",
+   "commonsImage": "Łódź, ul. Północna, Teatr Muzyczny - panoramio.jpg"
   },
   {
    "id": "osm:node:5743599019",
@@ -11748,7 +12040,24 @@
    "reason": "Tea shop",
    "type": "tea",
    "signals": {
-    "photos": 0.855,
+    "photos": 0.857,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:4502944631",
+   "name": "Placówka",
+   "lat": 51.776979,
+   "lon": 19.456081,
+   "category": "food",
+   "score": 24,
+   "kind": "stop",
+   "reason": "Restaurant",
+   "type": "restaurant",
+   "signals": {
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11766,31 +12075,13 @@
    "type": "park",
    "localName": "Park Podolski",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
    },
    "commonsCategory": "Park Podolski in Łódź",
    "commonsImage": "Park Podolski – Łódź (1).jpg"
-  },
-  {
-   "id": "osm:node:11691105259",
-   "name": "Quasą",
-   "lat": 51.761992,
-   "lon": 19.458155,
-   "category": "food",
-   "score": 24,
-   "kind": "stop",
-   "reason": "Pastry shop",
-   "type": "pastry",
-   "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   },
-   "openingHours": "Tu-Fr,Su 10:00-19:00"
   },
   {
    "id": "osm:node:12060796941",
@@ -11803,29 +12094,12 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.4,
     "independent": true
    },
    "openingHours": "Mo-Fr 08:00-19:00; Sa-Su 08:00-18:00"
-  },
-  {
-   "id": "osm:node:7850687748",
-   "name": "T.25 CAFE",
-   "lat": 51.753833,
-   "lon": 19.482333,
-   "category": "food",
-   "score": 24,
-   "kind": "stop",
-   "reason": "Café",
-   "type": "cafe",
-   "signals": {
-    "photos": 0.575,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:6176289039",
@@ -11839,7 +12113,7 @@
    "type": "attraction",
    "localName": "Kamienica Abrahama Dudaka",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11857,24 +12131,7 @@
    "type": "sculpture",
    "localName": "Marzenie Abramka",
    "signals": {
-    "photos": 0.266,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12269414478",
-   "name": "Air Czeburek",
-   "lat": 51.768739,
-   "lon": 19.455752,
-   "category": "food",
-   "score": 23,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.839,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11892,7 +12149,7 @@
    "type": "mural",
    "localName": "Centrum Przysposobienia Wojskowego Lotniczego",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11910,7 +12167,7 @@
    "type": "statue",
    "localName": "Anastazy Pankiewicz",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11928,7 +12185,7 @@
    "type": "mural",
    "localName": "Wzrastasz?",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11946,7 +12203,7 @@
    "type": "attraction",
    "localName": "Mural „Dzieci Bałut”",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11964,7 +12221,7 @@
    "type": "attraction",
    "localName": "Willa F. Schmidta",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -11982,7 +12239,7 @@
    "type": "mural",
    "localName": "Oblicze piękna",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12000,7 +12257,7 @@
    "type": "attraction",
    "localName": "Budynek dawnego szpitala Betlejem",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12018,7 +12275,7 @@
    "type": "attraction",
    "localName": "Kamienica Henryka Brautigama",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12036,7 +12293,7 @@
    "type": "attraction",
    "localName": "fabryk Hermanna Mullera i Augusta Seidlaa",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12063,23 +12320,6 @@
    "commonsImage": "Willa Hüffera.jpg"
   },
   {
-   "id": "osm:node:12862982799",
-   "name": "Imeruli Smak Gruzji",
-   "lat": 51.773735,
-   "lon": 19.455526,
-   "category": "food",
-   "score": 23,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.839,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:395897188",
    "name": "Jaś i Małgosia",
    "lat": 51.779127,
@@ -12090,7 +12330,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12128,7 +12368,7 @@
    "type": "attraction",
    "localName": "Dom Klemensa Elsnera",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12145,7 +12385,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12163,7 +12403,7 @@
    "type": "mural",
    "localName": "Życie jest stanem umysłu",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12181,24 +12421,7 @@
    "type": "attraction",
    "localName": "Willa Ludwika Beutnera",
    "signals": {
-    "photos": 0.266,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:4312033445",
-   "name": "M-3",
-   "lat": 51.765338,
-   "lon": 19.455658,
-   "category": "food",
-   "score": 23,
-   "kind": "stop",
-   "reason": "Pub",
-   "type": "pub",
-   "signals": {
-    "photos": 0.839,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12216,7 +12439,7 @@
    "type": "attraction",
    "localName": "Kamienica Marii i Stefana Szylke",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12234,7 +12457,7 @@
    "type": "attraction",
    "localName": "Modernistyczna krańcówka „Północna”",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12252,7 +12475,7 @@
    "type": "museum",
    "localName": "Muzeum Światła",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12269,29 +12492,12 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
    },
    "openingHours": "closed"
-  },
-  {
-   "id": "osm:node:4502944631",
-   "name": "Placówka",
-   "lat": 51.776979,
-   "lon": 19.456081,
-   "category": "food",
-   "score": 23,
-   "kind": "stop",
-   "reason": "Restaurant",
-   "type": "restaurant",
-   "signals": {
-    "photos": 0.839,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:1710755035",
@@ -12304,7 +12510,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12322,7 +12528,7 @@
    "type": "attraction",
    "localName": "Zespół fabryki R. Biedermanna",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12340,7 +12546,7 @@
    "type": "attraction",
    "localName": "Fabryka Rudolfa Kellera",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12358,7 +12564,7 @@
    "type": "attraction",
    "localName": "Willa Ryszarda Schimmela",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12376,7 +12582,7 @@
    "type": "attraction",
    "localName": "Dom rzeźbiarza ozdobiony rzeźbą kobiety",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12394,7 +12600,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12412,7 +12618,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12430,7 +12636,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12448,7 +12654,7 @@
    "type": "sculpture",
    "localName": "Sculpture",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12466,7 +12672,7 @@
    "type": "installation",
    "localName": "Neon Mewa",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12484,7 +12690,7 @@
    "type": "sculpture",
    "localName": "Czółenko",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12502,7 +12708,7 @@
    "type": "mural",
    "localName": "Still Life",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12520,7 +12726,7 @@
    "type": "attraction",
    "localName": "Fabryka Wilhelma Lürkensa",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12538,7 +12744,7 @@
    "type": "attraction",
    "localName": "Fabryka Winklera i Gaertnera",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12555,7 +12761,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12573,7 +12779,7 @@
    "type": "stone",
    "localName": "Pomnik organizacji podziemnej Rady Pomocy Żydom „Żegota”",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12590,7 +12796,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12607,7 +12813,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12624,7 +12830,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12644,7 +12850,7 @@
    "reason": "Italian restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12664,7 +12870,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12681,7 +12887,7 @@
    "reason": "Deli",
    "type": "deli",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12699,7 +12905,7 @@
    "reason": "Souvenir shop",
    "type": "souvenir",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12716,7 +12922,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12735,7 +12941,7 @@
    "type": "park",
    "localName": "Park Staszica",
    "signals": {
-    "photos": 0.487,
+    "photos": 0.49,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12752,7 +12958,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.794,
+    "photos": 0.795,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12769,7 +12975,7 @@
    "reason": "Pottery shop",
    "type": "pottery",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12786,7 +12992,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12803,7 +13009,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12821,7 +13027,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12841,7 +13047,7 @@
    "reason": "Pastry shop",
    "type": "pastry",
    "signals": {
-    "photos": 0.755,
+    "photos": 0.757,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12858,7 +13064,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.434,
+    "photos": 0.436,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -12897,7 +13103,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12914,7 +13120,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12931,7 +13137,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12948,7 +13154,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.931,
+    "photos": 0.932,
     "fame": 0.0,
     "quality": 1.0,
     "independent": false
@@ -12969,7 +13175,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12986,7 +13192,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.709,
+    "photos": 0.711,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13003,7 +13209,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13020,7 +13226,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.774,
+    "photos": 0.775,
     "fame": 0.0,
     "quality": 1.0,
     "independent": false
@@ -13041,7 +13247,7 @@
    "reason": "Breakfast restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13061,7 +13267,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13078,7 +13284,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13098,7 +13304,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13118,7 +13324,7 @@
    "reason": "Sushi restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13138,7 +13344,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.363,
+    "photos": 0.366,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13156,7 +13362,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13173,7 +13379,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13210,7 +13416,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13227,7 +13433,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.909,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13245,7 +13451,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.944,
+    "photos": 0.945,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13270,7 +13476,7 @@
    "reason": "Bookshop",
    "type": "books",
    "signals": {
-    "photos": 0.652,
+    "photos": 0.654,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13382,7 +13588,7 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13552,7 +13758,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.818,
+    "photos": 0.819,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13629,7 +13835,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.839,
+    "photos": 0.841,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13650,7 +13856,7 @@
    "reason": "Bar",
    "type": "bar",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13671,7 +13877,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13688,7 +13894,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13705,7 +13911,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.683,
+    "photos": 0.685,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13727,7 +13933,7 @@
    "reason": "Vietnamese restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13747,7 +13953,7 @@
    "reason": "Ice cream",
    "type": "ice_cream",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13764,7 +13970,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13781,7 +13987,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13799,7 +14005,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13819,7 +14025,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13837,7 +14043,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13855,7 +14061,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.733,
+    "photos": 0.735,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -13876,7 +14082,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13896,7 +14102,7 @@
    "reason": "Toy shop",
    "type": "toys",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13914,7 +14120,7 @@
    "reason": "Record shop",
    "type": "music",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13932,7 +14138,7 @@
    "reason": "Pub",
    "type": "pub",
    "signals": {
-    "photos": 0.575,
+    "photos": 0.578,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13949,7 +14155,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13967,7 +14173,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.266,
+    "photos": 0.267,
     "fame": 0.0,
     "quality": 0.2,
     "independent": true
@@ -13985,7 +14191,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14002,7 +14208,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14019,7 +14225,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14036,7 +14242,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.615,
+    "photos": 0.618,
     "fame": 0.0,
     "quality": 0.8,
     "independent": false
@@ -14057,7 +14263,7 @@
    "reason": "Pizza restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.871,
+    "photos": 0.872,
     "fame": 0.0,
     "quality": 0.6,
     "independent": false
@@ -14078,7 +14284,7 @@
    "reason": "Restaurant",
    "type": "restaurant",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14113,7 +14319,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14130,7 +14336,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14147,7 +14353,7 @@
    "reason": "Bakery",
    "type": "bakery",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -14164,7 +14370,7 @@
    "reason": "Café",
    "type": "cafe",
    "signals": {
-    "photos": 0.531,
+    "photos": 0.535,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true

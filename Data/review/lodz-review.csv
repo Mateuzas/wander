@@ -7,7 +7,7 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 6,osm:way:104252454,Museum of Archaeology and Ethnography,Muzeum Archeologiczne i Etnograficzne w Łodzi,photo,78,"Museum, popular photo spot",4,28,https://www.openstreetmap.org/way/104252454
 7,osm:way:104252448,Church of the Descent of the Holy Spirit,Kościół Zesłania Ducha Świętego,photo,77,Church on Plac Wolności at the top of Piotrkowska,7,49,https://www.openstreetmap.org/way/104252448
 8,osm:relation:12609642,Passage of Roses,Pasaż Róży,photo,77,Courtyard covered in a mirror mosaic of roses,0,14,https://www.openstreetmap.org/relation/12609642
-9,osm:way:104651431,Łódź Philharmonic,Filharmonia Łódzka,photo,76,"Well-known landmark, popular photo spot",11,16,https://www.openstreetmap.org/way/104651431
+9,osm:way:104651431,Łódź Philharmonic,Filharmonia Łódzka,photo,76,Concert hall of the Łódź Philharmonic,11,16,https://www.openstreetmap.org/way/104651431
 10,osm:way:1249270544,Dętka Sewer Museum,Muzeum Kanału „Dętka”,photo,74,Old brick sewer canal you can walk through,2,49,https://www.openstreetmap.org/way/1249270544
 11,osm:way:107422365,St Olga's Orthodox Church,Cerkiew św. Olgi,photo,74,"Historic church, popular photo spot",5,43,https://www.openstreetmap.org/way/107422365
 12,osm:way:683699016,Tadeusz Kościuszko Monument,Tadeusz Kościuszko,photo,74,Monument in the middle of Plac Wolności,5,51,https://www.openstreetmap.org/way/683699016
@@ -36,9 +36,9 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 35,osm:node:12695807037,Museum of the Artist's Book,Muzeum Książki Artystycznej,photo,63,"Museum, popular photo spot",2,19,https://www.openstreetmap.org/node/12695807037
 36,osm:relation:16510680,EC1 Science and Technology Centre,Centrum Nauki i Techniki EC1,photo,62,Former power station turned science centre,0,45,https://www.openstreetmap.org/relation/16510680
 37,osm:node:4450208060,Pharmacy Museum,Muzeum Farmacji im. prof. Jana Muszyńskiego,photo,62,"Museum, popular photo spot",0,58,https://www.openstreetmap.org/node/4450208060
-38,osm:node:1659745280,Bechtold Tenement House,Kamienica Bechtoldów,photo,61,"Landmark, popular photo spot",2,16,https://www.openstreetmap.org/node/1659745280
-39,osm:way:103645945,Grand Theatre,Teatr Wielki,photo,61,"Theatre, well-known landmark",11,3,https://www.openstreetmap.org/way/103645945
-40,osm:way:102162512,St Matthew's Church,Kościół św. Mateusza,photo,61,Historic church,7,8,https://www.openstreetmap.org/way/102162512
+38,osm:way:102162512,St Matthew's Church,Kościół św. Mateusza,photo,62,Historic church,7,8,https://www.openstreetmap.org/way/102162512
+39,osm:node:1659745280,Bechtold Tenement House,Kamienica Bechtoldów,photo,61,"Landmark, popular photo spot",2,16,https://www.openstreetmap.org/node/1659745280
+40,osm:way:103645945,Grand Theatre,Teatr Wielki,photo,61,"Theatre, well-known landmark",11,3,https://www.openstreetmap.org/way/103645945
 41,osm:node:2354558730,Floppy-Eared Teddy Bear Statue,Miś Uszatek,photo,60,Bronze of a classic Łódź-made cartoon bear,1,20,https://www.openstreetmap.org/node/2354558730
 42,osm:node:1659745279,Lubiński Tenement House,Kamienica A. Lubińskiego,photo,60,"Landmark, popular photo spot",2,15,https://www.openstreetmap.org/node/1659745279
 43,osm:node:14017311216,Rozenthal Tenement House,Kamienica R. Rozenthala,photo,60,"Landmark, popular photo spot",2,17,https://www.openstreetmap.org/node/14017311216
@@ -70,18 +70,18 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 69,osm:node:5743600958,Academy of Fine Arts Gallery,ASP,photo,54,"Art gallery, popular photo spot",0,24,https://www.openstreetmap.org/node/5743600958
 70,osm:node:5254235662,Anatomy Museum,Muzeum anatomiczne,photo,54,"Museum, popular photo spot",0,23,https://www.openstreetmap.org/node/5254235662
 71,osm:node:6121939861,Art Gallery,Galeria Sztuki,photo,54,"Art gallery, popular photo spot",0,26,https://www.openstreetmap.org/node/6121939861
-72,osm:node:4035531850,EC1 Planetarium,Planetarium EC1,photo,54,"Museum, popular photo spot",0,15,https://www.openstreetmap.org/node/4035531850
-73,osm:node:3223189955,Monument to the Łódź Army,Pomnik Chwały Żołnierzy Armii Łódź,photo,54,Monument,3,7,https://www.openstreetmap.org/node/3223189955
-74,osm:node:13168203896,Museum of Polish Children,Muzeum dzieci polskich,photo,54,"Museum, popular photo spot",0,18,https://www.openstreetmap.org/node/13168203896
-75,osm:node:13906555259,Szaja Goldblum Tenement House,Kamienica Szai Goldbluma,photo,54,"Landmark, popular photo spot",0,26,https://www.openstreetmap.org/node/13906555259
-76,osm:node:3843952552,August Härtig Palace,Pałac Augusta Haertiga,photo,53,Landmark,5,5,https://www.openstreetmap.org/node/3843952552
+72,osm:node:3843952552,August Härtig Palace,Pałac Augusta Haertiga,photo,54,Landmark,5,5,https://www.openstreetmap.org/node/3843952552
+73,osm:node:4035531850,EC1 Planetarium,Planetarium EC1,photo,54,"Museum, popular photo spot",0,15,https://www.openstreetmap.org/node/4035531850
+74,osm:node:3223189955,Monument to the Łódź Army,Pomnik Chwały Żołnierzy Armii Łódź,photo,54,Monument,3,7,https://www.openstreetmap.org/node/3223189955
+75,osm:node:13168203896,Museum of Polish Children,Muzeum dzieci polskich,photo,54,"Museum, popular photo spot",0,18,https://www.openstreetmap.org/node/13168203896
+76,osm:node:13906555259,Szaja Goldblum Tenement House,Kamienica Szai Goldbluma,photo,54,"Landmark, popular photo spot",0,26,https://www.openstreetmap.org/node/13906555259
 77,osm:node:4148494249,Ćwirek the Sparrow Statue,Wróbelek Ćwirek,photo,53,Fairytale trail: Łódź cartoon character,2,8,https://www.openstreetmap.org/node/4148494249
 78,osm:way:987137638,EC1 Historic Machinery,Zabytkowe urządzenia EC1,photo,52,"Monument, popular photo spot",0,20,https://www.openstreetmap.org/way/987137638
-79,osm:node:13856980704,Former Wilhelm Landau Bank,Dawny dom bankowy Wilhelma Landaua,photo,52,"Landmark, popular photo spot",0,20,https://www.openstreetmap.org/node/13856980704
-80,osm:relation:13026044,Open-Air Museum of Wooden Architecture,Skansen Łódzkiej Architektury Drewnianej,photo,52,Museum,4,5,https://www.openstreetmap.org/relation/13026044
-81,osm:way:103647580,University of Łódź Rectorate,Rektorat Uniwersytetu Łódzkiego,photo,52,"School, popular photo spot",0,20,https://www.openstreetmap.org/way/103647580
-82,osm:node:8771806694,Łódź in a Nutshell Mural,Łódź w pigułce — Zasłużeni dla Łodzi,photo,52,"Mural by Krzysztof Jaśkiewicz, popular photo spot",0,20,https://www.openstreetmap.org/node/8771806694
-83,osm:node:4148479534,Ferdinand the Magnificent Statue,Ferdynand Wspaniały,photo,51,Fairytale trail: Łódź cartoon character,1,10,https://www.openstreetmap.org/node/4148479534
+79,osm:node:4148479534,Ferdinand the Magnificent Statue,Ferdynand Wspaniały,photo,52,Fairytale trail: Łódź cartoon character,1,10,https://www.openstreetmap.org/node/4148479534
+80,osm:node:13856980704,Former Wilhelm Landau Bank,Dawny dom bankowy Wilhelma Landaua,photo,52,"Landmark, popular photo spot",0,20,https://www.openstreetmap.org/node/13856980704
+81,osm:relation:13026044,Open-Air Museum of Wooden Architecture,Skansen Łódzkiej Architektury Drewnianej,photo,52,Museum,4,5,https://www.openstreetmap.org/relation/13026044
+82,osm:way:103647580,University of Łódź Rectorate,Rektorat Uniwersytetu Łódzkiego,photo,52,"School, popular photo spot",0,20,https://www.openstreetmap.org/way/103647580
+83,osm:node:8771806694,Łódź in a Nutshell Mural,Łódź w pigułce — Zasłużeni dla Łodzi,photo,52,"Mural by Krzysztof Jaśkiewicz, popular photo spot",0,20,https://www.openstreetmap.org/node/8771806694
 84,osm:node:1989512941,Filemon and Bonifacy the Cats Statue,Dziwny Świat Kota Filemona i Bonifacego,photo,51,Fairytale trail: Łódź cartoon cats,2,7,https://www.openstreetmap.org/node/1989512941
 85,osm:way:987329735,Historic Steam Roller,Zabytkowy walczak,photo,51,"Monument, popular photo spot",0,19,https://www.openstreetmap.org/way/987329735
 86,osm:node:14017311217,Sachs Tenement House,Kamienica R. Sachsa,photo,51,"Landmark, popular photo spot",0,16,https://www.openstreetmap.org/node/14017311217
@@ -96,17 +96,17 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 95,osm:node:6262055518,Łódź Credit Society Building,Budynek Towarzystwa Kredytowego m. Łodzi,photo,50,"Landmark, popular photo spot",0,18,https://www.openstreetmap.org/node/6262055518
 96,osm:way:103394461,Dom Buta Department Store,Dom Buta,photo,49,"Landmark, popular photo spot",0,16,https://www.openstreetmap.org/way/103394461
 97,osm:node:7604381330,Gustaw Schreer Villa,Willa Gustawa Schreera,photo,49,Landmark,2,6,https://www.openstreetmap.org/node/7604381330
-98,osm:way:36894063,MS2 Museum of Art,Muzeum Sztuki MS2,photo,49,Museum,1,7,https://www.openstreetmap.org/way/36894063
-99,osm:way:455514019,Museum of City Transport,Muzeum Komunikacji Miejskiej MPK-Łódź,photo,49,Museum,3,3,https://www.openstreetmap.org/way/455514019
-100,osm:node:5752716216,Re:Medium Gallery,Galeria Re:Medium,photo,49,Art gallery,0,10,https://www.openstreetmap.org/node/5752716216
-101,osm:node:4148501938,Three Little Bears Statue,Trzy Misie,photo,49,Fairytale trail: Łódź cartoon character,2,6,https://www.openstreetmap.org/node/4148501938
-102,osm:node:3224138571,Aleksander Kamiński Monument,Pomnik Aleksandra Kamińskiego,photo,48,Sculpture,3,4,https://www.openstreetmap.org/node/3224138571
-103,osm:way:175721068,Karol Poznański Palace,Pałac Karola Poznańskiego,photo,48,Landmark,7,2,https://www.openstreetmap.org/way/175721068
+98,osm:way:175721068,Karol Poznański Palace,Pałac Karola Poznańskiego,photo,49,Landmark,7,2,https://www.openstreetmap.org/way/175721068
+99,osm:way:36894063,MS2 Museum of Art,Muzeum Sztuki MS2,photo,49,Museum,1,7,https://www.openstreetmap.org/way/36894063
+100,osm:way:455514019,Museum of City Transport,Muzeum Komunikacji Miejskiej MPK-Łódź,photo,49,Museum,3,3,https://www.openstreetmap.org/way/455514019
+101,osm:node:5752716216,Re:Medium Gallery,Galeria Re:Medium,photo,49,Art gallery,0,10,https://www.openstreetmap.org/node/5752716216
+102,osm:node:4148501938,Three Little Bears Statue,Trzy Misie,photo,49,Fairytale trail: Łódź cartoon character,2,6,https://www.openstreetmap.org/node/4148501938
+103,osm:node:3224138571,Aleksander Kamiński Monument,Pomnik Aleksandra Kamińskiego,photo,48,Sculpture,3,4,https://www.openstreetmap.org/node/3224138571
 104,osm:node:2650438608,Kookaburra Studio Gallery,Galeria Sztuki Kookaburra Studio,photo,48,Art gallery,0,11,https://www.openstreetmap.org/node/2650438608
-105,osm:node:1187744318,Władysław Reymont Statue,Władysław Reymont,photo,48,Statue,3,4,https://www.openstreetmap.org/node/1187744318
-106,osm:node:1659577127,Gustaw and Robert Geyer Villa,Willa Gustawa i Roberta Geyerów,photo,47,Landmark,0,14,https://www.openstreetmap.org/node/1659577127
-107,osm:way:103645939,Jakub Kestenberg Villa,Willa Jakuba Kestenberga,photo,47,Landmark,2,5,https://www.openstreetmap.org/way/103645939
-108,osm:way:178179618,Leopold Kindermann Art Nouveau Villa,Secesyjna willa Leopolda Kindermana,photo,47,Landmark,4,3,https://www.openstreetmap.org/way/178179618
+105,osm:way:178179618,Leopold Kindermann Art Nouveau Villa,Secesyjna willa Leopolda Kindermana,photo,48,Landmark,4,3,https://www.openstreetmap.org/way/178179618
+106,osm:node:1187744318,Władysław Reymont Statue,Władysław Reymont,photo,48,Statue,3,4,https://www.openstreetmap.org/node/1187744318
+107,osm:node:1659577127,Gustaw and Robert Geyer Villa,Willa Gustawa i Roberta Geyerów,photo,47,Landmark,0,14,https://www.openstreetmap.org/node/1659577127
+108,osm:way:103645939,Jakub Kestenberg Villa,Willa Jakuba Kestenberga,photo,47,Landmark,2,5,https://www.openstreetmap.org/way/103645939
 109,osm:node:5958714597,Chaskiel Pelc's Sukkah,Kuczka Chaskiela Pelca,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/5958714597
 110,osm:node:11270506977,Comics and Interactive Narrative Centre,Centrum Komiksu i Narracji Interaktywnej EC1,photo,46,Museum,0,9,https://www.openstreetmap.org/node/11270506977
 111,osm:node:1659517688,Emma and Robert Schweikert Palace,Zespół pałacowy Emmy i Roberta Schweikertów,photo,46,Landmark,4,2,https://www.openstreetmap.org/node/1659517688
@@ -133,22 +133,22 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 132,osm:way:76277579,Ludwik Grohman Villa,Willa Ludwika Grohmana,photo,44,Landmark,4,2,https://www.openstreetmap.org/way/76277579
 133,osm:node:1659496975,Marcus Silberstein Weaving Mill,Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina,photo,44,Landmark,4,2,https://www.openstreetmap.org/node/1659496975
 134,osm:node:3219972478,Mural by Kim Jung Gi,Mural by Kim Jung Gi,photo,44,Mural,0,11,https://www.openstreetmap.org/node/3219972478
-135,osm:way:146975092,Herman Juliusz Milsch Villa,Willa Hermana Juliusza Milsza,photo,43,Landmark,0,8,https://www.openstreetmap.org/way/146975092
-136,osm:node:1624531082,Old Fire Station,Dawny budynek straży pożarnej,photo,43,Landmark,0,10,https://www.openstreetmap.org/node/1624531082
-137,osm:node:11586240670,Piotr Szczęsny Memorial Tree,Pomnik i drzewo upamiętniające Piotra Szczęsnego,photo,43,Memorial stone,0,10,https://www.openstreetmap.org/node/11586240670
-138,osm:way:108945966,St Anne's Church,Kościół Świętej Anny,photo,43,Historic church,2,3,https://www.openstreetmap.org/way/108945966
-139,osm:node:1265560443,Stanisław Staszic Statue,St. Staszic,photo,43,Statue,0,10,https://www.openstreetmap.org/node/1265560443
-140,osm:node:6261981017,Edmund Stefanus Tenement House,Kamienica Edmunda Stefanusa,photo,42,Landmark,0,9,https://www.openstreetmap.org/node/6261981017
-141,osm:node:1913404161,Leon Schiller Statue,Leon Schiller,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404161
-142,osm:node:14072224610,Owls Tenement House,"Kamienica ""Pod Sowami"" Zachariasza Warszawskiego (1900)",photo,42,Landmark,0,9,https://www.openstreetmap.org/node/14072224610
-143,osm:node:1913404789,Reymont's Trunk,Kufer Reymonta,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404789
-144,osm:node:11868748242,Sculpture near Stanisław Moniuszko Bust,Sculpture,photo,42,Sculpture,0,9,https://www.openstreetmap.org/node/11868748242
-145,osm:node:3099369137,St Faustina Kowalska Statue,Św. Faustyna Kowalska,photo,42,Statue,3,2,https://www.openstreetmap.org/node/3099369137
-146,osm:way:846351835,Sundial,Zegar Słoneczny,photo,42,Landmark,0,9,https://www.openstreetmap.org/way/846351835
-147,osm:node:5752715780,Experymentarium Science Centre,Experymentarium,photo,41,Museum,0,8,https://www.openstreetmap.org/node/5752715780
-148,osm:node:5027104186,Improper Weight Statue,Ciężar niewłaściwy,photo,41,Statue,0,8,https://www.openstreetmap.org/node/5027104186
-149,osm:node:6270128617,Marek Edelman Mural,Mural „Marek Edelman”,photo,41,Landmark,0,8,https://www.openstreetmap.org/node/6270128617
-150,osm:node:6171348971,Nissen Rosenblum Tenement House,Kamienica Nissena Rosenbluma,photo,41,Landmark,0,8,https://www.openstreetmap.org/node/6171348971
+135,osm:way:174955734,Stefan Jaracz Theatre,Teatr im. Stefana Jaracza,photo,44,Theatre,6,4,https://www.openstreetmap.org/way/174955734
+136,osm:way:146975092,Herman Juliusz Milsch Villa,Willa Hermana Juliusza Milsza,photo,43,Landmark,0,8,https://www.openstreetmap.org/way/146975092
+137,osm:node:1624531082,Old Fire Station,Dawny budynek straży pożarnej,photo,43,Landmark,0,10,https://www.openstreetmap.org/node/1624531082
+138,osm:node:11586240670,Piotr Szczęsny Memorial Tree,Pomnik i drzewo upamiętniające Piotra Szczęsnego,photo,43,Memorial stone,0,10,https://www.openstreetmap.org/node/11586240670
+139,osm:way:108945966,St Anne's Church,Kościół Świętej Anny,photo,43,Historic church,2,3,https://www.openstreetmap.org/way/108945966
+140,osm:node:1265560443,Stanisław Staszic Statue,St. Staszic,photo,43,Statue,0,10,https://www.openstreetmap.org/node/1265560443
+141,osm:node:6261981017,Edmund Stefanus Tenement House,Kamienica Edmunda Stefanusa,photo,42,Landmark,0,9,https://www.openstreetmap.org/node/6261981017
+142,osm:node:1913404161,Leon Schiller Statue,Leon Schiller,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404161
+143,osm:node:14072224610,Owls Tenement House,"Kamienica ""Pod Sowami"" Zachariasza Warszawskiego (1900)",photo,42,Landmark,0,9,https://www.openstreetmap.org/node/14072224610
+144,osm:node:1913404789,Reymont's Trunk,Kufer Reymonta,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404789
+145,osm:node:11868748242,Sculpture near Stanisław Moniuszko Bust,Sculpture,photo,42,Sculpture,0,9,https://www.openstreetmap.org/node/11868748242
+146,osm:node:3099369137,St Faustina Kowalska Statue,Św. Faustyna Kowalska,photo,42,Statue,3,2,https://www.openstreetmap.org/node/3099369137
+147,osm:way:846351835,Sundial,Zegar Słoneczny,photo,42,Landmark,0,9,https://www.openstreetmap.org/way/846351835
+148,osm:node:5752715780,Experymentarium Science Centre,Experymentarium,photo,41,Museum,0,8,https://www.openstreetmap.org/node/5752715780
+149,osm:node:5027104186,Improper Weight Statue,Ciężar niewłaściwy,photo,41,Statue,0,8,https://www.openstreetmap.org/node/5027104186
+150,osm:node:6270128617,Marek Edelman Mural,Mural „Marek Edelman”,photo,41,Landmark,0,8,https://www.openstreetmap.org/node/6270128617
 151,osm:node:1360232267,Manekin,Manekin,food,68,Pancake restaurant,0,22,https://www.openstreetmap.org/node/1360232267
 152,osm:node:1821342802,Polka,Polka,food,68,Restaurant,0,22,https://www.openstreetmap.org/node/1821342802
 153,osm:node:6371021592,Spirit Bar,Spirit Bar,food,68,Bar,0,22,https://www.openstreetmap.org/node/6371021592
@@ -185,9 +185,9 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 184,osm:node:14239873938,Bistro u Janka,Bistro u Janka,food,56,Polish restaurant,0,14,https://www.openstreetmap.org/node/14239873938
 185,osm:node:1880188987,Pizzeria Papa Lolo,Pizzeria Papa Lolo,food,56,Pizza restaurant,0,14,https://www.openstreetmap.org/node/1880188987
 186,osm:node:5752716203,Cukiernia Dybalski,Cukiernia Dybalski,food,55,Café,0,12,https://www.openstreetmap.org/node/5752716203
-187,osm:node:3793370987,Owoce i Warzywa,Owoce i Warzywa,food,54,Pub,0,11,https://www.openstreetmap.org/node/3793370987
-188,osm:node:5743600966,Presto,Presto,food,54,Pizza restaurant,0,11,https://www.openstreetmap.org/node/5743600966
-189,osm:node:8612120284,Chude Ciacho Manufaktura,Chude Ciacho Manufaktura,food,53,Café,0,10,https://www.openstreetmap.org/node/8612120284
+187,osm:node:8612120284,Chude Ciacho Manufaktura,Chude Ciacho Manufaktura,food,54,Café,0,10,https://www.openstreetmap.org/node/8612120284
+188,osm:node:3793370987,Owoce i Warzywa,Owoce i Warzywa,food,54,Pub,0,11,https://www.openstreetmap.org/node/3793370987
+189,osm:node:5743600966,Presto,Presto,food,54,Pizza restaurant,0,11,https://www.openstreetmap.org/node/5743600966
 190,osm:node:13118789090,Fatamorgana,Fatamorgana,food,53,Author's restaurant,0,9,https://www.openstreetmap.org/node/13118789090
 191,osm:node:1880188103,Karczma u Chochoła,Karczma u Chochoła,food,53,Restaurant,0,9,https://www.openstreetmap.org/node/1880188103
 192,osm:node:11025832400,Kuchnia Kazachska Jurta,Kuchnia Kazachska Jurta,food,53,Restaurant,0,36,https://www.openstreetmap.org/node/11025832400
@@ -222,37 +222,42 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 221,osm:node:5752716182,"Sushi w Dłoń, Poké bowl, handroll & more","Sushi w Dłoń, Poké bowl, handroll & more",food,50,Japanese restaurant,0,6,https://www.openstreetmap.org/node/5752716182
 222,osm:node:2881426582,Tanoshii Sushi and Ramen,Tanoshii Sushi and Ramen,food,50,Sushi restaurant,0,6,https://www.openstreetmap.org/node/2881426582
 223,osm:node:8612148297,Wall Street BBQ,Wall Street BBQ,food,50,Barbecue restaurant,0,6,https://www.openstreetmap.org/node/8612148297
-224,osm:node:8572938909,FALLA Łódź,FALLA Łódź,food,49,Falafel restaurant,0,1,https://www.openstreetmap.org/node/8572938909
-225,osm:node:8612250842,Four Colors,Four Colors,food,49,International restaurant,0,1,https://www.openstreetmap.org/node/8612250842
+224,osm:node:5743600967,Angelo,Angelo,food,49,Italian restaurant,0,5,https://www.openstreetmap.org/node/5743600967
+225,osm:node:4289416730,Cud Miód Fabryczna,Cud Miód Fabryczna,food,49,Restaurant,0,5,https://www.openstreetmap.org/node/4289416730
 226,osm:node:1987200607,Łódzkie Towarzystwo Fotograficzne,Łódzkie Towarzystwo Fotograficzne,shop,57,Art shop,0,16,https://www.openstreetmap.org/node/1987200607
 227,osm:node:6261981012,Księgarnia Odkrywcy,Księgarnia Odkrywcy,shop,53,Bookshop,0,39,https://www.openstreetmap.org/node/6261981012
 228,osm:node:3617680785,Dom Wina,Dom Wina,shop,49,Wine shop,0,16,https://www.openstreetmap.org/node/3617680785
-229,osm:node:5752716168,Folkstar,Folkstar,shop,44,Gift shop,0,26,https://www.openstreetmap.org/node/5752716168
-230,osm:node:7576135116,Bookway,Bookway,shop,43,Bookshop,0,8,https://www.openstreetmap.org/node/7576135116
-231,osm:node:1861247905,Piotrkowska 35,Piotrkowska 35,shop,39,Art shop,0,14,https://www.openstreetmap.org/node/1861247905
-232,osm:node:3764468645,Antykwariat Silva Rerum,Antykwariat Silva Rerum,shop,37,Bookshop,0,11,https://www.openstreetmap.org/node/3764468645
-233,osm:node:6574426009,Kitsunebu,Kitsunebu,shop,37,Bookshop,0,11,https://www.openstreetmap.org/node/6574426009
-234,osm:node:12811469709,Dagton Guitars lutnik,Dagton Guitars lutnik,shop,36,Musical instrument shop,0,41,https://www.openstreetmap.org/node/12811469709
-235,osm:node:475372907,Krokodyl,Krokodyl,shop,34,Leather shop,0,20,https://www.openstreetmap.org/node/475372907
-236,osm:way:103526309,Wydawnictwo Uniwersytetu Łódzkiego,Wydawnictwo Uniwersytetu Łódzkiego,shop,34,Bookshop,1,0,https://www.openstreetmap.org/way/103526309
-237,osm:node:12065846750,Yatta.pl,Yatta.pl,shop,34,Bookshop,0,0,https://www.openstreetmap.org/node/12065846750
-238,osm:node:6270098704,Cepelia,Cepelia,shop,33,Gift shop,0,6,https://www.openstreetmap.org/node/6270098704
-239,osm:node:3782106639,E. Stompel,E. Stompel,shop,32,Bookshop,0,17,https://www.openstreetmap.org/node/3782106639
-240,osm:node:3782106651,Riff,Riff,shop,32,Record shop,0,16,https://www.openstreetmap.org/node/3782106651
-241,osm:node:1205570939,Antykwariat,Antykwariat,shop,31,Bookshop,0,15,https://www.openstreetmap.org/node/1205570939
-242,osm:node:5752716247,Antykwariat,Antykwariat,shop,31,Bookshop,0,14,https://www.openstreetmap.org/node/5752716247
-243,osm:node:3782106644,Sklepik Magiczny,Sklepik Magiczny,shop,31,Gift shop,0,14,https://www.openstreetmap.org/node/3782106644
-244,osm:node:4312033441,Cudny Sklep,Cudny Sklep,shop,29,Gift shop,0,3,https://www.openstreetmap.org/node/4312033441
-245,osm:node:11691016051,Księgarnia artystyczno graficzna,Księgarnia artystyczno graficzna,shop,29,Bookshop,0,11,https://www.openstreetmap.org/node/11691016051
-246,osm:node:12075568383,Skar.y.petki,Skar.y.petki,shop,27,Gift shop,0,2,https://www.openstreetmap.org/node/12075568383
-247,osm:node:5752716226,Tytka na Pietrynie,Tytka na Pietrynie,shop,26,Gift shop,0,7,https://www.openstreetmap.org/node/5752716226
-248,osm:node:5752716186,Światowid,Światowid,shop,25,Bookshop,0,20,https://www.openstreetmap.org/node/5752716186
-249,osm:node:4305888005,Gabi,Gabi,shop,24,Second-hand shop,0,6,https://www.openstreetmap.org/node/4305888005
-250,osm:node:6227632487,Sklep z pamiątkami,Sklep z pamiątkami,shop,22,Souvenir shop,0,13,https://www.openstreetmap.org/node/6227632487
-251,osm:node:1205571056,Chinka,Chinka,shop,21,Pottery shop,0,11,https://www.openstreetmap.org/node/1205571056
-252,osm:node:12176596681,Księży Młyn Dom Wydawniczy,Księży Młyn Dom Wydawniczy,shop,20,Bookshop,0,10,https://www.openstreetmap.org/node/12176596681
-253,osm:node:11257428548,Ossolineum,Ossolineum,shop,20,Bookshop,0,10,https://www.openstreetmap.org/node/11257428548
-254,osm:node:5752716193,Witchcraft,Witchcraft,shop,18,Bookshop,0,8,https://www.openstreetmap.org/node/5752716193
-255,osm:node:3635290140,Asstonex,Asstonex,shop,17,Record shop,0,0,https://www.openstreetmap.org/node/3635290140
-256,osm:node:12063374236,Skalper,Skalper,shop,16,Toy shop,0,1,https://www.openstreetmap.org/node/12063374236
-257,osm:node:4820033083,Skylark Records,Skylark Records,shop,16,Record shop,0,1,https://www.openstreetmap.org/node/4820033083
+229,osm:way:439650453,Nowa Sukcesja,Nowa Sukcesja,shop,49,Shopping centre,2,16,https://www.openstreetmap.org/way/439650453
+230,osm:node:7576135116,Bookway,Bookway,shop,44,Bookshop,0,8,https://www.openstreetmap.org/node/7576135116
+231,osm:node:5752716168,Folkstar,Folkstar,shop,44,Gift shop,0,26,https://www.openstreetmap.org/node/5752716168
+232,osm:node:1861247905,Piotrkowska 35,Piotrkowska 35,shop,39,Art shop,0,14,https://www.openstreetmap.org/node/1861247905
+233,osm:node:3764468645,Antykwariat Silva Rerum,Antykwariat Silva Rerum,shop,37,Bookshop,0,11,https://www.openstreetmap.org/node/3764468645
+234,osm:node:6574426009,Kitsunebu,Kitsunebu,shop,37,Bookshop,0,11,https://www.openstreetmap.org/node/6574426009
+235,osm:node:12811469709,Dagton Guitars lutnik,Dagton Guitars lutnik,shop,36,Musical instrument shop,0,41,https://www.openstreetmap.org/node/12811469709
+236,osm:node:475372907,Krokodyl,Krokodyl,shop,34,Leather shop,0,20,https://www.openstreetmap.org/node/475372907
+237,osm:way:103526309,Wydawnictwo Uniwersytetu Łódzkiego,Wydawnictwo Uniwersytetu Łódzkiego,shop,34,Bookshop,1,0,https://www.openstreetmap.org/way/103526309
+238,osm:node:12065846750,Yatta.pl,Yatta.pl,shop,34,Bookshop,0,0,https://www.openstreetmap.org/node/12065846750
+239,osm:node:6270098704,Cepelia,Cepelia,shop,33,Gift shop,0,6,https://www.openstreetmap.org/node/6270098704
+240,osm:way:173485216,Tulipan,Centrum Handlowe Tulipan,shop,33,Shopping centre,0,1,https://www.openstreetmap.org/way/173485216
+241,osm:node:3782106639,E. Stompel,E. Stompel,shop,32,Bookshop,0,17,https://www.openstreetmap.org/node/3782106639
+242,osm:way:174638513,Manufaktura,Centrum Handlowo-Rozrywkowe Manufaktura,shop,32,Shopping centre,0,5,https://www.openstreetmap.org/way/174638513
+243,osm:node:3782106651,Riff,Riff,shop,32,Record shop,0,16,https://www.openstreetmap.org/node/3782106651
+244,osm:node:1205570939,Antykwariat,Antykwariat,shop,31,Bookshop,0,15,https://www.openstreetmap.org/node/1205570939
+245,osm:node:5752716247,Antykwariat,Antykwariat,shop,31,Bookshop,0,14,https://www.openstreetmap.org/node/5752716247
+246,osm:node:3782106644,Sklepik Magiczny,Sklepik Magiczny,shop,31,Gift shop,0,14,https://www.openstreetmap.org/node/3782106644
+247,osm:node:4312033441,Cudny Sklep,Cudny Sklep,shop,29,Gift shop,0,3,https://www.openstreetmap.org/node/4312033441
+248,osm:node:11691016051,Księgarnia artystyczno graficzna,Księgarnia artystyczno graficzna,shop,29,Bookshop,0,11,https://www.openstreetmap.org/node/11691016051
+249,osm:node:12075568383,Skar.y.petki,Skar.y.petki,shop,27,Gift shop,0,2,https://www.openstreetmap.org/node/12075568383
+250,osm:node:5752716226,Tytka na Pietrynie,Tytka na Pietrynie,shop,26,Gift shop,0,7,https://www.openstreetmap.org/node/5752716226
+251,osm:node:4305888005,Gabi,Gabi,shop,25,Second-hand shop,0,6,https://www.openstreetmap.org/node/4305888005
+252,osm:way:173348997,Pasaż Łódzki,Pasaż Łódzki,shop,25,Shopping centre,0,0,https://www.openstreetmap.org/way/173348997
+253,osm:node:5752716186,Światowid,Światowid,shop,25,Bookshop,0,20,https://www.openstreetmap.org/node/5752716186
+254,osm:way:39524935,Galeria Łódzka,Galeria Łódzka,shop,24,Shopping centre,4,1,https://www.openstreetmap.org/way/39524935
+255,osm:node:6227632487,Sklep z pamiątkami,Sklep z pamiątkami,shop,22,Souvenir shop,0,13,https://www.openstreetmap.org/node/6227632487
+256,osm:node:1205571056,Chinka,Chinka,shop,21,Pottery shop,0,11,https://www.openstreetmap.org/node/1205571056
+257,osm:node:12176596681,Księży Młyn Dom Wydawniczy,Księży Młyn Dom Wydawniczy,shop,20,Bookshop,0,10,https://www.openstreetmap.org/node/12176596681
+258,osm:node:11257428548,Ossolineum,Ossolineum,shop,20,Bookshop,0,10,https://www.openstreetmap.org/node/11257428548
+259,osm:node:5752716193,Witchcraft,Witchcraft,shop,18,Bookshop,0,8,https://www.openstreetmap.org/node/5752716193
+260,osm:node:3635290140,Asstonex,Asstonex,shop,17,Record shop,0,0,https://www.openstreetmap.org/node/3635290140
+261,osm:node:12063374236,Skalper,Skalper,shop,16,Toy shop,0,1,https://www.openstreetmap.org/node/12063374236
+262,osm:node:4820033083,Skylark Records,Skylark Records,shop,16,Record shop,0,1,https://www.openstreetmap.org/node/4820033083
