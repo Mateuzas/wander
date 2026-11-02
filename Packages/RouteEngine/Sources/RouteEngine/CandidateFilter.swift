@@ -52,7 +52,10 @@ struct CandidateFilter {
             }
             let via = estimator.seconds(from: request.origin, to: poi.coordinate)
                 + estimator.seconds(from: poi.coordinate, to: request.destination)
-            if via - direct <= request.budget {
+            // Wider than the budget: real routes often beat the estimate, and a
+            // top-up after verification may then afford farther stops. The
+            // selector still holds every set to the budget.
+            if via - direct <= request.budget * config.corridorSlack {
                 result.candidates.append(poi)
             } else {
                 result.rejected[poi.id] = .outsideCorridor

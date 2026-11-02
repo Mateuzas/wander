@@ -315,6 +315,97 @@ struct PlannerTests {
         }
     }
 
+    // MARK: Top-up and modes
+
+    /// Three stops 600 m off the route: on estimates two fit 10 minutes
+    /// (about 8.6 min), all three don't (about 11.9 min).
+    var farStops: [POI] {
+        [300.0, 1000, 1700].enumerated().map { i, east in
+            Grid.poi("f\(i)", east: east, north: 600, category: POICategory.allCases[i], score: 70)
+        }
+    }
+
+    @Test func topsUpWhenRealRoutesBeatTheEstimate() async throws {
+        var off = PlannerConfig()
+        off.topUpBelow = 0
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, budget: 10 * 60,
+                                  pois: farStops, maxWaypoints: 5)
+        let without = try await Planner(config: off).plan(request, provider: FastWalkingTime())
+        let with = try await Planner().plan(request, provider: FastWalkingTime())
+        #expect(without.waypoints.count == 2)
+        #expect(without.extraTime < 0.7 * 10 * 60)
+        #expect(with.waypoints.count == 3)
+        #expect(with.extraTime > without.extraTime)
+        #expect(with.extraTime <= 10 * 60 * 1.1)
+        // The first pick is kept; top-up only adds.
+        #expect(Set(without.waypoints.map(\.id)).isSubset(of: Set(with.waypoints.map(\.id))))
+    }
+
+    @Test func explorerAddsAStopRelaxedDoesNotHave() async throws {
+        let plans = try await Planner().plans(
+            PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: spread),
+            provider: HaversineWalkingTime())
+        let relaxed = Set(plans[.relaxed]!.waypoints.map(\.id))
+        let explorer = Set(plans[.explorer]!.waypoints.map(\.id))
+        #expect(!relaxed.isEmpty)
+        #expect(!explorer.isSubset(of: relaxed))
+        #expect(plans[.direct]!.waypoints.isEmpty)
+
+        // Asked to differ from its own best plan, a mode finds another walk.
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .relaxed, pois: spread)
+        let first = try await Planner().plan(request, provider: HaversineWalkingTime())
+        let second = try await Planner().plan(request, provider: HaversineWalkingTime(), distinctFrom: [first])
+        #expect(!Set(second.waypoints.map(\.id)).isSubset(of: Set(first.waypoints.map(\.id))))
+    }
+
+    @Test func keepsTheSameStopsWhenNothingNewFits() async throws {
+        // Only two POIs exist; Explorer can't add anything new, and dropping
+        // one just to differ would make it worse than Relaxed.
+        let two = [Grid.poi("a", east: 500, north: 150), Grid.poi("b", east: 1500, north: -150, category: .shop)]
+        let plans = try await Planner().plans(
+            PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: two),
+            provider: HaversineWalkingTime())
+        #expect(Set(plans[.relaxed]!.waypoints.map(\.id)) == ["a", "b"])
+        #expect(Set(plans[.explorer]!.waypoints.map(\.id)) == ["a", "b"])
+    }
+
+    @Test func modesShareRealLegs() async throws {
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: spread)
+        let together = CountingWalkingTime()
+        _ = try await Planner().plans(request, provider: together)
+        let separate = CountingWalkingTime()
+        for mode in Mode.allCases {
+            var r = request
+            r.budget = mode.budget
+            r.maxWaypoints = mode.maxWaypoints
+            _ = try await Planner().plan(r, provider: separate)
+        }
+        #expect(await together.counter.count < separate.counter.count)
+    }
+
+    @Test func modesNeverExceedBudgets() async throws {
+        var rng = SplitMix64(seed: 99)
+        for _ in 0..<60 {
+            let origin = Grid.at(east: .random(in: -1000...1000, using: &rng), north: .random(in: -1000...1000, using: &rng))
+            let destination = Grid.at(east: .random(in: 0...3000, using: &rng), north: .random(in: -1500...1500, using: &rng))
+            let request = PlanRequest(origin: origin, destination: destination, mode: .direct,
+                                      pois: randomPOIs(count: 80, using: &rng))
+            for provider in [FastWalkingTime() as WalkingTimeProvider, NoisyWalkingTime(), HaversineWalkingTime()] {
+                let plans = try await Planner().plans(request, provider: provider)
+                for (mode, plan) in plans {
+                    #expect(plan.extraTime <= mode.budget * 1.1 + 1e-6)
+                    #expect(plan.waypoints.count <= mode.maxWaypoints)
+                }
+                let relaxed = Set(plans[.relaxed]!.waypoints.map(\.id))
+                let explorer = Set(plans[.explorer]!.waypoints.map(\.id))
+                if !relaxed.isEmpty && !explorer.isEmpty && explorer.isSubset(of: relaxed) {
+                    // Allowed only when Explorer couldn't add anything: same stops.
+                    #expect(explorer == relaxed)
+                }
+            }
+        }
+    }
+
     // MARK: Determinism
 
     @Test func isDeterministic() async throws {

@@ -44,12 +44,17 @@ struct WaypointSelector {
         var extra: TimeInterval
     }
 
+    /// Picks waypoints for `budget` (in estimated seconds). `initial` waypoints
+    /// stay in the route (topping up a verified plan). With `taken` (smaller
+    /// modes' stops), the result has a stop none of them has whenever such a
+    /// set fits; otherwise the overall best is returned.
     func run(origin: Coordinate, destination: Coordinate, candidates: [POI], budget: TimeInterval,
-             maxWaypoints: Int) -> Result {
+             maxWaypoints: Int, initial: [POI] = [], taken: TakenStops = TakenStops()) -> Result {
         let estimator = config.estimator
         let projection = LocalProjection(origin: origin)
         let direction = projection.point(destination) - projection.point(origin)
-        let values = Dictionary(uniqueKeysWithValues: candidates.map { ($0.id, scorer.value($0)) })
+        var values = Dictionary(uniqueKeysWithValues: candidates.map { ($0.id, scorer.value($0)) })
+        for poi in initial { values[poi.id] = scorer.value(poi) }
 
         func backtracks(_ from: Coordinate, _ to: Coordinate) -> Bool {
             let leg = projection.point(to) - projection.point(from)
@@ -92,10 +97,17 @@ struct WaypointSelector {
             return nil
         }
 
-        let empty = State(route: [origin, destination], waypoints: [], extra: 0, value: 0, key: "")
-        var best = empty
-        var beam = [empty]
-        for _ in 0..<maxWaypoints {
+        let startRoute = [origin] + initial.map(\.coordinate) + [destination]
+        let startExtra = zip(startRoute, startRoute.dropFirst()).reduce(0) { $0 + estimator.seconds(from: $1.0, to: $1.1) }
+            - estimator.seconds(from: origin, to: destination)
+        let start = State(route: startRoute, waypoints: initial, extra: startExtra,
+                          value: initial.reduce(0) { $0 + (values[$1.id] ?? 0) }, key: waypointKey(initial))
+        var best = start
+        // Best set with a stop the smaller modes don't have, for when the
+        // overall best is (inside) one of theirs.
+        var bestNew: State? = taken.isNew(start.waypoints) ? start : nil
+        var beam = [start]
+        for _ in 0..<max(0, maxWaypoints - initial.count) {
             var children: [String: State] = [:]
             for state in beam {
                 for poi in candidates where blocked(poi, in: state) == nil
@@ -106,15 +118,22 @@ struct WaypointSelector {
                     child.waypoints.insert(poi, at: insertion.position - 1)
                     child.extra += insertion.extra
                     child.value += values[poi.id] ?? 0
-                    child.key = child.waypoints.map(\.id).sorted().joined(separator: "|")
+                    child.key = waypointKey(child.waypoints)
                     if let existing = children[child.key], !child.isBetter(than: existing) { continue }
                     children[child.key] = child
                 }
             }
             guard !children.isEmpty else { break }
-            beam = Array(children.values.sorted { $0.isBetter(than: $1) }.prefix(config.beamWidth))
+            let ranked = children.values.sorted { $0.isBetter(than: $1) }
+            beam = Array(ranked.prefix(config.beamWidth))
             if beam[0].isBetter(than: best) { best = beam[0] }
+            if let fresh = ranked.first(where: { taken.isNew($0.waypoints) }),
+               bestNew.map({ fresh.isBetter(than: $0) }) ?? true {
+                bestNew = fresh
+            }
         }
+        // Never repeat a smaller mode's walk while a set with something new fits.
+        if !taken.isEmpty, !taken.isNew(best.waypoints), let bestNew { best = bestNew }
 
         // Extra time each chosen waypoint added when it was inserted is not
         // tracked per beam step, so report its marginal cost in the final route.

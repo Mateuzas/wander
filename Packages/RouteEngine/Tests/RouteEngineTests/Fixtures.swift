@@ -85,3 +85,13 @@ func randomPOIs(count: Int, using rng: inout SplitMix64) -> [POI] {
                  kind: Bool.random(using: &rng) ? .passby : .stop)
     }
 }
+
+/// Real routing faster than the estimate (like Apple Maps on a direct street grid).
+struct FastWalkingTime: WalkingTimeProvider {
+    var factor = 0.6
+    func leg(from: Coordinate, to: Coordinate) async throws -> Leg {
+        var leg = try await HaversineWalkingTime().leg(from: from, to: to)
+        leg.duration *= factor
+        return leg
+    }
+}
