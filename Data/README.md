@@ -21,6 +21,9 @@ Photo spots (tourism, historic, notable towers and bridges, parks), browsable in
 (a stop); the rest are `photo` (a pass-by), with `type` set to the OSM value.
 Only notable venues are kept: one with a `wikidata` or `wikipedia` tag, or with a footprint
 (bounding-box diagonal) of at least 150 m. Venues may be up to 2,500 m across (other spots: 800 m).
+Venues are searched in the city's optional `venue_bbox` (`cities.json`; for Łódź the whole city),
+everything else in `bbox`. Commons photo counts cover `bbox` only, so outer venues get photos = 0
+and rely on Wikidata fame.
 A venue already kept as a sight through another tag (e.g. `historic=theatre`) stays as it was.
 
 ## English names (`names-en/<city>.csv`)

@@ -42,19 +42,23 @@ MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-pa
 MIN_PARK_SIZE_M = 200     # named parks smaller than this are pocket greens
 
 
-def query(bbox):
-    s, w, n, e = bbox
-    b = f"({s},{w},{n},{e})"
+def query(bbox, venue_bbox=None):
+    """One Overpass request. Venues may use a wider box (the whole city) than everything else."""
+    b = "({},{},{},{})".format(*bbox)
+    vb = "({},{},{},{})".format(*(venue_bbox or bbox))
     return f"""
 [out:json][timeout:180];
 (
-  nwr["tourism"~"^(attraction|viewpoint|artwork|museum|gallery|zoo|aquarium|theme_park)$"]{b};
+  nwr["tourism"~"^(attraction|viewpoint|artwork|museum|gallery)$"]{b};
   nwr["historic"]{b};
   nwr["man_made"~"^(tower|lighthouse|bridge)$"]{b};
-  nwr["leisure"~"^(park|stadium)$"]["name"]{b};
-  nwr["amenity"~"^(theatre|arts_centre|concert_hall)$"]["name"]{b};
+  nwr["leisure"="park"]["name"]{b};
   nwr["shop"]["name"]{b};
   nwr["amenity"~"^(cafe|restaurant|bar|ice_cream|pub)$"]["name"]{b};
+  nwr["leisure"="stadium"]["name"]{vb};
+  nwr["amenity"~"^(theatre|arts_centre|concert_hall)$"]["name"]{vb};
+  nwr["tourism"~"^(zoo|aquarium|theme_park)$"]{vb};
+  nwr["shop"="mall"]["name"]{vb};
 );
 out tags center bb;
 """
@@ -156,8 +160,8 @@ def main():
         print(f"Using cached {raw_path.name} (pass --refresh to re-download)")
         raw = json.loads(raw_path.read_text())
     else:
-        print(f"Fetching OSM data for {city['name']} {city['bbox']} ...")
-        raw = http_json(OVERPASS, data={"data": query(city["bbox"])})
+        print(f"Fetching OSM data for {city['name']} {city['bbox']} (venues: {city.get('venue_bbox')}) ...")
+        raw = http_json(OVERPASS, data={"data": query(city["bbox"], city.get("venue_bbox"))})
         raw_path.write_text(json.dumps(raw, ensure_ascii=False))
     elements = raw.get("elements", [])
     print(f"  {len(elements)} raw elements")
