@@ -1,3 +1,4 @@
+import RouteEngine
 import SwiftUI
 
 // How each category looks and reads (PLAN.md §10, Bead and Accessibility).
