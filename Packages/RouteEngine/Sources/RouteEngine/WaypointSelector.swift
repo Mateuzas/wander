@@ -65,10 +65,12 @@ struct WaypointSelector {
 
         /// Cheapest insertion of `poi` into `state` that fits the budget and
         /// doesn't backtrack, plus diagnostics for the debug overlay.
-        func evaluate(_ poi: POI, in state: State) -> (fitting: Insertion?, cheapest: TimeInterval, anyInBudget: Bool) {
+        func evaluate(_ poi: POI, in state: State)
+            -> (fitting: Insertion?, cheapest: TimeInterval, anyInBudget: Bool, onTheWay: Bool) {
             var fitting: Insertion?
             var cheapest = TimeInterval.infinity
             var anyInBudget = false
+            var onTheWay = false
             let p = poi.coordinate
             for position in 1..<state.route.count {
                 let a = state.route[position - 1], b = state.route[position]
@@ -78,11 +80,16 @@ struct WaypointSelector {
                 guard state.extra + added <= budget else { continue }
                 anyInBudget = true
                 guard !backtracks(a, p), !backtracks(p, b) else { continue }
+                // Under `freeBelow` it's on the way: not worth a slot.
+                if config.freeBelow > 0 && added < config.freeBelow {
+                    onTheWay = true
+                    continue
+                }
                 if fitting == nil || added < fitting!.extra {
                     fitting = Insertion(position: position, extra: added)
                 }
             }
-            return (fitting, cheapest, anyInBudget)
+            return (fitting, cheapest, anyInBudget, onTheWay)
         }
 
         func blocked(_ poi: POI, in state: State) -> RejectionReason? {
@@ -154,6 +161,8 @@ struct WaypointSelector {
                 rejected[poi.id] = .overBudget
             } else if let reason = blocked(poi, in: best) {
                 rejected[poi.id] = reason
+            } else if evaluation.fitting == nil && evaluation.onTheWay {
+                rejected[poi.id] = .onTheWay
             } else if evaluation.fitting == nil {
                 rejected[poi.id] = .backtracks
             } else {

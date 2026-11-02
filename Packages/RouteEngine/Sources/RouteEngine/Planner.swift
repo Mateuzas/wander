@@ -62,11 +62,26 @@ public struct Planner: Sendable {
             waypoints: inserted.waypoints, baseline: baseline,
             budget: request.budget, store: store, taken: taken)
 
-        // 7. Top up: real routes often beat the estimate, leaving budget unused.
+        // 7. Free stops that turn out to be on the way (real detour under
+        // `freeBelow`): they become free highlights and give their slot back.
+        var freed: [POI] = []
+        var freeChecks = 0
+        func freeOnTheWay() async throws {
+            let result = try await freeNearlyFree(origin: request.origin, destination: request.destination,
+                                                  waypoints: verified.waypoints, legs: verified.legs,
+                                                  store: store, checksLeft: config.maxFreeChecks - freeChecks)
+            verified.waypoints = result.waypoints
+            verified.legs = result.legs
+            freed += result.freed
+            freeChecks += result.checks
+        }
+        try await freeOnTheWay()
+
+        // 8. Top up: real routes often beat the estimate, leaving budget unused.
         // While the verified walk uses under `topUpBelow` of its budget, add
         // stops sized with the estimate recalibrated to the real legs, and keep
         // them only if real routing still fits.
-        var tried = Set(verified.dropped.map(\.id))
+        var tried = Set(verified.dropped.map(\.id)).union(freed.map(\.id))
         for _ in 0..<config.maxTopUpRounds where request.budget > 0 && verified.waypoints.count < maxWaypoints {
             let realTotal = verified.legs.reduce(0) { $0 + $1.duration }
             let realExtra = realTotal - baseline.duration
@@ -90,22 +105,25 @@ public struct Planner: Sendable {
                 verified = Validator.Result(waypoints: more.waypoints, legs: legs, dropped: verified.dropped)
                 inserted.rejected = more.rejected
                 for (id, seconds) in more.bestExtra { inserted.bestExtra[id] = seconds }
+                try await freeOnTheWay()
             } else {
                 verified.dropped += added
             }
             tried.formUnion(added.map(\.id))
+            tried.formUnion(freed.map(\.id))
         }
 
         let totalTime = verified.legs.reduce(0) { $0 + $1.duration }
         var plan = WanderPlan(
             baseline: baseline, waypoints: verified.waypoints, legs: verified.legs,
             totalTime: totalTime, extraTime: totalTime - baseline.duration,
-            highlights: [], noDetourFit: request.budget > 0 && verified.waypoints.isEmpty,
+            highlights: [], noDetourFit: request.budget > 0 && verified.waypoints.isEmpty && freed.isEmpty,
             candidates: [])
 
         // Highlights: waypoints plus pass-by POIs along the final route.
         let line = MeasuredPolyline(plan.polyline, projection: LocalProjection(origin: request.origin))
         let waypointIDs = Set(verified.waypoints.map(\.id))
+        let freedIDs = Set(freed.map(\.id))
         var passbyIDs: Set<String> = []
         for poi in request.pois where request.interests.contains(poi.category)
             && filtered.rejected[poi.id] != .closed {
@@ -113,7 +131,9 @@ public struct Planner: Sendable {
             if waypointIDs.contains(poi.id) {
                 plan.highlights.append(Highlight(poi: poi, role: .waypoint,
                                                  distanceAlongRoute: near.along, distanceFromRoute: near.distance))
-            } else if near.distance <= config.passbyRadius {
+            } else if near.distance <= config.passbyRadius || freedIDs.contains(poi.id) {
+                // Freed stops are under a minute off the way, even if the route
+                // doesn't pass within `passbyRadius`.
                 passbyIDs.insert(poi.id)
                 plan.highlights.append(Highlight(poi: poi, role: .passby,
                                                  distanceAlongRoute: near.along, distanceFromRoute: near.distance))
@@ -145,6 +165,40 @@ public struct Planner: Sendable {
                                   estimatedExtraTime: inserted.bestExtra[poi.id], status: status)
         }
         return plan
+    }
+
+    /// Removes waypoints whose real detour is under `freeBelow`, one at a
+    /// time, checking the cheapest-looking first. Each check costs one leg
+    /// (the walk without that stop), up to `checksLeft`.
+    private func freeNearlyFree(origin: Coordinate, destination: Coordinate, waypoints: [POI], legs: [Leg],
+                                store: LegStore, checksLeft: Int)
+        async throws -> (waypoints: [POI], legs: [Leg], freed: [POI], checks: Int) {
+        let estimator = config.estimator
+        var waypoints = waypoints, legs = legs, freed: [POI] = [], checks = 0
+        var changed = true
+        while changed && checks < checksLeft {
+            changed = false
+            let stops = [origin] + waypoints.map(\.coordinate) + [destination]
+            let order = waypoints.indices.map { i -> (index: Int, estimate: Double) in
+                (i, estimator.seconds(from: stops[i], to: stops[i + 1])
+                    + estimator.seconds(from: stops[i + 1], to: stops[i + 2])
+                    - estimator.seconds(from: stops[i], to: stops[i + 2]))
+            }.filter { $0.estimate < config.freeCheckEstimate }.sorted { ($0.estimate, $0.index) < ($1.estimate, $1.index) }
+            for (i, _) in order where checks < checksLeft {
+                checks += 1
+                let bypass = try await store.leg(from: stops[i], to: stops[i + 2])
+                // Free only if skipping the stop doesn't lengthen the walk: with
+                // real routing, the leg past a stop can be slower than via it.
+                let detour = legs[i].duration + legs[i + 1].duration - bypass.duration
+                if detour >= 0 && detour < config.freeBelow {
+                    freed.append(waypoints.remove(at: i))
+                    legs.replaceSubrange(i...(i + 1), with: [bypass])
+                    changed = true
+                    break
+                }
+            }
+        }
+        return (waypoints, legs, freed, checks)
     }
 }
 
@@ -181,10 +235,18 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Corridor filter width as a multiple of the budget (wider than 1 so a
     /// top-up can reach stops that only fit once real times are known).
     public var corridorSlack: Double = 1.5
+    /// Seconds. A verified waypoint whose real detour is under this is on the
+    /// way anyway: it becomes a free highlight and its slot is freed.
+    public var freeBelow: TimeInterval = 60
+    /// Seconds. Only waypoints whose estimated detour is under this are
+    /// checked against real routing for `freeBelow` (each check is a request).
+    public var freeCheckEstimate: TimeInterval = 180
+    /// Most extra provider requests per plan for those checks.
+    public var maxFreeChecks: Int = 8
     /// Top up a verified plan while it uses less than this share of its budget.
     public var topUpBelow: Double = 0.7
     /// Most top-up attempts per plan (each one costs a few provider requests).
-    public var maxTopUpRounds: Int = 2
+    public var maxTopUpRounds: Int = 3
     /// Partial waypoint sets kept per step of the selection search. Higher is
     /// closer to the best set and slower.
     public var beamWidth: Int = 16
