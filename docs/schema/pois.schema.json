@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Mateuzas/wander/docs/schema/pois.schema.json",
+  "title": "Wander POI file (pois-<city>.json)",
+  "description": "Written by Data/score.py, bundled in the app, decoded by RouteEngine.POIFile. See docs/CONTRACTS.md §1.",
+  "type": "object",
+  "required": ["city", "generated", "pois"],
+  "additionalProperties": false,
+  "properties": {
+    "city": { "type": "string", "minLength": 1, "description": "Display name, e.g. \"Łódź\"" },
+    "generated": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "attribution": { "type": "string", "description": "Shown in the app: \"© OpenStreetMap contributors\"" },
+    "pois": { "type": "array", "items": { "$ref": "#/$defs/poi" } }
+  },
+  "$defs": {
+    "poi": {
+      "type": "object",
+      "required": ["id", "name", "lat", "lon", "category", "score", "kind", "reason"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^osm:(node|way|relation):[0-9]+$" },
+        "name": { "type": "string", "minLength": 1, "description": "Display name; English for sights" },
+        "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+        "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+        "category": { "enum": ["photo", "shop", "food"] },
+        "score": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "kind": { "enum": ["passby", "stop"], "description": "photo → passby; shop, food → stop" },
+        "reason": { "type": "string", "description": "Short human reason; may be empty" },
+        "type": { "type": "string", "description": "Most specific OSM value: mural, museum, church, cafe, books…" },
+        "signals": {
+          "type": "object",
+          "required": ["photos", "fame", "quality", "independent"],
+          "additionalProperties": false,
+          "properties": {
+            "photos": { "type": "number", "minimum": 0, "maximum": 1 },
+            "fame": { "type": "number", "minimum": 0, "maximum": 1 },
+            "quality": { "type": "number", "minimum": 0, "maximum": 1 },
+            "independent": { "type": "boolean" }
+          }
+        },
+        "cuisine": { "type": "array", "items": { "type": "string" }, "description": "food only" },
+        "openingHours": { "type": "string", "description": "Raw OSM opening_hours; shop and food only" },
+        "localName": { "type": "string", "description": "Original OSM name when name is a translation" },
+        "commonsImage": { "type": "string", "description": "Commons file name without File:; photo only" },
+        "commonsCategory": { "type": "string", "description": "Commons category without Category:; photo only" },
+        "popular": { "const": true, "description": "Present only when true; photo only" }
+      }
+    }
+  }
+}

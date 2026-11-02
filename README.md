@@ -19,4 +19,10 @@ xcodebuild -project App/Wander.xcodeproj -scheme Wander \
   -destination 'generic/platform=iOS Simulator' build
 ```
 
+## Docs
+
+- [PLAN.md](PLAN.md): product spec · [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) · [docs/CONTRACTS.md](docs/CONTRACTS.md) · [docs/TASKS.md](docs/TASKS.md) · [docs/adr/](docs/adr/)
+- How work is split: [AGENTS.md](AGENTS.md) (roles and ownership) and [ARCHITECT.md](ARCHITECT.md) (protocol)
+- [docs/BRAND.md](docs/BRAND.md) · [docs/SECRETS.md](docs/SECRETS.md) · [docs/field-test-lodz.md](docs/field-test-lodz.md)
+
 Map data © OpenStreetMap contributors (ODbL).
