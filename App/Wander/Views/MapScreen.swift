@@ -201,7 +201,8 @@ struct MapScreen: View {
         if let selected = selectedPOI, seen.insert(selected.id).inserted {
             items.append(BeadItem(poi: selected, dimmed: false, shown: true))
         }
-        return items
+        // MapKit draws annotations in order, so popular beads go last to sit on top.
+        return items.filter { $0.poi.popular != true } + items.filter { $0.poi.popular == true }
     }
 
     private var revealedRoute: [Coordinate] {

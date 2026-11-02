@@ -41,11 +41,14 @@ final class POIStore {
     func top(in region: MKCoordinateRegion, limit: Int) -> [POI] {
         let latSpan = region.span.latitudeDelta / 2, lonSpan = region.span.longitudeDelta / 2
         let c = region.center
-        return pois
+        let inView = pois
             .filter { abs($0.coordinate.lat - c.latitude) <= latSpan && abs($0.coordinate.lon - c.longitude) <= lonSpan }
             .sorted { $0.score != $1.score ? $0.score > $1.score : $0.id < $1.id }
-            .prefix(limit)
-            .map { $0 }
+        // Popular places (a couple of dozen per city) always show, even zoomed out;
+        // the rest fill the remaining slots by score.
+        let popular = inView.filter { $0.popular == true }
+        let others = inView.filter { $0.popular != true }.prefix(max(0, limit - popular.count))
+        return popular + others
     }
 
     private static func region(covering pois: [POI]) -> MKCoordinateRegion? {
