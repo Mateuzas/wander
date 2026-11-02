@@ -26,6 +26,10 @@ struct CandidateFilter {
                 result.rejected[poi.id] = .notInInterests
                 continue
             }
+            if isClosed(poi, request) {
+                result.rejected[poi.id] = .closed
+                continue
+            }
             if poi.kind == .passby {
                 let near = line.nearest(to: poi.coordinate)
                 if near.distance <= config.passbyRadius {
@@ -51,5 +55,12 @@ struct CandidateFilter {
         }
         result.candidates.sort { $0.id < $1.id }
         return result
+    }
+
+    /// Closed only when the hours parse and say so; unparseable hours keep the POI.
+    private func isClosed(_ poi: POI, _ request: PlanRequest) -> Bool {
+        guard let time = request.time, let raw = poi.openingHours,
+              let hours = OpeningHours(raw) else { return false }
+        return !hours.isOpen(at: time, in: request.timeZone)
     }
 }

@@ -30,13 +30,16 @@ public struct PlanRequest: Sendable {
     /// How to value POIs from their signals. Nil uses each POI's `score`.
     public var weights: SignalWeights?
     public var pois: [POI]
-    /// Local time of the walk. Accepted but not used yet: pois.json has no
-    /// opening hours, so there is nothing to filter on (decided for Milestone 2).
+    /// When the walk starts. If set, POIs whose `openingHours` say they are
+    /// closed at this time are left out. Nil skips the check.
     public var time: Date?
+    /// Time zone for reading `openingHours`: the city's, not the phone's.
+    public var timeZone: TimeZone
 
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
-                pois: [POI], time: Date? = nil) {
+                pois: [POI], time: Date? = nil,
+                timeZone: TimeZone = .current) {
         self.origin = origin
         self.destination = destination
         self.budget = max(0, budget)
@@ -44,13 +47,15 @@ public struct PlanRequest: Sendable {
         self.weights = weights
         self.pois = pois
         self.time = time
+        self.timeZone = timeZone
     }
 
     public init(origin: Coordinate, destination: Coordinate, mode: Mode,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
-                pois: [POI], time: Date? = nil) {
+                pois: [POI], time: Date? = nil,
+                timeZone: TimeZone = .current) {
         self.init(origin: origin, destination: destination, budget: mode.budget,
-                  interests: interests, weights: weights, pois: pois, time: time)
+                  interests: interests, weights: weights, pois: pois, time: time, timeZone: timeZone)
     }
 }
 
@@ -113,6 +118,8 @@ public enum RejectionReason: String, Hashable, Sendable {
     case notInInterests
     /// Value is zero or negative under the request's weights.
     case noValue
+    /// Its opening hours say it is closed at the request's time.
+    case closed
     /// Budget is zero (Direct mode), so no detours are considered.
     case noBudget
     /// Fails the straight-line corridor check (PLAN.md section 6, step 3).

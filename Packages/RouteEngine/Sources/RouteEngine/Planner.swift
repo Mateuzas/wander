@@ -41,7 +41,8 @@ public struct Planner: Sendable {
         let line = MeasuredPolyline(plan.polyline, projection: LocalProjection(origin: request.origin))
         let waypointIDs = Set(verified.waypoints.map(\.id))
         var passbyIDs: Set<String> = []
-        for poi in request.pois where request.interests.contains(poi.category) {
+        for poi in request.pois where request.interests.contains(poi.category)
+            && filtered.rejected[poi.id] != .closed {
             let near = line.nearest(to: poi.coordinate)
             if waypointIDs.contains(poi.id) {
                 plan.highlights.append(Highlight(poi: poi, role: .waypoint,
