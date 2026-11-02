@@ -31,6 +31,8 @@ POPULAR_PHOTO_PCT = 0.80   # photo percentile above which a reason says "popular
 FAMOUS_SITELINKS = 10      # sitelinks above which a reason says "well-known"
 DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
+NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
+NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
 MIN_SCORE = 15             # drop anything below this from the app file
 REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
@@ -193,9 +195,36 @@ def english_name(p, names_en):
     """Sights get an English name; shops and food keep their own (they are proper names)."""
     if p["id"] in names_en:
         return names_en[p["id"]]
-    if p["category"] == "photo" and p["tags"].get("name:en"):
-        return p["tags"]["name:en"]
+    if p["category"] == "photo":
+        # Wikidata labels are a fallback only: names-en/<city>.csv is the reviewed source.
+        return p["tags"].get("name:en") or p.get("wikidata_label_en") or p["name"]
     return p["name"]
+
+
+GENERIC_NAMES = set(ARTWORK_LABELS.values()) | set(MEMORIAL_LABELS.values()) | {"Public artwork"}
+
+
+def name_generic_sights(pois):
+    """A nudge for "Mural, 40 m ahead" means little. Name generic sights after their artist,
+    or else after the nearest well-known sight. Returns how many were renamed."""
+    anchors = [q for q in pois if q["category"] == "photo" and q["name"] not in GENERIC_NAMES
+               and q["score"] >= NEAR_MIN_SCORE]
+    renamed = 0
+    for p in pois:
+        if p["category"] != "photo" or p["name"] not in GENERIC_NAMES:
+            continue
+        artist = p["tags"].get("artist_name") or p["tags"].get("artist")
+        if artist:
+            label = p["name"]
+            p["name"] = f"{label} by {artist}"
+            p["reason"] = p["reason"].replace(f"{label} by {artist}", label, 1)  # don't repeat the name
+        else:
+            near = min(anchors, default=None, key=lambda q: metres(p["lat"], p["lon"], q["lat"], q["lon"]))
+            if not near or metres(p["lat"], p["lon"], near["lat"], near["lon"]) > NEAR_RADIUS_M:
+                continue
+            p["name"] = f"{p['name']} near {near['name']}"
+        renamed += 1
+    return renamed
 
 
 def apply_curation(pois, rules):
@@ -264,6 +293,7 @@ def main():
     pois = dedupe(pois)
     before_cut = len(pois)
     pois = [p for p in pois if p["score"] >= MIN_SCORE]
+    renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
 
     out_pois = []
@@ -308,7 +338,7 @@ def main():
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
-          f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied)")
+          f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied, {renamed} generic names expanded)")
     untranslated = [p for p in pois if p["category"] == "photo" and p["id"] not in names_en
                     and not p["tags"].get("name:en")]
     if untranslated:

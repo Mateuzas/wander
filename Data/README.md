@@ -14,7 +14,11 @@ Only `score.py` needs re-running after editing weights or `curation.csv`.
 
 Sights are shown in English. OSM rarely has `name:en` and Wikidata labels are unreliable,
 so each city has a reviewed `osm_id,name_en,original` file (first drafted by Claude: please check).
-Shops and food keep their own names. `score.py` lists any sight still missing a name.
+Shops and food keep their own names. Without a reviewed entry, a sight falls back to OSM `name:en`,
+then the Wikidata English label, then its own name; `score.py` lists any sight still missing one.
+
+Sights named only by their kind ("Mural", "Sculpture") are expanded automatically to
+"Mural by <artist>" or "Mural near <nearest well-known sight>" (within 250 m).
 
 ## Curation (`curation.csv`)
 
