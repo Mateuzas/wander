@@ -1,14 +1,6 @@
 import MapKit
 import RouteEngine
 
-/// One turn-by-turn step of a walking leg, kept for walking mode (Milestone 5).
-struct RouteStep: Hashable, Sendable {
-    let instructions: String
-    /// Metres.
-    let distance: Double
-    let polyline: [Coordinate]
-}
-
 enum RoutingError: Error {
     /// MapKit has no walking route between the two points.
     case noRoute
@@ -32,7 +24,6 @@ actor MapKitWalkingTime: WalkingTimeProvider {
     }
 
     private var legs: [Key: Leg] = [:]
-    private var steps: [Key: [RouteStep]] = [:]
     private var inFlight: [Key: Task<Leg, Error>] = [:]
     private var sent: [Date] = []
 
@@ -44,11 +35,6 @@ actor MapKitWalkingTime: WalkingTimeProvider {
         inFlight[key] = task
         defer { inFlight[key] = nil }
         return try await task.value
-    }
-
-    /// Steps for a leg fetched earlier, or nil if it was never routed.
-    func steps(from: Coordinate, to: Coordinate) -> [RouteStep]? {
-        steps[Key(from, to)]
     }
 
     // MARK: - Private
@@ -63,12 +49,9 @@ actor MapKitWalkingTime: WalkingTimeProvider {
             route = try await calculate(from: from, to: to)
         }
         let leg = Leg(from: from, to: to, duration: route.expectedTravelTime,
-                      distance: route.distance, polyline: Self.coordinates(of: route.polyline))
+                      distance: route.distance, polyline: Self.coordinates(of: route.polyline),
+                      steps: route.steps.map { RouteStep(instruction: $0.instructions, distance: $0.distance) })
         legs[key] = leg
-        steps[key] = route.steps.map {
-            RouteStep(instructions: $0.instructions, distance: $0.distance,
-                      polyline: Self.coordinates(of: $0.polyline))
-        }
         return leg
     }
 
