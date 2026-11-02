@@ -101,7 +101,8 @@ final class PlaceInfoService {
 /// A Commons photo with the credit Wikimedia's licences require.
 struct CommonsPhoto: Equatable {
     let imageURL: URL
-    let author: String
+    /// Nil when the file's metadata has no author.
+    let author: String?
     let license: String
     let licenseURL: URL?
     let pageURL: URL
@@ -153,7 +154,7 @@ final class CommonsPhotoCache {
         }
         guard let license = value("LicenseShortName") else { return nil }
         return CommonsPhoto(imageURL: imageURL,
-                            author: value("Artist") ?? "Unknown author",
+                            author: value("Artist"),
                             license: license,
                             licenseURL: value("LicenseUrl").flatMap(URL.init(string:)),
                             pageURL: pageURL)

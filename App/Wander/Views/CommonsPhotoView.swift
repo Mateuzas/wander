@@ -45,6 +45,11 @@ struct CommonsPhotoView: View {
             .accessibilityHidden(true)
     }
 
+    private func caption(_ photo: CommonsPhoto) -> String {
+        let credit = [photo.author, photo.license].compactMap { $0 }.joined(separator: ", ")
+        return "Photo: \(credit) · Wikimedia Commons"
+    }
+
     private func loaded(_ photo: CommonsPhoto) -> some View {
         VStack(alignment: .leading, spacing: Layout.grid / 2) {
             AsyncImage(url: photo.imageURL) { image in
@@ -62,7 +67,7 @@ struct CommonsPhotoView: View {
             .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             .accessibilityHidden(true)
 
-            Text("Photo: \(photo.author), \(photo.license) · Wikimedia Commons")
+            Text(caption(photo))
                 .font(WanderFont.caption)
                 .foregroundStyle(.inkMuted)
                 .lineLimit(2)
@@ -70,7 +75,7 @@ struct CommonsPhotoView: View {
         .contentShape(Rectangle())
         .onTapGesture { UIApplication.shared.open(photo.pageURL) }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Photo by \(photo.author), licence \(photo.license)")
+        .accessibilityLabel(caption(photo))
         .accessibilityHint("Opens the Wikimedia Commons page")
         .accessibilityAddTraits(.isLink)
     }
