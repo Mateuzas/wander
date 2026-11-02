@@ -1,3 +1,4 @@
+import MapKit
 import RouteEngine
 import SwiftUI
 
@@ -21,6 +22,10 @@ struct POIDetail: View {
 
     @State private var adding = false
     @State private var addMessage: String?
+    @State private var connectivity = Connectivity()
+    /// The matching Apple Maps place; nil until found, and stays nil if unsure.
+    @State private var place: MKMapItem?
+    @State private var commonsPhoto: CommonsPhoto?
 
     var body: some View {
         VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
@@ -54,12 +59,46 @@ struct POIDetail: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
 
+            placeInfo
             actionView
             Spacer(minLength: 0)
         }
         .padding(.horizontal, Layout.margin)
         .padding(.top, Layout.margin + Layout.grid)
         .onChange(of: poi.id) { addMessage = nil }
+        .task(id: poi.id) { await loadPlaceInfo() }
+    }
+
+    // MARK: - Photos and reviews
+
+    // TODO: return `poi.commonsImage` once the data agent adds that field (sights only).
+    private var commonsFileName: String? { nil }
+
+    private func loadPlaceInfo() async {
+        place = nil
+        commonsPhoto = nil
+        let match = await PlaceInfoService.shared.place(for: poi)
+        guard !Task.isCancelled else { return }
+        place = match
+        guard match == nil, PlaceInfoService.commonsFallbackEnabled,
+              poi.category == .photo, let file = commonsFileName else { return }
+        let photo = await PlaceInfoService.shared.commonsPhoto(fileName: file)
+        guard !Task.isCancelled else { return }
+        commonsPhoto = photo
+    }
+
+    /// Nothing is shown while looking up, offline, or on iOS 17. Never a spinner.
+    @ViewBuilder
+    private var placeInfo: some View {
+        if connectivity.isOnline {
+            if let place {
+                if #available(iOS 18, *) {
+                    PlaceCardRow(item: place, placeName: poi.name)
+                }
+            } else if let commonsPhoto {
+                CommonsPhotoView(photo: commonsPhoto)
+            }
+        }
     }
 
     @ViewBuilder
@@ -99,5 +138,64 @@ struct POIDetail: View {
                 .foregroundStyle(.inkMuted)
                 .fixedSize(horizontal: false, vertical: true)
         }
+    }
+}
+
+/// "Photos & reviews": opens Apple's place card (photos, ratings, hours).
+@available(iOS 18, *)
+private struct PlaceCardRow: View {
+    let item: MKMapItem
+    let placeName: String
+    @State private var showCard = false
+
+    var body: some View {
+        Button { showCard = true } label: {
+            HStack(spacing: Layout.grid) {
+                Image(systemName: "photo.on.rectangle")
+                Text("Photos & reviews")
+                    .font(WanderFont.body.weight(.semibold))
+                Spacer(minLength: Layout.grid)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.inkMuted)
+            }
+            .foregroundStyle(.wander)
+            .padding(.horizontal, Layout.grid * 1.5)
+            .frame(maxWidth: .infinity, minHeight: Layout.minTouch, alignment: .leading)
+            .background(.surfaceRaised, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Photos and reviews for \(placeName)")
+        .accessibilityHint("Opens the Apple Maps place card")
+        .mapItemDetailSheet(isPresented: $showCard, item: item, displaysMap: false)
+    }
+}
+
+/// A Commons photo with the author and licence credit Wikimedia requires.
+private struct CommonsPhotoView: View {
+    let photo: CommonsPhoto
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Layout.grid / 2) {
+            AsyncImage(url: photo.imageURL) { phase in
+                if let image = phase.image {
+                    image.resizable().scaledToFill()
+                } else {
+                    Color.surfaceRaised
+                }
+            }
+            .frame(height: 160)
+            .frame(maxWidth: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .accessibilityHidden(true)
+
+            Text("Photo: \(photo.author), \(photo.license), via Wikimedia Commons")
+                .font(WanderFont.caption)
+                .foregroundStyle(.inkMuted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Photo by \(photo.author), licence \(photo.license)")
     }
 }

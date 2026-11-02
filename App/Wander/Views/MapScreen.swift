@@ -24,6 +24,7 @@ struct MapScreen: View {
     @State private var detent: PresentationDetent = .peek
     @State private var selectedPOI: POI?
     @State private var debugOverlay = false
+    @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
 
     // Draw-in state for the current plan.
@@ -43,6 +44,12 @@ struct MapScreen: View {
 
     var body: some View {
         map
+            .overlay(alignment: .topTrailing) {
+                // Hidden while walking: the turn card owns the top of the screen.
+                if walk == nil {
+                    MapStyleControl(style: $mapStyle).padding(Layout.margin)
+                }
+            }
             .overlay(alignment: .top) {
                 if let walk, walk.phase == .walking {
                     TurnCard(walk: walk)
@@ -101,6 +108,16 @@ struct MapScreen: View {
             UserAnnotation()
 
             if let plan = displayedPlan {
+                if mapStyle.isImagery {
+                    // Casings keep both lines readable on imagery.
+                    if walk == nil, !plan.waypoints.isEmpty {
+                        MapPolyline(coordinates: plan.baseline.polyline.map(\.clLocation))
+                            .stroke(.white.opacity(0.85), style: StrokeStyle(lineWidth: 5, lineCap: .round, dash: [2, 7]))
+                    }
+                    MapPolyline(coordinates: revealedRoute.map(\.clLocation))
+                        .stroke(.white.opacity(0.9 * routeOpacity),
+                                style: StrokeStyle(lineWidth: 11, lineCap: .round, lineJoin: .round))
+                }
                 if walk == nil, !plan.waypoints.isEmpty {
                     // Fast route: thin, dashed, grey (§7.2).
                     MapPolyline(coordinates: plan.baseline.polyline.map(\.clLocation))
@@ -142,7 +159,7 @@ struct MapScreen: View {
             }
             #endif
         }
-        .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
+        .mapStyle(mapStyle.mapStyle)
         .mapControls {}
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
