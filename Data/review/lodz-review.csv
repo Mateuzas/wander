@@ -63,8 +63,8 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 62,osm:node:9906199577,Great Orchestra Heart Sculpture,Serce WOŚP,photo,55,"Sculpture by Sino Sculpture Group, popular photo spot",0,28,https://www.openstreetmap.org/node/9906199577
 63,osm:node:6176306594,Jezajasz Kestenberg Villa,Willa Jezajasza Kestenberga,photo,55,"Landmark, popular photo spot",0,34,https://www.openstreetmap.org/node/6176306594
 64,osm:way:185053089,Moenke Mausoleum,Mauzoleum małżonków Moenke,photo,55,Landmark,2,10,https://www.openstreetmap.org/way/185053089
-65,osm:node:12754981643,Mural,Mural,photo,55,"Mural, popular photo spot",0,27,https://www.openstreetmap.org/node/12754981643
-66,osm:node:11868748656,Sculpture,Sculpture,photo,55,"Sculpture, popular photo spot",0,32,https://www.openstreetmap.org/node/11868748656
+65,osm:node:12754981643,Mural near Art Gallery,Mural,photo,55,"Mural, popular photo spot",0,27,https://www.openstreetmap.org/node/12754981643
+66,osm:node:11868748656,Sculpture near Alexander Nevsky Orthodox Cathedral,Sculpture,photo,55,"Sculpture, popular photo spot",0,32,https://www.openstreetmap.org/node/11868748656
 67,osm:node:5244799797,Tadeusz Kotarbiński Bust,Prof. Tadeusz Kotarbiński,photo,55,"Bust, popular photo spot",0,29,https://www.openstreetmap.org/node/5244799797
 68,osm:node:11359073879,Towarto Installation,Towarto,photo,55,"Installation by Łukasz Zbieranowski, popular photo spot",0,33,https://www.openstreetmap.org/node/11359073879
 69,osm:node:5743600958,Academy of Fine Arts Gallery,ASP,photo,54,"Art gallery, popular photo spot",0,24,https://www.openstreetmap.org/node/5743600958
@@ -99,56 +99,56 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 98,osm:way:36894063,MS2 Museum of Art,Muzeum Sztuki MS2,photo,49,Museum,1,7,https://www.openstreetmap.org/way/36894063
 99,osm:way:455514019,Museum of City Transport,Muzeum Komunikacji Miejskiej MPK-Łódź,photo,49,Museum,3,3,https://www.openstreetmap.org/way/455514019
 100,osm:node:5752716216,Re:Medium Gallery,Galeria Re:Medium,photo,49,Art gallery,0,10,https://www.openstreetmap.org/node/5752716216
-101,osm:node:8787258040,Sculpture,Sculpture,photo,49,"Sculpture, popular photo spot",0,16,https://www.openstreetmap.org/node/8787258040
-102,osm:node:4148501938,Three Little Bears Statue,Trzy Misie,photo,49,Fairytale trail: Łódź cartoon character,2,6,https://www.openstreetmap.org/node/4148501938
-103,osm:node:3224138571,Aleksander Kamiński Monument,Pomnik Aleksandra Kamińskiego,photo,48,Sculpture,3,4,https://www.openstreetmap.org/node/3224138571
-104,osm:way:175721068,Karol Poznański Palace,Pałac Karola Poznańskiego,photo,48,Landmark,7,2,https://www.openstreetmap.org/way/175721068
-105,osm:node:2650438608,Kookaburra Studio Gallery,Galeria Sztuki Kookaburra Studio,photo,48,Art gallery,0,11,https://www.openstreetmap.org/node/2650438608
-106,osm:node:1187744318,Władysław Reymont Statue,Władysław Reymont,photo,48,Statue,3,4,https://www.openstreetmap.org/node/1187744318
-107,osm:node:1659577127,Gustaw and Robert Geyer Villa,Willa Gustawa i Roberta Geyerów,photo,47,Landmark,0,14,https://www.openstreetmap.org/node/1659577127
-108,osm:way:103645939,Jakub Kestenberg Villa,Willa Jakuba Kestenberga,photo,47,Landmark,2,5,https://www.openstreetmap.org/way/103645939
-109,osm:way:178179618,Leopold Kindermann Art Nouveau Villa,Secesyjna willa Leopolda Kindermana,photo,47,Landmark,4,3,https://www.openstreetmap.org/way/178179618
-110,osm:node:5958714597,Chaskiel Pelc's Sukkah,Kuczka Chaskiela Pelca,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/5958714597
-111,osm:node:11270506977,Comics and Interactive Narrative Centre,Centrum Komiksu i Narracji Interaktywnej EC1,photo,46,Museum,0,9,https://www.openstreetmap.org/node/11270506977
-112,osm:node:1659517688,Emma and Robert Schweikert Palace,Zespół pałacowy Emmy i Roberta Schweikertów,photo,46,Landmark,4,2,https://www.openstreetmap.org/node/1659517688
-113,osm:node:2564697464,Former Russian State Bank,dawny Rosyjski Bank Państwa (1906-08),photo,46,Landmark,0,13,https://www.openstreetmap.org/node/2564697464
-114,osm:node:9250432145,Halina Szwarc Statue,Halina Szwarc,photo,46,Statue,0,13,https://www.openstreetmap.org/node/9250432145
-115,osm:node:3100027206,Józef Richter Villa,Willa Józefa Richtera,photo,46,Landmark,4,2,https://www.openstreetmap.org/node/3100027206
-116,osm:node:6356458116,Kingsajz Film Props,Rekwizyty z filmu „Kingsajz”,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/6356458116
-117,osm:node:13907541109,Lejbuś Lewek Jakubowicz Tenement House,Kamienica Lejbusia Lewka Jakubowicza,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/13907541109
-118,osm:node:12401183004,Sculpture,Sculpture,photo,46,Sculpture,0,13,https://www.openstreetmap.org/node/12401183004
-119,osm:node:11446080081,Architectural Detail Lapidarium,Lapidarium detalu architektonicznego,photo,45,Museum,0,10,https://www.openstreetmap.org/node/11446080081
-120,osm:node:7547154979,Atlas Sztuki Gallery,Dom handlowy w Łodzi,photo,45,Landmark,2,4,https://www.openstreetmap.org/node/7547154979
-121,osm:node:6172712995,Ender Tenement House,Kamienica Enderów,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/6172712995
-122,osm:node:5743600943,Gallery 33,Galeria Sztuki 33,photo,45,Art gallery,0,12,https://www.openstreetmap.org/node/5743600943
-123,osm:node:2269446746,Katyń Monument,Pomnik Katyński,photo,45,Monument,3,3,https://www.openstreetmap.org/node/2269446746
-124,osm:node:14239572106,Rassalski Villa,Willa Rassalskich,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/14239572106
-125,osm:node:6293659277,Scheibler Power Station,Elektrownia Scheiblera,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/6293659277
-126,osm:node:11868748703,Sculpture,Sculpture,photo,45,Sculpture,0,12,https://www.openstreetmap.org/node/11868748703
-127,osm:node:11868748704,Sculpture,Sculpture,photo,45,Sculpture,0,12,https://www.openstreetmap.org/node/11868748704
-128,osm:node:3224178017,Solidarity Tree Monument,Pomnik drzewo Solidarności,photo,45,Sculpture,3,3,https://www.openstreetmap.org/node/3224178017
-129,osm:node:1659496906,Tomaszów Artificial Silk Factory Tenement,kamienica Tomaszowskiej Fabryki Sztucznego Jedwabiu,photo,45,Landmark,2,3,https://www.openstreetmap.org/node/1659496906
-130,osm:node:13907541108,Traugott Lehmann Tenement House,Kamienica Traugota Lehmana z 1896 roku,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/13907541108
-131,osm:way:103273339,Church of the Holy Name of Jesus,Kościół Najświętszego Imienia Jezus - Sanktuarium Najświętszego Imienia Jezus,photo,44,Historic church,4,2,https://www.openstreetmap.org/way/103273339
-132,osm:node:1659577137,Karol and Emil Steinert Palace,Pałac Karola i Emila Steinertów,photo,44,Landmark,4,2,https://www.openstreetmap.org/node/1659577137
-133,osm:way:76277579,Ludwik Grohman Villa,Willa Ludwika Grohmana,photo,44,Landmark,4,2,https://www.openstreetmap.org/way/76277579
-134,osm:node:1659496975,Marcus Silberstein Weaving Mill,Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina,photo,44,Landmark,4,2,https://www.openstreetmap.org/node/1659496975
-135,osm:node:3219972478,Mural by Kim Jung Gi,Mural by Kim Jung Gi,photo,44,Mural,0,11,https://www.openstreetmap.org/node/3219972478
-136,osm:way:146975092,Herman Juliusz Milsch Villa,Willa Hermana Juliusza Milsza,photo,43,Landmark,0,8,https://www.openstreetmap.org/way/146975092
-137,osm:node:1624531082,Old Fire Station,Dawny budynek straży pożarnej,photo,43,Landmark,0,10,https://www.openstreetmap.org/node/1624531082
-138,osm:node:11586240670,Piotr Szczęsny Memorial Tree,Pomnik i drzewo upamiętniające Piotra Szczęsnego,photo,43,Memorial stone,0,10,https://www.openstreetmap.org/node/11586240670
-139,osm:node:8786904194,Sculpture,Sculpture,photo,43,Sculpture,0,10,https://www.openstreetmap.org/node/8786904194
-140,osm:way:108945966,St Anne's Church,Kościół Świętej Anny,photo,43,Historic church,2,3,https://www.openstreetmap.org/way/108945966
-141,osm:node:1265560443,Stanisław Staszic Statue,St. Staszic,photo,43,Statue,0,10,https://www.openstreetmap.org/node/1265560443
-142,osm:node:6261981017,Edmund Stefanus Tenement House,Kamienica Edmunda Stefanusa,photo,42,Landmark,0,9,https://www.openstreetmap.org/node/6261981017
-143,osm:node:1913404161,Leon Schiller Statue,Leon Schiller,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404161
-144,osm:node:14072224610,Owls Tenement House,"Kamienica ""Pod Sowami"" Zachariasza Warszawskiego (1900)",photo,42,Landmark,0,9,https://www.openstreetmap.org/node/14072224610
-145,osm:node:1913404789,Reymont's Trunk,Kufer Reymonta,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404789
-146,osm:node:11868748242,Sculpture,Sculpture,photo,42,Sculpture,0,9,https://www.openstreetmap.org/node/11868748242
-147,osm:node:3099369137,St Faustina Kowalska Statue,Św. Faustyna Kowalska,photo,42,Statue,3,2,https://www.openstreetmap.org/node/3099369137
-148,osm:way:846351835,Sundial,Zegar Słoneczny,photo,42,Landmark,0,9,https://www.openstreetmap.org/way/846351835
-149,osm:node:5752715780,Experymentarium Science Centre,Experymentarium,photo,41,Museum,0,8,https://www.openstreetmap.org/node/5752715780
-150,osm:node:5027104186,Improper Weight Statue,Ciężar niewłaściwy,photo,41,Statue,0,8,https://www.openstreetmap.org/node/5027104186
+101,osm:node:4148501938,Three Little Bears Statue,Trzy Misie,photo,49,Fairytale trail: Łódź cartoon character,2,6,https://www.openstreetmap.org/node/4148501938
+102,osm:node:3224138571,Aleksander Kamiński Monument,Pomnik Aleksandra Kamińskiego,photo,48,Sculpture,3,4,https://www.openstreetmap.org/node/3224138571
+103,osm:way:175721068,Karol Poznański Palace,Pałac Karola Poznańskiego,photo,48,Landmark,7,2,https://www.openstreetmap.org/way/175721068
+104,osm:node:2650438608,Kookaburra Studio Gallery,Galeria Sztuki Kookaburra Studio,photo,48,Art gallery,0,11,https://www.openstreetmap.org/node/2650438608
+105,osm:node:1187744318,Władysław Reymont Statue,Władysław Reymont,photo,48,Statue,3,4,https://www.openstreetmap.org/node/1187744318
+106,osm:node:1659577127,Gustaw and Robert Geyer Villa,Willa Gustawa i Roberta Geyerów,photo,47,Landmark,0,14,https://www.openstreetmap.org/node/1659577127
+107,osm:way:103645939,Jakub Kestenberg Villa,Willa Jakuba Kestenberga,photo,47,Landmark,2,5,https://www.openstreetmap.org/way/103645939
+108,osm:way:178179618,Leopold Kindermann Art Nouveau Villa,Secesyjna willa Leopolda Kindermana,photo,47,Landmark,4,3,https://www.openstreetmap.org/way/178179618
+109,osm:node:5958714597,Chaskiel Pelc's Sukkah,Kuczka Chaskiela Pelca,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/5958714597
+110,osm:node:11270506977,Comics and Interactive Narrative Centre,Centrum Komiksu i Narracji Interaktywnej EC1,photo,46,Museum,0,9,https://www.openstreetmap.org/node/11270506977
+111,osm:node:1659517688,Emma and Robert Schweikert Palace,Zespół pałacowy Emmy i Roberta Schweikertów,photo,46,Landmark,4,2,https://www.openstreetmap.org/node/1659517688
+112,osm:node:2564697464,Former Russian State Bank,dawny Rosyjski Bank Państwa (1906-08),photo,46,Landmark,0,13,https://www.openstreetmap.org/node/2564697464
+113,osm:node:9250432145,Halina Szwarc Statue,Halina Szwarc,photo,46,Statue,0,13,https://www.openstreetmap.org/node/9250432145
+114,osm:node:3100027206,Józef Richter Villa,Willa Józefa Richtera,photo,46,Landmark,4,2,https://www.openstreetmap.org/node/3100027206
+115,osm:node:6356458116,Kingsajz Film Props,Rekwizyty z filmu „Kingsajz”,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/6356458116
+116,osm:node:13907541109,Lejbuś Lewek Jakubowicz Tenement House,Kamienica Lejbusia Lewka Jakubowicza,photo,46,Landmark,0,13,https://www.openstreetmap.org/node/13907541109
+117,osm:node:12401183004,Sculpture near Aleksander Kamiński Monument,Sculpture,photo,46,Sculpture,0,13,https://www.openstreetmap.org/node/12401183004
+118,osm:node:11446080081,Architectural Detail Lapidarium,Lapidarium detalu architektonicznego,photo,45,Museum,0,10,https://www.openstreetmap.org/node/11446080081
+119,osm:node:7547154979,Atlas Sztuki Gallery,Dom handlowy w Łodzi,photo,45,Landmark,2,4,https://www.openstreetmap.org/node/7547154979
+120,osm:node:6172712995,Ender Tenement House,Kamienica Enderów,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/6172712995
+121,osm:node:5743600943,Gallery 33,Galeria Sztuki 33,photo,45,Art gallery,0,12,https://www.openstreetmap.org/node/5743600943
+122,osm:node:2269446746,Katyń Monument,Pomnik Katyński,photo,45,Monument,3,3,https://www.openstreetmap.org/node/2269446746
+123,osm:node:14239572106,Rassalski Villa,Willa Rassalskich,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/14239572106
+124,osm:node:6293659277,Scheibler Power Station,Elektrownia Scheiblera,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/6293659277
+125,osm:node:11868748704,Sculpture near Alexander Nevsky Orthodox Cathedral,Sculpture,photo,45,Sculpture,0,12,https://www.openstreetmap.org/node/11868748704
+126,osm:node:11868748703,Sculpture near Stanisław Moniuszko Bust,Sculpture,photo,45,Sculpture,0,12,https://www.openstreetmap.org/node/11868748703
+127,osm:node:3224178017,Solidarity Tree Monument,Pomnik drzewo Solidarności,photo,45,Sculpture,3,3,https://www.openstreetmap.org/node/3224178017
+128,osm:node:1659496906,Tomaszów Artificial Silk Factory Tenement,kamienica Tomaszowskiej Fabryki Sztucznego Jedwabiu,photo,45,Landmark,2,3,https://www.openstreetmap.org/node/1659496906
+129,osm:node:13907541108,Traugott Lehmann Tenement House,Kamienica Traugota Lehmana z 1896 roku,photo,45,Landmark,0,12,https://www.openstreetmap.org/node/13907541108
+130,osm:way:103273339,Church of the Holy Name of Jesus,Kościół Najświętszego Imienia Jezus - Sanktuarium Najświętszego Imienia Jezus,photo,44,Historic church,4,2,https://www.openstreetmap.org/way/103273339
+131,osm:node:1659577137,Karol and Emil Steinert Palace,Pałac Karola i Emila Steinertów,photo,44,Landmark,4,2,https://www.openstreetmap.org/node/1659577137
+132,osm:way:76277579,Ludwik Grohman Villa,Willa Ludwika Grohmana,photo,44,Landmark,4,2,https://www.openstreetmap.org/way/76277579
+133,osm:node:1659496975,Marcus Silberstein Weaving Mill,Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina,photo,44,Landmark,4,2,https://www.openstreetmap.org/node/1659496975
+134,osm:node:3219972478,Mural by Kim Jung Gi,Mural by Kim Jung Gi,photo,44,Mural,0,11,https://www.openstreetmap.org/node/3219972478
+135,osm:way:146975092,Herman Juliusz Milsch Villa,Willa Hermana Juliusza Milsza,photo,43,Landmark,0,8,https://www.openstreetmap.org/way/146975092
+136,osm:node:1624531082,Old Fire Station,Dawny budynek straży pożarnej,photo,43,Landmark,0,10,https://www.openstreetmap.org/node/1624531082
+137,osm:node:11586240670,Piotr Szczęsny Memorial Tree,Pomnik i drzewo upamiętniające Piotra Szczęsnego,photo,43,Memorial stone,0,10,https://www.openstreetmap.org/node/11586240670
+138,osm:way:108945966,St Anne's Church,Kościół Świętej Anny,photo,43,Historic church,2,3,https://www.openstreetmap.org/way/108945966
+139,osm:node:1265560443,Stanisław Staszic Statue,St. Staszic,photo,43,Statue,0,10,https://www.openstreetmap.org/node/1265560443
+140,osm:node:6261981017,Edmund Stefanus Tenement House,Kamienica Edmunda Stefanusa,photo,42,Landmark,0,9,https://www.openstreetmap.org/node/6261981017
+141,osm:node:1913404161,Leon Schiller Statue,Leon Schiller,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404161
+142,osm:node:14072224610,Owls Tenement House,"Kamienica ""Pod Sowami"" Zachariasza Warszawskiego (1900)",photo,42,Landmark,0,9,https://www.openstreetmap.org/node/14072224610
+143,osm:node:1913404789,Reymont's Trunk,Kufer Reymonta,photo,42,Statue,0,9,https://www.openstreetmap.org/node/1913404789
+144,osm:node:11868748242,Sculpture near Stanisław Moniuszko Bust,Sculpture,photo,42,Sculpture,0,9,https://www.openstreetmap.org/node/11868748242
+145,osm:node:3099369137,St Faustina Kowalska Statue,Św. Faustyna Kowalska,photo,42,Statue,3,2,https://www.openstreetmap.org/node/3099369137
+146,osm:way:846351835,Sundial,Zegar Słoneczny,photo,42,Landmark,0,9,https://www.openstreetmap.org/way/846351835
+147,osm:node:5752715780,Experymentarium Science Centre,Experymentarium,photo,41,Museum,0,8,https://www.openstreetmap.org/node/5752715780
+148,osm:node:5027104186,Improper Weight Statue,Ciężar niewłaściwy,photo,41,Statue,0,8,https://www.openstreetmap.org/node/5027104186
+149,osm:node:6270128617,Marek Edelman Mural,Mural „Marek Edelman”,photo,41,Landmark,0,8,https://www.openstreetmap.org/node/6270128617
+150,osm:node:6171348971,Nissen Rosenblum Tenement House,Kamienica Nissena Rosenbluma,photo,41,Landmark,0,8,https://www.openstreetmap.org/node/6171348971
 151,osm:node:1360232267,Manekin,Manekin,food,68,Pancake restaurant,0,22,https://www.openstreetmap.org/node/1360232267
 152,osm:node:1821342802,Polka,Polka,food,68,Restaurant,0,22,https://www.openstreetmap.org/node/1821342802
 153,osm:node:6371021592,Spirit Bar,Spirit Bar,food,68,Bar,0,22,https://www.openstreetmap.org/node/6371021592

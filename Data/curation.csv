@@ -11,6 +11,8 @@ osm:way:987137643,exclude,,Claude draft: part of the same EC1 machinery display
 osm:node:12063407601,exclude,,Claude draft: unnamed sculpture 8 m from Jaracz's Armchair (likely the same object)
 osm:node:12066384545,exclude,,Claude draft: generic gallery name 11 m from Re:Medium Gallery
 osm:node:1659461054,exclude,,Claude draft: villa garden; the villa itself is listed
+osm:node:8786904194,exclude,,Claude draft: drinking fountain tagged as a sculpture
+osm:node:8787258040,exclude,,Claude draft: drinking fountain tagged as a sculpture
 # Not worth a detour: small markers, infrastructure, temporary or closed-door things
 osm:node:8100623031,exclude,,Claude draft: old hydrant
 osm:node:9126111719,exclude,,Claude draft: water tank
@@ -40,6 +42,8 @@ osm:way:37550695,boost,10,Claude draft: Poznański Palace is the city's best-kno
 osm:node:6173564343,boost,25,Claude draft: only point for Manufaktura, the city's main destination
 osm:node:6171264108,boost,15,Claude draft: Maurycy Poznański Palace (MS1 area)
 osm:node:1880679870,boost,10,Claude draft: Tuwim's Bench is a classic Piotrkowska photo stop
+# Generic names the automatic "by artist" / "near X" rule cannot fix
+osm:way:1393941930,rename,Sculpture in Poniatowski Park,Claude draft: inscription reads "Park Poniatowskiego"
 # Human reasons (PLAN.md 10: short, concrete, no marketing)
 osm:way:174955733,reason,Onion-domed Orthodox cathedral from the 1880s,Claude draft
 osm:way:283202330,reason,Neo-Gothic cathedral at the south end of Piotrkowska,Claude draft

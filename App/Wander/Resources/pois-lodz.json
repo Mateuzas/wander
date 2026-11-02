@@ -1872,7 +1872,7 @@
   },
   {
    "id": "osm:node:12754981643",
-   "name": "Mural",
+   "name": "Mural near Art Gallery",
    "lat": 51.770859,
    "lon": 19.462199,
    "category": "photo",
@@ -1889,7 +1889,7 @@
   },
   {
    "id": "osm:node:11868748656",
-   "name": "Sculpture",
+   "name": "Sculpture near Alexander Nevsky Orthodox Cathedral",
    "lat": 51.770975,
    "lon": 19.464517,
    "category": "photo",
@@ -3452,23 +3452,6 @@
    "openingHours": "Mo off; Tu-Th,Su 12:00-22:00; Fr-Sa 12:00-23:00"
   },
   {
-   "id": "osm:node:8787258040",
-   "name": "Sculpture",
-   "lat": 51.760927,
-   "lon": 19.458035,
-   "category": "photo",
-   "score": 49,
-   "kind": "passby",
-   "reason": "Sculpture, popular photo spot",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.839,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:4148501938",
    "name": "Three Little Bears Statue",
    "lat": 51.746253,
@@ -4051,7 +4034,7 @@
   },
   {
    "id": "osm:node:12401183004",
-   "name": "Sculpture",
+   "name": "Sculpture near Aleksander Kamiński Monument",
    "lat": 51.779102,
    "lon": 19.452469,
    "category": "photo",
@@ -4263,10 +4246,10 @@
    }
   },
   {
-   "id": "osm:node:11868748703",
-   "name": "Sculpture",
-   "lat": 51.770327,
-   "lon": 19.466796,
+   "id": "osm:node:11868748704",
+   "name": "Sculpture near Alexander Nevsky Orthodox Cathedral",
+   "lat": 51.770206,
+   "lon": 19.464294,
    "category": "photo",
    "score": 45,
    "kind": "passby",
@@ -4280,10 +4263,10 @@
    }
   },
   {
-   "id": "osm:node:11868748704",
-   "name": "Sculpture",
-   "lat": 51.770206,
-   "lon": 19.464294,
+   "id": "osm:node:11868748703",
+   "name": "Sculpture near Stanisław Moniuszko Bust",
+   "lat": 51.770327,
+   "lon": 19.466796,
    "category": "photo",
    "score": 45,
    "kind": "passby",
@@ -4898,23 +4881,6 @@
    }
   },
   {
-   "id": "osm:node:8786904194",
-   "name": "Sculpture",
-   "lat": 51.763703,
-   "lon": 19.458045,
-   "category": "photo",
-   "score": 43,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.709,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:108945966",
    "name": "St Anne's Church",
    "lat": 51.748799,
@@ -5218,7 +5184,7 @@
   },
   {
    "id": "osm:node:11868748242",
-   "name": "Sculpture",
+   "name": "Sculpture near Stanisław Moniuszko Bust",
    "lat": 51.771184,
    "lon": 19.46601,
    "category": "photo",
@@ -7041,8 +7007,25 @@
    }
   },
   {
+   "id": "osm:node:1822238527",
+   "name": "Mural by M-City",
+   "lat": 51.776567,
+   "lon": 19.450286,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Mural",
+   "type": "mural",
+   "signals": {
+    "photos": 0.531,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1822229796",
-   "name": "Mural",
+   "name": "Mural near Passage of Roses",
    "lat": 51.776355,
    "lon": 19.4513,
    "category": "photo",
@@ -7058,25 +7041,8 @@
    }
   },
   {
-   "id": "osm:node:1822238527",
-   "name": "Mural",
-   "lat": 51.776567,
-   "lon": 19.450286,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Mural by M-City",
-   "type": "mural",
-   "signals": {
-    "photos": 0.531,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:12713998932",
-   "name": "Mural",
+   "name": "Mural near Plastuś Statue",
    "lat": 51.764,
    "lon": 19.462878,
    "category": "photo",
@@ -8174,13 +8140,13 @@
   },
   {
    "id": "osm:node:1822233917",
-   "name": "Mural",
+   "name": "Mural by Kenor",
    "lat": 51.766162,
    "lon": 19.454582,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Mural by Kenor",
+   "reason": "Mural",
    "type": "mural",
    "signals": {
     "photos": 0.487,
@@ -8191,7 +8157,7 @@
   },
   {
    "id": "osm:node:13163549424",
-   "name": "Mural",
+   "name": "Mural near Edmund Stefanus Tenement House",
    "lat": 51.773312,
    "lon": 19.465792,
    "category": "photo",
@@ -8279,7 +8245,7 @@
   },
   {
    "id": "osm:node:12401183187",
-   "name": "Sculpture",
+   "name": "Sculpture near Sundial",
    "lat": 51.780102,
    "lon": 19.453431,
    "category": "photo",
@@ -8905,13 +8871,13 @@
   },
   {
    "id": "osm:node:9192743924",
-   "name": "Mural",
+   "name": "Mural by Grzegorz Gregor Gonsior",
    "lat": 51.775162,
    "lon": 19.457107,
    "category": "photo",
    "score": 31,
    "kind": "passby",
-   "reason": "Mural by Grzegorz Gregor Gonsior",
+   "reason": "Mural",
    "type": "mural",
    "signals": {
     "photos": 0.434,
@@ -8922,7 +8888,7 @@
   },
   {
    "id": "osm:node:13734808893",
-   "name": "Mural",
+   "name": "Mural near Rassalski Villa",
    "lat": 51.756765,
    "lon": 19.46376,
    "category": "photo",
@@ -9012,7 +8978,7 @@
   },
   {
    "id": "osm:node:12401182563",
-   "name": "Sculpture",
+   "name": "Sculpture near Izrael Poznański Palace",
    "lat": 51.78009,
    "lon": 19.451872,
    "category": "photo",
@@ -9765,10 +9731,10 @@
    }
   },
   {
-   "id": "osm:node:1822216028",
-   "name": "Mural",
-   "lat": 51.775887,
-   "lon": 19.452882,
+   "id": "osm:node:12705842732",
+   "name": "Mural near Monument to the Victims of Communism",
+   "lat": 51.778334,
+   "lon": 19.469851,
    "category": "photo",
    "score": 28,
    "kind": "passby",
@@ -9782,10 +9748,10 @@
    }
   },
   {
-   "id": "osm:node:12705842732",
-   "name": "Mural",
-   "lat": 51.778334,
-   "lon": 19.469851,
+   "id": "osm:node:1822216028",
+   "name": "Mural near Passage of Roses",
+   "lat": 51.775887,
+   "lon": 19.452882,
    "category": "photo",
    "score": 28,
    "kind": "passby",
@@ -11875,27 +11841,10 @@
    }
   },
   {
-   "id": "osm:node:4280398075",
-   "name": "Sculpture",
-   "lat": 51.759888,
-   "lon": 19.4789,
-   "category": "photo",
-   "score": 23,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.266,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9073862667",
-   "name": "Sculpture",
-   "lat": 51.744406,
-   "lon": 19.46321,
+   "id": "osm:way:1393941930",
+   "name": "Sculpture in Poniatowski Park",
+   "lat": 51.752374,
+   "lon": 19.441922,
    "category": "photo",
    "score": 23,
    "kind": "passby",
@@ -11910,7 +11859,7 @@
   },
   {
    "id": "osm:node:13730553676",
-   "name": "Sculpture",
+   "name": "Sculpture near Józef Richter Villa",
    "lat": 51.748276,
    "lon": 19.451486,
    "category": "photo",
@@ -11926,10 +11875,27 @@
    }
   },
   {
-   "id": "osm:way:1393941930",
-   "name": "Sculpture",
-   "lat": 51.752374,
-   "lon": 19.441922,
+   "id": "osm:node:9073862667",
+   "name": "Sculpture near Ludwik Geyer Manor",
+   "lat": 51.744406,
+   "lon": 19.46321,
+   "category": "photo",
+   "score": 23,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.266,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:4280398075",
+   "name": "Sculpture near Ćwirek the Sparrow Statue",
+   "lat": 51.759888,
+   "lon": 19.4789,
    "category": "photo",
    "score": 23,
    "kind": "passby",
