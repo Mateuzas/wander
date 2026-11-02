@@ -10,13 +10,31 @@ public struct Leg: Hashable, Sendable {
     public var distance: Double
     /// Path geometry. The haversine provider returns just the two endpoints.
     public var polyline: [Coordinate]
+    /// Turn-by-turn steps in order (from `MKRoute.steps` in the app). Empty
+    /// when the provider has none, e.g. the haversine estimate.
+    public var steps: [RouteStep]
 
-    public init(from: Coordinate, to: Coordinate, duration: Double, distance: Double, polyline: [Coordinate]) {
+    public init(from: Coordinate, to: Coordinate, duration: Double, distance: Double,
+                polyline: [Coordinate], steps: [RouteStep] = []) {
         self.from = from
         self.to = to
         self.duration = duration
         self.distance = distance
         self.polyline = polyline
+        self.steps = steps
+    }
+}
+
+/// One turn-by-turn instruction and the distance it covers.
+public struct RouteStep: Hashable, Sendable {
+    /// e.g. "Turn left onto Piotrkowska". May be empty (MapKit's first step often is).
+    public var instruction: String
+    /// Metres covered by this step.
+    public var distance: Double
+
+    public init(instruction: String, distance: Double) {
+        self.instruction = instruction
+        self.distance = distance
     }
 }
 
