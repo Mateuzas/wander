@@ -14,6 +14,7 @@ import urllib.parse
 from pathlib import Path
 
 from common import DATA, RESOURCES, cache_dir, load_city, metres
+from fetch_osm import venue_kind
 
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
 WEIGHTS = {
@@ -56,6 +57,7 @@ SHOP_LABELS = {
     "furniture": "Furniture shop", "interior_decoration": "Interior shop", "bicycle": "Bike shop",
     "photo": "Photo shop", "boutique": "Boutique", "wine": "Wine shop", "tea": "Tea shop",
     "herbalist": "Herbalist", "tattoo": "Tattoo studio", "hifi": "Hi-fi shop",
+    "mall": "Shopping centre",
 }
 FOOD_LABELS = {
     "cafe": "Café", "bar": "Bar", "pub": "Pub", "ice_cream": "Ice cream",
@@ -68,6 +70,9 @@ PHOTO_LABELS = {
     "manor": "Manor house", "palace": "Palace", "city_gate": "City gate", "wayside_shrine": "Wayside shrine",
     "industrial": "Industrial heritage", "factory": "Historic factory", "ruins": "Ruins",
     "tower": "Tower", "bridge": "Bridge", "park": "Park",
+    # Venues (BE-4)
+    "stadium": "Stadium", "theatre": "Theatre", "concert_hall": "Concert hall", "zoo": "Zoo",
+    "aquarium": "Aquarium", "theme_park": "Theme park", "arts_centre": "Arts centre",
 }
 MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
                    "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}
@@ -92,7 +97,7 @@ def poi_type(p):
         return (t.get("artwork_type") if t.get("tourism") == "artwork" else None) \
             or (t.get("memorial") if t.get("historic") == "memorial" else None) \
             or (t.get("tourism") if t.get("tourism") not in (None, "attraction") else None) \
-            or t.get("historic") or t.get("man_made") or t.get("leisure") or "attraction"
+            or t.get("historic") or t.get("man_made") or t.get("leisure") or venue_kind(t) or "attraction"
     if p["category"] == "food":
         return t.get("amenity") if t.get("amenity") in FOOD_LABELS or t.get("amenity") == "restaurant" \
             else t.get("shop", "food")
@@ -142,7 +147,7 @@ def draft_reason(p, photo_pct):
                 base += f" by {artist}"
         else:
             key = t.get("tourism") if t.get("tourism") not in (None, "attraction") else None
-            key = key or t.get("historic") or t.get("man_made") or t.get("leisure")
+            key = key or t.get("historic") or t.get("man_made") or t.get("leisure") or venue_kind(t)
             if key == "memorial" and t.get("memorial") in MEMORIAL_LABELS:
                 key = "memorial:" + t["memorial"]
             if key == "castle" and t.get("castle_type") in ("palace", "manor", "stately"):

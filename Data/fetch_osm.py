@@ -29,6 +29,16 @@ BORING_HISTORIC = {
     "stolperstein", "tomb", "grave", "archaeological_site", "aircraft",
 }
 MAX_SPOT_SIZE_M = 800     # a "spot" bigger than this is an area, not a place you walk past
+# Notable venues (BE-4): stadiums, theatres, zoos, malls... Big by nature, so they get a larger
+# size limit, but only well-known or large ones count (see venue_category).
+VENUE_TAGS = {
+    "leisure": {"stadium"},
+    "amenity": {"theatre", "arts_centre", "concert_hall"},
+    "tourism": {"zoo", "aquarium", "theme_park"},
+    "shop": {"mall"},
+}
+MIN_VENUE_SIZE_M = 150    # without a wikidata/wikipedia tag, a venue must be at least this big
+MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-past spot
 MIN_PARK_SIZE_M = 200     # named parks smaller than this are pocket greens
 
 
@@ -38,10 +48,11 @@ def query(bbox):
     return f"""
 [out:json][timeout:180];
 (
-  nwr["tourism"~"^(attraction|viewpoint|artwork|museum|gallery)$"]{b};
+  nwr["tourism"~"^(attraction|viewpoint|artwork|museum|gallery|zoo|aquarium|theme_park)$"]{b};
   nwr["historic"]{b};
   nwr["man_made"~"^(tower|lighthouse|bridge)$"]{b};
-  nwr["leisure"="park"]["name"]{b};
+  nwr["leisure"~"^(park|stadium)$"]["name"]{b};
+  nwr["amenity"~"^(theatre|arts_centre|concert_hall)$"]["name"]{b};
   nwr["shop"]["name"]{b};
   nwr["amenity"~"^(cafe|restaurant|bar|ice_cream|pub)$"]["name"]{b};
 );
@@ -70,8 +81,33 @@ def location(el):
     return None
 
 
+def venue_kind(tags):
+    """The OSM value if the element is a venue (stadium, theatre, zoo, mall...), else None."""
+    for key, values in VENUE_TAGS.items():
+        if tags.get(key) in values:
+            return tags[key]
+    return None
+
+
+def venue_category(tags, size):
+    """Category for a notable venue: malls are shops (a stop), the rest are sights (pass-by).
+    Notable = described on Wikidata/Wikipedia, or a footprint of at least MIN_VENUE_SIZE_M."""
+    kind = venue_kind(tags)
+    if not kind or size > MAX_VENUE_SIZE_M:
+        return None
+    if not ("wikidata" in tags or "wikipedia" in tags or size >= MIN_VENUE_SIZE_M):
+        return None
+    return "shop" if kind == "mall" else "photo"
+
+
 def categorise(tags, size):
     """Return the category for an OSM element, or None to drop it."""
+    # Venues already kept as sights (e.g. a historic theatre) stay as they were.
+    return base_category(tags, size) or venue_category(tags, size)
+
+
+def base_category(tags, size):
+    """Photo spots, tourist shops and food (PLAN.md 5.1)."""
     tourism, historic, shop = tags.get("tourism"), tags.get("historic"), tags.get("shop")
     amenity, man_made, leisure = tags.get("amenity"), tags.get("man_made"), tags.get("leisure")
 
