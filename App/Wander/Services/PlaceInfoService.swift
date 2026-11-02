@@ -96,7 +96,7 @@ final class PlaceInfoService {
     }
 }
 
-// MARK: - Wikimedia Commons fallback (disabled)
+// MARK: - Wikimedia Commons photo
 
 /// A Commons photo with the credit Wikimedia's licences require.
 struct CommonsPhoto: Equatable {
@@ -107,14 +107,22 @@ struct CommonsPhoto: Equatable {
     let pageURL: URL
 }
 
-extension PlaceInfoService {
-    // TODO: enable once the data agent adds `commonsImage` (a Commons file name,
-    // sights only) to POI. Until then the property doesn't exist and this stays off.
-    static let commonsFallbackEnabled = false
+/// Session cache for Commons lookups. Failures aren't cached, so a later tap retries.
+@MainActor
+final class CommonsPhotoCache {
+    static let shared = CommonsPhotoCache()
+    private var photos: [String: CommonsPhoto] = [:]
 
-    /// Fetches a 800 px rendition plus author and licence for a Commons file name
-    /// such as "Manufaktura Łódź.jpg". Returns nil on any failure.
-    func commonsPhoto(fileName: String) async -> CommonsPhoto? {
+    /// A ~800 px rendition plus author and licence for a Commons file name such as
+    /// "Manufaktura Łódź.jpg". Nil on any failure.
+    func photo(fileName: String) async -> CommonsPhoto? {
+        if let hit = photos[fileName] { return hit }
+        guard let photo = await Self.fetch(fileName: fileName) else { return nil }
+        photos[fileName] = photo
+        return photo
+    }
+
+    private nonisolated static func fetch(fileName: String) async -> CommonsPhoto? {
         var components = URLComponents(string: "https://commons.wikimedia.org/w/api.php")!
         components.queryItems = [
             .init(name: "action", value: "query"),
@@ -122,6 +130,7 @@ extension PlaceInfoService {
             .init(name: "prop", value: "imageinfo"),
             .init(name: "iiprop", value: "url|extmetadata"),
             .init(name: "iiurlwidth", value: "800"),
+            .init(name: "redirects", value: "1"),
             .init(name: "format", value: "json"),
         ]
         guard let url = components.url else { return nil }
@@ -140,7 +149,7 @@ extension PlaceInfoService {
         else { return nil }
 
         func value(_ key: String) -> String? {
-            ((meta[key] as? [String: Any])?["value"] as? String).map(Self.plainText)
+            ((meta[key] as? [String: Any])?["value"] as? String).map(plainText)
         }
         guard let license = value("LicenseShortName") else { return nil }
         return CommonsPhoto(imageURL: imageURL,
@@ -150,9 +159,12 @@ extension PlaceInfoService {
                             pageURL: pageURL)
     }
 
-    /// Commons credits are HTML snippets; drop the tags.
-    private static func plainText(_ html: String) -> String {
-        html.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+    /// Commons credits are HTML snippets; drop the tags and common entities.
+    private nonisolated static func plainText(_ html: String) -> String {
+        var text = html.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
+        for (entity, char) in [("&amp;", "&"), ("&quot;", "\""), ("&#39;", "'"), ("&lt;", "<"), ("&gt;", ">"), ("&nbsp;", " ")] {
+            text = text.replacingOccurrences(of: entity, with: char)
+        }
+        return text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
