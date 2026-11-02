@@ -4,8 +4,9 @@ import RouteEngine
 // Prints a summary table of plans for the golden A→B pairs (PLAN.md section 6, Testing).
 // Uses the offline haversine provider, so no network is needed.
 //
-// Usage: golden-routes [golden_routes.json] [--pois path] [--weights photos=1,fame=0.5,...]
+// Usage: golden-routes [golden_routes.json] [--pois path] [--preset name | --weights photos=1,fame=0.5,...]
 //                      [--time 2026-11-07T14:00]
+//   --preset   a WeightPreset: balanced, photoSpots, famousSights, hiddenGems
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
 
@@ -35,6 +36,7 @@ func option(_ name: String) -> String? {
 }
 let poisOverride = option("--pois")
 let weightsArg = option("--weights")
+let presetArg = option("--preset")
 let timeArg = option("--time")
 
 let goldenURL = URL(fileURLWithPath: args.first ?? "golden_routes.json")
@@ -51,6 +53,12 @@ guard let poisData = try? Data(contentsOf: poisURL) else {
 let file = try JSONDecoder().decode(POIFile.self, from: poisData)
 
 var weights: SignalWeights?
+if let presetArg {
+    guard let preset = WeightPreset(rawValue: presetArg) else {
+        fail("unknown preset \(presetArg); use " + WeightPreset.allCases.map(\.rawValue).joined(separator: ", "))
+    }
+    weights = preset.weights
+}
 if let weightsArg {
     var w = SignalWeights()
     for pair in weightsArg.split(separator: ",") {
@@ -91,7 +99,7 @@ func glyph(_ c: POICategory) -> String {
 let withHours = file.pois.compactMap(\.openingHours)
 let parsed = withHours.filter { OpeningHours($0) != nil }.count
 print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), haversine provider")
-print("Value: " + (weights.map { "signals × weights \($0)" } ?? "score")
+print("Value: " + (presetArg.map { "preset \($0), " } ?? "") + (weights.map { "signals × weights \($0)" } ?? "score")
       + " · time: " + (timeArg.map { "\($0) \(golden.timeZone)" } ?? "not checked")
       + " · opening hours parsed: \(parsed)/\(withHours.count)\n")
 print(pad("#", 3) + pad("Route", 36) + pad("Mode", 9) + lpad("Fast", 6) + lpad("Total", 7) + lpad("Extra", 7)
@@ -102,6 +110,8 @@ let planner = Planner()
 let provider = HaversineWalkingTime()
 var explorerWithin = 0, explorerTwoHighlights = 0, noFit: [String] = []
 var reasonCounts: [String: Int] = [:]
+var waypointCounts: [String: Int] = [:]
+var foodPerRoute: [Int] = []
 
 for (index, route) in golden.routes.enumerated() {
     let origin = Coordinate(lat: route.from[0], lon: route.from[1])
@@ -124,6 +134,8 @@ for (index, route) in golden.routes.enumerated() {
               + (plan.noDetourFit ? "(no detour fits)" : names))
         if mode == .explorer {
             explorerPlan = plan
+            for poi in plan.waypoints { waypointCounts["\(glyph(poi.category)) \(poi.name)", default: 0] += 1 }
+            foodPerRoute.append(plan.waypoints.filter { $0.category == .food }.count)
             if plan.extraTime <= mode.budget * 1.1 { explorerWithin += 1 }
             if plan.highlights.count >= 2 { explorerTwoHighlights += 1 }
             for c in plan.candidates {
@@ -145,5 +157,10 @@ let n = golden.routes.count
 print("Explorer within budget (+10%): \(explorerWithin)/\(n)   (target: all)")
 print("Explorer with ≥2 highlights:   \(explorerTwoHighlights)/\(n)   (target: ≥8)")
 print("No detour fits: \(noFit.isEmpty ? "none" : noFit.joined(separator: ", "))")
+let repeated = waypointCounts.filter { $0.value > 1 }.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
+print("Explorer waypoints used on 2+ routes: " + (repeated.isEmpty ? "none"
+    : repeated.map { "\($0.key) ×\($0.value)" }.joined(separator: ", ")))
+print("Explorer food waypoints per route: " + foodPerRoute.map(String.init).joined(separator: " ")
+      + "   (distinct waypoints: \(waypointCounts.count))")
 print("Explorer rejections: " + reasonCounts.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
     .map { "\($0.key) \($0.value)" }.joined(separator: ", "))
