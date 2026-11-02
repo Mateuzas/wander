@@ -44,6 +44,8 @@ osm:node:6171264108,boost,15,Claude draft: Maurycy Poznański Palace (MS1 area)
 osm:node:1880679870,boost,10,Claude draft: Tuwim's Bench is a classic Piotrkowska photo stop
 # Generic names the automatic "by artist" / "near X" rule cannot fix
 osm:way:1393941930,rename,Sculpture in Poniatowski Park,Claude draft: inscription reads "Park Poniatowskiego"
+osm:way:174638513,rename,Manufaktura,Backender draft: official name "Centrum Handlowo-Rozrywkowe Manufaktura" is too long
+osm:way:173485216,rename,Tulipan,Backender draft: official name "Centrum Handlowe Tulipan" (OSM short_name CH Tulipan)
 # Human reasons (PLAN.md 10: short, concrete, no marketing)
 osm:way:174955733,reason,Onion-domed Orthodox cathedral from the 1880s,Claude draft
 osm:way:283202330,reason,Neo-Gothic cathedral at the south end of Piotrkowska,Claude draft
@@ -79,3 +81,5 @@ osm:node:4148465072,reason,Fairytale trail: Łódź cartoon character,Claude dra
 osm:way:333043326,image,,Claude draft: Wikidata photo shows the cathedral, not the John Paul II monument
 osm:way:689186938,image,,Claude draft: Wikidata photo shows a shopping centre
 osm:node:1187744318,image,,Claude draft: Wikidata item is Reymont Square, not the statue
+# Venues tagged as something else (BE-4)
+osm:way:104651431,reason,Concert hall of the Łódź Philharmonic,Backender draft: tagged amenity=theatre but it is the philharmonic's concert hall
