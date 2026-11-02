@@ -37,18 +37,48 @@ final class POIStore {
         }
     }
 
-    /// The highest-scoring POIs inside `region`, so the map never draws hundreds of beads.
-    func top(in region: MKCoordinateRegion, limit: Int) -> [POI] {
+    /// The beads to draw for `region` on a map `viewSize` points big (FE-1).
+    ///
+    /// Popular places (a couple of dozen per city) always show. Ordinary POIs are
+    /// thinned with a screen-space grid of `cell`-point squares: at most one per
+    /// cell, the best score wins, and a cell holding a popular place stays empty.
+    /// The grid is anchored to the map, not the screen, so panning doesn't
+    /// reshuffle it. Beads in `shown` (the previous result) are kept first when
+    /// more than `limit` cells are filled, so zooming doesn't swap the middle of
+    /// the map for its corners.
+    func beads(in region: MKCoordinateRegion, viewSize: CGSize, keeping shown: Set<String>,
+               cell: CGFloat = 44, limit: Int) -> [POI] {
         let latSpan = region.span.latitudeDelta / 2, lonSpan = region.span.longitudeDelta / 2
         let c = region.center
         let inView = pois
             .filter { abs($0.coordinate.lat - c.latitude) <= latSpan && abs($0.coordinate.lon - c.longitude) <= lonSpan }
             .sorted { $0.score != $1.score ? $0.score > $1.score : $0.id < $1.id }
-        // Popular places (a couple of dozen per city) always show, even zoomed out;
-        // the rest fill the remaining slots by score.
         let popular = inView.filter { $0.popular == true }
-        let others = inView.filter { $0.popular != true }.prefix(max(0, limit - popular.count))
-        return popular + others
+
+        // Map points per screen point; Mercator keeps both axes at the same scale.
+        let west = MKMapPoint(CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude - lonSpan))
+        let east = MKMapPoint(CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude + lonSpan))
+        let width = viewSize.width > 0 ? Double(viewSize.width) : 390
+        let cellSize = max(abs(east.x - west.x) / width * Double(cell), 1)
+
+        struct Cell: Hashable { let x: Int; let y: Int }
+        func cellOf(_ poi: POI) -> Cell {
+            let p = MKMapPoint(poi.coordinate.clLocation)
+            return Cell(x: Int((p.x / cellSize).rounded(.down)), y: Int((p.y / cellSize).rounded(.down)))
+        }
+
+        var taken = Set(popular.map(cellOf))
+        var winners: [POI] = []  // best score first, one per free cell
+        for poi in inView where poi.popular != true && taken.insert(cellOf(poi)).inserted {
+            winners.append(poi)
+        }
+        if winners.count > limit {
+            // Over the cap: keep what is already on screen, then the best of the rest.
+            let kept = winners.filter { shown.contains($0.id) }
+            let fresh = winners.filter { !shown.contains($0.id) }
+            winners = Array((kept + fresh).prefix(limit))
+        }
+        return popular + winners
     }
 
     private static func region(covering pois: [POI]) -> MKCoordinateRegion? {
