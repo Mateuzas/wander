@@ -57,9 +57,7 @@ final class PlaceInfoService {
 
     /// Names to match against Apple's result, local name first. Apple's names are
     /// in the place's own language, ours are English display names.
-    // TODO: add `poi.localName` (original OSM name) here once POI has it:
-    // `[poi.localName, poi.name].compactMap { $0 }`.
-    private func names(of poi: POI) -> [String] { [poi.name] }
+    private func names(of poi: POI) -> [String] { [poi.localName, poi.name].compactMap { $0 } }
 
     /// The matching place, or nil when there is none or we can't tell.
     func place(for poi: POI) async -> MKMapItem? {
