@@ -38,11 +38,13 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var openingHours: String?
     /// Wikimedia Commons file name of the place's own photo (no "File:" prefix). Sights only.
     public var commonsImage: String?
+    /// Original local name when `name` is a translation, e.g. "Archikatedra pw. Świętego Stanisława Kostki".
+    public var localName: String?
 
     public init(id: String, name: String, lat: Double, lon: Double,
                 category: POICategory, score: Int, kind: POIKind, reason: String = "",
                 type: String? = nil, signals: Signals? = nil, cuisine: [String]? = nil,
-                openingHours: String? = nil, commonsImage: String? = nil) {
+                openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -56,13 +58,14 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.cuisine = cuisine
         self.openingHours = openingHours
         self.commonsImage = commonsImage
+        self.localName = localName
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
 
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
-        case type, signals, cuisine, openingHours, commonsImage
+        case type, signals, cuisine, openingHours, commonsImage, localName
     }
 
     public init(from decoder: Decoder) throws {
@@ -80,6 +83,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         cuisine = try c.decodeIfPresent([String].self, forKey: .cuisine)
         openingHours = try c.decodeIfPresent(String.self, forKey: .openingHours)
         commonsImage = try c.decodeIfPresent(String.self, forKey: .commonsImage)
+        localName = try c.decodeIfPresent(String.self, forKey: .localName)
     }
 }
 
