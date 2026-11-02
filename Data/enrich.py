@@ -36,9 +36,18 @@ def main_image(entity):
     return None
 
 
+def commons_category(entity):
+    """Commons category (P373) holding photos of this place, without "Category:", or None."""
+    for claim in entity.get("claims", {}).get("P373", []):
+        value = claim.get("mainsnak", {}).get("datavalue", {}).get("value")
+        if isinstance(value, str) and value:
+            return value
+    return None
+
+
 def fetch_wikidata(qids, cache, path):
     """Sitelink count, English label and main image (P18) per Wikidata id."""
-    missing = sorted({q for q in qids if not isinstance(cache.get(q), dict) or "image" not in cache[q]})
+    missing = sorted({q for q in qids if not isinstance(cache.get(q), dict) or "category" not in cache[q]})
     for i in range(0, len(missing), 50):
         batch = missing[i:i + 50]
         res = http_json(WIKIDATA, params={
@@ -51,6 +60,7 @@ def fetch_wikidata(qids, cache, path):
                 "sitelinks": len(entity.get("sitelinks", {})),
                 "label_en": entity.get("labels", {}).get("en", {}).get("value"),
                 "image": main_image(entity),
+                "category": commons_category(entity),
             }
         path.write_text(json.dumps(cache))
         print(f"  wikidata {min(i + 50, len(missing))}/{len(missing)}")
@@ -148,6 +158,7 @@ def main():
         p["sitelinks"] = entry.get("sitelinks", 0)
         p["wikidata_label_en"] = entry.get("label_en")
         p["wikidata_image"] = entry.get("image")
+        p["wikidata_category"] = entry.get("category")
         p["commons"] = cm.get(p["id"], 0)
     (d / "enriched.json").write_text(json.dumps(data, ensure_ascii=False, indent=1))
     print(f"Wrote enriched.json ({len(pois)} POIs)")

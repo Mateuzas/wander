@@ -40,11 +40,16 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var commonsImage: String?
     /// Original local name when `name` is a translation, e.g. "Archikatedra pw. Świętego Stanisława Kostki".
     public var localName: String?
+    /// Commons category with more photos of this place (no "Category:" prefix). Sights only.
+    public var commonsCategory: String?
+    /// A must-see (high score or well known). Sights only; missing means false.
+    public var popular: Bool?
 
     public init(id: String, name: String, lat: Double, lon: Double,
                 category: POICategory, score: Int, kind: POIKind, reason: String = "",
                 type: String? = nil, signals: Signals? = nil, cuisine: [String]? = nil,
-                openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil) {
+                openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil,
+                commonsCategory: String? = nil, popular: Bool? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -59,13 +64,15 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.openingHours = openingHours
         self.commonsImage = commonsImage
         self.localName = localName
+        self.commonsCategory = commonsCategory
+        self.popular = popular
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
 
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
-        case type, signals, cuisine, openingHours, commonsImage, localName
+        case type, signals, cuisine, openingHours, commonsImage, localName, commonsCategory, popular
     }
 
     public init(from decoder: Decoder) throws {
@@ -84,6 +91,8 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         openingHours = try c.decodeIfPresent(String.self, forKey: .openingHours)
         commonsImage = try c.decodeIfPresent(String.self, forKey: .commonsImage)
         localName = try c.decodeIfPresent(String.self, forKey: .localName)
+        commonsCategory = try c.decodeIfPresent(String.self, forKey: .commonsCategory)
+        popular = try c.decodeIfPresent(Bool.self, forKey: .popular)
     }
 }
 

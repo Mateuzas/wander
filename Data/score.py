@@ -35,7 +35,9 @@ DUPLICATE_RADIUS_M = 40    # same name this close = same place
 NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
 NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
 MIN_SCORE = 15
-MAX_IMAGE_SHARES = 3       # a photo used by this many places is too generic to show             # drop anything below this from the app file
+MAX_IMAGE_SHARES = 3       # a photo used by this many places is too generic to show
+POPULAR_SCORE = 70         # sights at or above this score are marked popular on the map...
+POPULAR_FAME = 0.6         # ...as are well-known ones (fame signal), whatever their score             # drop anything below this from the app file
 REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
@@ -189,6 +191,22 @@ def commons_image(p):
     return p.get("wikidata_image")
 
 
+def commons_category(p):
+    """Commons category with more photos of this place (no "Category:" prefix), or None."""
+    if p.get("image_override") == "":
+        return None  # its Wikidata item is a different place, so its category is too
+    tag = p["tags"].get("wikimedia_commons", "")
+    if tag.startswith("Category:"):
+        return tag[len("Category:"):].strip()
+    return p.get("wikidata_category")
+
+
+def is_popular(p):
+    if "popular_override" in p:
+        return p["popular_override"]
+    return p["category"] == "photo" and (p["score"] >= POPULAR_SCORE or fame_signal(p) >= POPULAR_FAME)
+
+
 def load_curation():
     path = DATA / "curation.csv"
     rules = {}
@@ -261,6 +279,8 @@ def apply_curation(pois, rules):
                 p["name"] = value
             elif action == "reason":
                 p["reason"] = value
+            elif action == "popular":
+                p["popular_override"] = value.strip().lower() in ("yes", "true", "1", "")
             elif action == "image":
                 p["image_override"] = value  # empty value removes the photo
             else:
@@ -325,6 +345,11 @@ def main():
         if p["category"] == "photo" and commons_image(p):
             image_uses[commons_image(p)] = image_uses.get(commons_image(p), 0) + 1
 
+    category_uses = {}
+    for p in pois:
+        if p["category"] == "photo" and commons_category(p):
+            category_uses[commons_category(p)] = category_uses.get(commons_category(p), 0) + 1
+
     out_pois = []
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
@@ -342,6 +367,11 @@ def main():
         cuisine = p["tags"].get("cuisine")
         if p["category"] == "food" and cuisine:
             row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
+        if is_popular(p):
+            row["popular"] = True
+        category = commons_category(p) if p["category"] == "photo" else None
+        if category and category_uses.get(category, 0) < MAX_IMAGE_SHARES:
+            row["commonsCategory"] = category
         image = commons_image(p) if p["category"] == "photo" else None
         if image and image_uses.get(image, 0) < MAX_IMAGE_SHARES:
             row["commonsImage"] = image

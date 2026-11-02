@@ -20,6 +20,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Saint Alexander Nevsky Orthodox church in Łódź",
    "commonsImage": "SM Łódź Cerkiew katedralna św Aleksandra Newskiego 2017 (1) ID 613040.jpg"
   },
   {
@@ -39,6 +41,8 @@
     "quality": 0.6,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Izrael Poznański Palace in Łódź",
    "commonsImage": "Łódź - Pałac Izraela Poznańskiego.jpg"
   },
   {
@@ -58,6 +62,8 @@
     "quality": 0.6,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Łódź Cathedral",
    "commonsImage": "Lodz katedra (dron).jpg"
   },
   {
@@ -77,6 +83,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Księży Młyn",
    "commonsImage": "Grohman Scheibler factory.jpg"
   },
   {
@@ -96,6 +104,8 @@
     "quality": 0.4,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Aleja Gwiazd w Łodzi",
    "commonsImage": "AlejaGwiazd Lodz.JPG"
   },
   {
@@ -115,6 +125,8 @@
     "quality": 0.8,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Museum of Archaeology and Ethnography (Łódź)",
    "commonsImage": "Plac Wolnosci 8.jpg"
   },
   {
@@ -134,6 +146,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Holy Spirit Church in Łódź",
    "commonsImage": "Łódź, Plac Wolności, marzec 2025, 142 KsP.jpg"
   },
   {
@@ -152,7 +166,8 @@
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
-   }
+   },
+   "popular": true
   },
   {
    "id": "osm:way:104651431",
@@ -171,6 +186,8 @@
     "quality": 0.4,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Łódż Philharmonic",
    "commonsImage": "2005-09 Łódź Narutowicza 20-22 (2).jpg"
   },
   {
@@ -190,6 +207,8 @@
     "quality": 0.8,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Muzeum Kanału \"Dętka\"",
    "commonsImage": "Muzeum Kanału Dętka - wejście.JPG"
   },
   {
@@ -209,6 +228,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Church of Saint Olga in Łódź",
    "commonsImage": "Cerkiew św. Olgi w Łodzi.JPG"
   },
   {
@@ -228,6 +249,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Tadeusz Kościuszko Monument in Łódź (Wolności Square)",
    "commonsImage": "Łódź - Pomnik Tadeusza Kościuszki 01.JPG"
   },
   {
@@ -247,6 +270,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Ławeczka Tuwima",
    "commonsImage": "Statue of a sitting man (7993606288).jpg"
   },
   {
@@ -266,6 +291,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Kamienica pod Gutenbergiem",
    "commonsImage": "Łódź, ulica Piotrkowska, marzec 2025, 109 KsP.jpg"
   },
   {
@@ -285,6 +312,8 @@
     "quality": 0.8,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Edward Herbst's palace",
    "commonsImage": "Palac Herbsta2.jpg"
   },
   {
@@ -304,6 +333,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Fabryka Ludwika Geyera",
    "commonsImage": "Biała Fabryka w Łodzi.jpg"
   },
   {
@@ -323,6 +354,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Sculpture 'Unicorn; a Place for Stars' by Tomohiro Inaba in Łódź",
    "commonsImage": "Lodz Unicorn 2019 01.jpg"
   },
   {
@@ -342,6 +375,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Twórcy Łodzi Przemysłowej",
    "commonsImage": "Four sitting man statue in Lodz (7993534291).jpg"
   },
   {
@@ -361,6 +395,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Rachmil Lipschitz's tenement house",
    "commonsImage": "Kamienica przy narutowicza 44.jpg"
   },
   {
@@ -401,6 +436,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Karl Wilhelm Scheibler's palace",
    "commonsImage": "Pałac, ob. Muzeum Kinematografii.jpg"
   },
   {
@@ -441,6 +477,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Fortepian Rubinsteina",
    "commonsImage": "Artur Rubinstein piano statue (7993529256).jpg"
   },
   {
@@ -460,6 +497,8 @@
     "quality": 0.2,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Karol Scheibler's Chapel",
    "commonsImage": "Kaplica Karola Scheiblera w Łodzi.JPG"
   },
   {
@@ -587,6 +626,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Fotel Jaracza",
    "commonsImage": "Fotel Jaracza Lodz.JPG"
   },
   {
@@ -624,6 +664,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Church of the Assumption of the Blessed Virgin Mary in Łódź",
    "commonsImage": "Lodz kosciol Wniebowziecia NMP (dron).jpg"
   },
   {
@@ -643,6 +684,7 @@
     "quality": 0.6,
     "independent": true
    },
+   "commonsCategory": "Museum of the Factory",
    "commonsImage": "Manufaktura Muzeum Fabryki 2 Łódź.JPG"
   },
   {
@@ -683,6 +725,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Juliusz Kinderman's palace",
    "commonsImage": "Palac Kindermana Lodz.jpg"
   },
   {
@@ -702,6 +745,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Dom Towarzystwa Akcyjnego Ludwika Geyera",
    "commonsImage": "Dom Towarzystwa Geyera Lodz.JPG"
   },
   {
@@ -721,6 +765,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Maksymilian Goldfeder's palace",
    "commonsImage": "Palac Maksymiliana Goldfedera Lodz.jpg"
   },
   {
@@ -740,6 +785,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Mural, 152 Piotrkowska Street",
    "commonsImage": "2003-09 - Łódź hausmalerei.png"
   },
   {
@@ -801,6 +847,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Pałac Juliusza Heinzla",
    "commonsImage": "Palac Juliusza Heinzla Lodz.JPG"
   },
   {
@@ -820,6 +867,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Krusche & Ender's tenement house",
    "commonsImage": "Kamienica Krusche i Ender Lodz.jpg"
   },
   {
@@ -878,6 +926,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Lampiarz",
    "commonsImage": "Lampiarz Lodz.jpg"
   },
   {
@@ -897,6 +946,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Book Art Museum (Łódź)",
    "commonsImage": "Muzeum Książki Artystycznej.jpg"
   },
   {
@@ -995,6 +1045,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "22 Piotrkowska Street in Łódź",
    "commonsImage": "Lodz, Piotrkowska 22 (2).JPG"
   },
   {
@@ -1035,6 +1086,8 @@
     "quality": 0.8,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Teatr Wielki w Łodzi",
    "commonsImage": "2012-06-02 Photo from tram trip 09.jpg"
   },
   {
@@ -1054,6 +1107,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "St. Matthew's Church in Łódź",
    "commonsImage": "SM Łódź Kościół św Mateusza 2017 (2) ID 613039.jpg"
   },
   {
@@ -1136,6 +1190,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Miś Uszatek sculpture in Łódź",
    "commonsImage": "Uszatek LODZ.JPG"
   },
   {
@@ -1155,6 +1210,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "19 Piotrkowska Street in Łódź",
    "commonsImage": "Kamienica A. Lubińskiego.jpg"
   },
   {
@@ -1195,6 +1251,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Rozenthal's tenement house",
    "commonsImage": "Piotrkowska 46.jpg"
   },
   {
@@ -1236,6 +1293,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Monument of Unknown Soldier in Łódź",
    "commonsImage": "Grob NZ Lodz 12.2007.jpg"
   },
   {
@@ -1422,6 +1480,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Józef Piłsudski Monument in Łódź",
    "commonsImage": "Pomnik Jozef Pilsudski Lodz.jpg"
   },
   {
@@ -1462,6 +1521,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Tradition of Independence Museum in Łódź",
    "commonsImage": "PL Wikiwarsztaty fotograficzne Łódź 080.jpg"
   },
   {
@@ -1521,6 +1581,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Stanisław Moniuszko monument in Łódź",
    "commonsImage": "Park Moniuszki w Łodzi - pomnik.jpg"
   },
   {
@@ -1579,6 +1640,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Alfred Biedermann's palace",
    "commonsImage": "Pałac Alfreda Biedermanna.jpg"
   },
   {
@@ -1640,6 +1702,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Moses monument in Łódź",
    "commonsImage": "Pomnik Mojzesza 2 Lodz.jpg"
   },
   {
@@ -1659,6 +1722,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Helenów in Łódź",
    "commonsImage": "Park Helenów Lodz.jpg"
   },
   {
@@ -1699,6 +1763,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Monument to victims of communism in Łódź",
    "commonsImage": "Pomnik Ofiar Komunizmu 3.JPG"
   },
   {
@@ -1718,6 +1783,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Scheiblers' palace",
    "commonsImage": "Palac Scheiblerow Lodz.jpg"
   },
   {
@@ -1776,6 +1842,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Ludwik Geyer's villa",
    "commonsImage": "Dworek Ludwika Geyera Lodz.jpg"
   },
   {
@@ -1870,6 +1937,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Reinhold Richter's villa",
    "commonsImage": "Wille Łodzi.jpg"
   },
   {
@@ -1889,6 +1957,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Saint Joseph church in Łódź",
    "commonsImage": "Kościół_św._Józefa_w_Łodzi.jpg"
   },
   {
@@ -1983,6 +2052,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Moenkes' mausoleum",
    "commonsImage": "Stary Cmentarz grobowiec rodziny Moenke Łódź.JPG"
   },
   {
@@ -2146,6 +2216,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Łódź Army monument",
    "commonsImage": "Łodź, sady Park Helenów, památník.JPG"
   },
   {
@@ -2240,6 +2311,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "August Härtig's palace",
    "commonsImage": "Palac Haertiga Lodz.jpg"
   },
   {
@@ -2577,6 +2649,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Open-air Museum of the Łódź Wooden Architecture",
    "commonsImage": "Skansen we mgle - panoramio.jpg"
   },
   {
@@ -2783,6 +2856,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Ferdynand Wspaniały sculpture in Łódź",
    "commonsImage": "Ferdynand Wspaniały (1).JPG"
   },
   {
@@ -3018,6 +3092,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Grohman's Factory Gate",
    "commonsImage": "Łódź beczki Grohmana 02 05 2010 P5020032.JPG"
   },
   {
@@ -3037,6 +3112,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Heinzl's chapel",
    "commonsImage": "Łódź, Stary cmentarz Kaplica Heinzlów - panoramio.jpg"
   },
   {
@@ -3446,6 +3522,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Gustaw Schreer's villa",
    "commonsImage": "Willa Gustawa Schreera.jpg"
   },
   {
@@ -3508,6 +3585,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "Ms²",
    "commonsImage": "Łódź, ul. Ogrodowa 17, tkalnia wysoka (ob. ms2), 1895 -2.JPG"
   },
   {
@@ -3527,6 +3605,7 @@
     "quality": 0.6,
     "independent": true
    },
+   "commonsCategory": "Museum of City Transport in Łódź",
    "commonsImage": "Muzeum Komunikacji Miejskiej Lodz.jpg"
   },
   {
@@ -3646,6 +3725,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Aleksander Kamiński monument in Łódź",
    "commonsImage": "Łódź-Pomnik Aleksandra Kamińskiego w Parku Staromiejskim - panoramio.jpg"
   },
   {
@@ -3704,6 +3784,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Karol Poznański's palace",
    "commonsImage": "Pałac K.Poznańskiego.jpg"
   },
   {
@@ -3924,6 +4005,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Jakub Kestenberg's palace",
    "commonsImage": "2005-09 Łódź - Sewertyna Sterlinga 26.jpg"
   },
   {
@@ -3943,6 +4025,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Willa Leopolda Kindermanna",
    "commonsImage": "Willa Leopolda Rudolfa Kindermanna Lodz.jpg"
   },
   {
@@ -4058,6 +4141,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "Robert Schweikert's palace",
    "commonsImage": "Schweikert Palace.jpg"
   },
   {
@@ -4155,6 +4239,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "Józef Richter's villa",
    "commonsImage": "Willa Józefa Richtera.jpg"
   },
   {
@@ -4288,6 +4373,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Atlas Sztuki gallery",
    "commonsImage": "Atlas Sztuki, Piotrkowska 114, Łódź.jpg"
   },
   {
@@ -4363,6 +4449,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Katyń monument in Łódź",
    "commonsImage": "Łódź, pomnik Katyński - panoramio.jpg"
   },
   {
@@ -4490,6 +4577,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Solidarność Monument in Łódź",
    "commonsImage": "Pomnik Solidarnosci Lodz.JPG"
   },
   {
@@ -4530,6 +4618,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "203 Piotrkowska Street in Łódź",
    "commonsImage": "Łódź Piotrkowska 203 2013 MZW 7848.JPG"
   },
   {
@@ -4610,6 +4699,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Saint John the Evangelist church in Łódź",
    "commonsImage": "Jezuitow Lodz.JPG"
   },
   {
@@ -4708,6 +4798,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Steinerts' palace",
    "commonsImage": "Palac Steinertow Lodz.jpg"
   },
   {
@@ -4745,6 +4836,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Ludwik Grohman's villa",
    "commonsImage": "Palac Ludwika Grohmana.jpg"
   },
   {
@@ -4782,6 +4874,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Markus Silberstein's factory",
    "commonsImage": "Piotrkowska 250 Lodz.jpg"
   },
   {
@@ -5107,6 +5200,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Church of Saint Anne in Łódź",
    "commonsImage": "Kościół św. Anny w Łodzi oraz figura Jezusa.jpg"
   },
   {
@@ -5452,6 +5546,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Faustyna Kowalska monument in Łódź",
    "commonsImage": "St Faustyna monument in Łódź, detail.jpg"
   },
   {
@@ -5927,7 +6022,8 @@
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
-   }
+   },
+   "commonsCategory": "Geralt_of_Rivia_mural,_182_Piotrkowska_st."
   },
   {
    "id": "osm:node:2121151117",
@@ -5985,6 +6081,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Tytus Kopisch's house",
    "commonsImage": "Dom Kopischa.jpg"
   },
   {
@@ -6004,6 +6101,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Kochankowie z ulicy Kamiennej fountain",
    "commonsImage": "Kochankowie z ulicy Kamiennej (2024) 1.jpg"
   },
   {
@@ -6098,6 +6196,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Ocalałych in Łódź",
    "commonsImage": "Park Ocalałych Pomnik Łódź 2010.jpg"
   },
   {
@@ -6214,6 +6313,8 @@
     "quality": 0.4,
     "independent": true
    },
+   "popular": true,
+   "commonsCategory": "Museum of Art in Łódź",
    "commonsImage": "Pałac Maurycego Poznańskiego z 1896 r, obecnie muzeum sztuki - panoramio.jpg"
   },
   {
@@ -6233,6 +6334,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Moniuszki in Łódź",
    "commonsImage": "Park Moniuszki w Łodzi - pomnik.jpg"
   },
   {
@@ -6398,6 +6500,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Holy Family church in Łódź (Polish Catholic Church)",
    "commonsImage": "St. Family Church, Polish Catholic Church in Lodz 01.jpg"
   },
   {
@@ -6508,6 +6611,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "Park Klepacza w Łodzi",
    "commonsImage": "Dąb szypułkowy Fabrykant w Parku Klepacza w Łodzi -1.JPG"
   },
   {
@@ -6583,6 +6687,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Enchanted Pencil sculpture in Łódź",
    "commonsImage": "Sculpture of main characters from cartoon 'Zaczarowany ołówek', Łódź Culture Center.jpg"
   },
   {
@@ -6638,6 +6743,7 @@
     "quality": 0.4,
     "independent": true
    },
+   "commonsCategory": "Hilary Majewski's house",
    "commonsImage": "Hilary Majewski's house 6.jpg"
   },
   {
@@ -7049,6 +7155,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Rudolf Keller's palace",
    "commonsImage": "Palac Kellera Lodz.jpg"
   },
   {
@@ -7068,6 +7175,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Sienkiewicza in Łódź",
    "commonsImage": "Park Sienkiewicza Lodz.JPG"
   },
   {
@@ -7145,6 +7253,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Church of Our Lady Victorious in Łódź",
    "commonsImage": "Kościół Matki Boskiej Zwycięskiej w Łodzi.jpg"
   },
   {
@@ -7264,6 +7373,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Old Health Department building in Łódź",
    "commonsImage": "03 Kasa chorych 2011.04.03.jpg"
   },
   {
@@ -7373,6 +7483,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Church of the Dormition in Łódź",
    "commonsImage": "Cerkiew Zaśnięcia Najświętszej Maryi Panny w Łodzi.JPG"
   },
   {
@@ -7592,6 +7703,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Zygmunt Richter's villa in Łódź",
    "commonsImage": "Willa Zygmunta Richtera Lodz.jpg"
   },
   {
@@ -7611,6 +7723,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Źródliska in Łódź",
    "commonsImage": "Park Zrodliska Lodz 1.JPG"
   },
   {
@@ -7760,6 +7873,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Gelich tenement house in Łódź",
    "commonsImage": "Kamienica K. Gelicha.jpg"
   },
   {
@@ -7873,6 +7987,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Matejki in Łódź",
    "commonsImage": "Lodz Park Matejki(pischmak).JPG"
   },
   {
@@ -8104,6 +8219,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Immaculate Conception church in Łódź",
    "commonsImage": "Kosciol Niepokalanego Poczecia NMP Lodz.jpg"
   },
   {
@@ -8957,6 +9073,7 @@
     "quality": 1.0,
     "independent": true
    },
+   "commonsCategory": "Centre of Art Promotion",
    "commonsImage": "Ośrodek Propagandy Sztuki, Park Sienkiewicza, Łódź.jpg"
   },
   {
@@ -9505,6 +9622,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "213 Piotrkowska Street in Łódź",
    "commonsImage": "Kamienica, Łódź, ul. Piotrkowska 213.jpg"
   },
   {
@@ -10420,6 +10538,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Staromiejski w Łodzi",
    "commonsImage": "Park Staromiejski w Łodzi - staw.jpg"
   },
   {
@@ -10475,6 +10594,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Reymonta w Łodzi",
    "commonsImage": "Park Reymonta Lodz.jpg"
   },
   {
@@ -10591,6 +10711,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Bohdan Stefanowski monument in Łódź",
    "commonsImage": "Pomnik Stefanowskiego Lodz.jpg"
   },
   {
@@ -11449,7 +11570,8 @@
     "fame": 0.296,
     "quality": 0.2,
     "independent": true
-   }
+   },
+   "commonsCategory": "Gardens and parks in Łódź"
   },
   {
    "id": "osm:node:10271571627",
@@ -11556,6 +11678,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Kilińskiego in Łódź",
    "commonsImage": "Kiliński park, Łódź, 01.jpg"
   },
   {
@@ -11627,6 +11750,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Podolski in Łódź",
    "commonsImage": "Park Podolski – Łódź (1).jpg"
   },
   {
@@ -11914,6 +12038,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Wilhelm Hüffer's villa",
    "commonsImage": "Willa Hüffera.jpg"
   },
   {
@@ -11967,6 +12092,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Karol König's house in Łódź",
    "commonsImage": "Łódź-König's house.jpg"
   },
   {
@@ -13049,6 +13175,7 @@
     "quality": 0.0,
     "independent": true
    },
+   "commonsCategory": "Tenement house at Struga 42 Street",
    "commonsImage": "Ulica Andrzeja Struga 42 w Łodzi - zabytkowa kamienica.jpg"
   },
   {
@@ -13145,6 +13272,7 @@
     "quality": 0.2,
     "independent": true
    },
+   "commonsCategory": "Park Źródliska in Łódź",
    "commonsImage": "Park Zrodliska Lodz 1.JPG"
   },
   {
