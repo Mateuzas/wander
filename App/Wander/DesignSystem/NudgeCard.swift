@@ -25,9 +25,8 @@ struct NudgeCard: View {
             .accessibilityLabel("\(category.spokenName), \(title), \(detail)")
             Spacer(minLength: Layout.grid)
             Button(actionTitle, action: action)
-                .font(WanderFont.body.weight(.semibold))
-                .foregroundStyle(.wander)
-                .frame(minWidth: Layout.minTouch, minHeight: Layout.minTouch)
+                .buttonStyle(.textAction)
+                .frame(minWidth: Layout.minTouch)
         }
         .padding(.leading, Layout.margin)
         .padding(.trailing, Layout.grid)
