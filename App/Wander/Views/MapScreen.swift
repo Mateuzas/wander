@@ -2,8 +2,9 @@ import MapKit
 import RouteEngine
 import SwiftUI
 
-/// Home and plan states (PLAN.md §7.1–7.3) on one full-bleed map. The sheet shows
-/// search, the plan, or a tapped bead's details. No tab or navigation bar.
+/// Home, plan and walking states (PLAN.md §7.1–7.4) on one full-bleed map. The
+/// sheet shows search, the plan, a tapped bead's details, or the walk. No tab or
+/// navigation bar.
 struct MapScreen: View {
     /// Unplanned beads drawn at once; the highest-scoring POIs in view win.
     private static let beadLimit = 40
@@ -23,6 +24,7 @@ struct MapScreen: View {
     @State private var detent: PresentationDetent = .peek
     @State private var selectedPOI: POI?
     @State private var debugOverlay = false
+    @State private var walk: WalkModel?
 
     // Draw-in state for the current plan.
     @State private var routeLine: [Coordinate] = []
@@ -41,9 +43,21 @@ struct MapScreen: View {
 
     var body: some View {
         map
+            .overlay(alignment: .top) {
+                if let walk, walk.phase == .walking {
+                    TurnCard(walk: walk)
+                        .padding(.horizontal, Layout.margin)
+                        .padding(.top, Layout.grid)
+                }
+            }
+            .overlay(alignment: .bottom) {
+                upAhead
+                    .padding(.horizontal, Layout.margin)
+                    .padding(.bottom, Layout.peekHeight + Layout.grid)
+            }
             .sheet(isPresented: .constant(true)) {
                 sheetContent
-                    .presentationDetents([.peek, .medium, .large], selection: $detent)
+                    .presentationDetents(walk == nil ? [.peek, .medium, .large] : [.peek, .medium], selection: $detent)
                     .presentationBackground(.surface)
                     .presentationBackgroundInteraction(.enabled(upThrough: .medium))
                     .interactiveDismissDisabled()
@@ -61,11 +75,23 @@ struct MapScreen: View {
                 }
             }
             .onChange(of: location.location) { _, fix in
-                if let fix { planner.setOrigin(Coordinate(fix.coordinate)) }
+                guard let fix else { return }
+                if let walk {
+                    walk.handle(fix)
+                } else {
+                    planner.setOrigin(Coordinate(fix.coordinate))
+                }
             }
-            .onChange(of: planner.plan) { _, plan in
+            .onChange(of: displayedPlan) { _, plan in
                 showPlan(plan)
             }
+            .onChange(of: walk?.phase) { _, phase in
+                if phase == .arrived || phase == .ended {
+                    location.setWalking(false)
+                    detent = .medium
+                }
+            }
+            .onDisappear { walk?.tearDown() }
     }
 
     // MARK: - Map
@@ -74,8 +100,8 @@ struct MapScreen: View {
         Map(position: $position) {
             UserAnnotation()
 
-            if let plan = planner.plan {
-                if !plan.waypoints.isEmpty {
+            if let plan = displayedPlan {
+                if walk == nil, !plan.waypoints.isEmpty {
                     // Fast route: thin, dashed, grey (§7.2).
                     MapPolyline(coordinates: plan.baseline.polyline.map(\.clLocation))
                         .stroke(Color.inkMuted, style: StrokeStyle(lineWidth: 3, lineCap: .round, dash: [2, 7]))
@@ -94,7 +120,7 @@ struct MapScreen: View {
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
                         .frame(width: Layout.minTouch, height: Layout.minTouch)
                         .contentShape(Circle())
-                        .onTapGesture { select(bead.poi) }
+                        .onTapGesture { if walk == nil { select(bead.poi) } }
                         .accessibilityAddTraits(.isButton)
                 }
                 .annotationTitles(.hidden)
@@ -142,13 +168,15 @@ struct MapScreen: View {
     private var beads: [BeadItem] {
         var items: [BeadItem] = []
         var seen: Set<String> = []
-        if let plan = planner.plan {
+        if let plan = displayedPlan {
             let total = max(routeLengths.last ?? 1, 1)
             for highlight in plan.highlights where seen.insert(highlight.poi.id).inserted {
                 items.append(BeadItem(poi: highlight.poi, dimmed: false,
                                       shown: highlight.distanceAlongRoute / total <= reveal + 0.001))
             }
         }
+        // While walking, only the walk's highlights show.
+        guard walk == nil else { return items }
         let dim = planner.plan != nil
         for poi in visiblePOIs where seen.insert(poi.id).inserted && !planner.excluded.contains(poi.id) {
             items.append(BeadItem(poi: poi, dimmed: dim, shown: true))
@@ -166,9 +194,26 @@ struct MapScreen: View {
 
     // MARK: - Sheet
 
+    /// The walk's (possibly rerouted) plan while walking, otherwise the selected mode's plan.
+    private var displayedPlan: WanderPlan? { walk?.plan ?? planner.plan }
+
+    @ViewBuilder
+    private var upAhead: some View {
+        Group {
+            if let walk, let nudge = walk.nudge {
+                UpAheadCard(nudge: nudge, onSkip: walk.skipNudge)
+                    .id(nudge.highlight.poi.id)
+                    .transition(reduceMotion ? .opacity : .move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .animation(reduceMotion ? .easeInOut(duration: 0.2) : .snappy(duration: 0.3), value: walk?.nudge?.highlight.poi.id)
+    }
+
     @ViewBuilder
     private var sheetContent: some View {
-        if let poi = selectedPOI {
+        if let walk {
+            WalkSheet(walk: walk, onDone: finishWalk)
+        } else if let poi = selectedPOI {
             POIDetail(
                 poi: poi,
                 action: detailAction(for: poi),
@@ -253,8 +298,29 @@ struct MapScreen: View {
         move(to: .camera(MapCamera(centerCoordinate: poi.coordinate.clLocation, distance: 700)))
     }
 
-    /// Hook for walking mode (Milestone 5).
-    private func startWalk(_ plan: WanderPlan) {}
+    private func startWalk(_ plan: WanderPlan) {
+        guard let destination = planner.destination else { return }
+        let walk = WalkModel(
+            plan: plan, destinationName: destination.name, provider: planner.provider,
+            pois: store.pois.filter { !planner.excluded.contains($0.id) }, interests: planner.interests)
+        self.walk = walk
+        selectedPOI = nil
+        debugOverlay = false
+        location.setWalking(true)
+        if let fix = location.location { walk.handle(fix) }
+        detent = .peek
+        move(to: .userLocation(followsHeading: false, fallback: .automatic))
+    }
+
+    /// Done after arriving or ending: back to the home screen.
+    private func finishWalk() {
+        walk?.end()
+        walk?.tearDown()
+        walk = nil
+        location.setWalking(false)
+        closePlan()
+        move(to: .userLocation(fallback: .automatic))
+    }
 
     private func move(to camera: MapCameraPosition) {
         if reduceMotion {
@@ -274,6 +340,12 @@ struct MapScreen: View {
         }
         routeLine = plan.polyline
         routeLengths = RouteGeometry.cumulativeLengths(routeLine)
+        if walk != nil {
+            // A reroute mid-walk: no draw-in, and the camera keeps following the walker.
+            reveal = 1
+            routeOpacity = 1
+            return
+        }
         if let region = Self.region(fitting: routeLine + plan.baseline.polyline) {
             move(to: .region(region))
         }
