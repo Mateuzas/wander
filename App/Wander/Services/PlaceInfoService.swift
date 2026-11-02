@@ -94,53 +94,93 @@ final class PlaceInfoService {
     }
 }
 
-// MARK: - Wikimedia Commons photo
+// MARK: - Wikimedia Commons photos
 
 /// A Commons photo with the credit Wikimedia's licences require.
-struct CommonsPhoto: Equatable {
+struct CommonsPhoto: Equatable, Identifiable {
+    /// File name without the "File:" prefix, spaces not underscores.
+    let fileName: String
     let imageURL: URL
     /// Nil when the file's metadata has no author.
     let author: String?
     let license: String
     let licenseURL: URL?
     let pageURL: URL
+
+    var id: String { fileName }
 }
 
 /// Session cache for Commons lookups. Failures aren't cached, so a later tap retries.
 @MainActor
 final class CommonsPhotoCache {
     static let shared = CommonsPhotoCache()
+    /// Extra gallery photos beyond the main one.
+    static let galleryLimit = 10
+
     private var photos: [String: CommonsPhoto] = [:]
+    private var galleries: [String: [CommonsPhoto]] = [:]
 
     /// A ~800 px rendition plus author and licence for a Commons file name such as
     /// "Manufaktura Łódź.jpg". Nil on any failure.
     func photo(fileName: String) async -> CommonsPhoto? {
         if let hit = photos[fileName] { return hit }
-        guard let photo = await Self.fetch(fileName: fileName) else { return nil }
+        let query = [
+            "titles": "File:\(fileName)", "redirects": "1",
+        ]
+        guard let pages = await Self.fetchPages(query), let photo = pages.compactMap(Self.photo(from:)).first
+        else { return nil }
         photos[fileName] = photo
         return photo
     }
 
-    private nonisolated static func fetch(fileName: String) async -> CommonsPhoto? {
-        var components = URLComponents(string: "https://commons.wikimedia.org/w/api.php")!
-        components.queryItems = [
-            .init(name: "action", value: "query"),
-            .init(name: "titles", value: "File:\(fileName)"),
-            .init(name: "prop", value: "imageinfo"),
-            .init(name: "iiprop", value: "url|extmetadata"),
-            .init(name: "iiurlwidth", value: "800"),
-            .init(name: "redirects", value: "1"),
-            .init(name: "format", value: "json"),
+    /// Up to `galleryLimit` more images from a Commons category, never `excluding`
+    /// the main photo. Empty on any failure, so the caller just shows what it has.
+    func gallery(category: String, excluding fileName: String?) async -> [CommonsPhoto] {
+        if let hit = galleries[category] { return Self.without(fileName, in: hit) }
+        let query = [
+            "generator": "categorymembers", "gcmtitle": "Category:\(category)",
+            "gcmtype": "file", "gcmlimit": "\(Self.galleryLimit + 6)",
+            "redirects": "1",
         ]
+        guard let pages = await Self.fetchPages(query) else { return [] }
+        let all = pages
+            .sorted { ($0["index"] as? Int ?? 0) < ($1["index"] as? Int ?? 0) }
+            .compactMap(Self.photo(from:))
+        galleries[category] = all
+        return Self.without(fileName, in: all)
+    }
+
+    private static func without(_ fileName: String?, in photos: [CommonsPhoto]) -> [CommonsPhoto] {
+        Array(photos.filter { $0.fileName != fileName }.prefix(galleryLimit))
+    }
+
+    private nonisolated static let imageTypes: Set<String> = ["image/jpeg", "image/png", "image/webp"]
+
+    /// One API call: imageinfo (800 px thumbnail, url, credit) for the given titles or generator.
+    private nonisolated static func fetchPages(_ extra: [String: String]) async -> [[String: Any]]? {
+        var components = URLComponents(string: "https://commons.wikimedia.org/w/api.php")!
+        var items: [String: String] = [
+            "action": "query", "prop": "imageinfo", "iiprop": "url|extmetadata|mime",
+            "iiurlwidth": "800", "format": "json",
+        ]
+        items.merge(extra) { $1 }
+        components.queryItems = items.map { URLQueryItem(name: $0.key, value: $0.value) }
         guard let url = components.url else { return nil }
         var request = URLRequest(url: url, timeoutInterval: 10)
         request.setValue("WanderMVP/0.1 (personal walking-route prototype)", forHTTPHeaderField: "User-Agent")
 
         guard let (data, _) = try? await URLSession.shared.data(for: request),
               let root = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let pages = (root["query"] as? [String: Any])?["pages"] as? [String: Any],
-              let page = pages.values.first as? [String: Any],
+              let pages = (root["query"] as? [String: Any])?["pages"] as? [String: Any]
+        else { return nil }
+        return pages.values.compactMap { $0 as? [String: Any] }
+    }
+
+    /// Nil for anything that isn't a plain photo (SVG, audio, PDF, missing file).
+    private nonisolated static func photo(from page: [String: Any]) -> CommonsPhoto? {
+        guard let title = page["title"] as? String, title.hasPrefix("File:"),
               let info = (page["imageinfo"] as? [[String: Any]])?.first,
+              let mime = info["mime"] as? String, imageTypes.contains(mime),
               let thumb = (info["thumburl"] as? String) ?? (info["url"] as? String),
               let imageURL = URL(string: thumb),
               let pageURL = (info["descriptionurl"] as? String).flatMap(URL.init(string:)),
@@ -151,7 +191,8 @@ final class CommonsPhotoCache {
             ((meta[key] as? [String: Any])?["value"] as? String).map(plainText)
         }
         guard let license = value("LicenseShortName") else { return nil }
-        return CommonsPhoto(imageURL: imageURL,
+        return CommonsPhoto(fileName: String(title.dropFirst("File:".count)),
+                            imageURL: imageURL,
                             author: value("Artist"),
                             license: license,
                             licenseURL: value("LicenseUrl").flatMap(URL.init(string:)),
