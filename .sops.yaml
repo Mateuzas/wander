@@ -1,0 +1,8 @@
+# SOPS config for Wander. See docs/SECRETS.md.
+# Recipients are age *public* keys; private keys never enter the repo.
+# To add a person or CI, append their public key (comma-separated) and run
+#   scripts/secrets.sh rekey
+creation_rules:
+  - path_regex: secrets/[^/]+\.enc\.(yaml|json|env)$
+    age: >-
+      age1qcyajmltd47snuq28yd4qlk6c6v9fpe26dkfdmnhft3k68nhg43q2rkt4y
