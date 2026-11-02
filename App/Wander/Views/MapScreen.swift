@@ -244,6 +244,8 @@ struct MapScreen: View {
                     planner.remove(poi)
                     selectedPOI = nil
                 },
+                // Hidden while walking (the walk sheet replaces the card anyway).
+                onDirections: walk == nil ? { directions(to: poi) } : nil,
                 onClose: { selectedPOI = nil })
         } else if let destination = planner.destination {
             planSheet(destination)
@@ -298,6 +300,14 @@ struct MapScreen: View {
         if location.access == .denied { planner.originUnavailable() }
         detent = .medium
         move(to: .camera(MapCamera(centerCoordinate: place.coordinate, distance: 2500)))
+    }
+
+    /// "Directions" on a place card: the same path as picking it from "Where to?"
+    /// (recents, plan sheet, all three modes, location-denied copy). Replaces any
+    /// destination already planned.
+    private func directions(to poi: POI) {
+        choose(Destination(name: poi.name, subtitle: poi.category.spokenName,
+                           coordinate: poi.coordinate.clLocation))
     }
 
     private func closePlan() {
