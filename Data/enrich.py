@@ -2,7 +2,7 @@
 
     python3 enrich.py lodz
 
-- Wikidata: sitelink count for POIs with a `wikidata` tag ("how famous is this").
+- Wikidata: sitelink count ("how famous is this") and English label for POIs with a `wikidata` tag.
 - Wikimedia Commons: number of geotagged files within 50 m ("do people photograph this"),
   counted locally from all geotagged files in the city box (fetched by tile).
 
@@ -27,27 +27,37 @@ def load_cache(path):
     return json.loads(path.read_text()) if path.exists() else {}
 
 
-def fetch_sitelinks(qids, cache, path):
-    missing = sorted({q for q in qids if q not in cache})
+def fetch_wikidata(qids, cache, path):
+    """Sitelink count and English label per Wikidata id."""
+    missing = sorted({q for q in qids if not isinstance(cache.get(q), dict)})
     for i in range(0, len(missing), 50):
         batch = missing[i:i + 50]
         res = http_json(WIKIDATA, params={
-            "action": "wbgetentities", "ids": "|".join(batch), "props": "sitelinks", "format": "json",
+            "action": "wbgetentities", "ids": "|".join(batch), "props": "sitelinks|labels",
+            "languages": "en", "format": "json",
         })
         for qid in batch:
             entity = res.get("entities", {}).get(qid, {})
-            cache[qid] = len(entity.get("sitelinks", {}))
+            cache[qid] = {
+                "sitelinks": len(entity.get("sitelinks", {})),
+                "label_en": entity.get("labels", {}).get("en", {}).get("value"),
+            }
         path.write_text(json.dumps(cache))
         print(f"  wikidata {min(i + 50, len(missing))}/{len(missing)}")
 
 
-def commons_tile(s, w, n, e):
-    res = http_json(COMMONS, params={
-        "action": "query", "list": "geosearch", "gsbbox": f"{n}|{w}|{s}|{e}",
-        "gslimit": TILE_LIMIT, "gsnamespace": 6, "format": "json",
-    })
-    if "error" in res:
-        raise RuntimeError(res["error"])
+def commons_tile(s, w, n, e, attempts=5):
+    for attempt in range(attempts):
+        res = http_json(COMMONS, params={
+            "action": "query", "list": "geosearch", "gsbbox": f"{n}|{w}|{s}|{e}",
+            "gslimit": TILE_LIMIT, "gsnamespace": 6, "format": "json",
+        })
+        if "error" not in res:
+            break
+        if attempt == attempts - 1 or "too-busy" not in res["error"].get("code", ""):
+            raise RuntimeError(res["error"])
+        print(f"  search busy, retry in {20 * (attempt + 1)}s", flush=True)
+        time.sleep(20 * (attempt + 1))
     return [(g["lat"], g["lon"]) for g in res.get("query", {}).get("geosearch", [])]
 
 
@@ -117,14 +127,16 @@ def main():
 
     qids = [p["tags"]["wikidata"] for p in pois if p["tags"].get("wikidata", "").startswith("Q")]
     print(f"Wikidata: {len(qids)} POIs with an id")
-    fetch_sitelinks(qids, wd, wd_path)
+    fetch_wikidata(qids, wd, wd_path)
     print("Commons: fetching geotagged files by tile")
     points = fetch_commons_points(load_city(sys.argv[1])["bbox"], tiles, cm_path)
     print(f"  {len(points)} geotagged files in the city box")
     cm = count_near(pois, points, COMMONS_RADIUS_M)
 
     for p in pois:
-        p["sitelinks"] = wd.get(p["tags"].get("wikidata", ""), 0)
+        entry = wd.get(p["tags"].get("wikidata", ""), {})
+        p["sitelinks"] = entry.get("sitelinks", 0)
+        p["wikidata_label_en"] = entry.get("label_en")
         p["commons"] = cm.get(p["id"], 0)
     (d / "enriched.json").write_text(json.dumps(data, ensure_ascii=False, indent=1))
     print(f"Wrote enriched.json ({len(pois)} POIs)")
