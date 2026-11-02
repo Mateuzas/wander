@@ -4,10 +4,11 @@ import MapKit
 import Observation
 import RouteEngine
 
-/// Plans for the chosen destination (PLAN.md §7.2). One plan per mode is cached,
-/// so switching modes is instant; the selected mode is planned first and the
-/// others follow in the background. Interests, profile and removed or added
-/// stops change every mode, so they clear the cache.
+/// Plans for the chosen destination (PLAN.md §7.2). All three modes are planned
+/// in one pass, smallest budget first, each kept distinct from the smaller ones
+/// (RouteEngine `distinctFrom`), and cached, so switching modes is instant.
+/// Interests, route style and removed or added stops change every mode, so
+/// they clear the cache.
 @MainActor
 @Observable
 final class PlannerModel {
@@ -41,13 +42,11 @@ final class PlannerModel {
     private(set) var destination: Destination?
     private(set) var origin: Coordinate?
 
-    var mode: Mode = .relaxed {
-        didSet { if mode != oldValue { ensurePlan(for: mode) } }
-    }
+    var mode: Mode = .relaxed
     var interests: Set<POICategory> = Set(POICategory.allCases) {
         didSet { if interests != oldValue { invalidate() } }
     }
-    var profile: RouteProfile = .balanced {
+    var profile: WeightPreset = .balanced {
         didSet { if profile != oldValue { invalidate() } }
     }
 
@@ -68,7 +67,7 @@ final class PlannerModel {
     @ObservationIgnored private var pois: [POI] = []
     @ObservationIgnored private var timeZone: TimeZone = .current
     @ObservationIgnored private var generation = 0
-    @ObservationIgnored private var tasks: [Mode: Task<Void, Never>] = [:]
+    @ObservationIgnored private var task: Task<Void, Never>?
 
     init(connectivity: Connectivity) {
         self.connectivity = connectivity
@@ -85,7 +84,7 @@ final class PlannerModel {
         self.timeZone = timeZone
         excluded = []
         pinned = []
-        ensurePlan(for: mode)
+        planModes()
     }
 
     /// Supplies the start point when the first location fix arrives after `start`.
@@ -124,7 +123,7 @@ final class PlannerModel {
     func addOption(for poi: POI) -> AddOption {
         guard let plan else { return .doesntFit }
         if mode == .direct { return .directMode }
-        if plan.waypoints.count >= PlanEditor.config.maxWaypoints { return .full }
+        if plan.waypoints.count >= mode.maxWaypoints { return .full }
         return PlanEditor.estimateFits(poi, in: plan, budget: mode.budget) ? .add : .doesntFit
     }
 
@@ -134,17 +133,17 @@ final class PlannerModel {
         excluded.remove(poi.id)
         do {
             let outcome = try await PlanEditor.adding(
-                poi, to: plan, budget: mode.budget, pois: activePOIs, interests: interests, provider: provider)
+                poi, to: plan, mode: mode, pois: activePOIs, interests: interests, provider: provider)
             guard gen == generation, mode == self.mode else { return .failed }
             switch outcome {
             case .added(let newPlan):
                 pinned.append(poi)
                 // Other modes recompute with the new stop; this one keeps the edited plan.
                 generation += 1
-                cancelAll(keepingPlans: false)
+                cancelAll()
                 plans = [mode: newPlan]
                 phases = [mode: .ready]
-                prefetchOtherModes()
+                planModes()
                 return .added
             case .doesntFit, .full:
                 return .doesntFit
@@ -160,64 +159,67 @@ final class PlannerModel {
 
     private func invalidate() {
         generation += 1
-        cancelAll(keepingPlans: false)
-        ensurePlan(for: mode)
+        cancelAll()
+        planModes()
     }
 
-    private func cancelAll(keepingPlans: Bool = false) {
-        tasks.values.forEach { $0.cancel() }
-        tasks = [:]
-        if !keepingPlans {
-            plans = [:]
-            phases = [:]
-        }
+    private func cancelAll() {
+        task?.cancel()
+        task = nil
+        plans = [:]
+        phases = [:]
     }
 
-    private func ensurePlan(for mode: Mode) {
-        guard let destination, plans[mode] == nil, tasks[mode] == nil else { return }
-        guard let origin else {
-            phases[mode] = .loading
-            return
-        }
-        phases[mode] = .loading
-        let request = PlanRequest(
-            origin: origin, destination: Coordinate(destination.coordinate), mode: mode,
+    /// Plans every mode not yet in `plans`, smallest budget first, publishing
+    /// each as it arrives. Plans already present (an edited one) are kept and
+    /// still count for `distinctFrom`.
+    private func planModes() {
+        guard let destination, task == nil else { return }
+        let modes = Mode.allCases.sorted { $0.budget < $1.budget }
+        for mode in modes where plans[mode] == nil { phases[mode] = .loading }
+        guard let origin else { return }
+
+        let base = PlanRequest(
+            origin: origin, destination: Coordinate(destination.coordinate), budget: 0,
             interests: interests, weights: profile.weights, pois: activePOIs,
             time: Date(), timeZone: timeZone)
         let pinned = self.pinned, interests = self.interests, provider = self.provider
         let gen = generation
 
-        tasks[mode] = Task {
-            let result: Result<WanderPlan, Error>
-            do {
-                var plan = try await Planner().plan(request, provider: provider)
-                for poi in pinned where !plan.waypoints.contains(where: { $0.id == poi.id }) {
-                    if case .added(let edited) = try await PlanEditor.adding(
-                        poi, to: plan, budget: mode.budget, pois: request.pois,
-                        interests: interests, provider: provider) {
-                        plan = edited
-                    }
+        task = Task {
+            var smaller: [WanderPlan] = []
+            for (index, mode) in modes.enumerated() {
+                if let existing = self.plans[mode] {
+                    smaller.append(existing)
+                    continue
                 }
-                result = .success(plan)
-            } catch {
-                result = .failure(error)
+                var request = base
+                request.budget = mode.budget
+                request.maxWaypoints = mode.maxWaypoints
+                do {
+                    let engine = try await Planner().plan(request, provider: provider, distinctFrom: smaller)
+                    smaller.append(engine)
+                    var plan = engine
+                    for poi in pinned where !plan.waypoints.contains(where: { $0.id == poi.id }) {
+                        if case .added(let edited) = try await PlanEditor.adding(
+                            poi, to: plan, mode: mode, pois: request.pois,
+                            interests: interests, provider: provider) {
+                            plan = edited
+                        }
+                    }
+                    guard gen == self.generation, !Task.isCancelled else { return }
+                    self.plans[mode] = plan
+                    self.phases[mode] = .ready
+                } catch {
+                    guard gen == self.generation, !Task.isCancelled else { return }
+                    let failure = self.classify(error)
+                    for later in modes[index...] where self.plans[later] == nil {
+                        self.phases[later] = .failed(failure)
+                    }
+                    break
+                }
             }
-            guard gen == self.generation, !Task.isCancelled else { return }
-            self.tasks[mode] = nil
-            switch result {
-            case .success(let plan):
-                self.plans[mode] = plan
-                self.phases[mode] = .ready
-                if mode == self.mode { self.prefetchOtherModes() }
-            case .failure(let error):
-                self.phases[mode] = .failed(self.classify(error))
-            }
-        }
-    }
-
-    private func prefetchOtherModes() {
-        for other in Mode.allCases where other != mode {
-            ensurePlan(for: other)
+            if gen == self.generation { self.task = nil }
         }
     }
 

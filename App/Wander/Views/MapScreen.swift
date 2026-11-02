@@ -214,7 +214,7 @@ struct MapScreen: View {
         case .directMode:
             return .unavailable("Direct takes the fastest route. Switch to Relaxed or Explorer to add stops.")
         case .full:
-            return .unavailable("This walk already has \(PlanEditor.config.maxWaypoints) stops. Remove one to add this.")
+            return .unavailable("This walk already has \(planner.mode.maxWaypoints) stops. Remove one to add this.")
         case .doesntFit:
             return .unavailable(planner.mode == .explorer
                 ? "Too far for a \(planner.mode.budgetLabel) detour."
