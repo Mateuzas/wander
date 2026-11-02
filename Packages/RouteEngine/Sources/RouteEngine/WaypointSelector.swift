@@ -81,7 +81,8 @@ struct WaypointSelector {
 
         func blocked(_ poi: POI, in state: State) -> RejectionReason? {
             if state.waypoints.count >= config.maxWaypoints { return .maxWaypoints }
-            if state.waypoints.filter({ $0.category == poi.category }).count >= config.maxPerCategory {
+            if state.waypoints.filter({ $0.category == poi.category }).count
+                >= config.waypointCap(for: poi.category, interests: scorer.interests) {
                 return .categoryCap
             }
             if state.waypoints.contains(where: { $0.coordinate.distance(to: poi.coordinate) < config.minWaypointSpacing }) {

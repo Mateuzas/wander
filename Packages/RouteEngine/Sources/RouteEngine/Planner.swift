@@ -95,6 +95,10 @@ public struct PlannerConfig: Hashable, Sendable {
     public var minWaypointSpacing: Double = 150
     /// Waypoints of one category.
     public var maxPerCategory: Int = 2
+    /// Tighter per-category caps for variety: by default one food stop per walk,
+    /// so the same few top-scoring restaurants don't take two of three slots.
+    /// Waived when the request's interests are only that category.
+    public var categoryLimits: [POICategory: Int] = [.food: 1]
     /// Degrees. A leg whose heading differs from the A→B heading by more than
     /// this counts as backtracking.
     public var maxLegDeviation: Double = 120
@@ -114,6 +118,12 @@ public struct PlannerConfig: Hashable, Sendable {
     public var estimator: HaversineWalkingTime = HaversineWalkingTime()
 
     public static let `default` = PlannerConfig()
+
+    /// Waypoint cap for `category` given the request's interests.
+    func waypointCap(for category: POICategory, interests: Set<POICategory>) -> Int {
+        guard interests != [category], let limit = categoryLimits[category] else { return maxPerCategory }
+        return min(maxPerCategory, limit)
+    }
 
     public init() {}
 }

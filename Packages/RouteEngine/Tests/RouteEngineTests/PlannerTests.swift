@@ -89,6 +89,32 @@ struct PlannerTests {
         }
     }
 
+    @Test func atMostOneFoodStopUnlessFoodOnly() async throws {
+        // Food is the most valuable thing around, but only one food stop is allowed.
+        let food = (0..<4).map { i in
+            Grid.poi("f\(i)", east: 300 + Double(i) * 450, north: 150, category: .food, score: 95)
+        }
+        let sights = (0..<2).map { i in Grid.poi("s\(i)", east: 600 + Double(i) * 700, north: -150, score: 60) }
+        let mixed = try await plan(food + sights, budget: 60 * 60)
+        #expect(mixed.waypoints.filter { $0.category == .food }.count == 1)
+        #expect(mixed.waypoints.count == 3)
+
+        // With a free slot left, the cap is what keeps the other food out.
+        var roomy = PlannerConfig()
+        roomy.maxWaypoints = 4
+        let spare = try await plan(food + sights, budget: 60 * 60, planner: Planner(config: roomy))
+        #expect(spare.waypoints.filter { $0.category == .food }.count == 1)
+        #expect(spare.candidates.contains { $0.poi.category == .food && $0.status == .rejected(.categoryCap) })
+
+        let foodOnly = try await plan(food + sights, budget: 60 * 60, interests: [.food])
+        #expect(foodOnly.waypoints.filter { $0.category == .food }.count == 2)
+
+        var config = PlannerConfig()
+        config.categoryLimits = [:]
+        let unlimited = try await plan(food + sights, budget: 60 * 60, planner: Planner(config: config))
+        #expect(unlimited.waypoints.filter { $0.category == .food }.count == 2)
+    }
+
     @Test func rejectsBacktracking() async throws {
         // Directly behind the origin: the A→p leg points backwards.
         let behind = Grid.poi("behind", east: -400, north: 0, score: 100)
