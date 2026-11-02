@@ -30,6 +30,7 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 | boost   | points (default 20)       | add to its score (max 100)          |
 | rename  | new name                  | replace the display name            |
 | reason  | short text                | replace the auto-drafted reason     |
+| image   | Commons file name, or empty | replace or remove the sight's photo |
 
 `cache/` is not committed. `review/` and the app's `pois-*.json` are.
 

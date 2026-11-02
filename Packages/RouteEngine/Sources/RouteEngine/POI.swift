@@ -36,11 +36,13 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var cuisine: [String]?
     /// Raw OSM `opening_hours` syntax, e.g. "Mo-Sa 10:00-20:00". Shops and food only.
     public var openingHours: String?
+    /// Wikimedia Commons file name of the place's own photo (no "File:" prefix). Sights only.
+    public var commonsImage: String?
 
     public init(id: String, name: String, lat: Double, lon: Double,
                 category: POICategory, score: Int, kind: POIKind, reason: String = "",
                 type: String? = nil, signals: Signals? = nil, cuisine: [String]? = nil,
-                openingHours: String? = nil) {
+                openingHours: String? = nil, commonsImage: String? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -53,13 +55,14 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.signals = signals
         self.cuisine = cuisine
         self.openingHours = openingHours
+        self.commonsImage = commonsImage
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
 
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
-        case type, signals, cuisine, openingHours
+        case type, signals, cuisine, openingHours, commonsImage
     }
 
     public init(from decoder: Decoder) throws {
@@ -76,6 +79,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         signals = try c.decodeIfPresent(Signals.self, forKey: .signals)
         cuisine = try c.decodeIfPresent([String].self, forKey: .cuisine)
         openingHours = try c.decodeIfPresent(String.self, forKey: .openingHours)
+        commonsImage = try c.decodeIfPresent(String.self, forKey: .commonsImage)
     }
 }
 
