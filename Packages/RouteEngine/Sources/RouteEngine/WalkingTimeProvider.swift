@@ -1,7 +1,7 @@
 import Foundation
 
 /// One walking leg between two points.
-public struct Leg: Sendable {
+public struct Leg: Hashable, Sendable {
     public var from: Coordinate
     public var to: Coordinate
     /// Seconds.
@@ -26,7 +26,7 @@ public protocol WalkingTimeProvider: Sendable {
 }
 
 /// Offline estimate: straight-line distance × tortuosity / walking speed.
-public struct HaversineWalkingTime: WalkingTimeProvider {
+public struct HaversineWalkingTime: WalkingTimeProvider, Hashable {
     public static let defaultSpeed = 1.35       // m/s
     public static let defaultTortuosity = 1.3   // street path vs straight line
 
