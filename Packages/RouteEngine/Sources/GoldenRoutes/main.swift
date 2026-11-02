@@ -10,6 +10,8 @@ import RouteEngine
 //   --streets  verify on L-shaped streets (like real routing, often shorter than the
 //              planner's 1.3× straight-line estimate) instead of the estimate itself
 //   --passes   also list the free pass-by highlights on each Explorer route
+//   --sequence walk the routes in order on one day: each route's Explorer stops
+//              are added to PlanRequest.seen for the routes after it
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
 
@@ -42,7 +44,8 @@ let weightsArg = option("--weights")
 let presetArg = option("--preset")
 let useStreets = args.contains("--streets")
 let showPasses = args.contains("--passes")
-args.removeAll { $0 == "--streets" || $0 == "--passes" }
+let sequence = args.contains("--sequence")
+args.removeAll { $0 == "--streets" || $0 == "--passes" || $0 == "--sequence" }
 let timeArg = option("--time")
 
 let goldenURL = URL(fileURLWithPath: args.first ?? "golden_routes.json")
@@ -115,7 +118,8 @@ func glyph(_ c: POICategory) -> String {
 
 let withHours = file.pois.compactMap(\.openingHours)
 let parsed = withHours.filter { OpeningHours($0) != nil }.count
-print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), \(useStreets ? "L-shaped street" : "haversine") provider")
+print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), \(useStreets ? "L-shaped street" : "haversine") provider"
+      + (sequence ? ", one day in sequence (earlier Explorer stops are seen)" : ""))
 print("Value: " + (presetArg.map { "preset \($0), " } ?? "") + (weights.map { "signals × weights \($0)" } ?? "score")
       + " · time: " + (timeArg.map { "\($0) \(golden.timeZone)" } ?? "not checked")
       + " · opening hours parsed: \(parsed)/\(withHours.count)\n")
@@ -131,6 +135,8 @@ var waypointCounts: [String: Int] = [:]
 var foodPerRoute: [Int] = []
 var sameRelaxedExplorer: [String] = []
 var budgetUse: [Mode: [Double]] = [:]
+var seen: Set<String> = []
+var seenAgain = 0
 
 for (index, route) in golden.routes.enumerated() {
     let origin = Coordinate(lat: route.from[0], lon: route.from[1])
@@ -140,7 +146,7 @@ for (index, route) in golden.routes.enumerated() {
     // All modes in one call, as the app does: Explorer must differ from Relaxed.
     let modePlans = try await planner.plans(
         PlanRequest(origin: origin, destination: destination, mode: .direct, weights: weights,
-                    pois: file.pois, time: time, timeZone: timeZone),
+                    pois: file.pois, time: time, timeZone: timeZone, seen: sequence ? seen : []),
         provider: provider)
     for mode in Mode.allCases {
         let plan = modePlans[mode]!
@@ -172,6 +178,9 @@ for (index, route) in golden.routes.enumerated() {
         if mode.budget > 0 { budgetUse[mode, default: []].append(plan.extraTime / mode.budget) }
     }
     if waypointSets[.relaxed] == waypointSets[.explorer] { sameRelaxedExplorer.append("\(index + 1)") }
+    let explorerStops = modePlans[.explorer]!.waypoints.map(\.id)
+    seenAgain += explorerStops.filter { seen.contains($0) }.count
+    seen.formUnion(explorerStops)
     // Pass-by highlights on the Explorer route, for eyeballing.
     let passby = (explorerPlan?.highlights ?? []).filter { $0.role == .passby }.map { "\($0.poi.name) (\($0.poi.score))" }
     if showPasses, !passby.isEmpty {
@@ -195,6 +204,7 @@ for mode in [Mode.relaxed, .explorer] {
 let repeated = waypointCounts.filter { $0.value > 1 }.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
 print("Explorer waypoints used on 2+ routes: " + (repeated.isEmpty ? "none"
     : repeated.map { "\($0.key) ×\($0.value)" }.joined(separator: ", ")))
+print("Explorer stops already used on an earlier route: \(seenAgain) of \(waypointCounts.values.reduce(0, +))")
 print("Explorer food waypoints per route: " + foodPerRoute.map(String.init).joined(separator: " ")
       + "   (distinct waypoints: \(waypointCounts.count))")
 print("Explorer rejections: " + reasonCounts.sorted { ($0.value, $1.key) > ($1.value, $0.key) }

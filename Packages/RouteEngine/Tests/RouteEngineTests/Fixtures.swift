@@ -95,3 +95,14 @@ struct FastWalkingTime: WalkingTimeProvider {
         return leg
     }
 }
+
+extension PlannerConfig {
+    /// Defaults without freeing near-free waypoints: the synthetic POIs sit
+    /// 150 m off the route (about 20 s of detour) and would all be freed,
+    /// hiding the selection rules these tests check.
+    static var selection: PlannerConfig {
+        var config = PlannerConfig()
+        config.freeBelow = 0
+        return config
+    }
+}

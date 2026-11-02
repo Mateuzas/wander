@@ -3,12 +3,12 @@ import Testing
 @testable import RouteEngine
 
 struct PlannerTests {
-    let planner = Planner()
+    let planner = Planner(config: .selection)
     let provider = HaversineWalkingTime()
 
     func plan(_ pois: [POI], budget: TimeInterval, interests: Set<POICategory> = Set(POICategory.allCases),
               weights: SignalWeights? = nil,
-              planner: Planner = Planner(), provider: WalkingTimeProvider = HaversineWalkingTime()) async throws -> WanderPlan {
+              planner: Planner = Planner(config: .selection), provider: WalkingTimeProvider = HaversineWalkingTime()) async throws -> WanderPlan {
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination,
                                   budget: budget, interests: interests, weights: weights, pois: pois)
         return try await planner.plan(request, provider: provider)
@@ -51,7 +51,7 @@ struct PlannerTests {
         let result = try await plan(spread, budget: 60 * 60)
         #expect(result.waypoints.count == 3)
 
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.maxWaypoints = 1
         let one = try await plan(spread, budget: 60 * 60, planner: Planner(config: config))
         #expect(one.waypoints.count == 1)
@@ -60,7 +60,7 @@ struct PlannerTests {
 
     @Test func explorerAllowsFiveStopsRelaxedThree() async throws {
         func modePlan(_ mode: Mode) async throws -> WanderPlan {
-            try await Planner().plan(PlanRequest(origin: Grid.origin, destination: Grid.destination,
+            try await Planner(config: .selection).plan(PlanRequest(origin: Grid.origin, destination: Grid.destination,
                                                  mode: mode, pois: spread), provider: HaversineWalkingTime())
         }
         let relaxed = try await modePlan(.relaxed)
@@ -69,7 +69,7 @@ struct PlannerTests {
         #expect(explorer.waypoints.count == 5)
         // Five slots allow three of a category (food stays at one).
         for category in POICategory.allCases {
-            #expect(explorer.waypoints.filter { $0.category == category }.count <= (category == .food ? 1 : 3))
+            #expect(explorer.waypoints.filter { $0.category == category }.count <= (category == .photo ? 3 : 1))
         }
     }
 
@@ -115,7 +115,7 @@ struct PlannerTests {
         #expect(mixed.waypoints.count == 3)
 
         // With a free slot left, the cap is what keeps the other food out.
-        var roomy = PlannerConfig()
+        var roomy = PlannerConfig.selection
         roomy.maxWaypoints = 4
         let spare = try await plan(food + sights, budget: 60 * 60, planner: Planner(config: roomy))
         #expect(spare.waypoints.filter { $0.category == .food }.count == 1)
@@ -124,10 +124,21 @@ struct PlannerTests {
         let foodOnly = try await plan(food + sights, budget: 60 * 60, interests: [.food])
         #expect(foodOnly.waypoints.filter { $0.category == .food }.count == 2)
 
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.categoryLimits = [:]
         let unlimited = try await plan(food + sights, budget: 60 * 60, planner: Planner(config: config))
         #expect(unlimited.waypoints.filter { $0.category == .food }.count == 2)
+    }
+
+    @Test func atMostOneShopUnlessShopsOnly() async throws {
+        let shops = (0..<4).map { i in
+            Grid.poi("s\(i)", east: 300 + Double(i) * 450, north: 250, category: .shop, score: 95)
+        }
+        let sights = (0..<2).map { i in Grid.poi("p\(i)", east: 600 + Double(i) * 700, north: -250, score: 60) }
+        let mixed = try await plan(shops + sights, budget: 60 * 60)
+        #expect(mixed.waypoints.filter { $0.category == .shop }.count == 1)
+        let shopsOnly = try await plan(shops + sights, budget: 60 * 60, interests: [.shop])
+        #expect(shopsOnly.waypoints.filter { $0.category == .shop }.count == 2)
     }
 
     @Test func rejectsBacktracking() async throws {
@@ -166,7 +177,7 @@ struct PlannerTests {
         // when the budget allows it.
         let close = Grid.poi("close", east: 1000, north: 100, score: 60)
         let far = Grid.poi("far", east: 1000, north: 700, score: 70)
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.maxWaypoints = 1
         let result = try await plan([close, far], budget: 30 * 60, planner: Planner(config: config))
         #expect(result.waypoints.map(\.id) == ["far"])
@@ -175,7 +186,7 @@ struct PlannerTests {
     @Test func equalValuePrefersLessTime() async throws {
         let close = Grid.poi("close", east: 1000, north: 100, score: 70)
         let far = Grid.poi("far", east: 1000, north: 700, score: 70)
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.maxWaypoints = 1
         let result = try await plan([close, far], budget: 30 * 60, planner: Planner(config: config))
         #expect(result.waypoints.map(\.id) == ["close"])
@@ -206,7 +217,7 @@ struct PlannerTests {
         famous.signals = Signals(photos: 0.2, fame: 0.9, quality: 0.5, independent: false)
         var photogenic = Grid.poi("photogenic", east: 1000, north: -150, score: 50)
         photogenic.signals = Signals(photos: 0.9, fame: 0.1, quality: 0.5, independent: true)
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.maxWaypoints = 1
         let one = Planner(config: config)
 
@@ -252,14 +263,14 @@ struct PlannerTests {
         #expect(result.waypoints.isEmpty)
         #expect(result.candidates.first?.status == .rejected(.lowValue))
 
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.minWaypointValue = 20
         let lenient = try await plan([weak], budget: 25 * 60, planner: Planner(config: config))
         #expect(lenient.waypoints.map(\.id) == ["weak"])
     }
 
     @Test func overBudgetBeatsMaxWaypointsInDebug() async throws {
-        var config = PlannerConfig()
+        var config = PlannerConfig.selection
         config.maxWaypoints = 1
         let near = Grid.poi("near", east: 1000, north: 200, score: 90)
         let far = Grid.poi("far", east: 1000, north: 1500, score: 90)
@@ -289,12 +300,12 @@ struct PlannerTests {
             let pois = randomPOIs(count: 60, using: &rng)
             let request = PlanRequest(origin: origin, destination: destination, budget: budget, pois: pois)
 
-            let estimated = try await planner.plan(request, provider: provider)
+            let estimated = try await Planner().plan(request, provider: provider)
             #expect(estimated.extraTime <= budget + 1e-6)
             #expect(estimated.waypoints.count <= 3)
 
             // Real routing slower than the estimate: within the 10% tolerance.
-            let noisy = try await planner.plan(request, provider: NoisyWalkingTime())
+            let noisy = try await Planner().plan(request, provider: NoisyWalkingTime())
             #expect(noisy.extraTime <= budget * 1.1 + 1e-6)
         }
     }
@@ -326,12 +337,12 @@ struct PlannerTests {
     }
 
     @Test func topsUpWhenRealRoutesBeatTheEstimate() async throws {
-        var off = PlannerConfig()
+        var off = PlannerConfig.selection
         off.topUpBelow = 0
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, budget: 10 * 60,
                                   pois: farStops, maxWaypoints: 5)
         let without = try await Planner(config: off).plan(request, provider: FastWalkingTime())
-        let with = try await Planner().plan(request, provider: FastWalkingTime())
+        let with = try await Planner(config: .selection).plan(request, provider: FastWalkingTime())
         #expect(without.waypoints.count == 2)
         #expect(without.extraTime < 0.7 * 10 * 60)
         #expect(with.waypoints.count == 3)
@@ -342,7 +353,7 @@ struct PlannerTests {
     }
 
     @Test func explorerAddsAStopRelaxedDoesNotHave() async throws {
-        let plans = try await Planner().plans(
+        let plans = try await Planner(config: .selection).plans(
             PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: spread),
             provider: HaversineWalkingTime())
         let relaxed = Set(plans[.relaxed]!.waypoints.map(\.id))
@@ -353,8 +364,8 @@ struct PlannerTests {
 
         // Asked to differ from its own best plan, a mode finds another walk.
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .relaxed, pois: spread)
-        let first = try await Planner().plan(request, provider: HaversineWalkingTime())
-        let second = try await Planner().plan(request, provider: HaversineWalkingTime(), distinctFrom: [first])
+        let first = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
+        let second = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime(), distinctFrom: [first])
         #expect(!Set(second.waypoints.map(\.id)).isSubset(of: Set(first.waypoints.map(\.id))))
     }
 
@@ -362,7 +373,7 @@ struct PlannerTests {
         // Only two POIs exist; Explorer can't add anything new, and dropping
         // one just to differ would make it worse than Relaxed.
         let two = [Grid.poi("a", east: 500, north: 150), Grid.poi("b", east: 1500, north: -150, category: .shop)]
-        let plans = try await Planner().plans(
+        let plans = try await Planner(config: .selection).plans(
             PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: two),
             provider: HaversineWalkingTime())
         #expect(Set(plans[.relaxed]!.waypoints.map(\.id)) == ["a", "b"])
@@ -372,13 +383,13 @@ struct PlannerTests {
     @Test func modesShareRealLegs() async throws {
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .direct, pois: spread)
         let together = CountingWalkingTime()
-        _ = try await Planner().plans(request, provider: together)
+        _ = try await Planner(config: .selection).plans(request, provider: together)
         let separate = CountingWalkingTime()
         for mode in Mode.allCases {
             var r = request
             r.budget = mode.budget
             r.maxWaypoints = mode.maxWaypoints
-            _ = try await Planner().plan(r, provider: separate)
+            _ = try await Planner(config: .selection).plan(r, provider: separate)
         }
         #expect(await together.counter.count < separate.counter.count)
     }
@@ -404,6 +415,60 @@ struct PlannerTests {
                 }
             }
         }
+    }
+
+    // MARK: Seen
+
+    @Test func seenPlacesGiveWayToNewOnes() async throws {
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .relaxed, pois: spread)
+        let first = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
+        var again = request
+        again.seen = Set(first.waypoints.map(\.id))
+        let second = try await Planner(config: .selection).plan(again, provider: HaversineWalkingTime())
+        #expect(!second.waypoints.isEmpty)
+        #expect(Set(first.waypoints.map(\.id)).isDisjoint(with: Set(second.waypoints.map(\.id))))
+        for poi in first.waypoints {
+            let debug = second.candidates.first { $0.poi.id == poi.id }!
+            #expect(abs(debug.value - Double(poi.score) * 0.2) < 1e-9)
+            #expect(debug.status == .rejected(.seen) || debug.status == .passby)
+        }
+    }
+
+    // MARK: Freeing stops on the way
+
+    @Test func waypointsAreNeverOnTheWay() async throws {
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .relaxed, pois: spread)
+        let kept = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
+        let freeing = try await Planner().plan(request, provider: HaversineWalkingTime())
+
+        // Every remaining waypoint costs a real minute or more.
+        let stops = [Grid.origin] + freeing.waypoints.map(\.coordinate) + [Grid.destination]
+        let h = HaversineWalkingTime()
+        for i in freeing.waypoints.indices {
+            let detour = h.seconds(from: stops[i], to: stops[i + 1]) + h.seconds(from: stops[i + 1], to: stops[i + 2])
+                - h.seconds(from: stops[i], to: stops[i + 2])
+            #expect(detour >= 60 - 1e-6)
+        }
+        // Selection alone would have spent slots on near-free stops.
+        #expect(Set(kept.waypoints.map(\.id)) != Set(freeing.waypoints.map(\.id)))
+        #expect(!freeing.noDetourFit)
+        #expect(freeing.extraTime <= Mode.relaxed.budget * 1.1)
+    }
+
+    @Test func freedSlotsGoToTheTopUp() async throws {
+        // One slot. "gem" is the most valuable and the estimate puts it 90 s
+        // off the way, but real routing (0.6×) does it in ~54 s: it's freed
+        // into a highlight and the slot goes to a real detour.
+        let gem = Grid.poi("gem", east: 1000, north: 308, score: 95)
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, budget: 10 * 60,
+                                  pois: [gem] + farStops, maxWaypoints: 1)
+        let kept = try await Planner(config: .selection).plan(request, provider: FastWalkingTime())
+        #expect(kept.waypoints.map(\.id) == ["gem"])
+        let plan = try await Planner().plan(request, provider: FastWalkingTime())
+        #expect(plan.waypoints.count == 1)
+        #expect(plan.waypoints.first?.id.hasPrefix("f") == true)
+        #expect(plan.highlights.contains { $0.poi.id == "gem" && $0.role == .passby })
+        #expect(plan.extraTime > kept.extraTime)
     }
 
     // MARK: Determinism

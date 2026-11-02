@@ -76,7 +76,7 @@ struct OpeningHoursTests {
 
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .explorer,
                                   pois: [closed, unreadable, open], time: sunday, timeZone: Self.warsaw)
-        let result = try await Planner().plan(request, provider: HaversineWalkingTime())
+        let result = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
         #expect(!result.waypoints.contains { $0.id == "closed" })
         #expect(result.candidates.first { $0.poi.id == "closed" }?.status == .rejected(.closed))
         #expect(Set(result.waypoints.map(\.id)) == ["unreadable", "noHours"])
@@ -84,7 +84,7 @@ struct OpeningHoursTests {
         // Without a time, hours are not checked.
         var anyTime = request
         anyTime.time = nil
-        let noTime = try await Planner().plan(anyTime, provider: HaversineWalkingTime())
+        let noTime = try await Planner(config: .selection).plan(anyTime, provider: HaversineWalkingTime())
         #expect(noTime.waypoints.contains { $0.id == "closed" })
     }
 }

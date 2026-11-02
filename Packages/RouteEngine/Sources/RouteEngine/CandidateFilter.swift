@@ -47,7 +47,7 @@ struct CandidateFilter {
                 continue
             }
             guard value >= config.minWaypointValue else {
-                result.rejected[poi.id] = .lowValue
+                result.rejected[poi.id] = request.seen.contains(poi.id) ? .seen : .lowValue
                 continue
             }
             let via = estimator.seconds(from: request.origin, to: poi.coordinate)

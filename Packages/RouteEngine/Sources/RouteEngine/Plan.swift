@@ -44,6 +44,10 @@ public struct PlanRequest: Sendable {
     public var time: Date?
     /// Time zone for reading `openingHours`: the city's, not the phone's.
     public var timeZone: TimeZone
+    /// POI ids the walker has already been shown (e.g. earlier walks today).
+    /// Their value is cut by `PlannerConfig.seenFactor` so repeat walks
+    /// favour new places; they still show as free highlights when passed.
+    public var seen: Set<String>
     /// Most waypoints for this plan. Nil uses `PlannerConfig.maxWaypoints`;
     /// the `mode:` initializer sets it from the mode.
     public var maxWaypoints: Int?
@@ -51,7 +55,7 @@ public struct PlanRequest: Sendable {
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
                 pois: [POI], time: Date? = nil,
-                timeZone: TimeZone = .current, maxWaypoints: Int? = nil) {
+                timeZone: TimeZone = .current, maxWaypoints: Int? = nil, seen: Set<String> = []) {
         self.origin = origin
         self.destination = destination
         self.budget = max(0, budget)
@@ -61,15 +65,16 @@ public struct PlanRequest: Sendable {
         self.time = time
         self.timeZone = timeZone
         self.maxWaypoints = maxWaypoints
+        self.seen = seen
     }
 
     public init(origin: Coordinate, destination: Coordinate, mode: Mode,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
                 pois: [POI], time: Date? = nil,
-                timeZone: TimeZone = .current) {
+                timeZone: TimeZone = .current, seen: Set<String> = []) {
         self.init(origin: origin, destination: destination, budget: mode.budget,
                   interests: interests, weights: weights, pois: pois, time: time, timeZone: timeZone,
-                  maxWaypoints: mode.maxWaypoints)
+                  maxWaypoints: mode.maxWaypoints, seen: seen)
     }
 }
 
@@ -150,6 +155,12 @@ public enum RejectionReason: String, Hashable, Sendable {
     case categoryCap
     /// Fits the budget, but a set of waypoints with more total value was chosen.
     case outvalued
+    /// Under a minute off the walk (`PlannerConfig.freeBelow`): never worth a
+    /// Already shown on an earlier walk (`PlanRequest.seen`), and its reduced
+    /// value is too low to detour for.
+    case seen
+    /// slot. It shows as a highlight if the route passes within `passbyRadius`.
+    case onTheWay
     /// Every insertion that fits the budget would make the route backtrack.
     case backtracks
     /// Chosen by the estimate, then dropped because real routing went over budget.
