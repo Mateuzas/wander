@@ -41,13 +41,18 @@ def fetch_sitelinks(qids, cache, path):
         print(f"  wikidata {min(i + 50, len(missing))}/{len(missing)}")
 
 
-def commons_tile(s, w, n, e):
-    res = http_json(COMMONS, params={
-        "action": "query", "list": "geosearch", "gsbbox": f"{n}|{w}|{s}|{e}",
-        "gslimit": TILE_LIMIT, "gsnamespace": 6, "format": "json",
-    })
-    if "error" in res:
-        raise RuntimeError(res["error"])
+def commons_tile(s, w, n, e, attempts=5):
+    for attempt in range(attempts):
+        res = http_json(COMMONS, params={
+            "action": "query", "list": "geosearch", "gsbbox": f"{n}|{w}|{s}|{e}",
+            "gslimit": TILE_LIMIT, "gsnamespace": 6, "format": "json",
+        })
+        if "error" not in res:
+            break
+        if attempt == attempts - 1 or "too-busy" not in res["error"].get("code", ""):
+            raise RuntimeError(res["error"])
+        print(f"  search busy, retry in {20 * (attempt + 1)}s", flush=True)
+        time.sleep(20 * (attempt + 1))
     return [(g["lat"], g["lon"]) for g in res.get("query", {}).get("geosearch", [])]
 
 
