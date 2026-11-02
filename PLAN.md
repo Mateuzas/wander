@@ -208,16 +208,16 @@ OSM data is ODbL: show "© OpenStreetMap contributors" in the app (about screen 
 
 ### Steps
 1. **Baseline.** Ask the provider for the walking route origin→destination. This gives `T0` and the fast polyline.
-2. **Pass-by freebies.** Any `passby` POI within ~40 m of the baseline polyline is already on the route. Mark it as a highlight at zero cost (this alone often makes Direct mode feel smarter).
+2. **Pass-by freebies.** Any POI within ~40 m of the baseline polyline is already on the route (sights, and also shops and food you walk past). Mark it as a highlight at zero cost (this alone often makes Direct mode feel smarter).
 3. **Corridor filter.** Keep candidates where the straight-line estimate satisfies
    `(d(A,p) + d(p,B) − d(A,B)) × 1.3 / walkingSpeed ≤ budget`
    (1.3 = rough street tortuosity, walking speed ≈ 1.35 m/s). Cheap, no network.
 4. **Greedy insertion** (cost-benefit heuristic for the orienteering problem):
    - Maintain `route = [A, B]`.
    - For each candidate and each insertion position, estimate the extra time using the haversine provider.
-   - Pick the (candidate, position) with the best `value / extraTime` where `value = score × interestWeight`.
+   - Pick the (candidate, position) with the best `value / extraTime` where `value = score × interestWeight`, or 100 × Σ weight × signal (weights normalised by Σ |weight|) when the request carries a weights profile and the POI has `signals`. POIs worth less than 35 are never waypoints.
    - Insert it if total estimated time ≤ `T0 + budget`. Repeat.
-   - Constraints: max 3 waypoints (keeps routes sane and Google Maps hand-off simple), min 150 m between chosen waypoints, max 2 of the same category, no waypoint that makes the route backtrack more than 60° against the A→B direction.
+   - Constraints: max 3 waypoints (keeps routes sane and Google Maps hand-off simple), min 150 m between chosen waypoints, max 2 of the same category, no waypoint that makes the route backtrack more than 120° against the A→B direction (legs under 100 m are not checked: their headings are noisy). Owner decision 2026-11-02; 60° rejected nearly every side detour.
 5. **Verify with real routing.** Run `MapKitWalkingTime` for each leg (A→w1, w1→w2, …, wn→B). If the real total exceeds `T0 + budget × 1.1`, drop the waypoint with the lowest `value / extraTime` and re-verify (max 2 retries).
 6. **Fall back gracefully.** If nothing fits, return the baseline route with the freebies and a flag `noDetourFit = true`.
 
