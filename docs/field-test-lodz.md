@@ -8,7 +8,7 @@ What we want to learn (PLAN.md §3): do people pick the Wander route over the fa
 - [ ] Walking mode (milestone 5) is merged and installed. Without it you can only test planning.
 - [ ] Phone charged plus a power bank: GPS with the screen on uses a lot.
 - [ ] Mobile data works in Poland (routes need internet; the places are in the app).
-- [ ] Optional: try a walk from home first with `scripts/fake-location.py walk fabryczna manufaktura`.
+- [ ] Check the phone uses real GPS: Apple Maps should show you where you actually are.
 
 ## During each walk
 
