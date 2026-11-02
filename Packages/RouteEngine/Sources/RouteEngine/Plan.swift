@@ -17,6 +17,15 @@ public enum Mode: String, CaseIterable, Codable, Hashable, Sendable {
 
     /// Extra time allowed over the fast route, in seconds.
     public var budget: TimeInterval { TimeInterval(extraMinutes) * 60 }
+
+    /// Most stops the route may be bent to visit.
+    public var maxWaypoints: Int {
+        switch self {
+        case .direct: 0
+        case .relaxed: 3
+        case .explorer: 5
+        }
+    }
 }
 
 /// Everything the planner needs for one plan.
@@ -35,11 +44,14 @@ public struct PlanRequest: Sendable {
     public var time: Date?
     /// Time zone for reading `openingHours`: the city's, not the phone's.
     public var timeZone: TimeZone
+    /// Most waypoints for this plan. Nil uses `PlannerConfig.maxWaypoints`;
+    /// the `mode:` initializer sets it from the mode.
+    public var maxWaypoints: Int?
 
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
                 pois: [POI], time: Date? = nil,
-                timeZone: TimeZone = .current) {
+                timeZone: TimeZone = .current, maxWaypoints: Int? = nil) {
         self.origin = origin
         self.destination = destination
         self.budget = max(0, budget)
@@ -48,6 +60,7 @@ public struct PlanRequest: Sendable {
         self.pois = pois
         self.time = time
         self.timeZone = timeZone
+        self.maxWaypoints = maxWaypoints
     }
 
     public init(origin: Coordinate, destination: Coordinate, mode: Mode,
@@ -55,7 +68,8 @@ public struct PlanRequest: Sendable {
                 pois: [POI], time: Date? = nil,
                 timeZone: TimeZone = .current) {
         self.init(origin: origin, destination: destination, budget: mode.budget,
-                  interests: interests, weights: weights, pois: pois, time: time, timeZone: timeZone)
+                  interests: interests, weights: weights, pois: pois, time: time, timeZone: timeZone,
+                  maxWaypoints: mode.maxWaypoints)
     }
 }
 

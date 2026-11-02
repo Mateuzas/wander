@@ -1,7 +1,7 @@
 import Foundation
 
 /// Real-route verification (PLAN.md section 6, step 5). All routing goes
-/// through the `WalkingTimeProvider`.
+/// through the `WalkingTimeProvider`, via a `LegStore`.
 struct Validator {
     var config: PlannerConfig
     var scorer: Scorer
@@ -13,37 +13,20 @@ struct Validator {
         var dropped: [POI]
     }
 
-    private struct LegKey: Hashable {
-        var from: Coordinate
-        var to: Coordinate
-    }
-
     func verify(origin: Coordinate, destination: Coordinate, waypoints: [POI], baseline: Leg,
-                budget: TimeInterval, provider: WalkingTimeProvider) async throws -> Result {
+                budget: TimeInterval, store: LegStore, taken: TakenStops = TakenStops()) async throws -> Result {
         guard !waypoints.isEmpty else { return Result(waypoints: [], legs: [baseline], dropped: []) }
 
         let limit = baseline.duration + budget * (1 + config.verificationTolerance)
-        var cache: [LegKey: Leg] = [LegKey(from: origin, to: destination): baseline]
         var kept = waypoints
         var dropped: [POI] = []
 
         for attempt in 0...config.maxVerificationRetries {
-            let stops = [origin] + kept.map(\.coordinate) + [destination]
-            var legs: [Leg] = []
-            for i in 1..<stops.count {
-                let key = LegKey(from: stops[i - 1], to: stops[i])
-                if let leg = cache[key] {
-                    legs.append(leg)
-                } else {
-                    let leg = try await provider.leg(from: key.from, to: key.to)
-                    cache[key] = leg
-                    legs.append(leg)
-                }
-            }
+            let legs = try await store.legs(origin: origin, waypoints: kept, destination: destination)
             let total = legs.reduce(0) { $0 + $1.duration }
             if total <= limit { return Result(waypoints: kept, legs: legs, dropped: dropped) }
             guard attempt < config.maxVerificationRetries, kept.count > 1 else { break }
-            let weakest = weakestIndex(origin: origin, destination: destination, waypoints: kept)
+            let weakest = weakestIndex(origin: origin, destination: destination, waypoints: kept, taken: taken)
             dropped.append(kept.remove(at: weakest))
         }
         // Still over budget: fall back to the fast route (step 6).
@@ -51,22 +34,52 @@ struct Validator {
     }
 
     /// Index of the waypoint with the lowest `value / extraTime`, where extra
-    /// time is its estimated marginal cost in the current route.
-    private func weakestIndex(origin: Coordinate, destination: Coordinate, waypoints: [POI]) -> Int {
+    /// time is its estimated marginal cost in the current route. Drops that
+    /// would leave a smaller mode's stops (or a subset) are avoided when
+    /// another drop is possible.
+    private func weakestIndex(origin: Coordinate, destination: Coordinate, waypoints: [POI],
+                              taken: TakenStops) -> Int {
         let estimator = config.estimator
         let stops = [origin] + waypoints.map(\.coordinate) + [destination]
-        var weakest = 0
-        var weakestRatio = Double.infinity
-        for i in waypoints.indices {
+        let ranked = waypoints.indices.map { i -> (index: Int, ratio: Double) in
             let a = stops[i], p = stops[i + 1], b = stops[i + 2]
             let marginal = estimator.seconds(from: a, to: p) + estimator.seconds(from: p, to: b)
                 - estimator.seconds(from: a, to: b)
-            let ratio = scorer.ratio(waypoints[i], extraTime: marginal)
-            if ratio < weakestRatio {
-                weakestRatio = ratio
-                weakest = i
-            }
+            return (i, scorer.ratio(waypoints[i], extraTime: marginal))
+        }.sorted { ($0.ratio, $0.index) < ($1.ratio, $1.index) }
+        let allowed = ranked.first { candidate in
+            var rest = waypoints
+            rest.remove(at: candidate.index)
+            return taken.isEmpty || taken.isNew(rest)
         }
-        return weakest
+        return (allowed ?? ranked[0]).index
     }
+}
+
+/// Order-independent identity of a waypoint set: the same stops in another
+/// order are the same walk for comparing modes.
+func waypointKey(_ waypoints: [POI]) -> String {
+    waypoints.map(\.id).sorted().joined(separator: "|")
+}
+
+/// Stop sets already used by smaller modes. A set is new only if it has a
+/// stop none of them has: the same stops, or a subset of them, would make a
+/// bigger mode the same walk or a worse one.
+struct TakenStops: Sendable {
+    var sets: [Set<String>] = []
+
+    init(_ plans: [[POI]] = []) {
+        sets = plans.filter { !$0.isEmpty }.map { Set($0.map(\.id)) }
+    }
+
+    mutating func add(_ waypoints: [POI]) {
+        if !waypoints.isEmpty { sets.append(Set(waypoints.map(\.id))) }
+    }
+
+    func isNew(_ waypoints: [POI]) -> Bool {
+        let ids = Set(waypoints.map(\.id))
+        return !sets.contains { ids.isSubset(of: $0) }
+    }
+
+    var isEmpty: Bool { sets.isEmpty }
 }
