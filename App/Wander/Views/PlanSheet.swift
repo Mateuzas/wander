@@ -126,7 +126,7 @@ struct PlanSheet: View {
                 Spacer()
                 Menu {
                     Picker("Route style", selection: $planner.profile) {
-                        ForEach(RouteProfile.allCases) { Text($0.title).tag($0) }
+                        ForEach(WeightPreset.allCases) { Text($0.title).tag($0) }
                     }
                 } label: {
                     HStack(spacing: Layout.grid / 2) {
