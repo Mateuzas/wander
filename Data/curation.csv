@@ -1,1 +1,73 @@
 osm_id,action,value,note
+# --- Łódź, first pass by Claude (2026-11-02). Unverified: check during the field test. ---
+# Same place tagged twice: keep one bead per building
+osm:node:432504799,exclude,,Claude draft: city museum is inside Izrael Poznański Palace (way 37550695)
+osm:node:6176514222,exclude,,Claude draft: same palace as the Museum of Cinematography
+osm:way:405391765,exclude,,Claude draft: textile museum is the White Factory (node 4283899056)
+osm:way:375002193,exclude,,Claude draft: generic EC1 outline; EC1 Science and Technology Centre covers it
+osm:way:987177326,exclude,,Claude draft: second half of the same EC1 machinery display
+osm:way:987137646,exclude,,Claude draft: part of the same EC1 machinery display
+osm:way:987137643,exclude,,Claude draft: part of the same EC1 machinery display
+osm:node:12063407601,exclude,,Claude draft: unnamed sculpture 8 m from Jaracz's Armchair (likely the same object)
+osm:node:12066384545,exclude,,Claude draft: generic gallery name 11 m from Re:Medium Gallery
+osm:node:1659461054,exclude,,Claude draft: villa garden; the villa itself is listed
+# Not worth a detour: small markers, infrastructure, temporary or closed-door things
+osm:node:8100623031,exclude,,Claude draft: old hydrant
+osm:node:9126111719,exclude,,Claude draft: water tank
+osm:node:12768612629,exclude,,Claude draft: water tank
+osm:node:7922852185,exclude,,Claude draft: plaque marking a park's founding date
+osm:node:1659496881,exclude,,Claude draft: surroundings of a tenement already listed
+osm:node:4138913808,exclude,,Claude draft: memorial plaque
+osm:node:11395913845,exclude,,Claude draft: memorial stone
+osm:node:11758960829,exclude,,Claude draft: memorial stone
+osm:node:10916444154,exclude,,Claude draft: memorial stone
+osm:node:13153242568,exclude,,Claude draft: exhibition that may be temporary
+osm:node:3743286502,exclude,,Claude draft: book-swap box
+osm:node:1624531091,exclude,,Claude draft: former company store, nothing to see
+# Chains not tagged as brands in OSM
+osm:node:475373797,exclude,,Claude draft: Sphinx is a national restaurant chain
+osm:node:475373798,exclude,,Claude draft: Bierhalle is a national restaurant chain
+osm:node:5743600953,exclude,,Claude draft: Świat Książki is a bookshop chain
+# Shops that are not for browsing
+osm:node:12578585904,exclude,,Claude draft: baby goods store
+osm:node:4262872614,exclude,,Claude draft: portrait photo studio
+osm:way:201385570,exclude,,Claude draft: religious bookshop
+osm:way:102851812,exclude,,Claude draft: religious bookshop
+# Gems that score low because few photos are geotagged exactly there
+osm:relation:12609642,boost,30,Claude draft: Passage of Roses is one of Łódź's signature sights
+osm:node:1842609517,boost,15,Claude draft: Księży Młyn is a must-see industrial village
+osm:way:37550695,boost,10,Claude draft: Poznański Palace is the city's best-known palace
+osm:node:6173564343,boost,25,Claude draft: only point for Manufaktura, the city's main destination
+osm:node:6171264108,boost,15,Claude draft: Maurycy Poznański Palace (MS1 area)
+osm:node:1880679870,boost,10,Claude draft: Tuwim's Bench is a classic Piotrkowska photo stop
+# Human reasons (PLAN.md 10: short, concrete, no marketing)
+osm:way:174955733,reason,Onion-domed Orthodox cathedral from the 1880s,Claude draft
+osm:way:283202330,reason,Neo-Gothic cathedral at the south end of Piotrkowska,Claude draft
+osm:node:8771864634,reason,Stars of Polish film-makers set into Piotrkowska's pavement,Claude draft
+osm:way:37550695,reason,Palace of textile magnate Izrael Poznański; now the city museum,Claude draft
+osm:way:104252448,reason,Church on Plac Wolności at the top of Piotrkowska,Claude draft
+osm:way:1249270544,reason,Old brick sewer canal you can walk through,Claude draft
+osm:way:683699016,reason,Monument in the middle of Plac Wolności,Claude draft
+osm:node:1624531102,reason,Furnished villa of a factory-owning family; now a museum,Claude draft
+osm:node:7566036517,reason,Tenement with Gutenberg on its facade,Claude draft
+osm:node:4283899056,reason,Early cotton mill; now the Central Museum of Textiles,Claude draft
+osm:node:7312842825,reason,Unicorn sculpture outside Łódź Fabryczna station,Claude draft
+osm:node:1205571104,reason,Bronze industrialists at a table on Piotrkowska,Claude draft
+osm:way:174195288,reason,Film museum inside Karol Scheibler's palace,Claude draft
+osm:node:1842609517,reason,Brick workers' houses of Scheibler's mill town,Claude draft
+osm:node:4459174692,reason,Bronze piano honouring Arthur Rubinstein,Claude draft
+osm:node:432504801,reason,Museum in Manufaktura's old weaving mill,Claude draft
+osm:node:1913405256,reason,Bronze armchair of actor Stefan Jaracz,Claude draft
+osm:node:1880679870,reason,Bronze bench with poet Julian Tuwim,Claude draft
+osm:node:1205571110,reason,Bronze lamplighter on Piotrkowska,Claude draft
+osm:relation:12609642,reason,Courtyard covered in a mirror mosaic of roses,Claude draft
+osm:node:6173564343,reason,Entrance to Manufaktura: a 19th-century factory turned shopping and arts complex,Claude draft
+osm:relation:16510680,reason,Former power station turned science centre,Claude draft
+osm:node:2354558730,reason,Bronze of a classic Łódź-made cartoon bear,Claude draft
+osm:node:4148494249,reason,Fairytale trail: Łódź cartoon character,Claude draft
+osm:node:1989512941,reason,Fairytale trail: Łódź cartoon cats,Claude draft
+osm:node:4148479534,reason,Fairytale trail: Łódź cartoon character,Claude draft
+osm:node:4148501938,reason,Fairytale trail: Łódź cartoon character,Claude draft
+osm:node:1966704088,reason,Fairytale trail: Łódź cartoon character,Claude draft
+osm:node:11884767684,reason,Fairytale trail: Łódź cartoon character,Claude draft
+osm:node:4148465072,reason,Fairytale trail: Łódź cartoon character,Claude draft
