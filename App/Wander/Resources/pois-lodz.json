@@ -13,6 +13,7 @@
    "kind": "passby",
    "reason": "Onion-domed Orthodox cathedral from the 1880s",
    "type": "church",
+   "localName": "Sobór św. Aleksandra Newskiego",
    "signals": {
     "photos": 0.95,
     "fame": 0.82,
@@ -31,6 +32,7 @@
    "kind": "passby",
    "reason": "Palace of textile magnate Izrael Poznański; now the city museum",
    "type": "castle",
+   "localName": "Pałac Izraela Poznańskiego w Łodzi",
    "signals": {
     "photos": 0.733,
     "fame": 0.691,
@@ -49,6 +51,7 @@
    "kind": "passby",
    "reason": "Neo-Gothic cathedral at the south end of Piotrkowska",
    "type": "church",
+   "localName": "Archikatedra pw. Świętego Stanisława Kostki",
    "signals": {
     "photos": 0.855,
     "fame": 0.793,
@@ -67,6 +70,7 @@
    "kind": "passby",
    "reason": "Brick workers' houses of Scheibler's mill town",
    "type": "attraction",
+   "localName": "Famuły Księży Młyn",
    "signals": {
     "photos": 0.755,
     "fame": 0.56,
@@ -85,6 +89,7 @@
    "kind": "passby",
    "reason": "Stars of Polish film-makers set into Piotrkowska's pavement",
    "type": "attraction",
+   "localName": "Aleja Gwiazd w Łodzi",
    "signals": {
     "photos": 0.944,
     "fame": 0.646,
@@ -103,6 +108,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum Archeologiczne i Etnograficzne w Łodzi",
    "signals": {
     "photos": 0.971,
     "fame": 0.433,
@@ -121,6 +127,7 @@
    "kind": "passby",
    "reason": "Church on Plac Wolności at the top of Piotrkowska",
    "type": "church",
+   "localName": "Kościół Zesłania Ducha Świętego",
    "signals": {
     "photos": 0.993,
     "fame": 0.56,
@@ -139,6 +146,7 @@
    "kind": "passby",
    "reason": "Courtyard covered in a mirror mosaic of roses",
    "type": "attraction",
+   "localName": "Pasaż Róży",
    "signals": {
     "photos": 0.794,
     "fame": 0.0,
@@ -156,6 +164,7 @@
    "kind": "passby",
    "reason": "Well-known landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Filharmonia Łódzka",
    "signals": {
     "photos": 0.839,
     "fame": 0.669,
@@ -174,6 +183,7 @@
    "kind": "passby",
    "reason": "Old brick sewer canal you can walk through",
    "type": "museum",
+   "localName": "Muzeum Kanału „Dętka”",
    "signals": {
     "photos": 0.993,
     "fame": 0.296,
@@ -192,6 +202,7 @@
    "kind": "passby",
    "reason": "Historic church, popular photo spot",
    "type": "church",
+   "localName": "Cerkiew św. Olgi",
    "signals": {
     "photos": 0.988,
     "fame": 0.482,
@@ -210,6 +221,7 @@
    "kind": "passby",
    "reason": "Monument in the middle of Plac Wolności",
    "type": "monument",
+   "localName": "Tadeusz Kościuszko",
    "signals": {
     "photos": 0.995,
     "fame": 0.482,
@@ -228,6 +240,7 @@
    "kind": "passby",
    "reason": "Bronze bench with poet Julian Tuwim",
    "type": "statue",
+   "localName": "Ławeczka Tuwima",
    "signals": {
     "photos": 0.733,
     "fame": 0.482,
@@ -246,6 +259,7 @@
    "kind": "passby",
    "reason": "Tenement with Gutenberg on its facade",
    "type": "attraction",
+   "localName": "Kamienica pod Gutenbergiem",
    "signals": {
     "photos": 0.931,
     "fame": 0.482,
@@ -264,6 +278,7 @@
    "kind": "passby",
    "reason": "Furnished villa of a factory-owning family; now a museum",
    "type": "museum",
+   "localName": "Muzeum Pałac Herbsta",
    "signals": {
     "photos": 0.755,
     "fame": 0.524,
@@ -282,6 +297,7 @@
    "kind": "passby",
    "reason": "Early cotton mill; now the Central Museum of Textiles",
    "type": "attraction",
+   "localName": "Biała Fabryka Geyera",
    "signals": {
     "photos": 0.774,
     "fame": 0.646,
@@ -300,6 +316,7 @@
    "kind": "passby",
    "reason": "Unicorn sculpture outside Łódź Fabryczna station",
    "type": "sculpture",
+   "localName": "Pomnik Jednorożca",
    "signals": {
     "photos": 0.975,
     "fame": 0.373,
@@ -318,6 +335,7 @@
    "kind": "passby",
    "reason": "Bronze industrialists at a table on Piotrkowska",
    "type": "sculpture",
+   "localName": "Twórcy Łodzi Przemysłowej",
    "signals": {
     "photos": 0.95,
     "fame": 0.373,
@@ -336,6 +354,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica Rachmila Lipszyca",
    "signals": {
     "photos": 0.996,
     "fame": 0.373,
@@ -375,6 +394,7 @@
    "kind": "passby",
    "reason": "Film museum inside Karol Scheibler's palace",
    "type": "museum",
+   "localName": "Muzeum Kinematografii",
    "signals": {
     "photos": 0.855,
     "fame": 0.482,
@@ -414,6 +434,7 @@
    "kind": "passby",
    "reason": "Bronze piano honouring Arthur Rubinstein",
    "type": "sculpture",
+   "localName": "Fortepian Rubinsteina",
    "signals": {
     "photos": 0.931,
     "fame": 0.373,
@@ -432,6 +453,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "chapel",
+   "localName": "Kaplica Rodziny Scheibler",
    "signals": {
     "photos": 0.755,
     "fame": 0.62,
@@ -558,6 +580,7 @@
    "kind": "passby",
    "reason": "Bronze armchair of actor Stefan Jaracz",
    "type": "statue",
+   "localName": "Fotel Jaracza",
    "signals": {
     "photos": 0.89,
     "fame": 0.373,
@@ -576,6 +599,7 @@
    "kind": "passby",
    "reason": "Entrance to Manufaktura: a 19th-century factory turned shopping and arts complex",
    "type": "attraction",
+   "localName": "Napis Manufaktura",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -593,6 +617,7 @@
    "kind": "passby",
    "reason": "Historic church, popular photo spot",
    "type": "church",
+   "localName": "Kościół Wniebowzięcia Najświętszej Maryi Panny",
    "signals": {
     "photos": 0.92,
     "fame": 0.296,
@@ -611,6 +636,7 @@
    "kind": "passby",
    "reason": "Museum in Manufaktura's old weaving mill",
    "type": "museum",
+   "localName": "Muzeum Fabryki",
    "signals": {
     "photos": 0.733,
     "fame": 0.433,
@@ -650,6 +676,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Juliusza Kindermanna",
    "signals": {
     "photos": 0.794,
     "fame": 0.482,
@@ -668,6 +695,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Dom Towarzystwa Akcyjnego Ludwika Geyera",
    "signals": {
     "photos": 0.818,
     "fame": 0.433,
@@ -686,6 +714,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Maksymiliana Goldfedera",
    "signals": {
     "photos": 0.755,
     "fame": 0.524,
@@ -704,6 +733,7 @@
    "kind": "passby",
    "reason": "Mural, popular photo spot",
    "type": "mural",
+   "localName": "Mural przy Piotrkowskiej",
    "signals": {
     "photos": 0.818,
     "fame": 0.433,
@@ -764,6 +794,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Juliusza Heinzla",
    "signals": {
     "photos": 0.709,
     "fame": 0.56,
@@ -782,6 +813,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom firmy „Krusche - Ender”",
    "signals": {
     "photos": 0.794,
     "fame": 0.433,
@@ -821,6 +853,7 @@
    "kind": "passby",
    "reason": "Monument, popular photo spot",
    "type": "monument",
+   "localName": "Jan Paweł II",
    "signals": {
     "photos": 0.818,
     "fame": 0.373,
@@ -838,6 +871,7 @@
    "kind": "passby",
    "reason": "Bronze lamplighter on Piotrkowska",
    "type": "statue",
+   "localName": "Pomnik Lampiarza",
    "signals": {
     "photos": 0.818,
     "fame": 0.373,
@@ -856,6 +890,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum Książki Artystycznej",
    "signals": {
     "photos": 0.89,
     "fame": 0.296,
@@ -874,6 +909,7 @@
    "kind": "passby",
    "reason": "Former power station turned science centre",
    "type": "museum",
+   "localName": "Centrum Nauki i Techniki EC1",
    "signals": {
     "photos": 0.99,
     "fame": 0.0,
@@ -891,6 +927,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum Farmacji im. prof. Jana Muszyńskiego",
    "signals": {
     "photos": 0.998,
     "fame": 0.0,
@@ -951,6 +988,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica Bechtoldów",
    "signals": {
     "photos": 0.839,
     "fame": 0.296,
@@ -990,6 +1028,7 @@
    "kind": "passby",
    "reason": "Theatre, well-known landmark",
    "type": "theatre",
+   "localName": "Teatr Wielki",
    "signals": {
     "photos": 0.434,
     "fame": 0.669,
@@ -1008,6 +1047,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół św. Mateusza",
    "signals": {
     "photos": 0.652,
     "fame": 0.56,
@@ -1089,6 +1129,7 @@
    "kind": "passby",
    "reason": "Bronze of a classic Łódź-made cartoon bear",
    "type": "statue",
+   "localName": "Miś Uszatek",
    "signals": {
     "photos": 0.908,
     "fame": 0.187,
@@ -1107,6 +1148,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica A. Lubińskiego",
    "signals": {
     "photos": 0.818,
     "fame": 0.296,
@@ -1146,6 +1188,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica R. Rozenthala",
    "signals": {
     "photos": 0.855,
     "fame": 0.296,
@@ -1186,6 +1229,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Grób Nieznanego Żołnierza",
    "signals": {
     "photos": 0.709,
     "fame": 0.433,
@@ -1371,6 +1415,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Marszałek Józef Piłsudski",
    "signals": {
     "photos": 0.774,
     "fame": 0.296,
@@ -1410,6 +1455,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Tradycji Niepodległościowych w Łodzi",
    "signals": {
     "photos": 0.755,
     "fame": 0.373,
@@ -1428,6 +1474,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Obelisk tradycji ulicy Piotrkowskiej",
    "signals": {
     "photos": 0.999,
     "fame": 0.0,
@@ -1467,6 +1514,7 @@
    "kind": "passby",
    "reason": "Bust",
    "type": "bust",
+   "localName": "Stanisław Moniuszko",
    "signals": {
     "photos": 0.774,
     "fame": 0.296,
@@ -1485,6 +1533,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Ulica Żywiołów EC1",
    "signals": {
     "photos": 0.957,
     "fame": 0.0,
@@ -1523,6 +1572,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Alfreda Biedermanna",
    "signals": {
     "photos": 0.652,
     "fame": 0.433,
@@ -1583,6 +1633,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik Dekalogu",
    "signals": {
     "photos": 0.683,
     "fame": 0.373,
@@ -1601,6 +1652,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Helenów",
    "signals": {
     "photos": 0.683,
     "fame": 0.373,
@@ -1640,6 +1692,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Pomnik Ofiar Komunizmu",
    "signals": {
     "photos": 0.652,
     "fame": 0.433,
@@ -1658,6 +1711,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Scheiblerów",
    "signals": {
     "photos": 0.575,
     "fame": 0.524,
@@ -1715,6 +1769,7 @@
    "kind": "passby",
    "reason": "Manor house",
    "type": "manor",
+   "localName": "Dworek Ludwika Geyera",
    "signals": {
     "photos": 0.615,
     "fame": 0.433,
@@ -1733,6 +1788,7 @@
    "kind": "passby",
    "reason": "Bust, popular photo spot",
    "type": "bust",
+   "localName": "Pomnik Pamięci Ofiar Stanu Wojennego",
    "signals": {
     "photos": 0.95,
     "fame": 0.0,
@@ -1750,6 +1806,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum Miasta Łodzi Oddział Kultur i Tradycji Wyznaniowych",
    "signals": {
     "photos": 0.997,
     "fame": 0.0,
@@ -1767,6 +1824,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Narodowe Centrum Kultury Filmowej EC1",
    "signals": {
     "photos": 0.871,
     "fame": 0.0,
@@ -1805,6 +1863,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Reinholda Richtera",
    "signals": {
     "photos": 0.531,
     "fame": 0.56,
@@ -1823,6 +1882,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół pw. Świętego Józefa Oblubieńca Najświętszej Maryi Panny",
    "signals": {
     "photos": 0.733,
     "fame": 0.296,
@@ -1841,6 +1901,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica „Pod Atlasami”",
    "signals": {
     "photos": 0.965,
     "fame": 0.0,
@@ -1879,6 +1940,7 @@
    "kind": "passby",
    "reason": "Sculpture by Sino Sculpture Group, popular photo spot",
    "type": "sculpture",
+   "localName": "Serce WOŚP",
    "signals": {
     "photos": 0.971,
     "fame": 0.0,
@@ -1896,6 +1958,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Willa Jezajasza Kestenberga",
    "signals": {
     "photos": 0.981,
     "fame": 0.0,
@@ -1913,6 +1976,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "tomb",
+   "localName": "Mauzoleum małżonków Moenke",
    "signals": {
     "photos": 0.709,
     "fame": 0.296,
@@ -1931,6 +1995,7 @@
    "kind": "passby",
    "reason": "Mural, popular photo spot",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.965,
     "fame": 0.0,
@@ -1948,6 +2013,7 @@
    "kind": "passby",
    "reason": "Sculpture, popular photo spot",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.978,
     "fame": 0.0,
@@ -1965,6 +2031,7 @@
    "kind": "passby",
    "reason": "Bust, popular photo spot",
    "type": "bust",
+   "localName": "Prof. Tadeusz Kotarbiński",
    "signals": {
     "photos": 0.975,
     "fame": 0.0,
@@ -1982,6 +2049,7 @@
    "kind": "passby",
    "reason": "Installation by Łukasz Zbieranowski, popular photo spot",
    "type": "installation",
+   "localName": "Towarto",
    "signals": {
     "photos": 0.98,
     "fame": 0.0,
@@ -1999,6 +2067,7 @@
    "kind": "passby",
    "reason": "Art gallery, popular photo spot",
    "type": "gallery",
+   "localName": "ASP",
    "signals": {
     "photos": 0.944,
     "fame": 0.0,
@@ -2016,6 +2085,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum anatomiczne",
    "signals": {
     "photos": 0.94,
     "fame": 0.0,
@@ -2033,6 +2103,7 @@
    "kind": "passby",
    "reason": "Art gallery, popular photo spot",
    "type": "gallery",
+   "localName": "Galeria Sztuki",
    "signals": {
     "photos": 0.957,
     "fame": 0.0,
@@ -2050,6 +2121,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Planetarium EC1",
    "signals": {
     "photos": 0.818,
     "fame": 0.0,
@@ -2067,6 +2139,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik Chwały Żołnierzy Armii Łódź",
    "signals": {
     "photos": 0.615,
     "fame": 0.373,
@@ -2085,6 +2158,7 @@
    "kind": "passby",
    "reason": "Museum, popular photo spot",
    "type": "museum",
+   "localName": "Muzeum dzieci polskich",
    "signals": {
     "photos": 0.871,
     "fame": 0.0,
@@ -2141,6 +2215,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica Szai Goldbluma",
    "signals": {
     "photos": 0.957,
     "fame": 0.0,
@@ -2158,6 +2233,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Augusta Haertiga",
    "signals": {
     "photos": 0.531,
     "fame": 0.482,
@@ -2300,6 +2376,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Wróbelek Ćwirek",
    "signals": {
     "photos": 0.652,
     "fame": 0.296,
@@ -2357,6 +2434,7 @@
    "kind": "passby",
    "reason": "Monument, popular photo spot",
    "type": "monument",
+   "localName": "Zabytkowe urządzenia EC1",
    "signals": {
     "photos": 0.908,
     "fame": 0.0,
@@ -2395,6 +2473,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Dawny dom bankowy Wilhelma Landaua",
    "signals": {
     "photos": 0.908,
     "fame": 0.0,
@@ -2491,6 +2570,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Skansen Łódzkiej Architektury Drewnianej",
    "signals": {
     "photos": 0.531,
     "fame": 0.433,
@@ -2638,6 +2718,7 @@
    "kind": "passby",
    "reason": "School, popular photo spot",
    "type": "school",
+   "localName": "Rektorat Uniwersytetu Łódzkiego",
    "signals": {
     "photos": 0.908,
     "fame": 0.0,
@@ -2655,6 +2736,7 @@
    "kind": "passby",
    "reason": "Mural by Krzysztof Jaśkiewicz, popular photo spot",
    "type": "mural",
+   "localName": "Łódź w pigułce — Zasłużeni dla Łodzi",
    "signals": {
     "photos": 0.908,
     "fame": 0.0,
@@ -2694,6 +2776,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Ferdynand Wspaniały",
    "signals": {
     "photos": 0.709,
     "fame": 0.187,
@@ -2712,6 +2795,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon cats",
    "type": "statue",
+   "localName": "Dziwny Świat Kota Filemona i Bonifacego",
    "signals": {
     "photos": 0.615,
     "fame": 0.296,
@@ -2729,6 +2813,7 @@
    "kind": "passby",
    "reason": "Monument, popular photo spot",
    "type": "monument",
+   "localName": "Zabytkowy walczak",
    "signals": {
     "photos": 0.89,
     "fame": 0.0,
@@ -2809,6 +2894,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica R. Sachsa",
    "signals": {
     "photos": 0.839,
     "fame": 0.0,
@@ -2907,6 +2993,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica Floriana Jarischa",
    "signals": {
     "photos": 0.855,
     "fame": 0.0,
@@ -2924,6 +3011,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "yes",
+   "localName": "Beczki Grohmana",
    "signals": {
     "photos": 0.531,
     "fame": 0.373,
@@ -2942,6 +3030,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "chapel",
+   "localName": "Kaplica Rodziny Heinzlów",
    "signals": {
     "photos": 0.487,
     "fame": 0.433,
@@ -2960,6 +3049,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Ignacy Skorupka",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -2995,6 +3085,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Dom Jana Petera",
    "signals": {
     "photos": 0.871,
     "fame": 0.0,
@@ -3030,6 +3121,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Budynek elektrowni",
    "signals": {
     "photos": 0.855,
     "fame": 0.0,
@@ -3087,6 +3179,7 @@
    "kind": "passby",
    "reason": "Mural, popular photo spot",
    "type": "mural",
+   "localName": "Bieg ulicą Piotrkowską Rossmann Run",
    "signals": {
     "photos": 0.871,
     "fame": 0.0,
@@ -3146,6 +3239,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Kamienica Sendera Dyszkina",
    "signals": {
     "photos": 0.855,
     "fame": 0.0,
@@ -3228,6 +3322,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Budynek Towarzystwa Kredytowego m. Łodzi",
    "signals": {
     "photos": 0.871,
     "fame": 0.0,
@@ -3245,6 +3340,7 @@
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
+   "localName": "Dom Buta",
    "signals": {
     "photos": 0.839,
     "fame": 0.0,
@@ -3343,6 +3439,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Gustawa Schreera",
    "signals": {
     "photos": 0.575,
     "fame": 0.296,
@@ -3404,6 +3501,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Sztuki MS2",
    "signals": {
     "photos": 0.615,
     "fame": 0.187,
@@ -3422,6 +3520,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Komunikacji Miejskiej MPK-Łódź",
    "signals": {
     "photos": 0.434,
     "fame": 0.373,
@@ -3483,6 +3582,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Galeria Re:Medium",
    "signals": {
     "photos": 0.709,
     "fame": 0.0,
@@ -3521,6 +3621,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Trzy Misie",
    "signals": {
     "photos": 0.575,
     "fame": 0.296,
@@ -3538,6 +3639,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Pomnik Aleksandra Kamińskiego",
    "signals": {
     "photos": 0.487,
     "fame": 0.373,
@@ -3595,6 +3697,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "building",
+   "localName": "Pałac Karola Poznańskiego",
    "signals": {
     "photos": 0.363,
     "fame": 0.56,
@@ -3634,6 +3737,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Galeria Sztuki Kookaburra Studio",
    "signals": {
     "photos": 0.733,
     "fame": 0.0,
@@ -3738,6 +3842,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Władysław Reymont",
    "signals": {
     "photos": 0.487,
     "fame": 0.373,
@@ -3794,6 +3899,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Gustawa i Roberta Geyerów",
    "signals": {
     "photos": 0.794,
     "fame": 0.0,
@@ -3811,6 +3917,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Jakuba Kestenberga",
    "signals": {
     "photos": 0.531,
     "fame": 0.296,
@@ -3829,6 +3936,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Secesyjna willa Leopolda Kindermana",
    "signals": {
     "photos": 0.434,
     "fame": 0.433,
@@ -3907,6 +4015,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kuczka Chaskiela Pelca",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -3924,6 +4033,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Centrum Komiksu i Narracji Interaktywnej EC1",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -3941,6 +4051,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zespół pałacowy Emmy i Roberta Schweikertów",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -3959,6 +4070,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "dawny Rosyjski Bank Państwa (1906-08)",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -3997,6 +4109,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Halina Szwarc",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -4035,6 +4148,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Józefa Richtera",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -4053,6 +4167,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Rekwizyty z filmu „Kingsajz”",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -4070,6 +4185,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Lejbusia Lewka Jakubowicza",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -4108,6 +4224,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.774,
     "fame": 0.0,
@@ -4146,6 +4263,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Lapidarium detalu architektonicznego",
    "signals": {
     "photos": 0.709,
     "fame": 0.0,
@@ -4163,6 +4281,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom handlowy w Łodzi",
    "signals": {
     "photos": 0.487,
     "fame": 0.296,
@@ -4201,6 +4320,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Enderów",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4218,6 +4338,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Galeria Sztuki 33",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4235,6 +4356,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik Katyński",
    "signals": {
     "photos": 0.434,
     "fame": 0.373,
@@ -4289,6 +4411,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Rassalskich",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4306,6 +4429,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Elektrownia Scheiblera",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4323,6 +4447,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4340,6 +4465,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4357,6 +4483,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Pomnik drzewo Solidarności",
    "signals": {
     "photos": 0.434,
     "fame": 0.373,
@@ -4396,6 +4523,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "kamienica Tomaszowskiej Fabryki Sztucznego Jedwabiu",
    "signals": {
     "photos": 0.434,
     "fame": 0.296,
@@ -4414,6 +4542,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Traugota Lehmana z 1896 roku",
    "signals": {
     "photos": 0.755,
     "fame": 0.0,
@@ -4474,6 +4603,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół Najświętszego Imienia Jezus - Sanktuarium Najświętszego Imienia Jezus",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -4571,6 +4701,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Karola i Emila Steinertów",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -4607,6 +4738,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Ludwika Grohmana",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -4643,6 +4775,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina",
    "signals": {
     "photos": 0.363,
     "fame": 0.433,
@@ -4856,6 +4989,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "building",
+   "localName": "Willa Hermana Juliusza Milsza",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -4930,6 +5064,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dawny budynek straży pożarnej",
    "signals": {
     "photos": 0.709,
     "fame": 0.0,
@@ -4947,6 +5082,7 @@
    "kind": "passby",
    "reason": "Memorial stone",
    "type": "stone",
+   "localName": "Pomnik i drzewo upamiętniające Piotra Szczęsnego",
    "signals": {
     "photos": 0.709,
     "fame": 0.0,
@@ -4964,6 +5100,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół Świętej Anny",
    "signals": {
     "photos": 0.434,
     "fame": 0.296,
@@ -4982,6 +5119,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "St. Staszic",
    "signals": {
     "photos": 0.709,
     "fame": 0.0,
@@ -5053,6 +5191,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Edmunda Stefanusa",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5088,6 +5227,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Leon Schiller",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5144,6 +5284,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica \"Pod Sowami\" Zachariasza Warszawskiego (1900)",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5250,6 +5391,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Kufer Reymonta",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5267,6 +5409,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5302,6 +5445,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Św. Faustyna Kowalska",
    "signals": {
     "photos": 0.363,
     "fame": 0.373,
@@ -5320,6 +5464,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zegar Słoneczny",
    "signals": {
     "photos": 0.683,
     "fame": 0.0,
@@ -5421,6 +5566,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Experymentarium",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5495,6 +5641,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Ciężar niewłaściwy",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5632,6 +5779,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Mural „Marek Edelman”",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5692,6 +5840,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Nissena Rosenbluma",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5772,6 +5921,7 @@
    "kind": "passby",
    "reason": "Mural by Jakub Rebelka",
    "type": "mural",
+   "localName": "Wiedźmin",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5789,6 +5939,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "„Koń Tuwimowski”",
    "signals": {
     "photos": 0.652,
     "fame": 0.0,
@@ -5827,6 +5978,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Bielnik Kopischa",
    "signals": {
     "photos": 0.266,
     "fame": 0.433,
@@ -5845,6 +5997,7 @@
    "kind": "passby",
    "reason": "Sculpture by Wojciech Gryniewicz",
    "type": "sculpture",
+   "localName": "Kochankowie z ulicy Kamiennej",
    "signals": {
     "photos": 0.363,
     "fame": 0.296,
@@ -5863,6 +6016,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Pomnik Początków Miasta Łodzi",
    "signals": {
     "photos": 0.363,
     "fame": 0.296,
@@ -5919,6 +6073,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Plastuś",
    "signals": {
     "photos": 0.363,
     "fame": 0.296,
@@ -5936,6 +6091,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Ocalałych",
    "signals": {
     "photos": 0.434,
     "fame": 0.56,
@@ -5997,6 +6153,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Miś Koralgol",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6032,6 +6189,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Ludwika Meyera „Trianon”",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6049,6 +6207,7 @@
    "kind": "passby",
    "reason": "Museum, well-known landmark",
    "type": "museum",
+   "localName": "Muzeum Sztuki MS1",
    "signals": {
     "photos": 0.0,
     "fame": 0.711,
@@ -6067,6 +6226,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Moniuszki",
    "signals": {
     "photos": 0.531,
     "fame": 0.373,
@@ -6120,6 +6280,7 @@
    "kind": "passby",
    "reason": "Mural by Eduardo Kobra",
    "type": "mural",
+   "localName": "Rubinstein",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6137,6 +6298,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Szkoła Powszechna K. Scheiblera",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6172,6 +6334,7 @@
    "kind": "passby",
    "reason": "Mural by DALeasta",
    "type": "mural",
+   "localName": "Fale",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6189,6 +6352,7 @@
    "kind": "passby",
    "reason": "Bust",
    "type": "bust",
+   "localName": "Władysław Reymont",
    "signals": {
     "photos": 0.615,
     "fame": 0.0,
@@ -6227,6 +6391,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kościół Świętej Rodziny",
    "signals": {
     "photos": 0.363,
     "fame": 0.296,
@@ -6245,6 +6410,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Maurycego Poznańskiego",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -6299,6 +6465,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik św. Józefa z XIX w.",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6334,6 +6501,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park im. Księdza Biskupa Michała Klepacza",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -6390,6 +6558,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Wyrobów Wełnianych Edwarda Häntschela",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6407,6 +6576,7 @@
    "kind": "passby",
    "reason": "Fairytale trail: Łódź cartoon character",
    "type": "statue",
+   "localName": "Rzeźba bohaterów filmu Zaczarowany ołówek",
    "signals": {
     "photos": 0.434,
     "fame": 0.187,
@@ -6425,6 +6595,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Ewalda Kerna",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6442,6 +6613,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dawna siedziba „Mitranzy”",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6459,6 +6631,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "building",
+   "localName": "Dom Hilarego Majewskiego",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -6477,6 +6650,7 @@
    "kind": "passby",
    "reason": "Bust",
    "type": "bust",
+   "localName": "Józef Babicki",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6554,6 +6728,7 @@
    "kind": "passby",
    "reason": "Memorial stone",
    "type": "stone",
+   "localName": "Upamiętnienie deportacji Żydów z Hamburga do getta w Łodzi",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6607,6 +6782,7 @@
    "kind": "passby",
    "reason": "Relief by Łukasz Berger",
    "type": "relief",
+   "localName": "Cisza",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6624,6 +6800,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik Ofiar Katastrofy Smoleńskiej",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6720,6 +6897,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zespół willi Wilhelma Teschemachera",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6737,6 +6915,7 @@
    "kind": "passby",
    "reason": "Installation by Bartek Bojarczuk",
    "type": "installation",
+   "localName": "Twórczość czasu",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6754,6 +6933,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Zygmunta Dejczmana",
    "signals": {
     "photos": 0.575,
     "fame": 0.0,
@@ -6862,6 +7042,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Rudolf Keller's palace",
    "signals": {
     "photos": 0.266,
     "fame": 0.373,
@@ -6880,6 +7061,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Sienkiewicza",
    "signals": {
     "photos": 0.434,
     "fame": 0.433,
@@ -6898,6 +7080,7 @@
    "kind": "passby",
    "reason": "Mural by Wojciech Siudmak",
    "type": "mural",
+   "localName": "Narodziny Dnia",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -6915,6 +7098,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "graduation_tower",
+   "localName": "Tężnia solankowa",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -6954,6 +7138,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół Matki Boskiej Zwycięskiej - Sanktuarium Matki Bożej Zwycięskiej",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -7015,6 +7200,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Budynek Dyrekcji Rzeźni Miejskiej",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7032,6 +7218,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dawny Łódzki Bank Handlowy",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7070,6 +7257,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Szpital im. Heleny Wolf w Łodzi",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -7088,6 +7276,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Jakuba Braunera",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7105,6 +7294,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7122,6 +7312,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7139,6 +7330,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7174,6 +7366,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Cerkiew Zaśnięcia Najświętszej Maryi Panny",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -7268,6 +7461,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Mural Pamięci STELLA I SALOMEA Litzmannstadt Getto",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7320,6 +7514,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Monopolu Wódczanego",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7354,6 +7549,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Wójtowski Młyn",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7371,6 +7567,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Zygmunta Richtera",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -7388,6 +7585,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Zygmunta Richtera",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -7406,6 +7604,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Źródliska I",
    "signals": {
     "photos": 0.363,
     "fame": 0.482,
@@ -7554,6 +7753,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica K. Gelicha",
    "signals": {
     "photos": 0.363,
     "fame": 0.187,
@@ -7666,6 +7866,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Matejki",
    "signals": {
     "photos": 0.487,
     "fame": 0.296,
@@ -7684,6 +7885,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Galeria Odlot",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -7895,6 +8097,7 @@
    "kind": "passby",
    "reason": "Historic church",
    "type": "church",
+   "localName": "Kościół Niepokalanego Poczęcia Najświętszej Marii Panny",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -7993,6 +8196,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Eugeniusza Glezera",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8027,6 +8231,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałac Floriana Jarischa",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8044,6 +8249,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dawny kantor fabryki Silbersteinów",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8061,6 +8267,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Geologiczne WNG UŁ",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8078,6 +8285,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Łaźnia Geyera",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8152,6 +8360,7 @@
    "kind": "passby",
    "reason": "Bust",
    "type": "bust",
+   "localName": "Julian Tuwim",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8169,6 +8378,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Karola Kretschmera",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8186,6 +8396,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Karola Reisfelda",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8243,6 +8454,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8260,6 +8472,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8277,6 +8490,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Stary Cmentarz Ewangelicko-Augsburski",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8348,6 +8562,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8365,6 +8580,7 @@
    "kind": "passby",
    "reason": "Mural by Paweł Ryżko",
    "type": "mural",
+   "localName": "Sobie",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8382,6 +8598,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Łódzki Manhattan",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -8492,6 +8709,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Henryka Birnbauma (z 2 oficynami)",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -8509,6 +8727,7 @@
    "kind": "passby",
    "reason": "Bench sculpture",
    "type": "bench",
+   "localName": "Ławeczka Jana Karskiego",
    "signals": {
     "photos": 0.266,
     "fame": 0.187,
@@ -8544,6 +8763,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Podest po odrzutowcu MIG-21",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -8582,6 +8802,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Przyrodnicze UŁ",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -8729,6 +8950,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Ośrodek Propagandy Sztuki",
    "signals": {
     "photos": 0.0,
     "fame": 0.296,
@@ -8787,6 +9009,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Ewalda Kerna",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8804,6 +9027,7 @@
    "kind": "passby",
    "reason": "Wayside cross",
    "type": "wayside_cross",
+   "localName": "Ks. Jerzego Popiełuszki",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8821,6 +9045,7 @@
    "kind": "passby",
    "reason": "Mural by NTK",
    "type": "mural",
+   "localName": "Jan Kowalewski",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8838,6 +9063,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Jocz",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8855,6 +9081,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Centrala Handlowa Karola Scheiblera",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8872,6 +9099,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Karola Wutke",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8889,6 +9117,7 @@
    "kind": "passby",
    "reason": "Installation",
    "type": "installation",
+   "localName": "Miłość! Wolność! Pamięć! Życie!",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8906,6 +9135,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zespół budynków fabryki Ludwika Geyera",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8958,6 +9188,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Pomnik Polaków Ratujących Żydów podczas II wojny światowej",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8975,6 +9206,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -8992,6 +9224,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9065,6 +9298,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka K. Scheiblera „Centrala”",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9082,6 +9316,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9117,6 +9352,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Święty Dominik czyta Biblię",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9134,6 +9370,7 @@
    "kind": "passby",
    "reason": "Installation",
    "type": "installation",
+   "localName": "Drzewo Pokoleń",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9151,6 +9388,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Miejska Galeria Sztuki - Galeria Willa",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9168,6 +9406,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Statua Orła Białego",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9185,6 +9424,7 @@
    "kind": "passby",
    "reason": "Mural by Maciej Bielewicz",
    "type": "mural",
+   "localName": "Bielik",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9220,6 +9460,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Łódzki Manhattan",
    "signals": {
     "photos": 0.434,
     "fame": 0.0,
@@ -9257,6 +9498,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "kamienica wielkomiejska",
    "signals": {
     "photos": 0.266,
     "fame": 0.187,
@@ -9629,6 +9871,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Adolfa Daube",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9646,6 +9889,7 @@
    "kind": "passby",
    "reason": "Mural by AweR",
    "type": "mural",
+   "localName": "Anatomy of funny moments",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9663,6 +9907,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Antona i Ewy Rybaków",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9698,6 +9943,7 @@
    "kind": "passby",
    "reason": "Mural by Maciej Bielewicz",
    "type": "mural",
+   "localName": "Bocian Czarny",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9715,6 +9961,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Ernesta Wevera",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9732,6 +9979,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dawny szpital żydowski im. Izraela i Leonii Poznańskich",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9769,6 +10017,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Judy Salomonowicza",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9786,6 +10035,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Pomnik Juliana Tuwima w Łodzi",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9803,6 +10053,7 @@
    "kind": "passby",
    "reason": "Mural by Aryz",
    "type": "mural",
+   "localName": "Love letter",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9820,6 +10071,7 @@
    "kind": "passby",
    "reason": "Palace",
    "type": "palace",
+   "localName": "Uniwersytet Medyczny w Łodzi Rektorat",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9837,6 +10089,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9854,6 +10107,7 @@
    "kind": "passby",
    "reason": "Mural",
    "type": "mural",
+   "localName": "Mural",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9871,6 +10125,7 @@
    "kind": "passby",
    "reason": "Mural by Karolina Treler",
    "type": "mural",
+   "localName": "Sąsiedzi",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -9997,6 +10252,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zespół Zakładów Przemysłu Spirytusowego „Monopol Wódczany”",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -10014,6 +10270,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom Tkaczy",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -10031,6 +10288,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Pałacyk Elektrowni Łódzkiej",
    "signals": {
     "photos": 0.363,
     "fame": 0.0,
@@ -10155,6 +10413,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Staromiejski",
    "signals": {
     "photos": 0.266,
     "fame": 0.373,
@@ -10209,6 +10468,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park im. Władysława Reymonta",
    "signals": {
     "photos": 0.266,
     "fame": 0.373,
@@ -10324,6 +10584,7 @@
    "kind": "passby",
    "reason": "Monument",
    "type": "monument",
+   "localName": "Bohdan Stefanowski",
    "signals": {
     "photos": 0.0,
     "fame": 0.373,
@@ -10758,6 +11019,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Józefa Johna",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -10775,6 +11037,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Leona Allarta",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -10856,6 +11119,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Michała Kippera",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11179,6 +11443,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Skwer Gdański",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -11284,6 +11549,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park im. Jana Kilińskiego",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -11302,6 +11568,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Skwer im. Leona Niemczyka",
    "signals": {
     "photos": 0.531,
     "fame": 0.0,
@@ -11353,6 +11620,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Podolski",
    "signals": {
     "photos": 0.266,
     "fame": 0.296,
@@ -11424,6 +11692,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Abrahama Dudaka",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11441,6 +11710,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Marzenie Abramka",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11475,6 +11745,7 @@
    "kind": "passby",
    "reason": "Mural by Good Looking Studio",
    "type": "mural",
+   "localName": "Centrum Przysposobienia Wojskowego Lotniczego",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11492,6 +11763,7 @@
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
+   "localName": "Anastazy Pankiewicz",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11509,6 +11781,7 @@
    "kind": "passby",
    "reason": "Mural by Ola Adamczuk, Paulina Nawrot",
    "type": "mural",
+   "localName": "Wzrastasz?",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11526,6 +11799,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Mural „Dzieci Bałut”",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11543,6 +11817,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa F. Schmidta",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11560,6 +11835,7 @@
    "kind": "passby",
    "reason": "Mural by Paulina Nawrot",
    "type": "mural",
+   "localName": "Oblicze piękna",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11577,6 +11853,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Budynek dawnego szpitala Betlejem",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11594,6 +11871,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Henryka Brautigama",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11611,6 +11889,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "fabryk Hermanna Mullera i Augusta Seidlaa",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11628,6 +11907,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Hüffera",
    "signals": {
     "photos": 0.0,
     "fame": 0.296,
@@ -11680,6 +11960,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom rezydencjonalny Karola Königa",
    "signals": {
     "photos": 0.0,
     "fame": 0.296,
@@ -11698,6 +11979,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom Klemensa Elsnera",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11732,6 +12014,7 @@
    "kind": "passby",
    "reason": "Mural by Boa Mistura",
    "type": "mural",
+   "localName": "Życie jest stanem umysłu",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11749,6 +12032,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Ludwika Beutnera",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11783,6 +12067,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Marii i Stefana Szylke",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11800,6 +12085,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Modernistyczna krańcówka „Północna”",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11817,6 +12103,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Światła",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11886,6 +12173,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Zespół fabryki R. Biedermanna",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11903,6 +12191,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Rudolfa Kellera",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11920,6 +12209,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Willa Ryszarda Schimmela",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11937,6 +12227,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Dom rzeźbiarza ozdobiony rzeźbą kobiety",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11954,6 +12245,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11971,6 +12263,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -11988,6 +12281,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12005,6 +12299,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Sculpture",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12022,6 +12317,7 @@
    "kind": "passby",
    "reason": "Installation",
    "type": "installation",
+   "localName": "Neon Mewa",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12039,6 +12335,7 @@
    "kind": "passby",
    "reason": "Sculpture",
    "type": "sculpture",
+   "localName": "Czółenko",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12056,6 +12353,7 @@
    "kind": "passby",
    "reason": "Mural by Aryz",
    "type": "mural",
+   "localName": "Still Life",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12073,6 +12371,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Wilhelma Lürkensa",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12090,6 +12389,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Fabryka Winklera i Gaertnera",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12124,6 +12424,7 @@
    "kind": "passby",
    "reason": "Memorial stone",
    "type": "stone",
+   "localName": "Pomnik organizacji podziemnej Rady Pomocy Żydom „Żegota”",
    "signals": {
     "photos": 0.266,
     "fame": 0.0,
@@ -12285,6 +12586,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Staszica",
    "signals": {
     "photos": 0.487,
     "fame": 0.0,
@@ -12740,6 +13042,7 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
+   "localName": "Kamienica Wielkomiejska",
    "signals": {
     "photos": 0.0,
     "fame": 0.187,
@@ -12835,6 +13138,7 @@
    "kind": "passby",
    "reason": "Park",
    "type": "park",
+   "localName": "Park Źródliska II",
    "signals": {
     "photos": 0.0,
     "fame": 0.482,
@@ -12853,6 +13157,7 @@
    "kind": "passby",
    "reason": "Art gallery",
    "type": "gallery",
+   "localName": "Art-Rama - artystyczna oprawa obrazów",
    "signals": {
     "photos": 0.0,
     "fame": 0.0,
@@ -13640,6 +13945,7 @@
    "kind": "passby",
    "reason": "Museum",
    "type": "museum",
+   "localName": "Muzeum Sportu i Turystyki",
    "signals": {
     "photos": 0.0,
     "fame": 0.0,
