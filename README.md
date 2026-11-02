@@ -14,6 +14,8 @@ Get where you're going, but walk past the good stuff. iPhone MVP; full spec in [
 
 ```sh
 ./scripts/test-engine.sh                 # RouteEngine tests (works with or without full Xcode)
+scripts/install-device.sh [--launch]    # build Debug and install on the connected iPhone
+python3 scripts/validate-pois.py         # check pois-*.json against docs/schema/pois.schema.json
 open App/Wander.xcodeproj                # needs Xcode 16+ (tested with 27.1)
 xcodebuild -project App/Wander.xcodeproj -scheme Wander \
   -destination 'generic/platform=iOS Simulator' build
