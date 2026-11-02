@@ -51,7 +51,7 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `localName` | String | – | Only when `name` is a translation; for matching Apple places |
 | `commonsImage` | String | – | Photo only; Commons file name without `File:`; show it with author and licence |
 | `commonsCategory` | String | – | Photo only; Commons category without `Category:`; for the gallery |
-| `popular` | Bool | – | Photo only; present only when `true` (score ≥ 70 or fame ≥ 0.6, or curated) |
+| `popular` | Bool | – | Present only when `true`. Any category: the top 5% of **that category** by score (at least 1 when the category is non-empty), plus sights with fame ≥ 0.6; overridable in `curation.csv` (BE-3) |
 
 Unknown fields are ignored by the decoder. A new field needs a schema update here first.
 
@@ -85,9 +85,9 @@ Unknown fields are ignored by the decoder. A new field needs a schema update her
 - `Leg`: `from`, `to`, `duration` (s), `distance` (m), `polyline: [Coordinate]`, `steps: [RouteStep]` (`instruction`, `distance`).
 - `MapKitWalkingTime` (app) must fill `steps` from `MKRoute.steps` and stay under 40 MKDirections requests per rolling minute.
 
-**Pending (BE-1, not on main yet):** zero-cost stops become pass-by highlights, and
-`PlanRequest.seen: Set<String>` lowers the value of POI ids the user already saw today. Frontender codes
-against this shape once BE-1 merges.
+**Seen places (BE-1, PR #18):** `PlanRequest(..., seen: Set<String> = [])` takes POI ids the user already
+saw today; their value is multiplied by `PlannerConfig.seenFactor`. Zero-cost stops become pass-by
+highlights and free their slot. At most 1 food and 1 shop stop per walk, unless that category is the only interest.
 
 ## 3. Build and configuration
 

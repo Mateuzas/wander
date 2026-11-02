@@ -43,7 +43,7 @@
         "localName": { "type": "string", "description": "Original OSM name when name is a translation" },
         "commonsImage": { "type": "string", "description": "Commons file name without File:; photo only" },
         "commonsCategory": { "type": "string", "description": "Commons category without Category:; photo only" },
-        "popular": { "const": true, "description": "Present only when true; photo only" }
+        "popular": { "const": true, "description": "Present only when true; top share of its category (docs/CONTRACTS.md §1)" }
       }
     }
   }

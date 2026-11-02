@@ -25,7 +25,8 @@ Architect installs the build on the user's iPhone and the user confirms.
 
 | Id | Task | Status | Inputs | Done when | Depends on |
 |---|---|---|---|---|---|
-| BE-1 | Zero-cost stops become pass-by highlights and free their slot; `PlanRequest.seen: Set<String>` cuts their value (×0.2); 1 shop per walk; golden-routes "walk in sequence" mode reporting repeats | in progress (ex-Agent A) | CONTRACTS §2 (pending) | tests pass; before/after golden table in the PR; Relaxed never equals Direct when a detour fits | – |
+| BE-1 | Zero-cost stops become pass-by highlights and free their slot; `PlanRequest.seen: Set<String>` cuts their value (×0.2); 1 shop per walk; golden-routes "walk in sequence" mode reporting repeats | done, PR #18 (ex-Agent A) | CONTRACTS §2 (pending) | tests pass; before/after golden table in the PR; Relaxed never equals Direct when a detour fits | – |
+| BE-3 | Popular places in every category: top `POPULAR_SHARE` (5%) of each category by score, minimum 1, plus sights with fame ≥ 0.6; `curation.csv` `popular` overrides still win | todo | CONTRACTS §1 | Łódź: popular counts roughly proportional to category sizes; schema check passes; README updated | – |
 | BE-2 | Vilnius data: run the pipeline, draft `names-en/vilnius.csv`, first-pass curation, review CSV | todo | `Data/cities.json` | `pois-vilnius.json` validates against the schema; top 20 sights spot-checked; golden routes for 10 Vilnius pairs | after the Łódź test |
 
 ## Frontender (`App/`)
@@ -34,7 +35,9 @@ Architect installs the build on the user's iPhone and the user confirms.
 |---|---|---|---|---|
 | FE-1 | Stable beads on zoom: at most one ordinary bead per screen cell (≈ 44 pt grid), keep beads already shown when the set changes, popular always shown | todo | zooming in and out doesn't make middle beads vanish while corner ones appear (phone check) | – |
 | FE-2 | Redesign the Sights / Shops / Food interest chips within PLAN §10 | todo | user approves on the phone | – |
-| FE-3 | Per-day "seen" list (highlights passed, skipped or visited), passed as `PlanRequest.seen` | todo | a second walk on the same day prefers new places | BE-1 |
+| FE-3 | Per-day "seen" list (highlights passed, skipped or visited), passed as `PlanRequest.seen` | todo (after #18) | a second walk on the same day prefers new places | BE-1 |
+| FE-5 | "Directions" on every place card: tap → that place becomes the destination and a plan is made from the current location (like Google Maps). Hidden while walking | todo | works for sights, food and shops (phone check) | – |
+| FE-6 | Branded launch: static iOS launch screen (surface colour + Wander mark from the brand kit), then a short SwiftUI hand-off (≤ 0.8 s fade, Reduce Motion respected, never blocks startup) | todo | cold start shows the brand, not a blank map (phone check) | – |
 | FE-4 | M6 polish: dark mode pass, Dynamic Type to AX3, VoiceOver labels (PLAN §10), §7 empty and error states, Settings/About with OSM and Commons attribution (§7.5) | todo | checklist in the PR; phone check | – |
 
 ## DevOps (`.github/`, `scripts/`, `secrets/`, `App/Config/`)
