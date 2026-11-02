@@ -1,5 +1,7 @@
 # Wander
 
+[![CI](https://github.com/Mateuzas/wander/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Mateuzas/wander/actions/workflows/ci.yml)
+
 Get where you're going, but walk past the good stuff. iPhone MVP; full spec in [PLAN.md](PLAN.md).
 
 ## Layout
