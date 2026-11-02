@@ -4,6 +4,8 @@ import SwiftUI
 struct Bead: View {
     let category: POICategory
     var isSelected = false
+    /// Place name for VoiceOver, read after the category ("Photo spot, Mural on Stiklių").
+    var name: String?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -23,7 +25,7 @@ struct Bead: View {
             }
             .frame(width: size, height: size)
             .animation(reduceMotion ? nil : .snappy(duration: 0.2), value: isSelected)
-            .accessibilityLabel(category.spokenName)
+            .accessibilityLabel([category.spokenName, name].compactMap { $0 }.joined(separator: ", "))
             .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
