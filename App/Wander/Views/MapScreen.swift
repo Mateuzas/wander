@@ -23,6 +23,7 @@ struct MapScreen: View {
     @State private var detent: PresentationDetent = .peek
     @State private var selectedPOI: POI?
     @State private var debugOverlay = false
+    @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
 
     // Draw-in state for the current plan.
     @State private var routeLine: [Coordinate] = []
@@ -41,6 +42,9 @@ struct MapScreen: View {
 
     var body: some View {
         map
+            .overlay(alignment: .topTrailing) {
+                MapStyleControl(style: $mapStyle).padding(Layout.margin)
+            }
             .sheet(isPresented: .constant(true)) {
                 sheetContent
                     .presentationDetents([.peek, .medium, .large], selection: $detent)
@@ -75,6 +79,16 @@ struct MapScreen: View {
             UserAnnotation()
 
             if let plan = planner.plan {
+                if mapStyle.isImagery {
+                    // Casings keep both lines readable on imagery.
+                    if !plan.waypoints.isEmpty {
+                        MapPolyline(coordinates: plan.baseline.polyline.map(\.clLocation))
+                            .stroke(.white.opacity(0.85), style: StrokeStyle(lineWidth: 5, lineCap: .round, dash: [2, 7]))
+                    }
+                    MapPolyline(coordinates: revealedRoute.map(\.clLocation))
+                        .stroke(.white.opacity(0.9 * routeOpacity),
+                                style: StrokeStyle(lineWidth: 11, lineCap: .round, lineJoin: .round))
+                }
                 if !plan.waypoints.isEmpty {
                     // Fast route: thin, dashed, grey (§7.2).
                     MapPolyline(coordinates: plan.baseline.polyline.map(\.clLocation))
@@ -116,7 +130,7 @@ struct MapScreen: View {
             }
             #endif
         }
-        .mapStyle(.standard(elevation: .flat, emphasis: .muted, pointsOfInterest: .excludingAll))
+        .mapStyle(mapStyle.mapStyle)
         .mapControls {}
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
