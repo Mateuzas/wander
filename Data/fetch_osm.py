@@ -13,20 +13,12 @@ from common import cache_dir, http_json, load_city, metres
 
 OVERPASS = "https://overpass-api.de/api/interpreter"
 
-# Shops that are errands, not discoveries (PLAN.md 5.1).
-BORING_SHOPS = {
-    "supermarket", "convenience", "chemist", "mobile_phone", "car", "car_repair", "car_parts",
-    "tyres", "fuel", "hairdresser", "beauty", "massage", "optician", "kiosk", "tobacco",
-    "e-cigarette", "lottery", "money_lender", "pawnbroker", "funeral_directors", "dry_cleaning",
-    "laundry", "copyshop", "hardware", "doityourself", "trade", "variety_store", "mall",
-    "insurance", "travel_agency", "bookmaker", "vacant", "storage_rental", "motorcycle",
-    "electrical", "telecommunication", "medical_supply", "hearing_aids", "nutrition_supplements",
-    "alcohol", "beverages", "pet", "pet_grooming", "general", "department_store", "wholesale",
-    "electronics", "computer", "appliance", "bathroom_furnishing", "kitchen", "doors", "windows",
-    "flooring", "paint", "tiles", "curtain", "bed", "lighting", "houseware", "craft", "glaziery",
-    "locksmith", "sewing", "fabric", "shoe_repair", "repair", "agrarian", "gas", "erotic",
-    "weapons", "security", "health_food", "frozen_food", "dairy", "butcher", "greengrocer",
-    "seafood", "cosmetics", "perfumery", "fashion_accessories", "bag", "baby_goods", "fireplace",
+# Shop types a tourist would browse (PLAN.md 5.1). An allowlist: OSM has hundreds of shop
+# values and almost all of them are errands (florists, tailors, bike or shoe shops...).
+TOURIST_SHOPS = {
+    "books", "second_hand", "antiques", "art", "gift", "souvenir", "music", "musical_instrument",
+    "boutique", "wine", "photo", "toys", "games", "collector", "leather", "anime", "comics",
+    "craft_beer", "vintage", "pottery", "glass", "frame",
 }
 FOOD_SHOPS = {"bakery", "pastry", "deli", "confectionery", "chocolate", "coffee", "tea", "cheese"}
 FOOD_AMENITIES = {"cafe", "restaurant", "bar", "ice_cream", "pub"}
@@ -65,6 +57,19 @@ def size_m(el):
     return metres(b["minlat"], b["minlon"], b["maxlat"], b["maxlon"])
 
 
+def location(el):
+    """Point for an element. With `out center bb` Overpass returns only bounds for ways and
+    relations (no center), so use the middle of the bounds."""
+    if "lat" in el:
+        return {"lat": el["lat"], "lon": el["lon"]}
+    if "center" in el:
+        return el["center"]
+    b = el.get("bounds")
+    if b:
+        return {"lat": (b["minlat"] + b["maxlat"]) / 2, "lon": (b["minlon"] + b["maxlon"]) / 2}
+    return None
+
+
 def categorise(tags, size):
     """Return the category for an OSM element, or None to drop it."""
     tourism, historic, shop = tags.get("tourism"), tags.get("historic"), tags.get("shop")
@@ -85,7 +90,7 @@ def categorise(tags, size):
     if leisure == "park":
         return "photo" if size >= MIN_PARK_SIZE_M else None
     if shop:
-        return None if shop in BORING_SHOPS else "shop"
+        return "shop" if shop in TOURIST_SHOPS else None
     return None
 
 
@@ -121,7 +126,7 @@ def main():
     elements = raw.get("elements", [])
     print(f"  {len(elements)} raw elements")
 
-    pois, dropped = [], {"unnamed": 0, "filtered": 0}
+    pois, dropped = [], {"unnamed": 0, "filtered": 0, "no_location": 0}
     for el in elements:
         tags = el.get("tags", {})
         name = display_name(tags)
@@ -133,8 +138,9 @@ def main():
         if not category:
             dropped["filtered"] += 1
             continue
-        center = el.get("center") or {"lat": el.get("lat"), "lon": el.get("lon")}
-        if center["lat"] is None:
+        center = location(el)
+        if not center:
+            dropped["no_location"] += 1
             continue
         pois.append({
             "id": f"osm:{el['type']}:{el['id']}",

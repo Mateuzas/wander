@@ -3,7 +3,7 @@
     python3 score.py lodz
 
 Reads cache/<city>/enriched.json and curation.csv.
-Writes App/Wander/Resources/pois-<city>.json and review/<city>-top300.csv (for hand review).
+Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
 """
 import csv
 import datetime
@@ -17,17 +17,24 @@ from common import DATA, RESOURCES, cache_dir, load_city, metres
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
 WEIGHTS = {
     "photo": {"photo": 0.45, "landmark": 0.45, "quality": 0.10},
-    "shop":  {"unique": 0.50, "quality": 0.30, "photo": 0.20},
-    "food":  {"unique": 0.50, "quality": 0.30, "photo": 0.20},
+    "shop":  {"quality": 0.60, "photo": 0.40},
+    "food":  {"quality": 0.60, "photo": 0.40},
 }
+# PLAN.md gave shops/food 0.5 for merely being unbranded, so every independent café outranked
+# real sights (Łódź top 300: 244 food, 5 photo). Instead, independence is a multiplier and
+# shop/food scores are capped so the best café can match a mid-level sight but never a landmark.
+CATEGORY_CEILING = {"photo": 1.0, "shop": 0.70, "food": 0.70}
+BRANDED_FACTOR = 0.3       # chains keep 30% of their score
 SITELINK_CAP = 40          # sitelinks at which the fame signal saturates
 LANDMARK_TAG_BONUS = 0.25  # tourism/historic tag alone counts for something
 POPULAR_PHOTO_PCT = 0.80   # photo percentile above which a reason says "popular photo spot"
 FAMOUS_SITELINKS = 10      # sitelinks above which a reason says "well-known"
 DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
+NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
+NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
 MIN_SCORE = 15             # drop anything below this from the app file
-REVIEW_TOP_N = 300
+REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
 LANDMARK_TOURISM = {"attraction", "museum", "gallery", "viewpoint", "artwork"}
@@ -58,6 +65,9 @@ PHOTO_LABELS = {
     "industrial": "Industrial heritage", "factory": "Historic factory", "ruins": "Ruins",
     "tower": "Tower", "bridge": "Bridge", "park": "Park",
 }
+MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
+                   "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}
+PHOTO_LABELS.update({f"memorial:{k}": v for k, v in MEMORIAL_LABELS.items()})
 ARTWORK_LABELS = {"mural": "Mural", "sculpture": "Sculpture", "statue": "Statue",
                   "installation": "Installation", "relief": "Relief"}
 
@@ -66,9 +76,28 @@ def sentence(text):
     return text[:1].upper() + text[1:] if text else text
 
 
+def fame_signal(p):
+    """0-1, log-scaled Wikipedia sitelink count (how famous the place is)."""
+    return min(1.0, math.log1p(p["sitelinks"]) / math.log1p(SITELINK_CAP))
+
+
+def poi_type(p):
+    """Most specific OSM value describing the place, e.g. mural, museum, church, cafe, books."""
+    t = p["tags"]
+    if p["category"] == "photo":
+        return (t.get("artwork_type") if t.get("tourism") == "artwork" else None) \
+            or (t.get("memorial") if t.get("historic") == "memorial" else None) \
+            or (t.get("tourism") if t.get("tourism") not in (None, "attraction") else None) \
+            or t.get("historic") or t.get("man_made") or t.get("leisure") or "attraction"
+    if p["category"] == "food":
+        return t.get("amenity") if t.get("amenity") in FOOD_LABELS or t.get("amenity") == "restaurant" \
+            else t.get("shop", "food")
+    return t.get("shop", "shop")
+
+
 def landmark_signal(p):
     t = p["tags"]
-    fame = min(1.0, math.log1p(p["sitelinks"]) / math.log1p(SITELINK_CAP))
+    fame = fame_signal(p)
     bonus = LANDMARK_TAG_BONUS if (t.get("tourism") in LANDMARK_TOURISM or "historic" in t) else 0
     return min(1.0, 0.75 * fame + bonus)
 
@@ -110,16 +139,23 @@ def draft_reason(p, photo_pct):
         else:
             key = t.get("tourism") if t.get("tourism") not in (None, "attraction") else None
             key = key or t.get("historic") or t.get("man_made") or t.get("leisure")
+            if key == "memorial" and t.get("memorial") in MEMORIAL_LABELS:
+                key = "memorial:" + t["memorial"]
+            if key == "castle" and t.get("castle_type") in ("palace", "manor", "stately"):
+                key = "palace" if t["castle_type"] != "manor" else "manor"
             base = PHOTO_LABELS.get(key) or ("Landmark" if t.get("tourism") == "attraction"
                                              else sentence((key or "landmark").replace("_", " ")))
         extras = []
         if p["sitelinks"] >= FAMOUS_SITELINKS:
-            extras.append("well-known landmark")
+            if base == "Landmark":
+                base = "Well-known landmark"
+            else:
+                extras.append("well-known landmark")
         if photo_pct >= POPULAR_PHOTO_PCT:
             extras.append("popular photo spot")
         return ", ".join([base] + extras)
 
-    indie = is_unique(p)
+    # Independence already shapes the score; repeating it in every reason is noise.
     if cat == "food":
         kind = t.get("amenity") if t.get("amenity") in FOOD_LABELS else t.get("shop")
         cuisine = (t.get("cuisine") or "").split(";")[0].replace("_", " ").strip()
@@ -127,13 +163,10 @@ def draft_reason(p, photo_pct):
             label = f"{cuisine} restaurant" if cuisine and cuisine != "regional" else "Restaurant"
         else:
             label = FOOD_LABELS.get(kind, "Food")
-        label = sentence(label)
-        return f"Independent {label[0].lower() + label[1:]}" if indie else label
+        return sentence(label)
 
     label = SHOP_LABELS.get(t.get("shop")) or sentence(f"{t.get('shop', '').replace('_', ' ')} shop")
-    if t.get("shop") == "yes":
-        label = "Shop"
-    return f"Independent {label[0].lower() + label[1:]}" if indie else label
+    return "Shop" if t.get("shop") == "yes" else label
 
 
 def load_curation():
@@ -146,6 +179,52 @@ def load_curation():
                 rules.setdefault(osm_id, []).append(
                     ((row.get("action") or "").strip(), (row.get("value") or "").strip()))
     return rules
+
+
+def load_english_names(slug):
+    """Reviewed English display names (names-en/<city>.csv). OSM rarely has name:en and
+    Wikidata labels are unreliable, so these are drafted once and edited by hand."""
+    path = DATA / "names-en" / f"{slug}.csv"
+    if not path.exists():
+        return {}
+    with path.open(newline="") as f:
+        return {r["osm_id"]: r["name_en"].strip() for r in csv.DictReader(f) if r.get("name_en", "").strip()}
+
+
+def english_name(p, names_en):
+    """Sights get an English name; shops and food keep their own (they are proper names)."""
+    if p["id"] in names_en:
+        return names_en[p["id"]]
+    if p["category"] == "photo":
+        # Wikidata labels are a fallback only: names-en/<city>.csv is the reviewed source.
+        return p["tags"].get("name:en") or p.get("wikidata_label_en") or p["name"]
+    return p["name"]
+
+
+GENERIC_NAMES = set(ARTWORK_LABELS.values()) | set(MEMORIAL_LABELS.values()) | {"Public artwork"}
+
+
+def name_generic_sights(pois):
+    """A nudge for "Mural, 40 m ahead" means little. Name generic sights after their artist,
+    or else after the nearest well-known sight. Returns how many were renamed."""
+    anchors = [q for q in pois if q["category"] == "photo" and q["name"] not in GENERIC_NAMES
+               and q["score"] >= NEAR_MIN_SCORE]
+    renamed = 0
+    for p in pois:
+        if p["category"] != "photo" or p["name"] not in GENERIC_NAMES:
+            continue
+        artist = p["tags"].get("artist_name") or p["tags"].get("artist")
+        if artist:
+            label = p["name"]
+            p["name"] = f"{label} by {artist}"
+            p["reason"] = p["reason"].replace(f"{label} by {artist}", label, 1)  # don't repeat the name
+        else:
+            near = min(anchors, default=None, key=lambda q: metres(p["lat"], p["lon"], q["lat"], q["lon"]))
+            if not near or metres(p["lat"], p["lon"], near["lat"], near["lon"]) > NEAR_RADIUS_M:
+                continue
+            p["name"] = f"{p['name']} near {near['name']}"
+        renamed += 1
+    return renamed
 
 
 def apply_curation(pois, rules):
@@ -174,8 +253,8 @@ def dedupe(pois):
     pois = sorted(pois, key=lambda p: -p["score"])
     kept = []
     for p in pois:
-        name = p["name"].casefold()
-        if any(q["name"].casefold() == name and
+        name = p["original_name"].casefold()  # stable regardless of translations
+        if any(q["original_name"].casefold() == name and
                metres(p["lat"], p["lon"], q["lat"], q["lon"]) < DUPLICATE_RADIUS_M for q in kept):
             continue
         kept.append(p)
@@ -189,6 +268,10 @@ def main():
     city = load_city(slug)
     pois = json.loads((cache_dir(slug) / "enriched.json").read_text())["pois"]
     pct = photo_percentiles(pois)
+    names_en = load_english_names(slug)
+    for p in pois:
+        p["original_name"] = p["name"]
+        p["name"] = english_name(p, names_en)
 
     for p in pois:
         signals = {
@@ -197,8 +280,12 @@ def main():
             "unique": 1.0 if is_unique(p) else 0.0,
             "quality": quality_signal(p),
         }
-        w = WEIGHTS[p["category"]]
-        p["score"] = round(100 * sum(w[k] * signals[k] for k in w))
+        cat = p["category"]
+        w = WEIGHTS[cat]
+        raw = sum(w[k] * signals[k] for k in w) * CATEGORY_CEILING[cat]
+        if cat != "photo" and not signals["unique"]:
+            raw *= BRANDED_FACTOR
+        p["score"] = round(100 * raw)
         p["reason"] = draft_reason(p, pct[p["id"]])
         p["kind"] = "passby" if p["category"] == "photo" else "stop"
 
@@ -206,11 +293,23 @@ def main():
     pois = dedupe(pois)
     before_cut = len(pois)
     pois = [p for p in pois if p["score"] >= MIN_SCORE]
+    renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
 
     out_pois = []
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
+        row["type"] = poi_type(p)
+        # Raw 0-1 signals so the app can weight them per user; `score` is the default blend.
+        row["signals"] = {
+            "photos": round(pct[p["id"]], 3),
+            "fame": round(fame_signal(p), 3),
+            "quality": round(quality_signal(p), 3),
+            "independent": is_unique(p),
+        }
+        cuisine = p["tags"].get("cuisine")
+        if p["category"] == "food" and cuisine:
+            row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
         if p["category"] != "photo" and p["tags"].get("opening_hours"):
             row["openingHours"] = p["tags"]["opening_hours"]
         out_pois.append(row)
@@ -226,18 +325,26 @@ def main():
 
     review_dir = DATA / "review"
     review_dir.mkdir(exist_ok=True)
-    review = review_dir / f"{slug}-top{REVIEW_TOP_N}.csv"
+    review = review_dir / f"{slug}-review.csv"
+    review_rows = [p for cat, n in REVIEW_PER_CATEGORY.items()
+                   for p in [q for q in pois if q["category"] == cat][:n]]
     with review.open("w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["rank", "osm_id", "name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
-        for i, p in enumerate(pois[:REVIEW_TOP_N], 1):
+        w.writerow(["rank", "osm_id", "name", "original_name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
+        for i, p in enumerate(review_rows, 1):
             typ, num = p["id"].split(":")[1:]
-            w.writerow([i, p["id"], p["name"], p["category"], p["score"], p["reason"],
+            w.writerow([i, p["id"], p["name"], p["original_name"], p["category"], p["score"], p["reason"],
                         p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
-          f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied)")
+          f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied, {renamed} generic names expanded)")
+    untranslated = [p for p in pois if p["category"] == "photo" and p["id"] not in names_en
+                    and not p["tags"].get("name:en")]
+    if untranslated:
+        print(f"  ! {len(untranslated)} sights have no English name; add them to names-en/{slug}.csv:")
+        for p in untranslated[:10]:
+            print(f"    {p['id']},,{p['original_name']}")
     print(f"  wrote {out.relative_to(DATA.parent)} ({out.stat().st_size // 1024} KB)")
     print(f"  wrote {review.relative_to(DATA.parent)}")
 
