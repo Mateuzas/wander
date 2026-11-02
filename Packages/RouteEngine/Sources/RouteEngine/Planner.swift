@@ -38,7 +38,8 @@ public struct Planner: Sendable {
     }
 
     func plan(_ request: PlanRequest, store: LegStore, taken: TakenStops) async throws -> WanderPlan {
-        let scorer = Scorer(config: config, interests: request.interests, weights: request.weights)
+        let scorer = Scorer(config: config, interests: request.interests, weights: request.weights,
+                            seen: request.seen)
         let estimator = config.estimator
         let selector = WaypointSelector(config: config, scorer: scorer)
         let validator = Validator(config: config, scorer: scorer)
@@ -235,6 +236,9 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Corridor filter width as a multiple of the budget (wider than 1 so a
     /// top-up can reach stops that only fit once real times are known).
     public var corridorSlack: Double = 1.5
+    /// Value multiplier for POIs in `PlanRequest.seen`. At 0.2 an 80-point
+    /// place drops to 16, under `minWaypointValue`, so it isn't a stop again.
+    public var seenFactor: Double = 0.2
     /// Seconds. A verified waypoint whose real detour is under this is on the
     /// way anyway: it becomes a free highlight and its slot is freed.
     public var freeBelow: TimeInterval = 60

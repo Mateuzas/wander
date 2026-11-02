@@ -406,6 +406,23 @@ struct PlannerTests {
         }
     }
 
+    // MARK: Seen
+
+    @Test func seenPlacesGiveWayToNewOnes() async throws {
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .relaxed, pois: spread)
+        let first = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
+        var again = request
+        again.seen = Set(first.waypoints.map(\.id))
+        let second = try await Planner(config: .selection).plan(again, provider: HaversineWalkingTime())
+        #expect(!second.waypoints.isEmpty)
+        #expect(Set(first.waypoints.map(\.id)).isDisjoint(with: Set(second.waypoints.map(\.id))))
+        for poi in first.waypoints {
+            let debug = second.candidates.first { $0.poi.id == poi.id }!
+            #expect(abs(debug.value - Double(poi.score) * 0.2) < 1e-9)
+            #expect(debug.status == .rejected(.seen) || debug.status == .passby)
+        }
+    }
+
     // MARK: Freeing stops on the way
 
     @Test func waypointsAreNeverOnTheWay() async throws {
