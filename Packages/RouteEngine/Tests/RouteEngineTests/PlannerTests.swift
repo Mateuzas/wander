@@ -120,13 +120,42 @@ struct PlannerTests {
         #expect(result.legs == [result.baseline])
     }
 
-    @Test func prefersBetterValueForTime() async throws {
+    @Test func prefersHigherValueWithinBudget() async throws {
+        // Ranking is by total value, not value per minute: the better place wins
+        // when the budget allows it.
         let close = Grid.poi("close", east: 1000, north: 100, score: 60)
         let far = Grid.poi("far", east: 1000, north: 700, score: 70)
         var config = PlannerConfig()
         config.maxWaypoints = 1
         let result = try await plan([close, far], budget: 30 * 60, planner: Planner(config: config))
+        #expect(result.waypoints.map(\.id) == ["far"])
+    }
+
+    @Test func equalValuePrefersLessTime() async throws {
+        let close = Grid.poi("close", east: 1000, north: 100, score: 70)
+        let far = Grid.poi("far", east: 1000, north: 700, score: 70)
+        var config = PlannerConfig()
+        config.maxWaypoints = 1
+        let result = try await plan([close, far], budget: 30 * 60, planner: Planner(config: config))
         #expect(result.waypoints.map(\.id) == ["close"])
+        #expect(result.candidates.first { $0.poi.id == "far" }?.status == .rejected(.maxWaypoints))
+    }
+
+    @Test func explorerSpendsItsBudgetOnABetterSet() async throws {
+        // Three decent places hug the route; a great one needs a ~13 min detour.
+        // Relaxed can't afford it; Explorer should trade a near place for it.
+        let near = [
+            Grid.poi("near0", east: 400, north: 60, category: .photo, score: 50),
+            Grid.poi("near1", east: 1000, north: 60, category: .food, score: 50),
+            Grid.poi("near2", east: 1600, north: 60, category: .shop, score: 50),
+        ]
+        let great = Grid.poi("great", east: 1000, north: 1000, category: .photo, score: 95)
+        let relaxed = try await plan(near + [great], budget: Mode.relaxed.budget)
+        let explorer = try await plan(near + [great], budget: Mode.explorer.budget)
+        #expect(relaxed.waypoints.count == 3)
+        #expect(!relaxed.waypoints.contains { $0.id == "great" })
+        #expect(explorer.waypoints.contains { $0.id == "great" })
+        #expect(explorer.extraTime > relaxed.extraTime + 5 * 60)
     }
 
     // MARK: Weights

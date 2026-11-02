@@ -19,8 +19,8 @@ public struct Planner: Sendable {
         // 2–3. Freebies and corridor.
         let filtered = CandidateFilter(config: config, scorer: scorer).filter(request, baseline: baseline)
 
-        // 4. Greedy insertion on estimates.
-        let inserted = GreedyInserter(config: config, scorer: scorer).run(
+        // 4. Choose the most valuable waypoint set on estimates.
+        let inserted = WaypointSelector(config: config, scorer: scorer).run(
             origin: request.origin, destination: request.destination,
             candidates: filtered.candidates, budget: request.budget)
 
@@ -103,9 +103,13 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Real routing may exceed the budget by this fraction before dropping a waypoint.
     public var verificationTolerance: Double = 0.1
     public var maxVerificationRetries: Int = 2
-    /// Seconds. Floor for extra time in `value / extraTime`, so POIs right on
+    /// Seconds. Floor for extra time in `value / extraTime` (used to pick which
+    /// waypoint to drop when verification fails), so POIs right on
     /// the route don't get an infinite ratio.
     public var minExtraTimeForRatio: TimeInterval = 30
+    /// Partial waypoint sets kept per step of the selection search. Higher is
+    /// closer to the best set and slower.
+    public var beamWidth: Int = 16
     /// Offline estimator for the corridor filter and insertion.
     public var estimator: HaversineWalkingTime = HaversineWalkingTime()
 

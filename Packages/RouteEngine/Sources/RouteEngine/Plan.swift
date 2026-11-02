@@ -134,6 +134,8 @@ public enum RejectionReason: String, Hashable, Sendable {
     case tooClose
     /// The route already has the maximum number of waypoints of this category.
     case categoryCap
+    /// Fits the budget, but a set of waypoints with more total value was chosen.
+    case outvalued
     /// Every insertion that fits the budget would make the route backtrack.
     case backtracks
     /// Chosen by the estimate, then dropped because real routing went over budget.
