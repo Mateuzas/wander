@@ -1,6 +1,7 @@
 osm_id,action,value,note
 # --- Łódź, first pass by Claude (2026-11-02). Unverified: check during the field test. ---
 # Same place tagged twice: keep one bead per building
+osm:node:6173564343,exclude,,Backender draft: Manufaktura sign; the Manufaktura mall (way 174638513) is the single bead
 osm:node:432504799,exclude,,Claude draft: city museum is inside Izrael Poznański Palace (way 37550695)
 osm:node:6176514222,exclude,,Claude draft: same palace as the Museum of Cinematography
 osm:way:405391765,exclude,,Claude draft: textile museum is the White Factory (node 4283899056)
@@ -39,7 +40,6 @@ osm:way:102851812,exclude,,Claude draft: religious bookshop
 osm:relation:12609642,boost,30,Claude draft: Passage of Roses is one of Łódź's signature sights
 osm:node:1842609517,boost,15,Claude draft: Księży Młyn is a must-see industrial village
 osm:way:37550695,boost,10,Claude draft: Poznański Palace is the city's best-known palace
-osm:node:6173564343,boost,25,Claude draft: only point for Manufaktura, the city's main destination
 osm:node:6171264108,boost,15,Claude draft: Maurycy Poznański Palace (MS1 area)
 osm:node:1880679870,boost,10,Claude draft: Tuwim's Bench is a classic Piotrkowska photo stop
 # Generic names the automatic "by artist" / "near X" rule cannot fix
@@ -67,7 +67,6 @@ osm:node:1913405256,reason,Bronze armchair of actor Stefan Jaracz,Claude draft
 osm:node:1880679870,reason,Bronze bench with poet Julian Tuwim,Claude draft
 osm:node:1205571110,reason,Bronze lamplighter on Piotrkowska,Claude draft
 osm:relation:12609642,reason,Courtyard covered in a mirror mosaic of roses,Claude draft
-osm:node:6173564343,reason,Entrance to Manufaktura: a 19th-century factory turned shopping and arts complex,Claude draft
 osm:relation:16510680,reason,Former power station turned science centre,Claude draft
 osm:node:2354558730,reason,Bronze of a classic Łódź-made cartoon bear,Claude draft
 osm:node:4148494249,reason,Fairytale trail: Łódź cartoon character,Claude draft
@@ -83,3 +82,5 @@ osm:way:689186938,image,,Claude draft: Wikidata photo shows a shopping centre
 osm:node:1187744318,image,,Claude draft: Wikidata item is Reymont Square, not the statue
 # Venues tagged as something else (BE-4)
 osm:way:104651431,reason,Concert hall of the Łódź Philharmonic,Backender draft: tagged amenity=theatre but it is the philharmonic's concert hall
+osm:way:174638513,popular,yes,Backender draft: Manufaktura is Łódź's biggest destination
+osm:way:174638513,reason,"19th-century cotton mill turned shopping, food and culture complex",Backender draft
