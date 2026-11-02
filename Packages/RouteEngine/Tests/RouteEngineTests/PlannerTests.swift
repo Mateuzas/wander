@@ -58,6 +58,21 @@ struct PlannerTests {
         #expect(one.candidates.contains { $0.status == .rejected(.maxWaypoints) })
     }
 
+    @Test func explorerAllowsFiveStopsRelaxedThree() async throws {
+        func modePlan(_ mode: Mode) async throws -> WanderPlan {
+            try await Planner().plan(PlanRequest(origin: Grid.origin, destination: Grid.destination,
+                                                 mode: mode, pois: spread), provider: HaversineWalkingTime())
+        }
+        let relaxed = try await modePlan(.relaxed)
+        let explorer = try await modePlan(.explorer)
+        #expect(relaxed.waypoints.count == 3)
+        #expect(explorer.waypoints.count == 5)
+        // Five slots allow three of a category (food stays at one).
+        for category in POICategory.allCases {
+            #expect(explorer.waypoints.filter { $0.category == category }.count <= (category == .food ? 1 : 3))
+        }
+    }
+
     @Test func respectsMinSpacing() async throws {
         // A tight cluster of excellent POIs: only one may be chosen. They run
         // away from the route 50 m apart, so the others stay more than

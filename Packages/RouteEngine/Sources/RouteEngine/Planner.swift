@@ -20,9 +20,10 @@ public struct Planner: Sendable {
         let filtered = CandidateFilter(config: config, scorer: scorer).filter(request, baseline: baseline)
 
         // 4. Choose the most valuable waypoint set on estimates.
+        let maxWaypoints = request.maxWaypoints ?? config.maxWaypoints
         let inserted = WaypointSelector(config: config, scorer: scorer).run(
             origin: request.origin, destination: request.destination,
-            candidates: filtered.candidates, budget: request.budget)
+            candidates: filtered.candidates, budget: request.budget, maxWaypoints: maxWaypoints)
 
         // 5–6. Verify with real routing, fall back to the baseline.
         let verified = try await Validator(config: config, scorer: scorer).verify(
@@ -86,6 +87,7 @@ public struct Planner: Sendable {
 public struct PlannerConfig: Hashable, Sendable {
     /// Metres. A POI this close to the route is a free highlight, whatever its kind.
     public var passbyRadius: Double = 40
+    /// Waypoints when the request doesn't say (`PlanRequest.maxWaypoints`).
     public var maxWaypoints: Int = 3
     /// 0–100. A POI must be worth at least this much to bend the route for it
     /// (PLAN.md section 3: no stops that are clearly not worth it). Free
@@ -119,10 +121,13 @@ public struct PlannerConfig: Hashable, Sendable {
 
     public static let `default` = PlannerConfig()
 
-    /// Waypoint cap for `category` given the request's interests.
-    func waypointCap(for category: POICategory, interests: Set<POICategory>) -> Int {
-        guard interests != [category], let limit = categoryLimits[category] else { return maxPerCategory }
-        return min(maxPerCategory, limit)
+    /// Waypoint cap for `category` given the request's interests and how many
+    /// waypoints the plan may have. With more slots the cap grows (3 of 5), so
+    /// a long walk isn't forced to fill slots with categories it values less.
+    func waypointCap(for category: POICategory, interests: Set<POICategory>, maxWaypoints: Int) -> Int {
+        let base = max(maxPerCategory, (maxWaypoints + 1) / 2)
+        guard interests != [category], let limit = categoryLimits[category] else { return base }
+        return min(base, limit)
     }
 
     public init() {}

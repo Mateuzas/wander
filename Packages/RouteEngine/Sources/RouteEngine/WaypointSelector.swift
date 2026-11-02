@@ -44,7 +44,8 @@ struct WaypointSelector {
         var extra: TimeInterval
     }
 
-    func run(origin: Coordinate, destination: Coordinate, candidates: [POI], budget: TimeInterval) -> Result {
+    func run(origin: Coordinate, destination: Coordinate, candidates: [POI], budget: TimeInterval,
+             maxWaypoints: Int) -> Result {
         let estimator = config.estimator
         let projection = LocalProjection(origin: origin)
         let direction = projection.point(destination) - projection.point(origin)
@@ -80,9 +81,9 @@ struct WaypointSelector {
         }
 
         func blocked(_ poi: POI, in state: State) -> RejectionReason? {
-            if state.waypoints.count >= config.maxWaypoints { return .maxWaypoints }
+            if state.waypoints.count >= maxWaypoints { return .maxWaypoints }
             if state.waypoints.filter({ $0.category == poi.category }).count
-                >= config.waypointCap(for: poi.category, interests: scorer.interests) {
+                >= config.waypointCap(for: poi.category, interests: scorer.interests, maxWaypoints: maxWaypoints) {
                 return .categoryCap
             }
             if state.waypoints.contains(where: { $0.coordinate.distance(to: poi.coordinate) < config.minWaypointSpacing }) {
@@ -94,7 +95,7 @@ struct WaypointSelector {
         let empty = State(route: [origin, destination], waypoints: [], extra: 0, value: 0, key: "")
         var best = empty
         var beam = [empty]
-        for _ in 0..<config.maxWaypoints {
+        for _ in 0..<maxWaypoints {
             var children: [String: State] = [:]
             for state in beam {
                 for poi in candidates where blocked(poi, in: state) == nil
