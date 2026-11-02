@@ -329,6 +329,9 @@ def main():
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
         row["type"] = poi_type(p)
+        if p["original_name"] != p["name"]:
+            # Local (OSM) name, for matching Apple Maps places, which use it.
+            row["localName"] = p["original_name"]
         # Raw 0-1 signals so the app can weight them per user; `score` is the default blend.
         row["signals"] = {
             "photos": round(pct[p["id"]], 3),
