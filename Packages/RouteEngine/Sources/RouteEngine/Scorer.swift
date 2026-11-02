@@ -3,7 +3,7 @@ import Foundation
 /// Value and cost-benefit ratio for candidates (PLAN.md section 6, step 4).
 struct Scorer {
     var config: PlannerConfig
-    var interests: Set<Category>
+    var interests: Set<POICategory>
 
     /// `score × interestWeight`. Interests are on/off for now, so the weight is 1 or 0.
     func value(_ poi: POI) -> Double {

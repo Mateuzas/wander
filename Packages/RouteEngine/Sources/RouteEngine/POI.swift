@@ -1,14 +1,14 @@
 import Foundation
 
 /// POI category, matching `category` in pois.json (PLAN.md section 5.5).
-public enum Category: String, Codable, CaseIterable, Hashable, Sendable {
+public enum POICategory: String, Codable, CaseIterable, Hashable, Sendable {
     case photo
     case shop
     case food
 }
 
 /// How a POI is experienced, matching `kind` in pois.json.
-public enum Kind: String, Codable, Hashable, Sendable {
+public enum POIKind: String, Codable, Hashable, Sendable {
     /// Visible from the street, costs no dwell time (landmarks, murals, viewpoints).
     case passby
     /// Shops and food; optional to enter.
@@ -22,15 +22,15 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var name: String
     public var lat: Double
     public var lon: Double
-    public var category: Category
+    public var category: POICategory
     /// 0–100.
     public var score: Int
-    public var kind: Kind
+    public var kind: POIKind
     /// Short human-readable reason. May be empty.
     public var reason: String
 
     public init(id: String, name: String, lat: Double, lon: Double,
-                category: Category, score: Int, kind: Kind, reason: String = "") {
+                category: POICategory, score: Int, kind: POIKind, reason: String = "") {
         self.id = id
         self.name = name
         self.lat = lat
@@ -53,9 +53,9 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         name = try c.decode(String.self, forKey: .name)
         lat = try c.decode(Double.self, forKey: .lat)
         lon = try c.decode(Double.self, forKey: .lon)
-        category = try c.decode(Category.self, forKey: .category)
+        category = try c.decode(POICategory.self, forKey: .category)
         score = try c.decode(Int.self, forKey: .score)
-        kind = try c.decode(Kind.self, forKey: .kind)
+        kind = try c.decode(POIKind.self, forKey: .kind)
         reason = try c.decodeIfPresent(String.self, forKey: .reason) ?? ""
     }
 }

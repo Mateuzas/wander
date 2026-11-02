@@ -26,14 +26,14 @@ public struct PlanRequest: Sendable {
     /// Extra seconds allowed over the fast route.
     public var budget: TimeInterval
     /// Categories the user wants. Default: all.
-    public var interests: Set<Category>
+    public var interests: Set<POICategory>
     public var pois: [POI]
     /// Local time of the walk. Accepted but not used yet: pois.json has no
     /// opening hours, so there is nothing to filter on (decided for Milestone 2).
     public var time: Date?
 
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
-                interests: Set<Category> = Set(Category.allCases), pois: [POI], time: Date? = nil) {
+                interests: Set<POICategory> = Set(POICategory.allCases), pois: [POI], time: Date? = nil) {
         self.origin = origin
         self.destination = destination
         self.budget = max(0, budget)
@@ -43,7 +43,7 @@ public struct PlanRequest: Sendable {
     }
 
     public init(origin: Coordinate, destination: Coordinate, mode: Mode,
-                interests: Set<Category> = Set(Category.allCases), pois: [POI], time: Date? = nil) {
+                interests: Set<POICategory> = Set(POICategory.allCases), pois: [POI], time: Date? = nil) {
         self.init(origin: origin, destination: destination, budget: mode.budget,
                   interests: interests, pois: pois, time: time)
     }
