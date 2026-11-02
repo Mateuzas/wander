@@ -169,9 +169,6 @@ struct MapScreen: View {
             visiblePOIs = store.beads(in: context.region, viewSize: mapSize,
                                       keeping: Set(visiblePOIs.map(\.id)), limit: Self.beadLimit)
         }
-        #if DEBUG
-        .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in debugOverlay.toggle() })
-        #endif
         .ignoresSafeArea()
         // Full-screen size, so the bead grid matches the region MapKit reports.
         .onGeometryChange(for: CGSize.self) { $0.size } action: { mapSize = $0 }
