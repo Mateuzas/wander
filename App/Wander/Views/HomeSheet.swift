@@ -40,6 +40,8 @@ struct HomeSheet: View {
                         suggestions
                     } else if !recents.items.isEmpty {
                         recentList
+                    } else if !offline, !locationDenied, errorMessage == nil {
+                        welcome
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -55,6 +57,22 @@ struct HomeSheet: View {
     }
 
     // MARK: - Pieces
+
+    /// First run, nothing searched yet: the brand logo and the pitch (docs/BRAND.md).
+    private var welcome: some View {
+        VStack(alignment: .leading, spacing: Layout.grid) {
+            Image("WanderLogo")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 32)
+                .accessibilityLabel("Wander")
+            Text("Get where you're going, but walk past the good stuff.")
+                .font(WanderFont.body)
+                .foregroundStyle(.inkMuted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.top, Layout.grid)
+    }
 
     private var searchField: some View {
         HStack(spacing: Layout.grid) {
