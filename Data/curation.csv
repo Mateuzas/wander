@@ -84,3 +84,7 @@ osm:node:1187744318,image,,Claude draft: Wikidata item is Reymont Square, not th
 osm:way:104651431,reason,Concert hall of the Łódź Philharmonic,Backender draft: tagged amenity=theatre but it is the philharmonic's concert hall
 osm:way:174638513,popular,yes,Backender draft: Manufaktura is Łódź's biggest destination
 osm:way:174638513,reason,"19th-century cotton mill turned shopping, food and culture complex",Backender draft
+osm:way:319475663,exclude,,Backender draft: Street Mall Vis a Vis is a small retail strip, not a destination
+osm:way:461413300,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
+osm:way:1346902649,exclude,,Backender draft: university sports club grounds, not a destination
+osm:way:386608429,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
