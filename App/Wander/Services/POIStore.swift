@@ -9,6 +9,10 @@ import RouteEngine
 final class POIStore {
     /// Pilot city slug; matches the file name produced by Data/score.py.
     nonisolated static let pilotCity = "lodz"
+    /// Opening hours are read in the city's time zone, not the phone's.
+    nonisolated static let timeZones = ["lodz": "Europe/Warsaw", "vilnius": "Europe/Vilnius"]
+
+    let timeZone: TimeZone
 
     private(set) var city = ""
     private(set) var attribution = ""
@@ -18,6 +22,7 @@ final class POIStore {
     private(set) var loadError: Error?
 
     init(city: String = POIStore.pilotCity, bundle: Bundle = .main) {
+        timeZone = Self.timeZones[city].flatMap(TimeZone.init(identifier:)) ?? .current
         do {
             guard let url = bundle.url(forResource: "pois-\(city)", withExtension: "json") else {
                 throw CocoaError(.fileNoSuchFile)
@@ -59,5 +64,7 @@ final class POIStore {
 }
 
 extension Coordinate {
+    init(_ c: CLLocationCoordinate2D) { self.init(lat: c.latitude, lon: c.longitude) }
+
     var clLocation: CLLocationCoordinate2D { CLLocationCoordinate2D(latitude: lat, longitude: lon) }
 }

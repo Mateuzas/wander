@@ -7,6 +7,7 @@ struct HomeSheet: View {
     let search: SearchService
     let recents: RecentDestinations
     let locationDenied: Bool
+    var offline = false
     @Binding var detent: PresentationDetent
     let onChoose: (Destination) -> Void
 
@@ -21,6 +22,12 @@ struct HomeSheet: View {
             searchField
             ScrollView {
                 VStack(alignment: .leading, spacing: Layout.margin) {
+                    if offline {
+                        Text("No connection. Routes need internet; saved places still show.")
+                            .font(WanderFont.body)
+                            .foregroundStyle(.ink)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     if locationDenied {
                         LocationDeniedMessage()
                     }
