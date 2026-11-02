@@ -181,12 +181,23 @@ Remove junk (parking-lot "attractions", closed places, duplicates), boost the tr
       "category": "photo",
       "score": 82,
       "kind": "passby",
-      "reason": "Short human-readable reason"
+      "reason": "Short human-readable reason",
+      "type": "mural",
+      "signals": { "photos": 0.82, "fame": 0.40, "quality": 0.6, "independent": true },
+      "cuisine": ["italian"],
+      "openingHours": "Mo-Sa 10:00-20:00"
     }
   ]
 }
 ```
 `kind`: `passby` (visible from the street, costs no dwell time: landmarks, murals, viewpoints) or `stop` (shops and food, optional to enter).
+
+Additions agreed after the first data run (2026-11-02):
+- One file per city: `pois-<city>.json` (Łódź first, then Vilnius).
+- `name` is English for sights (reviewed in `Data/names-en/<city>.csv`); shops and food keep their own names.
+- `type`: most specific OSM value (`mural`, `museum`, `church`, `cafe`, `books`, …).
+- `signals`: raw 0–1 inputs so the app can weight them **per user** (e.g. photo hunter vs. classic sightseer vs. hidden gems). `photos` = Commons photo-density percentile in the city, `fame` = log-scaled Wikipedia sitelinks, `quality` = OSM data completeness, `independent` = no brand tag. `score` stays as the default blend. A `rating` signal is reserved for later; no free source has ratings, and Google's terms forbid storing them.
+- Optional: `cuisine` (food only), `openingHours` (raw OSM syntax, shops and food only).
 
 ### 5.6 Licensing
 OSM data is ODbL: show "© OpenStreetMap contributors" in the app (about screen is fine). Apple Maps attribution is handled by MapKit.
