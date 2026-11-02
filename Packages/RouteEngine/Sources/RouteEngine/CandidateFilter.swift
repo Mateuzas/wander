@@ -1,0 +1,50 @@
+import Foundation
+
+/// Steps 2 and 3 of PLAN.md section 6: pass-by freebies and the corridor filter.
+struct CandidateFilter {
+    var config: PlannerConfig
+
+    struct Result {
+        /// `passby` POIs already on the fast route, with their route position.
+        var freebies: [(poi: POI, distance: Double, along: Double)]
+        /// POIs worth trying as waypoints, sorted by id for determinism.
+        var candidates: [POI]
+        /// Everything else, by POI id.
+        var rejected: [String: RejectionReason]
+    }
+
+    func filter(_ request: PlanRequest, baseline: Leg) -> Result {
+        let projection = LocalProjection(origin: request.origin)
+        let line = MeasuredPolyline(baseline.polyline, projection: projection)
+        let estimator = config.estimator
+        let direct = estimator.seconds(from: request.origin, to: request.destination)
+
+        var result = Result(freebies: [], candidates: [], rejected: [:])
+        for poi in request.pois {
+            guard request.interests.contains(poi.category) else {
+                result.rejected[poi.id] = .notInInterests
+                continue
+            }
+            if poi.kind == .passby {
+                let near = line.nearest(to: poi.coordinate)
+                if near.distance <= config.passbyRadius {
+                    result.freebies.append((poi, near.distance, near.along))
+                    continue
+                }
+            }
+            guard request.budget > 0 else {
+                result.rejected[poi.id] = .noBudget
+                continue
+            }
+            let via = estimator.seconds(from: request.origin, to: poi.coordinate)
+                + estimator.seconds(from: poi.coordinate, to: request.destination)
+            if via - direct <= request.budget {
+                result.candidates.append(poi)
+            } else {
+                result.rejected[poi.id] = .outsideCorridor
+            }
+        }
+        result.candidates.sort { $0.id < $1.id }
+        return result
+    }
+}

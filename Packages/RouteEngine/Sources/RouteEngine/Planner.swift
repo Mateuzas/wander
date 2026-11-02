@@ -11,11 +11,73 @@ public struct Planner: Sendable {
     /// Builds a plan. Real routing goes only through `provider`; detours are
     /// estimated offline with `config.estimator`.
     public func plan(_ request: PlanRequest, provider: WalkingTimeProvider) async throws -> WanderPlan {
-        // API placeholder for Milestone 2: returns the baseline only.
+        let scorer = Scorer(config: config, interests: request.interests)
+
+        // 1. Baseline.
         let baseline = try await provider.leg(from: request.origin, to: request.destination)
-        return WanderPlan(baseline: baseline, waypoints: [], legs: [baseline],
-                          totalTime: baseline.duration, extraTime: 0, highlights: [],
-                          noDetourFit: false, candidates: [])
+
+        // 2–3. Freebies and corridor.
+        let filtered = CandidateFilter(config: config).filter(request, baseline: baseline)
+
+        // 4. Greedy insertion on estimates.
+        let inserted = GreedyInserter(config: config, scorer: scorer).run(
+            origin: request.origin, destination: request.destination,
+            candidates: filtered.candidates, budget: request.budget)
+
+        // 5–6. Verify with real routing, fall back to the baseline.
+        let verified = try await Validator(config: config, scorer: scorer).verify(
+            origin: request.origin, destination: request.destination,
+            waypoints: inserted.waypoints, baseline: baseline,
+            budget: request.budget, provider: provider)
+
+        let totalTime = verified.legs.reduce(0) { $0 + $1.duration }
+        var plan = WanderPlan(
+            baseline: baseline, waypoints: verified.waypoints, legs: verified.legs,
+            totalTime: totalTime, extraTime: totalTime - baseline.duration,
+            highlights: [], noDetourFit: request.budget > 0 && verified.waypoints.isEmpty,
+            candidates: [])
+
+        // Highlights: waypoints plus pass-by POIs along the final route.
+        let line = MeasuredPolyline(plan.polyline, projection: LocalProjection(origin: request.origin))
+        let waypointIDs = Set(verified.waypoints.map(\.id))
+        var passbyIDs: Set<String> = []
+        for poi in request.pois where request.interests.contains(poi.category) {
+            let near = line.nearest(to: poi.coordinate)
+            if waypointIDs.contains(poi.id) {
+                plan.highlights.append(Highlight(poi: poi, role: .waypoint,
+                                                 distanceAlongRoute: near.along, distanceFromRoute: near.distance))
+            } else if poi.kind == .passby, near.distance <= config.passbyRadius {
+                passbyIDs.insert(poi.id)
+                plan.highlights.append(Highlight(poi: poi, role: .passby,
+                                                 distanceAlongRoute: near.along, distanceFromRoute: near.distance))
+            }
+        }
+        plan.highlights.sort {
+            ($0.distanceAlongRoute, $0.poi.id) < ($1.distanceAlongRoute, $1.poi.id)
+        }
+
+        // Debug record per POI.
+        let freebieIDs = Set(filtered.freebies.map(\.poi.id))
+        let droppedIDs = Set(verified.dropped.map(\.id))
+        plan.candidates = request.pois.map { poi in
+            let status: CandidateStatus
+            if waypointIDs.contains(poi.id) {
+                status = .waypoint
+            } else if passbyIDs.contains(poi.id) {
+                status = .passby
+            } else if let reason = filtered.rejected[poi.id] {
+                status = .rejected(reason)
+            } else if freebieIDs.contains(poi.id) {
+                status = .rejected(.bypassedByDetour)
+            } else if droppedIDs.contains(poi.id) {
+                status = .rejected(.failedVerification)
+            } else {
+                status = .rejected(inserted.rejected[poi.id] ?? .overBudget)
+            }
+            return CandidateDebug(poi: poi, value: scorer.value(poi),
+                                  estimatedExtraTime: inserted.bestExtra[poi.id], status: status)
+        }
+        return plan
     }
 }
 
