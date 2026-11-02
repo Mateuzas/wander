@@ -34,6 +34,13 @@ final class LocationService: NSObject {
         }
     }
 
+    /// While walking, every fix counts (no distance filter) and CoreLocation is
+    /// told the user is on foot. Still when-in-use only: no background updates.
+    func setWalking(_ walking: Bool) {
+        manager.activityType = walking ? .fitness : .other
+        manager.distanceFilter = walking ? kCLDistanceFilterNone : 10
+    }
+
     private func update(for status: CLAuthorizationStatus) {
         switch status {
         case .authorizedWhenInUse, .authorizedAlways:
