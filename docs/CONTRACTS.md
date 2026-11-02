@@ -40,7 +40,7 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `id` | String | ✓ | `osm:(node\|way\|relation):<n>`, stable across runs; used for curation, `seen` lists, caches |
 | `name` | String | ✓ | Display name. Sights: English (`Data/names-en/<city>.csv`). Shops and food: their own name |
 | `lat`, `lon` | Double | ✓ | WGS84; centroid for ways and relations |
-| `category` | `photo` \| `shop` \| `food` | ✓ | Swift `POICategory` |
+| `category` | `photo` \| `shop` \| `food` | ✓ | Swift `POICategory`. Notable venues (BE-4) use the same categories: stadiums, arenas, theatres, concert halls, zoos, aquariums and theme parks are `photo`; shopping malls are `shop` |
 | `score` | Int 0–100 | ✓ | Default blend; used when no weights are given. Shop and food are capped at 70 |
 | `kind` | `passby` \| `stop` | ✓ | photo → passby, shop and food → stop |
 | `reason` | String | ✓ | Short, concrete, sentence case (PLAN §10); may be `""` |
