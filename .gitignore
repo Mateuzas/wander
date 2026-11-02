@@ -7,3 +7,16 @@ xcuserdata/
 __pycache__/
 .venv/
 Data/cache/
+
+# Secrets: only SOPS-encrypted files under secrets/ are committed (docs/SECRETS.md)
+.env
+.env.*
+*.p8
+*.p12
+*.cer
+*.mobileprovision
+*.provisionprofile
+*.agekey
+keys.txt
+*.dec.*
+App/Config/*.local.xcconfig
