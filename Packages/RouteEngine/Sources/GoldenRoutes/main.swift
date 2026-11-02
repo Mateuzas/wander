@@ -137,10 +137,13 @@ for (index, route) in golden.routes.enumerated() {
     let destination = Coordinate(lat: route.to[0], lon: route.to[1])
     var explorerPlan: WanderPlan?
     var waypointSets: [Mode: Set<String>] = [:]
+    // All modes in one call, as the app does: Explorer must differ from Relaxed.
+    let modePlans = try await planner.plans(
+        PlanRequest(origin: origin, destination: destination, mode: .direct, weights: weights,
+                    pois: file.pois, time: time, timeZone: timeZone),
+        provider: provider)
     for mode in Mode.allCases {
-        let request = PlanRequest(origin: origin, destination: destination, mode: mode, weights: weights,
-                                  pois: file.pois, time: time, timeZone: timeZone)
-        let plan = try await planner.plan(request, provider: provider)
+        let plan = modePlans[mode]!
         let debug = Dictionary(uniqueKeysWithValues: plan.candidates.map { ($0.poi.id, $0) })
         let names = plan.waypoints.map { poi in
             let d = debug[poi.id]
