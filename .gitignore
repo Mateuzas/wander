@@ -20,3 +20,6 @@ Data/cache/
 keys.txt
 *.dec.*
 App/Config/*.local.xcconfig
+
+# Claude Code sub-agent worktrees (.claude/worktrees/)
+.claude/
