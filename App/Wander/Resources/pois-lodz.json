@@ -4,25 +4,8 @@
  "attribution": "© OpenStreetMap contributors",
  "pois": [
   {
-   "id": "osm:way:283202330",
-   "name": "Archikatedra pw. Świętego Stanisława Kostki",
-   "lat": 51.748928,
-   "lon": 19.459686,
-   "category": "photo",
-   "score": 84,
-   "kind": "passby",
-   "reason": "Historic church, well-known landmark, popular photo spot",
-   "type": "church",
-   "signals": {
-    "photos": 0.881,
-    "fame": 0.793,
-    "quality": 0.6,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:174955733",
-   "name": "Sobór św. Aleksandra Newskiego",
+   "name": "Alexander Nevsky Orthodox Cathedral",
    "lat": 51.770662,
    "lon": 19.464166,
    "category": "photo",
@@ -38,8 +21,25 @@
    }
   },
   {
+   "id": "osm:way:283202330",
+   "name": "St Stanislaus Kostka Cathedral",
+   "lat": 51.748928,
+   "lon": 19.459686,
+   "category": "photo",
+   "score": 84,
+   "kind": "passby",
+   "reason": "Historic church, well-known landmark, popular photo spot",
+   "type": "church",
+   "signals": {
+    "photos": 0.881,
+    "fame": 0.793,
+    "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:8771864634",
-   "name": "Aleja Gwiazd w Łodzi",
+   "name": "Łódź Walk of Fame",
    "lat": 51.768642,
    "lon": 19.456602,
    "category": "photo",
@@ -56,7 +56,7 @@
   },
   {
    "id": "osm:way:104252454",
-   "name": "Muzeum Archeologiczne i Etnograficzne w Łodzi",
+   "name": "Museum of Archaeology and Ethnography",
    "lat": 51.776397,
    "lon": 19.455556,
    "category": "photo",
@@ -73,7 +73,7 @@
   },
   {
    "id": "osm:node:432504799",
-   "name": "Muzeum Miasta Łodzi",
+   "name": "Museum of the City of Łódź",
    "lat": 51.778721,
    "lon": 19.451049,
    "category": "photo",
@@ -89,25 +89,8 @@
    }
   },
   {
-   "id": "osm:way:104651431",
-   "name": "Filharmonia Łódzka",
-   "lat": 51.771266,
-   "lon": 19.460006,
-   "category": "photo",
-   "score": 77,
-   "kind": "passby",
-   "reason": "Well-known landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.867,
-    "fame": 0.669,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:104252448",
-   "name": "Kościół Zesłania Ducha Świętego",
+   "name": "Church of the Descent of the Holy Spirit",
    "lat": 51.776131,
    "lon": 19.455204,
    "category": "photo",
@@ -123,8 +106,25 @@
    }
   },
   {
+   "id": "osm:way:104651431",
+   "name": "Łódź Philharmonic",
+   "lat": 51.771266,
+   "lon": 19.460006,
+   "category": "photo",
+   "score": 77,
+   "kind": "passby",
+   "reason": "Well-known landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.867,
+    "fame": 0.669,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:37550695",
-   "name": "Pałac Izraela Poznańskiego w Łodzi",
+   "name": "Izrael Poznański Palace",
    "lat": 51.779285,
    "lon": 19.450956,
    "category": "photo",
@@ -140,25 +140,8 @@
    }
   },
   {
-   "id": "osm:way:107422365",
-   "name": "Cerkiew św. Olgi",
-   "lat": 51.771951,
-   "lon": 19.465242,
-   "category": "photo",
-   "score": 74,
-   "kind": "passby",
-   "reason": "Historic church, popular photo spot",
-   "type": "church",
-   "signals": {
-    "photos": 0.992,
-    "fame": 0.482,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:1249270544",
-   "name": "Muzeum Kanału „Dętka”",
+   "name": "Dętka Sewer Museum",
    "lat": 51.777003,
    "lon": 19.454593,
    "category": "photo",
@@ -174,8 +157,25 @@
    }
   },
   {
+   "id": "osm:way:107422365",
+   "name": "St Olga's Orthodox Church",
+   "lat": 51.771951,
+   "lon": 19.465242,
+   "category": "photo",
+   "score": 74,
+   "kind": "passby",
+   "reason": "Historic church, popular photo spot",
+   "type": "church",
+   "signals": {
+    "photos": 0.992,
+    "fame": 0.482,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:683699016",
-   "name": "Tadeusz Kościuszko",
+   "name": "Tadeusz Kościuszko Monument",
    "lat": 51.776783,
    "lon": 19.454701,
    "category": "photo",
@@ -192,7 +192,7 @@
   },
   {
    "id": "osm:node:1624531102",
-   "name": "Muzeum Pałac Herbsta",
+   "name": "Herbst Palace Museum",
    "lat": 51.754267,
    "lon": 19.484721,
    "category": "photo",
@@ -209,7 +209,7 @@
   },
   {
    "id": "osm:node:7566036517",
-   "name": "Kamienica pod Gutenbergiem",
+   "name": "Gutenberg Tenement House",
    "lat": 51.766886,
    "lon": 19.457093,
    "category": "photo",
@@ -226,7 +226,7 @@
   },
   {
    "id": "osm:node:4283899056",
-   "name": "Biała Fabryka Geyera",
+   "name": "Geyer's White Factory",
    "lat": 51.745506,
    "lon": 19.461874,
    "category": "photo",
@@ -243,7 +243,7 @@
   },
   {
    "id": "osm:way:190343346",
-   "name": "Kaplica Rodziny Scheibler",
+   "name": "Scheibler Family Chapel",
    "lat": 51.776677,
    "lon": 19.43324,
    "category": "photo",
@@ -260,7 +260,7 @@
   },
   {
    "id": "osm:node:7312842825",
-   "name": "Pomnik Jednorożca",
+   "name": "Unicorn Sculpture",
    "lat": 51.75897,
    "lon": 19.458257,
    "category": "photo",
@@ -276,25 +276,25 @@
    }
   },
   {
-   "id": "osm:node:14072578122",
-   "name": "Kamienica Rachmila Lipszyca",
-   "lat": 51.771542,
-   "lon": 19.464656,
+   "id": "osm:node:1205571104",
+   "name": "Founders of Industrial Łódź Sculpture",
+   "lat": 51.77284,
+   "lon": 19.455792,
    "category": "photo",
    "score": 69,
    "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
+   "reason": "Sculpture, popular photo spot",
+   "type": "sculpture",
    "signals": {
-    "photos": 0.997,
+    "photos": 0.956,
     "fame": 0.373,
-    "quality": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
   {
    "id": "osm:way:174195288",
-   "name": "Muzeum Kinematografii",
+   "name": "Museum of Cinematography",
    "lat": 51.759605,
    "lon": 19.474547,
    "category": "photo",
@@ -310,19 +310,19 @@
    }
   },
   {
-   "id": "osm:node:1205571104",
-   "name": "Twórcy Łodzi Przemysłowej",
-   "lat": 51.77284,
-   "lon": 19.455792,
+   "id": "osm:node:14072578122",
+   "name": "Rachmil Lipszyc Tenement House",
+   "lat": 51.771542,
+   "lon": 19.464656,
    "category": "photo",
    "score": 69,
    "kind": "passby",
-   "reason": "Sculpture, popular photo spot",
-   "type": "sculpture",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
    "signals": {
-    "photos": 0.956,
+    "photos": 0.997,
     "fame": 0.373,
-    "quality": 0.2,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -350,7 +350,7 @@
   },
   {
    "id": "osm:node:1842609517",
-   "name": "Famuły Księży Młyn",
+   "name": "Księży Młyn Workers' Houses",
    "lat": 51.754843,
    "lon": 19.481796,
    "category": "photo",
@@ -361,23 +361,6 @@
    "signals": {
     "photos": 0.792,
     "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:4459174692",
-   "name": "Fortepian Rubinsteina",
-   "lat": 51.767584,
-   "lon": 19.456805,
-   "category": "photo",
-   "score": 68,
-   "kind": "passby",
-   "reason": "Sculpture, popular photo spot",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.941,
-    "fame": 0.373,
     "quality": 0.2,
     "independent": true
    }
@@ -446,6 +429,23 @@
    "openingHours": "Mo-Su 11:00-21:30"
   },
   {
+   "id": "osm:node:4459174692",
+   "name": "Rubinstein's Piano",
+   "lat": 51.767584,
+   "lon": 19.456805,
+   "category": "photo",
+   "score": 68,
+   "kind": "passby",
+   "reason": "Sculpture, popular photo spot",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.941,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:6371021592",
    "name": "Spirit Bar",
    "lat": 51.778153,
@@ -488,25 +488,8 @@
    "openingHours": "Su-Th 10:00-23:00; Fr-Sa 10:00-01:00"
   },
   {
-   "id": "osm:node:1913405256",
-   "name": "Fotel Jaracza",
-   "lat": 51.759922,
-   "lon": 19.458504,
-   "category": "photo",
-   "score": 67,
-   "kind": "passby",
-   "reason": "Statue, popular photo spot",
-   "type": "statue",
-   "signals": {
-    "photos": 0.908,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:432504801",
-   "name": "Muzeum Fabryki",
+   "name": "Factory Museum",
    "lat": 51.780795,
    "lon": 19.448051,
    "category": "photo",
@@ -522,8 +505,25 @@
    }
   },
   {
+   "id": "osm:node:1913405256",
+   "name": "Jaracz's Armchair",
+   "lat": 51.759922,
+   "lon": 19.458504,
+   "category": "photo",
+   "score": 67,
+   "kind": "passby",
+   "reason": "Statue, popular photo spot",
+   "type": "statue",
+   "signals": {
+    "photos": 0.908,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:3237838362",
-   "name": "Pałac Juliusza Kindermanna",
+   "name": "Juliusz Kindermann Palace",
    "lat": 51.761327,
    "lon": 19.457812,
    "category": "photo",
@@ -540,7 +540,7 @@
   },
   {
    "id": "osm:way:101293559",
-   "name": "Pałac Maksymiliana Goldfedera",
+   "name": "Maksymilian Goldfeder Palace",
    "lat": 51.767404,
    "lon": 19.456172,
    "category": "photo",
@@ -600,23 +600,6 @@
    "openingHours": "Mo-Th 08:30-22:00; Fr 08:30-23:00; Sa 09:30-23:00; Su 09:00-21:00"
   },
   {
-   "id": "osm:node:3672230401",
-   "name": "Dom Towarzystwa Akcyjnego Ludwika Geyera",
-   "lat": 51.76816,
-   "lon": 19.456825,
-   "category": "photo",
-   "score": 66,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.849,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1821342782",
    "name": "Ganesh",
    "lat": 51.779516,
@@ -638,25 +621,8 @@
    "openingHours": "Mo-Th 11:00-22:00; Fr,Sa 11:00-23:00; Su 12:00-20:00"
   },
   {
-   "id": "osm:node:5059802535",
-   "name": "Mural przy Piotrkowskiej",
-   "lat": 51.760095,
-   "lon": 19.458791,
-   "category": "photo",
-   "score": 66,
-   "kind": "passby",
-   "reason": "Mural, popular photo spot",
-   "type": "mural",
-   "signals": {
-    "photos": 0.849,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:way:104189409",
-   "name": "Pałac Juliusza Heinzla",
+   "name": "Juliusz Heinzel Palace",
    "lat": 51.764642,
    "lon": 19.457694,
    "category": "photo",
@@ -667,6 +633,40 @@
    "signals": {
     "photos": 0.748,
     "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3672230401",
+   "name": "Ludwik Geyer Company House",
+   "lat": 51.76816,
+   "lon": 19.456825,
+   "category": "photo",
+   "score": 66,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.849,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:5059802535",
+   "name": "Piotrkowska Street Mural",
+   "lat": 51.760095,
+   "lon": 19.458791,
+   "category": "photo",
+   "score": 66,
+   "kind": "passby",
+   "reason": "Mural, popular photo spot",
+   "type": "mural",
+   "signals": {
+    "photos": 0.849,
+    "fame": 0.433,
     "quality": 0.2,
     "independent": true
    }
@@ -714,6 +714,23 @@
    "openingHours": "Su-Th 11:00-23:00, Fr-Sa 11:00-00:00"
   },
   {
+   "id": "osm:way:103281496",
+   "name": "Church of the Assumption",
+   "lat": 51.783173,
+   "lon": 19.453897,
+   "category": "photo",
+   "score": 65,
+   "kind": "passby",
+   "reason": "Historic church, popular photo spot",
+   "type": "church",
+   "signals": {
+    "photos": 0.932,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:4289393126",
    "name": "Cykada",
    "lat": 51.761362,
@@ -736,7 +753,7 @@
   },
   {
    "id": "osm:node:4283850145",
-   "name": "Dom firmy „Krusche - Ender”",
+   "name": "Krusche & Ender House",
    "lat": 51.760987,
    "lon": 19.457909,
    "category": "photo",
@@ -747,23 +764,6 @@
    "signals": {
     "photos": 0.828,
     "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:103281496",
-   "name": "Kościół Wniebowzięcia Najświętszej Maryi Panny",
-   "lat": 51.783173,
-   "lon": 19.453897,
-   "category": "photo",
-   "score": 65,
-   "kind": "passby",
-   "reason": "Historic church, popular photo spot",
-   "type": "church",
-   "signals": {
-    "photos": 0.932,
-    "fame": 0.296,
     "quality": 0.2,
     "independent": true
    }
@@ -791,7 +791,7 @@
   },
   {
    "id": "osm:way:333043326",
-   "name": "Jan Paweł II",
+   "name": "John Paul II Monument",
    "lat": 51.749193,
    "lon": 19.460361,
    "category": "photo",
@@ -807,42 +807,8 @@
    }
   },
   {
-   "id": "osm:way:102162512",
-   "name": "Kościół św. Mateusza",
-   "lat": 51.7465,
-   "lon": 19.460387,
-   "category": "photo",
-   "score": 64,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12695807037",
-   "name": "Muzeum Książki Artystycznej",
-   "lat": 51.753043,
-   "lon": 19.477758,
-   "category": "photo",
-   "score": 64,
-   "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
-   "signals": {
-    "photos": 0.908,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1205571110",
-   "name": "Pomnik Lampiarza",
+   "name": "Lamplighter Statue",
    "lat": 51.771555,
    "lon": 19.455786,
    "category": "photo",
@@ -858,8 +824,42 @@
    }
   },
   {
+   "id": "osm:node:12695807037",
+   "name": "Museum of the Artist's Book",
+   "lat": 51.753043,
+   "lon": 19.477758,
+   "category": "photo",
+   "score": 64,
+   "kind": "passby",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
+   "signals": {
+    "photos": 0.908,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:102162512",
+   "name": "St Matthew's Church",
+   "lat": 51.7465,
+   "lon": 19.460387,
+   "category": "photo",
+   "score": 64,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1880679870",
-   "name": "Ławeczka Tuwima",
+   "name": "Tuwim's Bench",
    "lat": 51.764657,
    "lon": 19.457455,
    "category": "photo",
@@ -876,7 +876,7 @@
   },
   {
    "id": "osm:way:103645945",
-   "name": "Teatr Wielki",
+   "name": "Grand Theatre",
    "lat": 51.77333,
    "lon": 19.469709,
    "category": "photo",
@@ -892,42 +892,8 @@
    }
   },
   {
-   "id": "osm:relation:16510680",
-   "name": "Centrum Nauki i Techniki EC1",
-   "lat": 51.767576,
-   "lon": 19.468083,
-   "category": "photo",
-   "score": 62,
-   "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
-   "signals": {
-    "photos": 0.993,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:333039324",
-   "name": "Grób Nieznanego Żołnierza",
-   "lat": 51.749443,
-   "lon": 19.460463,
-   "category": "photo",
-   "score": 62,
-   "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
-   "signals": {
-    "photos": 0.748,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1659745280",
-   "name": "Kamienica Bechtoldów",
+   "name": "Bechtold Tenement House",
    "lat": 51.773831,
    "lon": 19.455565,
    "category": "photo",
@@ -943,8 +909,25 @@
    }
   },
   {
+   "id": "osm:relation:16510680",
+   "name": "EC1 Science and Technology Centre",
+   "lat": 51.767576,
+   "lon": 19.468083,
+   "category": "photo",
+   "score": 62,
+   "kind": "passby",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
+   "signals": {
+    "photos": 0.993,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:4450208060",
-   "name": "Muzeum Farmacji im. prof. Jana Muszyńskiego",
+   "name": "Pharmacy Museum",
    "lat": 51.776229,
    "lon": 19.45429,
    "category": "photo",
@@ -956,6 +939,23 @@
     "photos": 0.999,
     "fame": 0.0,
     "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:333039324",
+   "name": "Tomb of the Unknown Soldier",
+   "lat": 51.749443,
+   "lon": 19.460463,
+   "category": "photo",
+   "score": 62,
+   "kind": "passby",
+   "reason": "Monument",
+   "type": "monument",
+   "signals": {
+    "photos": 0.748,
+    "fame": 0.433,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -1004,7 +1004,7 @@
   },
   {
    "id": "osm:way:405391765",
-   "name": "Centralne Muzeum Włókiennictwa",
+   "name": "Central Museum of Textiles",
    "lat": 51.745493,
    "lon": 19.462545,
    "category": "photo",
@@ -1083,8 +1083,25 @@
    "openingHours": "Su-Th 12:00-22:00; Fr-Sa 12:00-23:00"
   },
   {
+   "id": "osm:node:2354558730",
+   "name": "Floppy-Eared Teddy Bear Statue",
+   "lat": 51.76649,
+   "lon": 19.456816,
+   "category": "photo",
+   "score": 61,
+   "kind": "passby",
+   "reason": "Statue, popular photo spot",
+   "type": "statue",
+   "signals": {
+    "photos": 0.923,
+    "fame": 0.187,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1659745279",
-   "name": "Kamienica A. Lubińskiego",
+   "name": "Lubiński Tenement House",
    "lat": 51.773785,
    "lon": 19.455099,
    "category": "photo",
@@ -1101,7 +1118,7 @@
   },
   {
    "id": "osm:node:14017311216",
-   "name": "Kamienica R. Rozenthala",
+   "name": "Rozenthal Tenement House",
    "lat": 51.771408,
    "lon": 19.456182,
    "category": "photo",
@@ -1113,23 +1130,6 @@
     "photos": 0.881,
     "fame": 0.296,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:2354558730",
-   "name": "Miś Uszatek",
-   "lat": 51.76649,
-   "lon": 19.456816,
-   "category": "photo",
-   "score": 61,
-   "kind": "passby",
-   "reason": "Statue, popular photo spot",
-   "type": "statue",
-   "signals": {
-    "photos": 0.923,
-    "fame": 0.187,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -1172,6 +1172,23 @@
    }
   },
   {
+   "id": "osm:node:1921667413",
+   "name": "Józef Piłsudski Statue",
+   "lat": 51.769154,
+   "lon": 19.464127,
+   "category": "photo",
+   "score": 60,
+   "kind": "passby",
+   "reason": "Statue, popular photo spot",
+   "type": "statue",
+   "signals": {
+    "photos": 0.81,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:4289336268",
    "name": "LaVende Bistro",
    "lat": 51.767776,
@@ -1191,23 +1208,6 @@
     "european"
    ],
    "openingHours": "Mo-Th 12:00-20:00; Sa 12:00-21:00; Su 12:00-20:00"
-  },
-  {
-   "id": "osm:node:1921667413",
-   "name": "Marszałek Józef Piłsudski",
-   "lat": 51.769154,
-   "lon": 19.464127,
-   "category": "photo",
-   "score": 60,
-   "kind": "passby",
-   "reason": "Statue, popular photo spot",
-   "type": "statue",
-   "signals": {
-    "photos": 0.81,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:11903357688",
@@ -1232,7 +1232,7 @@
   },
   {
    "id": "osm:node:1913091145",
-   "name": "Stanisław Moniuszko",
+   "name": "Stanisław Moniuszko Bust",
    "lat": 51.771037,
    "lon": 19.465424,
    "category": "photo",
@@ -1289,6 +1289,23 @@
     "regional"
    ],
    "openingHours": "Mo-Su 14:00-22:00"
+  },
+  {
+   "id": "osm:way:174531565",
+   "name": "Alfred Biedermann Palace",
+   "lat": 51.780271,
+   "lon": 19.463214,
+   "category": "photo",
+   "score": 59,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:5743599016",
@@ -1374,8 +1391,25 @@
    ]
   },
   {
+   "id": "osm:way:1267248001",
+   "name": "Monument to the Victims of Communism",
+   "lat": 51.779169,
+   "lon": 19.470696,
+   "category": "photo",
+   "score": 59,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:175716830",
-   "name": "Muzeum Tradycji Niepodległościowych w Łodzi",
+   "name": "Museum of Independence Traditions",
    "lat": 51.775699,
    "lon": 19.447411,
    "category": "photo",
@@ -1410,57 +1444,6 @@
     "pancake"
    ],
    "openingHours": "Su-Th 10:00-23:00, Fr-Sa 10:00-00:00"
-  },
-  {
-   "id": "osm:way:174531565",
-   "name": "Pałac Alfreda Biedermanna",
-   "lat": 51.780271,
-   "lon": 19.463214,
-   "category": "photo",
-   "score": 59,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:3100027194",
-   "name": "Pałac Scheiblerów",
-   "lat": 51.749589,
-   "lon": 19.46096,
-   "category": "photo",
-   "score": 59,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.621,
-    "fame": 0.524,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:1267248001",
-   "name": "Pomnik Ofiar Komunizmu",
-   "lat": 51.779169,
-   "lon": 19.470696,
-   "category": "photo",
-   "score": 59,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:13132905276",
@@ -1506,6 +1489,40 @@
    "openingHours": "Mo-Th 12:00-21:00; Fr-Sa 12:00-23:00; Su 12:00-20:00"
   },
   {
+   "id": "osm:node:3100027194",
+   "name": "Scheibler Palace",
+   "lat": 51.749589,
+   "lon": 19.46096,
+   "category": "photo",
+   "score": 59,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.524,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:11270506978",
+   "name": "Street of Elements at EC1",
+   "lat": 51.767038,
+   "lon": 19.467959,
+   "category": "photo",
+   "score": 59,
+   "kind": "passby",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
+   "signals": {
+    "photos": 0.962,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5219223321",
    "name": "Susharnia",
    "lat": 51.776968,
@@ -1548,23 +1565,6 @@
    "openingHours": "Mo-Th 11:00-22:00; Fr-Sa 11:00-00:00, Su 11:00-22:00"
   },
   {
-   "id": "osm:node:11270506978",
-   "name": "Ulica Żywiołów EC1",
-   "lat": 51.767038,
-   "lon": 19.467959,
-   "category": "photo",
-   "score": 59,
-   "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
-   "signals": {
-    "photos": 0.962,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1820217333",
    "name": "Anatewka",
    "lat": 51.780618,
@@ -1586,76 +1586,8 @@
    "openingHours": "Mo-Th 12:00-20:00; Fr-Sa 12:00-21:00; Su 12:00-19:00"
   },
   {
-   "id": "osm:way:105828051",
-   "name": "Dworek Ludwika Geyera",
-   "lat": 51.743307,
-   "lon": 19.462328,
-   "category": "photo",
-   "score": 58,
-   "kind": "passby",
-   "reason": "Manor house",
-   "type": "manor",
-   "signals": {
-    "photos": 0.659,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:104253587",
-   "name": "Kościół pw. Świętego Józefa Oblubieńca Najświętszej Maryi Panny",
-   "lat": 51.777686,
-   "lon": 19.448844,
-   "category": "photo",
-   "score": 58,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.772,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:7593494214",
-   "name": "Obelisk tradycji ulicy Piotrkowskiej",
-   "lat": 51.776227,
-   "lon": 19.454748,
-   "category": "photo",
-   "score": 58,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 1.0,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:174531558",
-   "name": "Park Helenów",
-   "lat": 51.78183,
-   "lon": 19.468355,
-   "category": "photo",
-   "score": 58,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1852230511",
-   "name": "Pomnik Dekalogu",
+   "name": "Decalogue Monument",
    "lat": 51.780791,
    "lon": 19.45705,
    "category": "photo",
@@ -1671,8 +1603,59 @@
    }
   },
   {
+   "id": "osm:way:174531558",
+   "name": "Helenów Park",
+   "lat": 51.78183,
+   "lon": 19.468355,
+   "category": "photo",
+   "score": 58,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:105828051",
+   "name": "Ludwik Geyer Manor",
+   "lat": 51.743307,
+   "lon": 19.462328,
+   "category": "photo",
+   "score": 58,
+   "kind": "passby",
+   "reason": "Manor house",
+   "type": "manor",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:7593494214",
+   "name": "Piotrkowska Street Heritage Obelisk",
+   "lat": 51.776227,
+   "lon": 19.454748,
+   "category": "photo",
+   "score": 58,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 1.0,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:283988938",
-   "name": "Willa Reinholda Richtera",
+   "name": "Reinhold Richter Villa",
    "lat": 51.748699,
    "lon": 19.455376,
    "category": "photo",
@@ -1683,6 +1666,23 @@
    "signals": {
     "photos": 0.582,
     "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:104253587",
+   "name": "St Joseph's Church",
+   "lat": 51.777686,
+   "lon": 19.448844,
+   "category": "photo",
+   "score": 58,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.772,
+    "fame": 0.296,
     "quality": 0.2,
     "independent": true
    }
@@ -1770,7 +1770,7 @@
   },
   {
    "id": "osm:way:185053089",
-   "name": "Mauzoleum małżonków Moenke",
+   "name": "Moenke Mausoleum",
    "lat": 51.775672,
    "lon": 19.43439,
    "category": "photo",
@@ -1787,7 +1787,7 @@
   },
   {
    "id": "osm:node:11270506976",
-   "name": "Narodowe Centrum Kultury Filmowej EC1",
+   "name": "National Film Culture Centre",
    "lat": 51.768094,
    "lon": 19.469276,
    "category": "photo",
@@ -1824,6 +1824,23 @@
    "openingHours": "Mo-Sa 11:00-21:00; Su 12:00-21:00"
   },
   {
+   "id": "osm:node:3843952552",
+   "name": "August Härtig Palace",
+   "lat": 51.752434,
+   "lon": 19.460329,
+   "category": "photo",
+   "score": 56,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.482,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5752716203",
    "name": "Cukiernia Dybalski",
    "lat": 51.764824,
@@ -1845,42 +1862,42 @@
    "openingHours": "Mo-Sa 07:30-19:00; Su 11:00-18:00"
   },
   {
-   "id": "osm:node:1180711185",
-   "name": "Muzeum Miasta Łodzi Oddział Kultur i Tradycji Wyznaniowych",
-   "lat": 51.776151,
-   "lon": 19.454384,
+   "id": "osm:node:6176306594",
+   "name": "Jezajasz Kestenberg Villa",
+   "lat": 51.771783,
+   "lon": 19.471454,
    "category": "photo",
    "score": 56,
    "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
    "signals": {
-    "photos": 0.998,
+    "photos": 0.986,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:3843952552",
-   "name": "Pałac Augusta Haertiga",
-   "lat": 51.752434,
-   "lon": 19.460329,
+   "id": "osm:node:2281378202",
+   "name": "Martial Law Victims Memorial",
+   "lat": 51.765714,
+   "lon": 19.462022,
    "category": "photo",
    "score": 56,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Bust, popular photo spot",
+   "type": "bust",
    "signals": {
-    "photos": 0.582,
-    "fame": 0.482,
+    "photos": 0.956,
+    "fame": 0.0,
     "quality": 0.2,
     "independent": true
    }
   },
   {
    "id": "osm:node:3223189955",
-   "name": "Pomnik Chwały Żołnierzy Armii Łódź",
+   "name": "Monument to the Łódź Army",
    "lat": 51.780485,
    "lon": 19.468183,
    "category": "photo",
@@ -1896,19 +1913,19 @@
    }
   },
   {
-   "id": "osm:node:2281378202",
-   "name": "Pomnik Pamięci Ofiar Stanu Wojennego",
-   "lat": 51.765714,
-   "lon": 19.462022,
+   "id": "osm:node:1180711185",
+   "name": "Museum of Religious Cultures and Traditions",
+   "lat": 51.776151,
+   "lon": 19.454384,
    "category": "photo",
    "score": 56,
    "kind": "passby",
-   "reason": "Bust, popular photo spot",
-   "type": "bust",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
    "signals": {
-    "photos": 0.956,
+    "photos": 0.998,
     "fame": 0.0,
-    "quality": 0.2,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -1931,7 +1948,7 @@
   },
   {
    "id": "osm:node:11359073879",
-   "name": "Towarto",
+   "name": "Towarto Installation",
    "lat": 51.772565,
    "lon": 19.47937,
    "category": "photo",
@@ -1947,17 +1964,34 @@
    }
   },
   {
-   "id": "osm:node:6176306594",
-   "name": "Willa Jezajasza Kestenberga",
-   "lat": 51.771783,
-   "lon": 19.471454,
+   "id": "osm:node:6121939861",
+   "name": "Art Gallery",
+   "lat": 51.771109,
+   "lon": 19.460708,
    "category": "photo",
-   "score": 56,
+   "score": 55,
+   "kind": "passby",
+   "reason": "Art gallery, popular photo spot",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.962,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6176306593",
+   "name": "Atlantes Tenement House",
+   "lat": 51.771634,
+   "lon": 19.469078,
+   "category": "photo",
+   "score": 55,
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
    "signals": {
-    "photos": 0.986,
+    "photos": 0.97,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -1985,51 +2019,34 @@
    "openingHours": "Mo-Su 10:00-20:00"
   },
   {
-   "id": "osm:node:6121939861",
-   "name": "Galeria Sztuki",
-   "lat": 51.771109,
-   "lon": 19.460708,
+   "id": "osm:node:4035531850",
+   "name": "EC1 Planetarium",
+   "lat": 51.76815,
+   "lon": 19.469921,
    "category": "photo",
    "score": 55,
    "kind": "passby",
-   "reason": "Art gallery, popular photo spot",
-   "type": "gallery",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
    "signals": {
-    "photos": 0.962,
+    "photos": 0.849,
     "fame": 0.0,
-    "quality": 0.0,
+    "quality": 0.6,
     "independent": true
    }
   },
   {
-   "id": "osm:node:13906555259",
-   "name": "Kamienica Szai Goldbluma",
-   "lat": 51.765205,
-   "lon": 19.45694,
+   "id": "osm:node:9906199577",
+   "name": "Great Orchestra Heart Sculpture",
+   "lat": 51.778345,
+   "lon": 19.451261,
    "category": "photo",
    "score": 55,
    "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
+   "reason": "Sculpture by Sino Sculpture Group, popular photo spot",
+   "type": "sculpture",
    "signals": {
-    "photos": 0.962,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6176306593",
-   "name": "Kamienica „Pod Atlasami”",
-   "lat": 51.771634,
-   "lon": 19.469078,
-   "category": "photo",
-   "score": 55,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.97,
+    "photos": 0.976,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2054,7 +2071,7 @@
   },
   {
    "id": "osm:node:13168203896",
-   "name": "Muzeum dzieci polskich",
+   "name": "Museum of Polish Children",
    "lat": 51.766528,
    "lon": 19.457296,
    "category": "photo",
@@ -2088,23 +2105,6 @@
    "openingHours": "Mo-Th 10:00-24:00; Fr,Sa 10:00+; Su 11:00-24:00"
   },
   {
-   "id": "osm:node:4035531850",
-   "name": "Planetarium EC1",
-   "lat": 51.76815,
-   "lon": 19.469921,
-   "category": "photo",
-   "score": 55,
-   "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
-   "signals": {
-    "photos": 0.849,
-    "fame": 0.0,
-    "quality": 0.6,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5743600966",
    "name": "Presto",
    "lat": 51.768383,
@@ -2126,8 +2126,25 @@
    "openingHours": "Mo-Su 12:00-22:00"
   },
   {
+   "id": "osm:node:13906555259",
+   "name": "Szaja Goldblum Tenement House",
+   "lat": 51.765205,
+   "lon": 19.45694,
+   "category": "photo",
+   "score": 55,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.962,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5244799797",
-   "name": "Prof. Tadeusz Kotarbiński",
+   "name": "Tadeusz Kotarbiński Bust",
    "lat": 51.772395,
    "lon": 19.474319,
    "category": "photo",
@@ -2143,25 +2160,8 @@
    }
   },
   {
-   "id": "osm:node:9906199577",
-   "name": "Serce WOŚP",
-   "lat": 51.778345,
-   "lon": 19.451261,
-   "category": "photo",
-   "score": 55,
-   "kind": "passby",
-   "reason": "Sculpture by Sino Sculpture Group, popular photo spot",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.976,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:4148494249",
-   "name": "Wróbelek Ćwirek",
+   "name": "Ćwirek the Sparrow Statue",
    "lat": 51.760556,
    "lon": 19.479255,
    "category": "photo",
@@ -2178,7 +2178,7 @@
   },
   {
    "id": "osm:node:5743600958",
-   "name": "ASP",
+   "name": "Academy of Fine Arts Gallery",
    "lat": 51.769128,
    "lon": 19.456573,
    "category": "photo",
@@ -2188,6 +2188,23 @@
    "type": "gallery",
    "signals": {
     "photos": 0.951,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:5254235662",
+   "name": "Anatomy Museum",
+   "lat": 51.771996,
+   "lon": 19.468427,
+   "category": "photo",
+   "score": 54,
+   "kind": "passby",
+   "reason": "Museum, popular photo spot",
+   "type": "museum",
+   "signals": {
+    "photos": 0.948,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2239,25 +2256,8 @@
    "openingHours": "Mo-Th 12:00-23:00, Fr-Sa 12:00-00:00, Su 12:00-23:00"
   },
   {
-   "id": "osm:node:5254235662",
-   "name": "Muzeum anatomiczne",
-   "lat": 51.771996,
-   "lon": 19.468427,
-   "category": "photo",
-   "score": 54,
-   "kind": "passby",
-   "reason": "Museum, popular photo spot",
-   "type": "museum",
-   "signals": {
-    "photos": 0.948,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:relation:13026044",
-   "name": "Skansen Łódzkiej Architektury Drewnianej",
+   "name": "Open-Air Museum of Wooden Architecture",
    "lat": 51.745979,
    "lon": 19.464115,
    "category": "photo",
@@ -2295,15 +2295,15 @@
    "openingHours": "Mo-Su 09:00-21:00"
   },
   {
-   "id": "osm:node:13856980704",
-   "name": "Dawny dom bankowy Wilhelma Landaua",
-   "lat": 51.772544,
-   "lon": 19.455395,
+   "id": "osm:way:987137638",
+   "name": "EC1 Historic Machinery",
+   "lat": 51.767617,
+   "lon": 19.467154,
    "category": "photo",
    "score": 53,
    "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
+   "reason": "Monument, popular photo spot",
+   "type": "monument",
    "signals": {
     "photos": 0.923,
     "fame": 0.0,
@@ -2312,19 +2312,19 @@
    }
   },
   {
-   "id": "osm:node:1989512941",
-   "name": "Dziwny Świat Kota Filemona i Bonifacego",
-   "lat": 51.759538,
-   "lon": 19.47391,
+   "id": "osm:way:987177326",
+   "name": "EC1 Historic Machinery",
+   "lat": 51.76729,
+   "lon": 19.467427,
    "category": "photo",
    "score": 53,
    "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
+   "reason": "Monument, popular photo spot",
+   "type": "monument",
    "signals": {
-    "photos": 0.659,
-    "fame": 0.296,
-    "quality": 0.2,
+    "photos": 0.932,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -2351,7 +2351,7 @@
   },
   {
    "id": "osm:node:4148479534",
-   "name": "Ferdynand Wspaniały",
+   "name": "Ferdinand the Magnificent Statue",
    "lat": 51.759487,
    "lon": 19.463584,
    "category": "photo",
@@ -2363,6 +2363,40 @@
     "photos": 0.748,
     "fame": 0.187,
     "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1989512941",
+   "name": "Filemon and Bonifacy the Cats Statue",
+   "lat": 51.759538,
+   "lon": 19.47391,
+   "category": "photo",
+   "score": 53,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13856980704",
+   "name": "Former Wilhelm Landau Bank",
+   "lat": 51.772544,
+   "lon": 19.455395,
+   "category": "photo",
+   "score": 53,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.923,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -2464,23 +2498,6 @@
     "author's"
    ],
    "openingHours": "Mo-Sa 15:00-21:00; Su 13:00-19:00"
-  },
-  {
-   "id": "osm:way:103647580",
-   "name": "Rektorat Uniwersytetu Łódzkiego",
-   "lat": 51.772543,
-   "lon": 19.474646,
-   "category": "photo",
-   "score": 53,
-   "kind": "passby",
-   "reason": "School, popular photo spot",
-   "type": "school",
-   "signals": {
-    "photos": 0.923,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:12063407601",
@@ -2587,34 +2604,17 @@
    "openingHours": "We-Th 12:00-21:00; Fr-Sa 12:00-22:00; Su 12:00-18:00"
   },
   {
-   "id": "osm:way:987137638",
-   "name": "Zabytkowe urządzenia EC1",
-   "lat": 51.767617,
-   "lon": 19.467154,
+   "id": "osm:way:103647580",
+   "name": "University of Łódź Rectorate",
+   "lat": 51.772543,
+   "lon": 19.474646,
    "category": "photo",
    "score": 53,
    "kind": "passby",
-   "reason": "Monument, popular photo spot",
-   "type": "monument",
+   "reason": "School, popular photo spot",
+   "type": "school",
    "signals": {
     "photos": 0.923,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:987177326",
-   "name": "Zabytkowe urządzenia EC1",
-   "lat": 51.76729,
-   "lon": 19.467427,
-   "category": "photo",
-   "score": 53,
-   "kind": "passby",
-   "reason": "Monument, popular photo spot",
-   "type": "monument",
-   "signals": {
-    "photos": 0.932,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -2640,7 +2640,7 @@
   },
   {
    "id": "osm:node:8771806694",
-   "name": "Łódź w pigułce — Zasłużeni dla Łodzi",
+   "name": "Łódź in a Nutshell Mural",
    "lat": 51.767884,
    "lon": 19.456384,
    "category": "photo",
@@ -2652,23 +2652,6 @@
     "photos": 0.923,
     "fame": 0.0,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:748070588",
-   "name": "Beczki Grohmana",
-   "lat": 51.755367,
-   "lon": 19.473911,
-   "category": "photo",
-   "score": 52,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "yes",
-   "signals": {
-    "photos": 0.582,
-    "fame": 0.373,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -2717,8 +2700,59 @@
    "openingHours": "Mo-Fr 13:00-21:00"
   },
   {
+   "id": "osm:node:748070588",
+   "name": "Grohman's Barrels Gate",
+   "lat": 51.755367,
+   "lon": 19.473911,
+   "category": "photo",
+   "score": 52,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "yes",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:169561251",
+   "name": "Heinzel Family Chapel",
+   "lat": 51.778052,
+   "lon": 19.436205,
+   "category": "photo",
+   "score": 52,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "chapel",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:987329735",
+   "name": "Historic Steam Roller",
+   "lat": 51.767851,
+   "lon": 19.467503,
+   "category": "photo",
+   "score": 52,
+   "kind": "passby",
+   "reason": "Monument, popular photo spot",
+   "type": "monument",
+   "signals": {
+    "photos": 0.908,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:333045238",
-   "name": "Ignacy Skorupka",
+   "name": "Ignacy Skorupka Monument",
    "lat": 51.748769,
    "lon": 19.460539,
    "category": "photo",
@@ -2753,40 +2787,6 @@
     "korean"
    ],
    "openingHours": "Su-Th 12:00-21:00; Fr-Sa 12:00-22:00"
-  },
-  {
-   "id": "osm:node:14017311217",
-   "name": "Kamienica R. Sachsa",
-   "lat": 51.771613,
-   "lon": 19.456104,
-   "category": "photo",
-   "score": 52,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.867,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:169561251",
-   "name": "Kaplica Rodziny Heinzlów",
-   "lat": 51.778052,
-   "lon": 19.436205,
-   "category": "photo",
-   "score": 52,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "chapel",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:8612048825",
@@ -2889,19 +2889,19 @@
    "openingHours": "Mo-Sa 13:00-22:00; Su 13:00-21:00"
   },
   {
-   "id": "osm:way:987329735",
-   "name": "Zabytkowy walczak",
-   "lat": 51.767851,
-   "lon": 19.467503,
+   "id": "osm:node:14017311217",
+   "name": "Sachs Tenement House",
+   "lat": 51.771613,
+   "lon": 19.456104,
    "category": "photo",
    "score": 52,
    "kind": "passby",
-   "reason": "Monument, popular photo spot",
-   "type": "monument",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
    "signals": {
-    "photos": 0.908,
+    "photos": 0.867,
     "fame": 0.0,
-    "quality": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -2922,57 +2922,6 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 11:00-18:00; Sa 10:00-14:00"
-  },
-  {
-   "id": "osm:node:11959681870",
-   "name": "Bieg ulicą Piotrkowską Rossmann Run",
-   "lat": 51.776891,
-   "lon": 19.456983,
-   "category": "photo",
-   "score": 51,
-   "kind": "passby",
-   "reason": "Mural, popular photo spot",
-   "type": "mural",
-   "signals": {
-    "photos": 0.893,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6262055518",
-   "name": "Budynek Towarzystwa Kredytowego m. Łodzi",
-   "lat": 51.77702,
-   "lon": 19.45937,
-   "category": "photo",
-   "score": 51,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.893,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1659582646",
-   "name": "Budynek elektrowni",
-   "lat": 51.745895,
-   "lon": 19.462047,
-   "category": "photo",
-   "score": 51,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.881,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:1970850652",
@@ -3035,23 +2984,6 @@
    "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-21:00"
   },
   {
-   "id": "osm:node:1659745278",
-   "name": "Dom Jana Petera",
-   "lat": 51.774595,
-   "lon": 19.45468,
-   "category": "photo",
-   "score": 51,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.893,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5752716201",
    "name": "Ferment",
    "lat": 51.76513,
@@ -3073,19 +3005,36 @@
    "openingHours": "Mo-Th 13:00-23:00; Fr-Sa 12:00-24:00; Su 12:00-22:00"
   },
   {
-   "id": "osm:node:5752716216",
-   "name": "Galeria Re:Medium",
-   "lat": 51.763887,
-   "lon": 19.457298,
+   "id": "osm:node:13907541106",
+   "name": "Florian Jarisch Tenement House",
+   "lat": 51.760138,
+   "lon": 19.458069,
    "category": "photo",
    "score": 51,
    "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
    "signals": {
-    "photos": 0.748,
+    "photos": 0.881,
     "fame": 0.0,
-    "quality": 0.6,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:7604381330",
+   "name": "Gustaw Schreer Villa",
+   "lat": 51.771646,
+   "lon": 19.465901,
+   "category": "photo",
+   "score": 51,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.296,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -3108,42 +3057,42 @@
    "openingHours": "15:00-04:00"
   },
   {
-   "id": "osm:node:13907541106",
-   "name": "Kamienica Floriana Jarischa",
-   "lat": 51.760138,
-   "lon": 19.458069,
+   "id": "osm:node:1659745278",
+   "name": "Jan Peters House",
+   "lat": 51.774595,
+   "lon": 19.45468,
    "category": "photo",
    "score": 51,
    "kind": "passby",
    "reason": "Landmark, popular photo spot",
    "type": "attraction",
    "signals": {
-    "photos": 0.881,
+    "photos": 0.893,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:13856980734",
-   "name": "Kamienica Sendera Dyszkina",
-   "lat": 51.772352,
-   "lon": 19.455429,
+   "id": "osm:way:36894063",
+   "name": "MS2 Museum of Art",
+   "lat": 51.778825,
+   "lon": 19.446508,
    "category": "photo",
    "score": 51,
    "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
+   "reason": "Museum",
+   "type": "museum",
    "signals": {
-    "photos": 0.881,
-    "fame": 0.0,
-    "quality": 0.0,
+    "photos": 0.659,
+    "fame": 0.187,
+    "quality": 0.4,
     "independent": true
    }
   },
   {
    "id": "osm:way:455514019",
-   "name": "Muzeum Komunikacji Miejskiej MPK-Łódź",
+   "name": "Museum of City Transport",
    "lat": 51.771816,
    "lon": 19.478606,
    "category": "photo",
@@ -3159,19 +3108,19 @@
    }
   },
   {
-   "id": "osm:way:36894063",
-   "name": "Muzeum Sztuki MS2",
-   "lat": 51.778825,
-   "lon": 19.446508,
+   "id": "osm:node:1659582646",
+   "name": "Old Power Station Building",
+   "lat": 51.745895,
+   "lon": 19.462047,
    "category": "photo",
    "score": 51,
    "kind": "passby",
-   "reason": "Museum",
-   "type": "museum",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
    "signals": {
-    "photos": 0.659,
-    "fame": 0.187,
-    "quality": 0.4,
+    "photos": 0.881,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -3216,6 +3165,40 @@
    "openingHours": "Mo-Su 10:00-22:00"
   },
   {
+   "id": "osm:node:11959681870",
+   "name": "Piotrkowska Run Mural",
+   "lat": 51.776891,
+   "lon": 19.456983,
+   "category": "photo",
+   "score": 51,
+   "kind": "passby",
+   "reason": "Mural, popular photo spot",
+   "type": "mural",
+   "signals": {
+    "photos": 0.893,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:5752716216",
+   "name": "Re:Medium Gallery",
+   "lat": 51.763887,
+   "lon": 19.457298,
+   "category": "photo",
+   "score": 51,
+   "kind": "passby",
+   "reason": "Art gallery",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.748,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:8612300897",
    "name": "Restauracja Łódzka",
    "lat": 51.752479,
@@ -3236,6 +3219,23 @@
     "polish"
    ],
    "openingHours": "Mo-Fr 06:30-10:30, 17:00-22:00; Sa-Su 07:00-11:00, 17:00-22:00"
+  },
+  {
+   "id": "osm:node:13856980734",
+   "name": "Sender Dyszkin Tenement House",
+   "lat": 51.772352,
+   "lon": 19.455429,
+   "category": "photo",
+   "score": 51,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.881,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:5752716182",
@@ -3281,7 +3281,7 @@
   },
   {
    "id": "osm:node:4148501938",
-   "name": "Trzy Misie",
+   "name": "Three Little Bears Statue",
    "lat": 51.746253,
    "lon": 19.464295,
    "category": "photo",
@@ -3320,18 +3320,35 @@
    "openingHours": "Mo-Th, Su 12:00-22:00; Fr-Sa 12:00-23:00"
   },
   {
-   "id": "osm:node:7604381330",
-   "name": "Willa Gustawa Schreera",
-   "lat": 51.771646,
-   "lon": 19.465901,
+   "id": "osm:node:6262055518",
+   "name": "Łódź Credit Society Building",
+   "lat": 51.77702,
+   "lon": 19.45937,
    "category": "photo",
    "score": 51,
    "kind": "passby",
-   "reason": "Landmark",
+   "reason": "Landmark, popular photo spot",
    "type": "attraction",
    "signals": {
-    "photos": 0.621,
-    "fame": 0.296,
+    "photos": 0.893,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3224138571",
+   "name": "Aleksander Kamiński Monument",
+   "lat": 51.779105,
+   "lon": 19.452965,
+   "category": "photo",
+   "score": 50,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.373,
     "quality": 0.2,
     "independent": true
    }
@@ -3359,7 +3376,7 @@
   },
   {
    "id": "osm:node:13153242568",
-   "name": "Black World - Wystawa oczami niewidomych",
+   "name": "Black World Exhibition",
    "lat": 51.77679,
    "lon": 19.453565,
    "category": "photo",
@@ -3394,7 +3411,7 @@
   },
   {
    "id": "osm:way:103394461",
-   "name": "Dom Buta",
+   "name": "Dom Buta Department Store",
    "lat": 51.765738,
    "lon": 19.457681,
    "category": "photo",
@@ -3453,40 +3470,6 @@
    "openingHours": "Mo-Fr 06:30-10:00; Sa-Su 07:00-12:00"
   },
   {
-   "id": "osm:node:2650438608",
-   "name": "Galeria Sztuki Kookaburra Studio",
-   "lat": 51.771795,
-   "lon": 19.455336,
-   "category": "photo",
-   "score": 50,
-   "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
-   "signals": {
-    "photos": 0.772,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12066384545",
-   "name": "Galerie Miejskie w Łodzi",
-   "lat": 51.763793,
-   "lon": 19.457354,
-   "category": "photo",
-   "score": 50,
-   "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
-   "signals": {
-    "photos": 0.772,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:11691016049",
    "name": "Gỗ by Ha Long",
    "lat": 51.760042,
@@ -3508,6 +3491,23 @@
    "openingHours": "Mo-Th,Su 12:00-22:00; Fr-Sa 12:00-23:00"
   },
   {
+   "id": "osm:way:175721068",
+   "name": "Karol Poznański Palace",
+   "lat": 51.772896,
+   "lon": 19.448826,
+   "category": "photo",
+   "score": 50,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "building",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:475372905",
    "name": "Klub Spadkobierców",
    "lat": 51.767389,
@@ -3524,6 +3524,23 @@
     "independent": true
    },
    "openingHours": "Mo-Su 12:00-22:00"
+  },
+  {
+   "id": "osm:node:2650438608",
+   "name": "Kookaburra Studio Gallery",
+   "lat": 51.771795,
+   "lon": 19.455336,
+   "category": "photo",
+   "score": 50,
+   "kind": "passby",
+   "reason": "Art gallery",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.772,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:7000671786",
@@ -3573,23 +3590,6 @@
    "openingHours": "Mo-Th 10:00-00:00; Fr-Sa 10:00+; Su 11:00-00:00"
   },
   {
-   "id": "osm:way:175721068",
-   "name": "Pałac Karola Poznańskiego",
-   "lat": 51.772896,
-   "lon": 19.448826,
-   "category": "photo",
-   "score": 50,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "building",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:10811946450",
    "name": "Pin Up American",
    "lat": 51.77489,
@@ -3630,23 +3630,6 @@
    "cuisine": [
     "pizza"
    ]
-  },
-  {
-   "id": "osm:node:3224138571",
-   "name": "Pomnik Aleksandra Kamińskiego",
-   "lat": 51.779105,
-   "lon": 19.452965,
-   "category": "photo",
-   "score": 50,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:5752716178",
@@ -3709,7 +3692,7 @@
   },
   {
    "id": "osm:node:1187744318",
-   "name": "Władysław Reymont",
+   "name": "Władysław Reymont Statue",
    "lat": 51.742632,
    "lon": 19.462706,
    "category": "photo",
@@ -3721,6 +3704,23 @@
     "photos": 0.534,
     "fame": 0.373,
     "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:12066384545",
+   "name": "Łódź City Galleries",
+   "lat": 51.763793,
+   "lon": 19.457354,
+   "category": "photo",
+   "score": 50,
+   "kind": "passby",
+   "reason": "Art gallery",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.772,
+    "fame": 0.0,
+    "quality": 0.4,
     "independent": true
    }
   },
@@ -3802,6 +3802,23 @@
    "openingHours": "Mo-Su 09:00-18:30"
   },
   {
+   "id": "osm:node:1659577127",
+   "name": "Gustaw and Robert Geyer Villa",
+   "lat": 51.746134,
+   "lon": 19.462,
+   "category": "photo",
+   "score": 49,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.828,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5752715792",
    "name": "Hana Sushi",
    "lat": 51.779539,
@@ -3822,6 +3839,40 @@
     "sushi"
    ],
    "openingHours": "Mo-Th 11:00-22:00; Fr,Sa 11:00-22:30; Su 11:00-22:00"
+  },
+  {
+   "id": "osm:way:103645939",
+   "name": "Jakub Kestenberg Villa",
+   "lat": 51.774114,
+   "lon": 19.469766,
+   "category": "photo",
+   "score": 49,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6176514222",
+   "name": "Karol Scheibler Palace",
+   "lat": 51.759605,
+   "lon": 19.474199,
+   "category": "photo",
+   "score": 49,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.828,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:11691016052",
@@ -3845,6 +3896,23 @@
    "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-20:00"
   },
   {
+   "id": "osm:way:178179618",
+   "name": "Leopold Kindermann Art Nouveau Villa",
+   "lat": 51.769217,
+   "lon": 19.45165,
+   "category": "photo",
+   "score": 49,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:8578986146",
    "name": "Long Play",
    "lat": 51.766434,
@@ -3864,26 +3932,9 @@
   },
   {
    "id": "osm:relation:12609642",
-   "name": "Pasaż Róży",
+   "name": "Passage of Roses",
    "lat": 51.775886,
    "lon": 19.453593,
-   "category": "photo",
-   "score": 49,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.828,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6176514222",
-   "name": "Pałac Karola Scheiblera",
-   "lat": 51.759605,
-   "lon": 19.474199,
    "category": "photo",
    "score": 49,
    "kind": "passby",
@@ -3936,23 +3987,6 @@
    "openingHours": "Tu-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 13:00-22:00"
   },
   {
-   "id": "osm:way:178179618",
-   "name": "Secesyjna willa Leopolda Kindermana",
-   "lat": 51.769217,
-   "lon": 19.45165,
-   "category": "photo",
-   "score": 49,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5752716230",
    "name": "The Brick Coffee Factory",
    "lat": 51.761398,
@@ -3996,93 +4030,8 @@
    "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-21:00"
   },
   {
-   "id": "osm:node:1659577127",
-   "name": "Willa Gustawa i Roberta Geyerów",
-   "lat": 51.746134,
-   "lon": 19.462,
-   "category": "photo",
-   "score": 49,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.828,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:103645939",
-   "name": "Willa Jakuba Kestenberga",
-   "lat": 51.774114,
-   "lon": 19.469766,
-   "category": "photo",
-   "score": 49,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.582,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:11270506977",
-   "name": "Centrum Komiksu i Narracji Interaktywnej EC1",
-   "lat": 51.767128,
-   "lon": 19.469892,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Museum",
-   "type": "museum",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9250432145",
-   "name": "Halina Szwarc",
-   "lat": 51.776002,
-   "lon": 19.447314,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Statue, popular photo spot",
-   "type": "statue",
-   "signals": {
-    "photos": 0.81,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:13907541109",
-   "name": "Kamienica Lejbusia Lewka Jakubowicza",
-   "lat": 51.760788,
-   "lon": 19.457919,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.81,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5958714597",
-   "name": "Kuczka Chaskiela Pelca",
+   "name": "Chaskiel Pelc's Sukkah",
    "lat": 51.766298,
    "lon": 19.457387,
    "category": "photo",
@@ -4098,10 +4047,112 @@
    }
   },
   {
+   "id": "osm:node:11270506977",
+   "name": "Comics and Interactive Narrative Centre",
+   "lat": 51.767128,
+   "lon": 19.469892,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Museum",
+   "type": "museum",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1659517688",
+   "name": "Emma and Robert Schweikert Palace",
+   "lat": 51.750069,
+   "lon": 19.461392,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.433,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:2564697464",
+   "name": "Former Russian State Bank",
+   "lat": 51.768008,
+   "lon": 19.454235,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.81,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:9250432145",
+   "name": "Halina Szwarc Statue",
+   "lat": 51.776002,
+   "lon": 19.447314,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Statue, popular photo spot",
+   "type": "statue",
+   "signals": {
+    "photos": 0.81,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3100027206",
+   "name": "Józef Richter Villa",
+   "lat": 51.748677,
+   "lon": 19.453134,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.433,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:6356458116",
-   "name": "Rekwizyty z filmu „Kingsajz”",
+   "name": "Kingsajz Film Props",
    "lat": 51.759499,
    "lon": 19.474166,
+   "category": "photo",
+   "score": 48,
+   "kind": "passby",
+   "reason": "Landmark, popular photo spot",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.81,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13907541109",
+   "name": "Lejbuś Lewek Jakubowicz Tenement House",
+   "lat": 51.760788,
+   "lon": 19.457919,
    "category": "photo",
    "score": 48,
    "kind": "passby",
@@ -4132,57 +4183,6 @@
    }
   },
   {
-   "id": "osm:node:3100027206",
-   "name": "Willa Józefa Richtera",
-   "lat": 51.748677,
-   "lon": 19.453134,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.433,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1659517688",
-   "name": "Zespół pałacowy Emmy i Roberta Schweikertów",
-   "lat": 51.750069,
-   "lon": 19.461392,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.433,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:2564697464",
-   "name": "dawny Rosyjski Bank Państwa (1906-08)",
-   "lat": 51.768008,
-   "lon": 19.454235,
-   "category": "photo",
-   "score": 48,
-   "kind": "passby",
-   "reason": "Landmark, popular photo spot",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.81,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:13163549417",
    "name": "Airbike",
    "lat": 51.772044,
@@ -4201,8 +4201,25 @@
    "openingHours": "Mo-Fr 10:00-18:00; Sa-Su off"
   },
   {
+   "id": "osm:node:11446080081",
+   "name": "Architectural Detail Lapidarium",
+   "lat": 51.767746,
+   "lon": 19.453478,
+   "category": "photo",
+   "score": 47,
+   "kind": "passby",
+   "reason": "Museum",
+   "type": "museum",
+   "signals": {
+    "photos": 0.748,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:7547154979",
-   "name": "Dom handlowy w Łodzi",
+   "name": "Atlas Sztuki Gallery",
    "lat": 51.763514,
    "lon": 19.459317,
    "category": "photo",
@@ -4218,10 +4235,10 @@
    }
   },
   {
-   "id": "osm:node:6293659277",
-   "name": "Elektrownia Scheiblera",
-   "lat": 51.748583,
-   "lon": 19.466792,
+   "id": "osm:node:6172712995",
+   "name": "Ender Tenement House",
+   "lat": 51.758764,
+   "lon": 19.456191,
    "category": "photo",
    "score": 47,
    "kind": "passby",
@@ -4236,7 +4253,7 @@
   },
   {
    "id": "osm:node:5743600943",
-   "name": "Galeria Sztuki 33",
+   "name": "Gallery 33",
    "lat": 51.772201,
    "lon": 19.455534,
    "category": "photo",
@@ -4273,6 +4290,23 @@
    "openingHours": "Mo-Fr 11:00-00:00; Sa-Su 12:00-00:00"
   },
   {
+   "id": "osm:node:9126111719",
+   "name": "Historic Water Tank",
+   "lat": 51.767164,
+   "lon": 19.469005,
+   "category": "photo",
+   "score": 47,
+   "kind": "passby",
+   "reason": "Monument",
+   "type": "monument",
+   "signals": {
+    "photos": 0.792,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1820217358",
    "name": "Hot Spoon",
    "lat": 51.780588,
@@ -4294,52 +4328,18 @@
    "openingHours": "Mo-Sa 12:00-20:00; Su 12:00-19:00"
   },
   {
-   "id": "osm:node:6172712995",
-   "name": "Kamienica Enderów",
-   "lat": 51.758764,
-   "lon": 19.456191,
+   "id": "osm:node:2269446746",
+   "name": "Katyń Monument",
+   "lat": 51.757959,
+   "lon": 19.445797,
    "category": "photo",
    "score": 47,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Monument",
+   "type": "monument",
    "signals": {
-    "photos": 0.792,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:13907541108",
-   "name": "Kamienica Traugota Lehmana z 1896 roku",
-   "lat": 51.760469,
-   "lon": 19.458033,
-   "category": "photo",
-   "score": 47,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.792,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:11446080081",
-   "name": "Lapidarium detalu architektonicznego",
-   "lat": 51.767746,
-   "lon": 19.453478,
-   "category": "photo",
-   "score": 47,
-   "kind": "passby",
-   "reason": "Museum",
-   "type": "museum",
-   "signals": {
-    "photos": 0.748,
-    "fame": 0.0,
+    "photos": 0.473,
+    "fame": 0.373,
     "quality": 0.2,
     "independent": true
    }
@@ -4366,36 +4366,36 @@
    "openingHours": "Mo-Su 10:00-22:00"
   },
   {
-   "id": "osm:node:2269446746",
-   "name": "Pomnik Katyński",
-   "lat": 51.757959,
-   "lon": 19.445797,
+   "id": "osm:node:14239572106",
+   "name": "Rassalski Villa",
+   "lat": 51.756215,
+   "lon": 19.460522,
    "category": "photo",
    "score": 47,
    "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
-    "photos": 0.473,
-    "fame": 0.373,
-    "quality": 0.2,
+    "photos": 0.792,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:3224178017",
-   "name": "Pomnik drzewo Solidarności",
-   "lat": 51.779362,
-   "lon": 19.481375,
+   "id": "osm:node:6293659277",
+   "name": "Scheibler Power Station",
+   "lat": 51.748583,
+   "lon": 19.466792,
    "category": "photo",
    "score": 47,
    "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
-    "photos": 0.473,
-    "fame": 0.373,
-    "quality": 0.2,
+    "photos": 0.792,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -4455,42 +4455,25 @@
    "openingHours": "Tu-Th 16:00-22:00; Fr 16:00-22:00; Sa 14:00-22:00"
   },
   {
-   "id": "osm:node:14239572106",
-   "name": "Willa Rassalskich",
-   "lat": 51.756215,
-   "lon": 19.460522,
+   "id": "osm:node:3224178017",
+   "name": "Solidarity Tree Monument",
+   "lat": 51.779362,
+   "lon": 19.481375,
    "category": "photo",
    "score": 47,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Sculpture",
+   "type": "sculpture",
    "signals": {
-    "photos": 0.792,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9126111719",
-   "name": "Zabytkowy zbiornik",
-   "lat": 51.767164,
-   "lon": 19.469005,
-   "category": "photo",
-   "score": 47,
-   "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
-   "signals": {
-    "photos": 0.792,
-    "fame": 0.0,
-    "quality": 0.0,
+    "photos": 0.473,
+    "fame": 0.373,
+    "quality": 0.2,
     "independent": true
    }
   },
   {
    "id": "osm:node:1659496906",
-   "name": "kamienica Tomaszowskiej Fabryki Sztucznego Jedwabiu",
+   "name": "Tomaszów Artificial Silk Factory Tenement",
    "lat": 51.755021,
    "lon": 19.459239,
    "category": "photo",
@@ -4502,6 +4485,23 @@
     "photos": 0.473,
     "fame": 0.296,
     "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13907541108",
+   "name": "Traugott Lehmann Tenement House",
+   "lat": 51.760469,
+   "lon": 19.458033,
+   "category": "photo",
+   "score": 47,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.792,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -4526,6 +4526,23 @@
    ]
   },
   {
+   "id": "osm:way:103273339",
+   "name": "Church of the Holy Name of Jesus",
+   "lat": 51.761103,
+   "lon": 19.463946,
+   "category": "photo",
+   "score": 46,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:3618398445",
    "name": "Drukarnia",
    "lat": 51.761056,
@@ -4544,15 +4561,15 @@
    "openingHours": "Mo-We 07:00-22:00; Th 07:00- 00:00; Fr 07:00- 01:30; Sa 10:00-01:30; Su 10:00-22:00"
   },
   {
-   "id": "osm:way:103273339",
-   "name": "Kościół Najświętszego Imienia Jezus - Sanktuarium Najświętszego Imienia Jezus",
-   "lat": 51.761103,
-   "lon": 19.463946,
+   "id": "osm:node:1659577137",
+   "name": "Karol and Emil Steinert Palace",
+   "lat": 51.747508,
+   "lon": 19.461412,
    "category": "photo",
    "score": 46,
    "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.399,
     "fame": 0.433,
@@ -4597,6 +4614,23 @@
    "openingHours": "Mo-Th 10:00-22:00; Fr-Sa 10:00-23:00; Su 10:00-21:00"
   },
   {
+   "id": "osm:way:76277579",
+   "name": "Ludwik Grohman Villa",
+   "lat": 51.753091,
+   "lon": 19.473911,
+   "category": "photo",
+   "score": 46,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1839999699",
    "name": "Lumi",
    "lat": 51.763112,
@@ -4633,6 +4667,23 @@
    "openingHours": "Mo-Th 11:00-19:00; Fr 11:00-20:00; Sa-Su 10:00-20:00"
   },
   {
+   "id": "osm:node:1659496975",
+   "name": "Marcus Silberstein Weaving Mill",
+   "lat": 51.751657,
+   "lon": 19.460973,
+   "category": "photo",
+   "score": 46,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:3219972478",
    "name": "Mural by Kim Jung Gi",
    "lat": 51.767323,
@@ -4646,23 +4697,6 @@
     "photos": 0.772,
     "fame": 0.0,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1659577137",
-   "name": "Pałac Karola i Emila Steinertów",
-   "lat": 51.747508,
-   "lon": 19.461412,
-   "category": "photo",
-   "score": 46,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.433,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -4703,40 +4737,6 @@
    "cuisine": [
     "coffee_shop"
    ]
-  },
-  {
-   "id": "osm:node:1659496975",
-   "name": "Tkalnia Sp. A. Wyrobów Wełnianych i Bawełnianych Marcusa Silbersteina",
-   "lat": 51.751657,
-   "lon": 19.460973,
-   "category": "photo",
-   "score": 46,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:76277579",
-   "name": "Willa Ludwika Grohmana",
-   "lat": 51.753091,
-   "lon": 19.473911,
-   "category": "photo",
-   "score": 46,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:1862824427",
@@ -4820,19 +4820,19 @@
    ]
   },
   {
-   "id": "osm:node:1624531082",
-   "name": "Dawny budynek straży pożarnej",
-   "lat": 51.753935,
-   "lon": 19.480883,
+   "id": "osm:way:146975092",
+   "name": "Herman Juliusz Milsch Villa",
+   "lat": 51.759838,
+   "lon": 19.442668,
    "category": "photo",
    "score": 45,
    "kind": "passby",
    "reason": "Landmark",
-   "type": "attraction",
+   "type": "building",
    "signals": {
-    "photos": 0.748,
+    "photos": 0.697,
     "fame": 0.0,
-    "quality": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -4919,27 +4919,10 @@
    "openingHours": "Mo-Fr 07:30-20:00; Sa-Su 09:00-20:00"
   },
   {
-   "id": "osm:way:108945966",
-   "name": "Kościół Świętej Anny",
-   "lat": 51.748799,
-   "lon": 19.490237,
-   "category": "photo",
-   "score": 45,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1659461054",
-   "name": "Ogród przywillowy Rassalskich",
-   "lat": 51.756198,
-   "lon": 19.46021,
+   "id": "osm:node:1624531082",
+   "name": "Old Fire Station",
+   "lat": 51.753935,
+   "lon": 19.480883,
    "category": "photo",
    "score": 45,
    "kind": "passby",
@@ -4954,7 +4937,7 @@
   },
   {
    "id": "osm:node:11586240670",
-   "name": "Pomnik i drzewo upamiętniające Piotra Szczęsnego",
+   "name": "Piotr Szczęsny Memorial Tree",
    "lat": 51.770516,
    "lon": 19.465017,
    "category": "photo",
@@ -4962,6 +4945,23 @@
    "kind": "passby",
    "reason": "Memorial stone",
    "type": "stone",
+   "signals": {
+    "photos": 0.748,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1659461054",
+   "name": "Rassalski Villa Garden",
+   "lat": 51.756198,
+   "lon": 19.46021,
+   "category": "photo",
+   "score": 45,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.748,
     "fame": 0.0,
@@ -5028,8 +5028,25 @@
    "openingHours": "Mo-Sa 11:30-21:00; Su 12:00-21:00"
   },
   {
+   "id": "osm:way:108945966",
+   "name": "St Anne's Church",
+   "lat": 51.748799,
+   "lon": 19.490237,
+   "category": "photo",
+   "score": 45,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1265560443",
-   "name": "St. Staszic",
+   "name": "Stanisław Staszic Statue",
    "lat": 51.772823,
    "lon": 19.476066,
    "category": "photo",
@@ -5066,23 +5083,6 @@
    ]
   },
   {
-   "id": "osm:way:146975092",
-   "name": "Willa Hermana Juliusza Milsza",
-   "lat": 51.759838,
-   "lon": 19.442668,
-   "category": "photo",
-   "score": 45,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "building",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:4289336284",
    "name": "A&A",
    "lat": 51.765266,
@@ -5101,10 +5101,10 @@
    "openingHours": "Mo-Fr 10:00-18:00; Sa 10:00-14:00"
   },
   {
-   "id": "osm:node:1624531091",
-   "name": "Dawny budynek konsumów",
-   "lat": 51.755802,
-   "lon": 19.480466,
+   "id": "osm:node:6261981017",
+   "name": "Edmund Stefanus Tenement House",
+   "lat": 51.773616,
+   "lon": 19.467627,
    "category": "photo",
    "score": 44,
    "kind": "passby",
@@ -5136,8 +5136,25 @@
    "openingHours": "Mo-Sa 10:00-21:00; Su 10:00-20:00"
   },
   {
+   "id": "osm:node:1624531091",
+   "name": "Former Company Store",
+   "lat": 51.755802,
+   "lon": 19.480466,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:8100623031",
-   "name": "Hydrant",
+   "name": "Historic Hydrant",
    "lat": 51.753697,
    "lon": 19.480897,
    "category": "photo",
@@ -5171,59 +5188,8 @@
    "openingHours": "Mo-Wd 10:00-00:00; 10:00-01:30; Fr 10:00-02:00, Sa12:00-02:00; Su 12:00-00:00"
   },
   {
-   "id": "osm:node:14072224610",
-   "name": "Kamienica \"Pod Sowami\" Zachariasza Warszawskiego (1900)",
-   "lat": 51.775323,
-   "lon": 19.460437,
-   "category": "photo",
-   "score": 44,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6261981017",
-   "name": "Kamienica Edmunda Stefanusa",
-   "lat": 51.773616,
-   "lon": 19.467627,
-   "category": "photo",
-   "score": 44,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1913404789",
-   "name": "Kufer Reymonta",
-   "lat": 51.761486,
-   "lon": 19.457879,
-   "category": "photo",
-   "score": 44,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1913404161",
-   "name": "Leon Schiller",
+   "name": "Leon Schiller Statue",
    "lat": 51.763825,
    "lon": 19.458104,
    "category": "photo",
@@ -5278,6 +5244,23 @@
    "openingHours": "Mo-Fr 11:00-18:00; Sa-Su 12:00-18:00"
   },
   {
+   "id": "osm:node:14072224610",
+   "name": "Owls Tenement House",
+   "lat": 51.775323,
+   "lon": 19.460437,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:4448000518",
    "name": "Piwnica Smaków",
    "lat": 51.77187,
@@ -5297,6 +5280,23 @@
     "regional"
    ],
    "openingHours": "Mo-Fr 09:00-17:00"
+  },
+  {
+   "id": "osm:node:1913404789",
+   "name": "Reymont's Trunk",
+   "lat": 51.761486,
+   "lon": 19.457879,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:11868748242",
@@ -5332,6 +5332,40 @@
     "independent": true
    },
    "openingHours": "Mo-Th 09:30-22:00; Fr-Sa 09:30-00:00; Su 10:00-22:00"
+  },
+  {
+   "id": "osm:node:3099369137",
+   "name": "St Faustina Kowalska Statue",
+   "lat": 51.74078,
+   "lon": 19.463181,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:846351835",
+   "name": "Sundial",
+   "lat": 51.780643,
+   "lon": 19.454285,
+   "category": "photo",
+   "score": 44,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.726,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:4305829227",
@@ -5372,23 +5406,6 @@
    }
   },
   {
-   "id": "osm:way:846351835",
-   "name": "Zegar Słoneczny",
-   "lat": 51.780643,
-   "lon": 19.454285,
-   "category": "photo",
-   "score": 44,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.726,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:14096187918",
    "name": "sztuki KAWAłek",
    "lat": 51.763319,
@@ -5408,23 +5425,6 @@
     "coffee_shop"
    ],
    "openingHours": "Th-Su 11:00-18:00"
-  },
-  {
-   "id": "osm:node:3099369137",
-   "name": "Św. Faustyna Kowalska",
-   "lat": 51.74078,
-   "lon": 19.463181,
-   "category": "photo",
-   "score": 44,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:11573661850",
@@ -5462,15 +5462,15 @@
    "openingHours": "Mo-Tu 17:00-02:00; We,Su 15:00-02:00; Th 15:00-03:00; Fr-Sa 15:00-05:00"
   },
   {
-   "id": "osm:node:5027104186",
-   "name": "Ciężar niewłaściwy",
-   "lat": 51.769704,
-   "lon": 19.470472,
+   "id": "osm:node:5752715780",
+   "name": "Experymentarium Science Centre",
+   "lat": 51.780712,
+   "lon": 19.447296,
    "category": "photo",
    "score": 43,
    "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
+   "reason": "Museum",
+   "type": "museum",
    "signals": {
     "photos": 0.697,
     "fame": 0.0,
@@ -5479,15 +5479,15 @@
    }
   },
   {
-   "id": "osm:node:5752715780",
-   "name": "Experymentarium",
-   "lat": 51.780712,
-   "lon": 19.447296,
+   "id": "osm:node:5027104186",
+   "name": "Improper Weight Statue",
+   "lat": 51.769704,
+   "lon": 19.470472,
    "category": "photo",
    "score": 43,
    "kind": "passby",
-   "reason": "Museum",
-   "type": "museum",
+   "reason": "Statue",
+   "type": "statue",
    "signals": {
     "photos": 0.697,
     "fame": 0.0,
@@ -5512,23 +5512,6 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 10:00-17:00; Sa 10:00-16:00"
-  },
-  {
-   "id": "osm:node:6171348971",
-   "name": "Kamienica Nissena Rosenbluma",
-   "lat": 51.767546,
-   "lon": 19.453558,
-   "category": "photo",
-   "score": 43,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:9902603414",
@@ -5567,6 +5550,40 @@
    "openingHours": "Mo-Th 12:00-22:00; Fr-Sa 12:00-23:00; Su 12:00-20:00"
   },
   {
+   "id": "osm:node:6173564343",
+   "name": "Manufaktura Sign",
+   "lat": 51.780479,
+   "lon": 19.449754,
+   "category": "photo",
+   "score": 43,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6270128617",
+   "name": "Marek Edelman Mural",
+   "lat": 51.782415,
+   "lon": 19.456477,
+   "category": "photo",
+   "score": 43,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:6371021591",
    "name": "Miska Gastro Bowls",
    "lat": 51.778104,
@@ -5588,40 +5605,6 @@
    ]
   },
   {
-   "id": "osm:node:6270128617",
-   "name": "Mural „Marek Edelman”",
-   "lat": 51.782415,
-   "lon": 19.456477,
-   "category": "photo",
-   "score": 43,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6173564343",
-   "name": "Napis Manufaktura",
-   "lat": 51.780479,
-   "lon": 19.449754,
-   "category": "photo",
-   "score": 43,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.659,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:3782106645",
    "name": "Niebostan",
    "lat": 51.77416,
@@ -5638,6 +5621,23 @@
     "independent": true
    },
    "openingHours": "Mo-Su 09:00-16:00"
+  },
+  {
+   "id": "osm:node:6171348971",
+   "name": "Nissen Rosenblum Tenement House",
+   "lat": 51.767546,
+   "lon": 19.453558,
+   "category": "photo",
+   "score": 43,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:1205570974",
@@ -5680,7 +5680,7 @@
   },
   {
    "id": "osm:node:9192716359",
-   "name": "Wiedźmin",
+   "name": "The Witcher Mural",
    "lat": 51.7578,
    "lon": 19.460234,
    "category": "photo",
@@ -5688,6 +5688,23 @@
    "kind": "passby",
    "reason": "Mural by Jakub Rebelka",
    "type": "mural",
+   "signals": {
+    "photos": 0.697,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:2121151117",
+   "name": "Tuwim's Horse Sculpture",
+   "lat": 51.762239,
+   "lon": 19.448571,
+   "category": "photo",
+   "score": 43,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
    "signals": {
     "photos": 0.697,
     "fame": 0.0,
@@ -5712,23 +5729,6 @@
     "independent": true
    },
    "openingHours": "We,Th 11:00-19:00; Fr,Sa 11:00-21:00; Su 13:00-18:00"
-  },
-  {
-   "id": "osm:node:2121151117",
-   "name": "„Koń Tuwimowski”",
-   "lat": 51.762239,
-   "lon": 19.448571,
-   "category": "photo",
-   "score": 43,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.697,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:12066507672",
@@ -5978,23 +5978,6 @@
    "openingHours": "Mo-Fr 07:00-18:00, So 07:00-17:00, Su 09:00-16:00"
   },
   {
-   "id": "osm:way:27523408",
-   "name": "Park Ocalałych",
-   "lat": 51.786275,
-   "lon": 19.472834,
-   "category": "photo",
-   "score": 42,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.56,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:6172775131",
    "name": "Pizza Truck Garage",
    "lat": 51.753458,
@@ -6126,6 +6109,23 @@
    "openingHours": "Tu-Sa 15:00-22:00, Mo off"
   },
   {
+   "id": "osm:way:27523408",
+   "name": "Survivors' Park",
+   "lat": 51.786275,
+   "lon": 19.472834,
+   "category": "photo",
+   "score": 42,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.56,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:8192338071",
    "name": "Łódzkie Centrum Rowerowe",
    "lat": 51.761142,
@@ -6160,23 +6160,6 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 09:00-18:00; Sa 10:00-14:00"
-  },
-  {
-   "id": "osm:node:3188211327",
-   "name": "Bielnik Kopischa",
-   "lat": 51.748967,
-   "lon": 19.463923,
-   "category": "photo",
-   "score": 41,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.433,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:5252220474",
@@ -6218,23 +6201,6 @@
    "openingHours": "Mo-Fr 10:00-18:00;Sa 10:00-14:00"
   },
   {
-   "id": "osm:node:9428344891",
-   "name": "Fale",
-   "lat": 51.778871,
-   "lon": 19.47755,
-   "category": "photo",
-   "score": 41,
-   "kind": "passby",
-   "reason": "Mural by DALeasta",
-   "type": "mural",
-   "signals": {
-    "photos": 0.659,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5743600946",
    "name": "Grey Wolf",
    "lat": 51.771122,
@@ -6271,8 +6237,42 @@
    "openingHours": "Mo-Sa 09:00-17:00"
   },
   {
+   "id": "osm:node:3188211327",
+   "name": "Kopisch Bleachery",
+   "lat": 51.748967,
+   "lon": 19.463923,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.433,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:11884767684",
+   "name": "Koralgol the Bear Statue",
+   "lat": 51.768702,
+   "lon": 19.460689,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:1820033754",
-   "name": "Kochankowie z ulicy Kamiennej",
+   "name": "Lovers of Kamienna Street Fountain",
    "lat": 51.77399,
    "lon": 19.458459,
    "category": "photo",
@@ -6288,19 +6288,53 @@
    }
   },
   {
-   "id": "osm:node:11884767684",
-   "name": "Miś Koralgol",
-   "lat": 51.768702,
-   "lon": 19.460689,
+   "id": "osm:node:14000485959",
+   "name": "Ludwik Meyer Villa \"Trianon\"",
+   "lat": 51.768051,
+   "lon": 19.458558,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:174955732",
+   "name": "Moniuszko Park",
+   "lat": 51.770517,
+   "lon": 19.465383,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:689186938",
+   "name": "Monument to the Beginnings of Łódź",
+   "lat": 51.750709,
+   "lon": 19.449467,
    "category": "photo",
    "score": 41,
    "kind": "passby",
    "reason": "Statue",
    "type": "statue",
    "signals": {
-    "photos": 0.659,
-    "fame": 0.0,
-    "quality": 0.0,
+    "photos": 0.399,
+    "fame": 0.296,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -6321,23 +6355,6 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 10:00-18:00; Sa 10:00-14:00; Su off"
-  },
-  {
-   "id": "osm:way:174955732",
-   "name": "Park Moniuszki",
-   "lat": 51.770517,
-   "lon": 19.465383,
-   "category": "photo",
-   "score": 41,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.582,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:4420706661",
@@ -6380,7 +6397,7 @@
   },
   {
    "id": "osm:node:1966704088",
-   "name": "Plastuś",
+   "name": "Plastuś Statue",
    "lat": 51.764843,
    "lon": 19.464883,
    "category": "photo",
@@ -6396,25 +6413,8 @@
    }
   },
   {
-   "id": "osm:way:689186938",
-   "name": "Pomnik Początków Miasta Łodzi",
-   "lat": 51.750709,
-   "lon": 19.449467,
-   "category": "photo",
-   "score": 41,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:9937771267",
-   "name": "Rubinstein",
+   "name": "Rubinstein Mural",
    "lat": 51.768849,
    "lon": 19.461211,
    "category": "photo",
@@ -6422,6 +6422,23 @@
    "kind": "passby",
    "reason": "Mural by Eduardo Kobra",
    "type": "mural",
+   "signals": {
+    "photos": 0.659,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1624531098",
+   "name": "Scheibler Primary School",
+   "lat": 51.755982,
+   "lon": 19.481451,
+   "category": "photo",
+   "score": 41,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.659,
     "fame": 0.0,
@@ -6448,32 +6465,15 @@
    "openingHours": "Mo-Fr 11:00-18:00; Sa 11:00-17:00"
   },
   {
-   "id": "osm:node:1624531098",
-   "name": "Szkoła Powszechna K. Scheiblera",
-   "lat": 51.755982,
-   "lon": 19.481451,
+   "id": "osm:node:9428344891",
+   "name": "Waves Mural",
+   "lat": 51.778871,
+   "lon": 19.47755,
    "category": "photo",
    "score": 41,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.659,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:14000485959",
-   "name": "Willa Ludwika Meyera „Trianon”",
-   "lat": 51.768051,
-   "lon": 19.458558,
-   "category": "photo",
-   "score": 41,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Mural by DALeasta",
+   "type": "mural",
    "signals": {
     "photos": 0.659,
     "fame": 0.0,
@@ -6483,7 +6483,7 @@
   },
   {
    "id": "osm:node:6357942707",
-   "name": "Władysław Reymont",
+   "name": "Władysław Reymont Bust",
    "lat": 51.759618,
    "lon": 19.473875,
    "category": "photo",
@@ -6613,19 +6613,36 @@
    "openingHours": "Mo 12:00-00:00; Tu-Th 13:00-00:00; Fr- Sa 13:00-04:00; Su 13:00-01:00"
   },
   {
-   "id": "osm:node:7671910785",
-   "name": "Cisza",
-   "lat": 51.771549,
-   "lon": 19.451212,
+   "id": "osm:node:1749054979",
+   "name": "19th-Century St Joseph Statue",
+   "lat": 51.777225,
+   "lon": 19.449003,
    "category": "photo",
    "score": 39,
    "kind": "passby",
-   "reason": "Relief by Łukasz Berger",
-   "type": "relief",
+   "reason": "Monument",
+   "type": "monument",
    "signals": {
     "photos": 0.621,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:733411619",
+   "name": "Bishop Michał Klepacz Park",
+   "lat": 51.748475,
+   "lon": 19.453468,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.4,
     "independent": true
    }
   },
@@ -6651,42 +6668,8 @@
    "openingHours": "Tu-Th 10:00-19:00; Fr, Sa 10:00-19:00; Su 10:00-19:00"
   },
   {
-   "id": "osm:node:6173146009",
-   "name": "Dawna siedziba „Mitranzy”",
-   "lat": 51.77117,
-   "lon": 19.451191,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.621,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:137794057",
-   "name": "Dom Hilarego Majewskiego",
-   "lat": 51.773997,
-   "lon": 19.460774,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "building",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:6171348967",
-   "name": "Fabryka Wyrobów Wełnianych Edwarda Häntschela",
+   "name": "Edward Häntschel Wool Factory",
    "lat": 51.771407,
    "lon": 19.451573,
    "category": "photo",
@@ -6702,8 +6685,59 @@
    }
   },
   {
+   "id": "osm:node:4148465072",
+   "name": "Enchanted Pencil Statue",
+   "lat": 51.769234,
+   "lon": 19.462514,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.187,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6172712990",
+   "name": "Ewald Kern Palace",
+   "lat": 51.757284,
+   "lon": 19.45862,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6173146009",
+   "name": "Former Mitranza Headquarters",
+   "lat": 51.77117,
+   "lon": 19.451191,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:10916444154",
-   "name": "Grzegorz Palka",
+   "name": "Grzegorz Palka Memorial Stone",
    "lat": 51.779614,
    "lon": 19.482034,
    "category": "photo",
@@ -6719,42 +6753,25 @@
    }
   },
   {
-   "id": "osm:node:10795785449",
-   "name": "Józef Babicki",
-   "lat": 51.755972,
-   "lon": 19.483093,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Bust",
-   "type": "bust",
-   "signals": {
-    "photos": 0.621,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:104511758",
-   "name": "Kamienica Zygmunta Dejczmana",
-   "lat": 51.75946,
-   "lon": 19.455289,
+   "id": "osm:way:137794057",
+   "name": "Hilary Majewski House",
+   "lat": 51.773997,
+   "lon": 19.460774,
    "category": "photo",
    "score": 39,
    "kind": "passby",
    "reason": "Landmark",
-   "type": "attraction",
+   "type": "building",
    "signals": {
-    "photos": 0.621,
-    "fame": 0.0,
-    "quality": 0.0,
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.4,
     "independent": true
    }
   },
   {
    "id": "osm:way:169566258",
-   "name": "Kościół Świętej Rodziny",
+   "name": "Holy Family Church",
    "lat": 51.787491,
    "lon": 19.442513,
    "category": "photo",
@@ -6770,8 +6787,25 @@
    }
   },
   {
+   "id": "osm:node:10795785449",
+   "name": "Józef Babicki Bust",
+   "lat": 51.755972,
+   "lon": 19.483093,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Bust",
+   "type": "bust",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:104292250",
-   "name": "Muzeum Sztuki MS1",
+   "name": "MS1 Museum of Art",
    "lat": 51.771674,
    "lon": 19.44786,
    "category": "photo",
@@ -6787,32 +6821,15 @@
    }
   },
   {
-   "id": "osm:way:733411619",
-   "name": "Park im. Księdza Biskupa Michała Klepacza",
-   "lat": 51.748475,
-   "lon": 19.453468,
+   "id": "osm:node:13742869719",
+   "name": "Memorial to Jews Deported from Hamburg",
+   "lat": 51.783008,
+   "lon": 19.452766,
    "category": "photo",
    "score": 39,
    "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6172712990",
-   "name": "Pałac Ewalda Kerna",
-   "lat": 51.757284,
-   "lon": 19.45862,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Memorial stone",
+   "type": "stone",
    "signals": {
     "photos": 0.621,
     "fame": 0.0,
@@ -6841,8 +6858,25 @@
    ]
   },
   {
+   "id": "osm:node:7671910785",
+   "name": "Silence Relief",
+   "lat": 51.771549,
+   "lon": 19.451212,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Relief by Łukasz Berger",
+   "type": "relief",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:4897866033",
-   "name": "Pomnik Ofiar Katastrofy Smoleńskiej",
+   "name": "Smolensk Air Disaster Memorial",
    "lat": 51.748859,
    "lon": 19.458735,
    "category": "photo",
@@ -6853,40 +6887,6 @@
    "signals": {
     "photos": 0.621,
     "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1749054979",
-   "name": "Pomnik św. Józefa z XIX w.",
-   "lat": 51.777225,
-   "lon": 19.449003,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
-   "signals": {
-    "photos": 0.621,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:4148465072",
-   "name": "Rzeźba bohaterów filmu Zaczarowany ołówek",
-   "lat": 51.769234,
-   "lon": 19.462514,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.187,
     "quality": 0.0,
     "independent": true
    }
@@ -6909,8 +6909,25 @@
    }
   },
   {
+   "id": "osm:node:1659446992",
+   "name": "Wilhelm Teschemacher Villas",
+   "lat": 51.75647,
+   "lon": 19.463303,
+   "category": "photo",
+   "score": 39,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.621,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:9925281041",
-   "name": "Twórczość czasu",
+   "name": "Work of Time Installation",
    "lat": 51.755727,
    "lon": 19.45761,
    "category": "photo",
@@ -6926,27 +6943,10 @@
    }
   },
   {
-   "id": "osm:node:13742869719",
-   "name": "Upamiętnienie deportacji Żydów z Hamburga do getta w Łodzi",
-   "lat": 51.783008,
-   "lon": 19.452766,
-   "category": "photo",
-   "score": 39,
-   "kind": "passby",
-   "reason": "Memorial stone",
-   "type": "stone",
-   "signals": {
-    "photos": 0.621,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:1659446992",
-   "name": "Zespół willi Wilhelma Teschemachera",
-   "lat": 51.75647,
-   "lon": 19.463303,
+   "id": "osm:way:104511758",
+   "name": "Zygmunt Dejczman Tenement House",
+   "lat": 51.75946,
+   "lon": 19.455289,
    "category": "photo",
    "score": 39,
    "kind": "passby",
@@ -7131,7 +7131,7 @@
   },
   {
    "id": "osm:way:174196794",
-   "name": "Park Sienkiewicza",
+   "name": "Sienkiewicz Park",
    "lat": 51.764809,
    "lon": 19.464287,
    "category": "photo",
@@ -7226,52 +7226,35 @@
    "openingHours": "Mo-Th 12:00-21:00; Fr,Sa 12:00-22:00; Su 12:00-20:00"
   },
   {
-   "id": "osm:node:11758960829",
-   "name": "575. rocznica przyznania praw miejskich Łodzi",
-   "lat": 51.781837,
-   "lon": 19.454281,
+   "id": "osm:node:8773849525",
+   "name": "Birth of Day Mural",
+   "lat": 51.772264,
+   "lon": 19.454989,
    "category": "photo",
    "score": 37,
    "kind": "passby",
-   "reason": "Memorial stone",
-   "type": "stone",
+   "reason": "Mural by Wojciech Siudmak",
+   "type": "mural",
    "signals": {
-    "photos": 0.582,
+    "photos": 0.534,
     "fame": 0.0,
-    "quality": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
   {
-   "id": "osm:node:6179328411",
-   "name": "Budynek Dyrekcji Rzeźni Miejskiej",
-   "lat": 51.751545,
-   "lon": 19.44179,
+   "id": "osm:way:1110540294",
+   "name": "Brine Graduation Tower",
+   "lat": 51.741501,
+   "lon": 19.494019,
    "category": "photo",
    "score": 37,
    "kind": "passby",
    "reason": "Landmark",
-   "type": "attraction",
+   "type": "graduation_tower",
    "signals": {
-    "photos": 0.582,
+    "photos": 0.534,
     "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:266903009",
-   "name": "Cerkiew Zaśnięcia Najświętszej Maryi Panny",
-   "lat": 51.783995,
-   "lon": 19.487131,
-   "category": "photo",
-   "score": 37,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
     "quality": 0.2,
     "independent": true
    }
@@ -7295,8 +7278,42 @@
    "openingHours": "Mo-We 16:00-24:00, Th,Su 15:00-24:00, Fr,Sa 15:00-02:00"
   },
   {
+   "id": "osm:way:530348394",
+   "name": "Church of Our Lady of Victory",
+   "lat": 51.758038,
+   "lon": 19.444972,
+   "category": "photo",
+   "score": 37,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6179328411",
+   "name": "Former Municipal Slaughterhouse Office",
+   "lat": 51.751545,
+   "lon": 19.44179,
+   "category": "photo",
+   "score": 37,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:2564697465",
-   "name": "Dawny Łódzki Bank Handlowy",
+   "name": "Former Łódź Commercial Bank",
    "lat": 51.768225,
    "lon": 19.453194,
    "category": "photo",
@@ -7312,25 +7329,25 @@
    }
   },
   {
-   "id": "osm:node:6172767816",
-   "name": "Fabryka Zygmunta Richtera",
-   "lat": 51.751959,
-   "lon": 19.452364,
+   "id": "osm:node:7684010647",
+   "name": "Helena Wolf Hospital",
+   "lat": 51.789834,
+   "lon": 19.453854,
    "category": "photo",
    "score": 37,
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
    "signals": {
-    "photos": 0.582,
-    "fame": 0.0,
-    "quality": 0.0,
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.2,
     "independent": true
    }
   },
   {
    "id": "osm:node:6171348970",
-   "name": "Kamienica Jakuba Braunera",
+   "name": "Jakub Brauner Tenement House",
    "lat": 51.766776,
    "lon": 19.453727,
    "category": "photo",
@@ -7342,23 +7359,6 @@
     "photos": 0.582,
     "fame": 0.0,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:530348394",
-   "name": "Kościół Matki Boskiej Zwycięskiej - Sanktuarium Matki Bożej Zwycięskiej",
-   "lat": 51.758038,
-   "lon": 19.444972,
-   "category": "photo",
-   "score": 37,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -7414,8 +7414,42 @@
    }
   },
   {
+   "id": "osm:way:266903009",
+   "name": "Orthodox Church of the Dormition",
+   "lat": 51.783995,
+   "lon": 19.487131,
+   "category": "photo",
+   "score": 37,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13754796976",
+   "name": "Rudolf Keller Palace",
+   "lat": 51.770457,
+   "lon": 19.44848,
+   "category": "photo",
+   "score": 37,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.373,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:6270128612",
-   "name": "Mural Pamięci STELLA I SALOMEA Litzmannstadt Getto",
+   "name": "Stella and Salomea Ghetto Memorial Mural",
    "lat": 51.783956,
    "lon": 19.460178,
    "category": "photo",
@@ -7432,7 +7466,7 @@
   },
   {
    "id": "osm:node:7784779803",
-   "name": "Muzeum Monopolu Wódczanego",
+   "name": "Vodka Monopoly Museum",
    "lat": 51.763354,
    "lon": 19.485494,
    "category": "photo",
@@ -7448,76 +7482,42 @@
    }
   },
   {
-   "id": "osm:node:8773849525",
-   "name": "Narodziny Dnia",
-   "lat": 51.772264,
-   "lon": 19.454989,
-   "category": "photo",
-   "score": 37,
-   "kind": "passby",
-   "reason": "Mural by Wojciech Siudmak",
-   "type": "mural",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:13754796976",
-   "name": "Rudolf Keller's palace",
-   "lat": 51.770457,
-   "lon": 19.44848,
+   "id": "osm:node:1712977264",
+   "name": "Wójtowski Mill",
+   "lat": 51.756372,
+   "lon": 19.492944,
    "category": "photo",
    "score": 37,
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
    "signals": {
-    "photos": 0.301,
-    "fame": 0.373,
+    "photos": 0.582,
+    "fame": 0.0,
     "quality": 0.0,
     "independent": true
    }
   },
   {
-   "id": "osm:node:7684010647",
-   "name": "Szpital im. Heleny Wolf w Łodzi",
-   "lat": 51.789834,
-   "lon": 19.453854,
+   "id": "osm:node:6172767816",
+   "name": "Zygmunt Richter Factory",
+   "lat": 51.751959,
+   "lon": 19.452364,
    "category": "photo",
    "score": 37,
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
    "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:1110540294",
-   "name": "Tężnia solankowa",
-   "lat": 51.741501,
-   "lon": 19.494019,
-   "category": "photo",
-   "score": 37,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "graduation_tower",
-   "signals": {
-    "photos": 0.534,
+    "photos": 0.582,
     "fame": 0.0,
-    "quality": 0.2,
+    "quality": 0.0,
     "independent": true
    }
   },
   {
    "id": "osm:node:3100027207",
-   "name": "Willa Zygmunta Richtera",
+   "name": "Zygmunt Richter Villa",
    "lat": 51.750606,
    "lon": 19.455457,
    "category": "photo",
@@ -7533,15 +7533,15 @@
    }
   },
   {
-   "id": "osm:node:1712977264",
-   "name": "Wójtowski Młyn",
-   "lat": 51.756372,
-   "lon": 19.492944,
+   "id": "osm:node:11758960829",
+   "name": "Łódź Town Charter Memorial Stone",
+   "lat": 51.781837,
+   "lon": 19.454281,
    "category": "photo",
    "score": 37,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Memorial stone",
+   "type": "stone",
    "signals": {
     "photos": 0.582,
     "fame": 0.0,
@@ -7652,6 +7652,23 @@
    "openingHours": "Tu-Th 13:00-21:00; Fr-Sa 13:00-22:00; Su 13:00-19:00"
   },
   {
+   "id": "osm:node:1659496895",
+   "name": "Gelich Tenement House",
+   "lat": 51.754033,
+   "lon": 19.459404,
+   "category": "photo",
+   "score": 36,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.187,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:11190405519",
    "name": "Ha Long",
    "lat": 51.778367,
@@ -7673,19 +7690,19 @@
    "openingHours": "Mo-Su 10:00-21:00"
   },
   {
-   "id": "osm:node:1659496895",
-   "name": "Kamienica K. Gelicha",
-   "lat": 51.754033,
-   "lon": 19.459404,
+   "id": "osm:way:174475969",
+   "name": "Matejko Park",
+   "lat": 51.774184,
+   "lon": 19.48556,
    "category": "photo",
    "score": 36,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Park",
+   "type": "park",
    "signals": {
-    "photos": 0.399,
-    "fame": 0.187,
-    "quality": 0.0,
+    "photos": 0.534,
+    "fame": 0.296,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -7741,40 +7758,6 @@
     "independent": true
    },
    "openingHours": "Mo-Th 08:00-21:00; Fr-Sa 08:00-23:00; Su 08:00-21:00"
-  },
-  {
-   "id": "osm:way:174475969",
-   "name": "Park Matejki",
-   "lat": 51.774184,
-   "lon": 19.48556,
-   "category": "photo",
-   "score": 36,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:174195290",
-   "name": "Park Źródliska I",
-   "lat": 51.759026,
-   "lon": 19.479419,
-   "category": "photo",
-   "score": 36,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.482,
-    "quality": 0.2,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:7563062785",
@@ -7959,6 +7942,23 @@
    }
   },
   {
+   "id": "osm:way:174195290",
+   "name": "Źródliska Park I",
+   "lat": 51.759026,
+   "lon": 19.479419,
+   "category": "photo",
+   "score": 36,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.482,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:14265387301",
    "name": "Aïoli",
    "lat": 51.780187,
@@ -7992,6 +7992,23 @@
     "photos": 0.956,
     "fame": 0.0,
     "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:185548672",
+   "name": "Church of the Immaculate Conception",
+   "lat": 51.762119,
+   "lon": 19.444234,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Historic church",
+   "type": "church",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -8042,8 +8059,42 @@
    "openingHours": "Mo-Sa 09:00-20:00; Su 11:00-20:00"
   },
   {
+   "id": "osm:node:6268323182",
+   "name": "Eugeniusz Glezer Villa",
+   "lat": 51.774727,
+   "lon": 19.477267,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13907541107",
+   "name": "Florian Jarisch Palace",
+   "lat": 51.760082,
+   "lon": 19.457248,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:3843947579",
-   "name": "Dawny kantor fabryki Silbersteinów",
+   "name": "Former Silberstein Factory Office",
    "lat": 51.751989,
    "lon": 19.460374,
    "category": "photo",
@@ -8059,25 +8110,42 @@
    }
   },
   {
-   "id": "osm:node:7646392859",
-   "name": "Galeria Odlot",
-   "lat": 51.763738,
-   "lon": 19.459844,
+   "id": "osm:way:143564231",
+   "name": "Geology Museum",
+   "lat": 51.773989,
+   "lon": 19.482023,
    "category": "photo",
    "score": 35,
    "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
+   "reason": "Museum",
+   "type": "museum",
    "signals": {
-    "photos": 0.399,
+    "photos": 0.534,
     "fame": 0.0,
-    "quality": 0.6,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3099361274",
+   "name": "Geyer Bathhouse",
+   "lat": 51.745462,
+   "lon": 19.463495,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
   {
    "id": "osm:node:8838496387",
-   "name": "Julian Tuwim",
+   "name": "Julian Tuwim Bust",
    "lat": 51.768396,
    "lon": 19.458059,
    "category": "photo",
@@ -8094,9 +8162,26 @@
   },
   {
    "id": "osm:node:13858771104",
-   "name": "Kamienica Karola Kretschmera",
+   "name": "Karol Kretschmer Tenement House",
    "lat": 51.76864,
    "lon": 19.454071,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.534,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:14159376632",
+   "name": "Karol Reisfeld Villa",
+   "lat": 51.776199,
+   "lon": 19.473867,
    "category": "photo",
    "score": 35,
    "kind": "passby",
@@ -8123,23 +8208,6 @@
     "photos": 0.659,
     "fame": 0.0,
     "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:185548672",
-   "name": "Kościół Niepokalanego Poczęcia Najświętszej Marii Panny",
-   "lat": 51.762119,
-   "lon": 19.444234,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Historic church",
-   "type": "church",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.0,
     "independent": true
    }
   },
@@ -8195,15 +8263,32 @@
    }
   },
   {
-   "id": "osm:way:143564231",
-   "name": "Muzeum Geologiczne WNG UŁ",
-   "lat": 51.773989,
-   "lon": 19.482023,
+   "id": "osm:node:7646392859",
+   "name": "Odlot Gallery",
+   "lat": 51.763738,
+   "lon": 19.459844,
    "category": "photo",
    "score": 35,
    "kind": "passby",
-   "reason": "Museum",
-   "type": "museum",
+   "reason": "Art gallery",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.6,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:529506699",
+   "name": "Old Lutheran Cemetery",
+   "lat": 51.776563,
+   "lon": 19.433923,
+   "category": "photo",
+   "score": 35,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.534,
     "fame": 0.0,
@@ -8213,7 +8298,7 @@
   },
   {
    "id": "osm:node:7922852185",
-   "name": "Park założony w 1896",
+   "name": "Park Founded in 1896",
    "lat": 51.764416,
    "lon": 19.466438,
    "category": "photo",
@@ -8221,23 +8306,6 @@
    "kind": "passby",
    "reason": "Memorial",
    "type": "memorial",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:13907541107",
-   "name": "Pałac Floriana Jarischa",
-   "lat": 51.760082,
-   "lon": 19.457248,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
    "signals": {
     "photos": 0.534,
     "fame": 0.0,
@@ -8264,7 +8332,7 @@
   },
   {
    "id": "osm:node:10106895236",
-   "name": "Sobie",
+   "name": "Sobie Mural",
    "lat": 51.778596,
    "lon": 19.453259,
    "category": "photo",
@@ -8272,23 +8340,6 @@
    "kind": "passby",
    "reason": "Mural by Paweł Ryżko",
    "type": "mural",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:529506699",
-   "name": "Stary Cmentarz Ewangelicko-Augsburski",
-   "lat": 51.776563,
-   "lon": 19.433923,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
    "signals": {
     "photos": 0.534,
     "fame": 0.0,
@@ -8332,57 +8383,6 @@
    "openingHours": "Mo-Th 09:00-22:00, Fr 09:00-03:00, Sa 10:00-04:00, Su 10:00-22:00"
   },
   {
-   "id": "osm:node:6268323182",
-   "name": "Willa Eugeniusza Glezera",
-   "lat": 51.774727,
-   "lon": 19.477267,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:14159376632",
-   "name": "Willa Karola Reisfelda",
-   "lat": 51.776199,
-   "lon": 19.473867,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:3099361274",
-   "name": "Łaźnia Geyera",
-   "lat": 51.745462,
-   "lon": 19.463495,
-   "category": "photo",
-   "score": 35,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1205571053",
    "name": "Łyk i kęs",
    "lat": 51.773068,
@@ -8404,7 +8404,7 @@
   },
   {
    "id": "osm:node:4691979864",
-   "name": "Łódzki Manhattan",
+   "name": "Łódź Manhattan",
    "lat": 51.75845,
    "lon": 19.460466,
    "category": "photo",
@@ -9035,23 +9035,6 @@
    }
   },
   {
-   "id": "osm:node:12253625794",
-   "name": "Bielik",
-   "lat": 51.773989,
-   "lon": 19.481772,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Mural by Maciej Bielewicz",
-   "type": "mural",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:6574396332",
    "name": "Bubamara",
    "lat": 51.779134,
@@ -9088,23 +9071,6 @@
     "coffee_shop"
    ],
    "openingHours": "Mo-Sa 09:00-19:00; Su 13:00-19:00"
-  },
-  {
-   "id": "osm:node:6176514221",
-   "name": "Centrala Handlowa Karola Scheiblera",
-   "lat": 51.756187,
-   "lon": 19.473113,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:5743600960",
@@ -9145,23 +9111,6 @@
    "openingHours": "Mo-Fr 10:00-18:00; Sa 10:00-14:00"
   },
   {
-   "id": "osm:node:8672526181",
-   "name": "Drzewo Pokoleń",
-   "lat": 51.786187,
-   "lon": 19.472846,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Installation",
-   "type": "installation",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:3782106639",
    "name": "E. Stompel",
    "lat": 51.77507,
@@ -9181,7 +9130,7 @@
   },
   {
    "id": "osm:node:6172687859",
-   "name": "Fabryka Ewalda Kerna",
+   "name": "Ewald Kern Factory",
    "lat": 51.755598,
    "lon": 19.451801,
    "category": "photo",
@@ -9197,15 +9146,15 @@
    }
   },
   {
-   "id": "osm:node:6176514223",
-   "name": "Fabryka K. Scheiblera „Centrala”",
-   "lat": 51.759041,
-   "lon": 19.47628,
+   "id": "osm:node:1837779294",
+   "name": "Fr Jerzy Popiełuszko Cross",
+   "lat": 51.761243,
+   "lon": 19.463341,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Wayside cross",
+   "type": "wayside_cross",
    "signals": {
     "photos": 0.473,
     "fame": 0.0,
@@ -9214,8 +9163,42 @@
    }
   },
   {
+   "id": "osm:node:1659517679",
+   "name": "Henryk Birnbaum Tenement House",
+   "lat": 51.750391,
+   "lon": 19.460708,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1837779196",
+   "name": "Jan Karski Bench",
+   "lat": 51.785471,
+   "lon": 19.474575,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Bench sculpture",
+   "type": "bench",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.187,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:9229920569",
-   "name": "Jan Kowalewski",
+   "name": "Jan Kowalewski Mural",
    "lat": 51.762423,
    "lon": 19.460246,
    "category": "photo",
@@ -9232,7 +9215,7 @@
   },
   {
    "id": "osm:node:1572559735",
-   "name": "Jocz",
+   "name": "Jocz Monument",
    "lat": 51.77385,
    "lon": 19.481951,
    "category": "photo",
@@ -9248,25 +9231,25 @@
    }
   },
   {
-   "id": "osm:node:1659517679",
-   "name": "Kamienica Henryka Birnbauma (z 2 oficynami)",
-   "lat": 51.750391,
-   "lon": 19.460708,
+   "id": "osm:node:6176514221",
+   "name": "Karol Scheibler Trading House",
+   "lat": 51.756187,
+   "lon": 19.473113,
    "category": "photo",
    "score": 33,
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
    "signals": {
-    "photos": 0.399,
+    "photos": 0.473,
     "fame": 0.0,
-    "quality": 0.4,
+    "quality": 0.0,
     "independent": true
    }
   },
   {
    "id": "osm:node:6266576719",
-   "name": "Kamienica Karola Wutke",
+   "name": "Karol Wutke Tenement House",
    "lat": 51.77364,
    "lon": 19.465265,
    "category": "photo",
@@ -9282,15 +9265,32 @@
    }
   },
   {
-   "id": "osm:node:1837779294",
-   "name": "Ks. Jerzego Popiełuszki",
-   "lat": 51.761243,
-   "lon": 19.463341,
+   "id": "osm:node:9668786801",
+   "name": "Love! Freedom! Memory! Life! Installation",
+   "lat": 51.772855,
+   "lon": 19.463135,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Wayside cross",
-   "type": "wayside_cross",
+   "reason": "Installation",
+   "type": "installation",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1659602418",
+   "name": "Ludwik Geyer Factory Complex",
+   "lat": 51.744236,
+   "lon": 19.461206,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.473,
     "fame": 0.0,
@@ -9317,36 +9317,19 @@
    "openingHours": "Mo-Su 08:00-15:00"
   },
   {
-   "id": "osm:node:6173146022",
-   "name": "Miejska Galeria Sztuki - Galeria Willa",
-   "lat": 51.769191,
-   "lon": 19.451615,
+   "id": "osm:way:1293137898",
+   "name": "MiG-21 Jet on a Plinth",
+   "lat": 51.748785,
+   "lon": 19.450688,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
+   "reason": "Statue",
+   "type": "statue",
    "signals": {
-    "photos": 0.473,
+    "photos": 0.399,
     "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9668786801",
-   "name": "Miłość! Wolność! Pamięć! Życie!",
-   "lat": 51.772855,
-   "lon": 19.463135,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Installation",
-   "type": "installation",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
+    "quality": 0.4,
     "independent": true
    }
   },
@@ -9370,6 +9353,23 @@
     "coffee_shop",
     "cake"
    ]
+  },
+  {
+   "id": "osm:node:2210405028",
+   "name": "Monument to Poles Who Saved Jews",
+   "lat": 51.785364,
+   "lon": 19.470706,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Monument",
+   "type": "monument",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:9192743924",
@@ -9407,7 +9407,7 @@
   },
   {
    "id": "osm:way:989322661",
-   "name": "Muzeum Przyrodnicze UŁ",
+   "name": "Natural History Museum",
    "lat": 51.764663,
    "lon": 19.466056,
    "category": "photo",
@@ -9443,40 +9443,6 @@
     "pasta"
    ],
    "openingHours": "Mo-Sa 10:00-22:00"
-  },
-  {
-   "id": "osm:way:1293137898",
-   "name": "Podest po odrzutowcu MIG-21",
-   "lat": 51.748785,
-   "lon": 19.450688,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.4,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:2210405028",
-   "name": "Pomnik Polaków Ratujących Żydów podczas II wojny światowej",
-   "lat": 51.785364,
-   "lon": 19.470706,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:1914114837",
@@ -9533,6 +9499,23 @@
    "openingHours": "Mo-Fr 10:00-19:00; Sa 10:00-16:00"
   },
   {
+   "id": "osm:node:6176514223",
+   "name": "Scheibler \"Centrala\" Factory",
+   "lat": 51.759041,
+   "lon": 19.47628,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:12401182563",
    "name": "Sculpture",
    "lat": 51.78009,
@@ -9550,15 +9533,15 @@
    }
   },
   {
-   "id": "osm:node:3224203865",
-   "name": "Statua Orła Białego",
-   "lat": 51.785308,
-   "lon": 19.470988,
+   "id": "osm:node:12766914622",
+   "name": "St Dominic Reading the Bible Mural",
+   "lat": 51.769724,
+   "lon": 19.451407,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Monument",
-   "type": "monument",
+   "reason": "Mural",
+   "type": "mural",
    "signals": {
     "photos": 0.473,
     "fame": 0.0,
@@ -9604,15 +9587,15 @@
    ]
   },
   {
-   "id": "osm:node:1659602418",
-   "name": "Zespół budynków fabryki Ludwika Geyera",
-   "lat": 51.744236,
-   "lon": 19.461206,
+   "id": "osm:node:8672526181",
+   "name": "Tree of Generations",
+   "lat": 51.786187,
+   "lon": 19.472846,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Installation",
+   "type": "installation",
    "signals": {
     "photos": 0.473,
     "fame": 0.0,
@@ -9621,25 +9604,59 @@
    }
   },
   {
-   "id": "osm:node:1837779196",
-   "name": "Ławeczka Jana Karskiego",
-   "lat": 51.785471,
-   "lon": 19.474575,
+   "id": "osm:node:6173146022",
+   "name": "Villa Gallery",
+   "lat": 51.769191,
+   "lon": 19.451615,
    "category": "photo",
    "score": 33,
    "kind": "passby",
-   "reason": "Bench sculpture",
-   "type": "bench",
+   "reason": "Art gallery",
+   "type": "gallery",
    "signals": {
-    "photos": 0.301,
-    "fame": 0.187,
-    "quality": 0.2,
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3224203865",
+   "name": "White Eagle Statue",
+   "lat": 51.785308,
+   "lon": 19.470988,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Monument",
+   "type": "monument",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:12253625794",
+   "name": "White-Tailed Eagle Mural",
+   "lat": 51.773989,
+   "lon": 19.481772,
+   "category": "photo",
+   "score": 33,
+   "kind": "passby",
+   "reason": "Mural by Maciej Bielewicz",
+   "type": "mural",
+   "signals": {
+    "photos": 0.473,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
   {
    "id": "osm:relation:11771044",
-   "name": "Łódzki Manhattan",
+   "name": "Łódź Manhattan",
    "lat": 51.756931,
    "lon": 19.461353,
    "category": "photo",
@@ -9647,23 +9664,6 @@
    "kind": "passby",
    "reason": "Landmark",
    "type": "attraction",
-   "signals": {
-    "photos": 0.473,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12766914622",
-   "name": "Święty Dominik czyta Biblię",
-   "lat": 51.769724,
-   "lon": 19.451407,
-   "category": "photo",
-   "score": 33,
-   "kind": "passby",
-   "reason": "Mural",
-   "type": "mural",
    "signals": {
     "photos": 0.473,
     "fame": 0.0,
@@ -10015,6 +10015,23 @@
    "openingHours": "Mo-Fr 06:00-19:00; Sa 07:00-15:00"
   },
   {
+   "id": "osm:way:104236319",
+   "name": "Centre of Art Propagation",
+   "lat": 51.763828,
+   "lon": 19.464221,
+   "category": "photo",
+   "score": 31,
+   "kind": "passby",
+   "reason": "Art gallery",
+   "type": "gallery",
+   "signals": {
+    "photos": 0.0,
+    "fame": 0.296,
+    "quality": 1.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:11257428539",
    "name": "Elitna Gruzja",
    "lat": 51.756142,
@@ -10033,6 +10050,23 @@
    "cuisine": [
     "georgian"
    ]
+  },
+  {
+   "id": "osm:node:1659496950",
+   "name": "Grand City Tenement House",
+   "lat": 51.754251,
+   "lon": 19.459354,
+   "category": "photo",
+   "score": 31,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.187,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:11257428541",
@@ -10089,23 +10123,6 @@
    "openingHours": "Mo-Fr 08:00-18:00; Sa 10:00-18:00"
   },
   {
-   "id": "osm:way:104236319",
-   "name": "Ośrodek Propagandy Sztuki",
-   "lat": 51.763828,
-   "lon": 19.464221,
-   "category": "photo",
-   "score": 31,
-   "kind": "passby",
-   "reason": "Art gallery",
-   "type": "gallery",
-   "signals": {
-    "photos": 0.0,
-    "fame": 0.296,
-    "quality": 1.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:8760605230",
    "name": "Skrzydlewska",
    "lat": 51.756275,
@@ -10122,23 +10139,6 @@
     "independent": true
    },
    "openingHours": "Mo-Sa 07:00-20:00; Su 09:00-18:00"
-  },
-  {
-   "id": "osm:node:1659496950",
-   "name": "kamienica wielkomiejska",
-   "lat": 51.754251,
-   "lon": 19.459354,
-   "category": "photo",
-   "score": 31,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.187,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:6172710659",
@@ -10443,8 +10443,25 @@
    }
   },
   {
+   "id": "osm:node:6172687857",
+   "name": "Adolf Daube Factory",
+   "lat": 51.75778,
+   "lon": 19.454661,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:9428403530",
-   "name": "Anatomy of funny moments",
+   "name": "Anatomy of Funny Moments Mural",
    "lat": 51.778487,
    "lon": 19.475825,
    "category": "photo",
@@ -10452,6 +10469,23 @@
    "kind": "passby",
    "reason": "Mural by AweR",
    "type": "mural",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6171348965",
+   "name": "Anton and Ewa Rybak Tenement House",
+   "lat": 51.772954,
+   "lon": 19.448065,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.399,
     "fame": 0.0,
@@ -10479,7 +10513,7 @@
   },
   {
    "id": "osm:node:9192716360",
-   "name": "Bocian Czarny",
+   "name": "Black Stork Mural",
    "lat": 51.757618,
    "lon": 19.463914,
    "category": "photo",
@@ -10495,8 +10529,42 @@
    }
   },
   {
+   "id": "osm:node:4138913808",
+   "name": "Edward M. Potęga Memorial Plaque",
+   "lat": 51.764332,
+   "lon": 19.464682,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Memorial stone",
+   "type": "stone",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6176415520",
+   "name": "Ernest Wever Factory",
+   "lat": 51.76366,
+   "lon": 19.452429,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:way:134873122",
-   "name": "Dawny szpital żydowski im. Izraela i Leonii Poznańskich",
+   "name": "Former Poznański Jewish Hospital",
    "lat": 51.77944,
    "lon": 19.467722,
    "category": "photo",
@@ -10512,44 +10580,10 @@
    }
   },
   {
-   "id": "osm:node:3672174522",
-   "name": "Dom Tkaczy",
-   "lat": 51.752134,
-   "lon": 19.460384,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6172687857",
-   "name": "Fabryka Adolfa Daube",
-   "lat": 51.75778,
-   "lon": 19.454661,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6176415520",
-   "name": "Fabryka Ernesta Wevera",
-   "lat": 51.76366,
-   "lon": 19.452429,
+   "id": "osm:node:1659496881",
+   "name": "Gelich Tenement Courtyard",
+   "lat": 51.754019,
+   "lon": 19.459159,
    "category": "photo",
    "score": 29,
    "kind": "passby",
@@ -10583,25 +10617,8 @@
    ]
   },
   {
-   "id": "osm:node:6171348965",
-   "name": "Kamienica Antona i Ewy Rybaków",
-   "lat": 51.772954,
-   "lon": 19.448065,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:13720789970",
-   "name": "Kamienica Judy Salomonowicza",
+   "name": "Juda Salomonowicz Tenement House",
    "lat": 51.770122,
    "lon": 19.448343,
    "category": "photo",
@@ -10617,8 +10634,25 @@
    }
   },
   {
+   "id": "osm:node:13652239110",
+   "name": "Julian Tuwim Statue",
+   "lat": 51.757301,
+   "lon": 19.44362,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Statue",
+   "type": "statue",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:9192731094",
-   "name": "Love letter",
+   "name": "Love Letter Mural",
    "lat": 51.77796,
    "lon": 19.469905,
    "category": "photo",
@@ -10626,6 +10660,23 @@
    "kind": "passby",
    "reason": "Mural by Aryz",
    "type": "mural",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:104290998",
+   "name": "Medical University Rectorate",
+   "lat": 51.769859,
+   "lon": 19.454027,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Palace",
+   "type": "palace",
    "signals": {
     "photos": 0.399,
     "fame": 0.0,
@@ -10668,49 +10719,15 @@
    }
   },
   {
-   "id": "osm:node:1659496881",
-   "name": "Otoczenie kamienicy Gelicha",
-   "lat": 51.754019,
-   "lon": 19.459159,
+   "id": "osm:node:13720665496",
+   "name": "Neighbours Mural",
+   "lat": 51.771848,
+   "lon": 19.458185,
    "category": "photo",
    "score": 29,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6176484918",
-   "name": "Pałacyk Elektrowni Łódzkiej",
-   "lat": 51.763579,
-   "lon": 19.449676,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:13652239110",
-   "name": "Pomnik Juliana Tuwima w Łodzi",
-   "lat": 51.757301,
-   "lon": 19.44362,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Statue",
-   "type": "statue",
+   "reason": "Mural by Karolina Treler",
+   "type": "mural",
    "signals": {
     "photos": 0.399,
     "fame": 0.0,
@@ -10793,32 +10810,15 @@
    }
   },
   {
-   "id": "osm:node:13720665496",
-   "name": "Sąsiedzi",
-   "lat": 51.771848,
-   "lon": 19.458185,
+   "id": "osm:node:12768612629",
+   "name": "Solina Water Tank",
+   "lat": 51.772231,
+   "lon": 19.456667,
    "category": "photo",
    "score": 29,
    "kind": "passby",
-   "reason": "Mural by Karolina Treler",
-   "type": "mural",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:4138913808",
-   "name": "Tablica Pamiątkowa Edward M. Potęga",
-   "lat": 51.764332,
-   "lon": 19.464682,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Memorial stone",
-   "type": "stone",
+   "reason": "Installation",
+   "type": "installation",
    "signals": {
     "photos": 0.399,
     "fame": 0.0,
@@ -10845,44 +10845,44 @@
    "openingHours": "Mo-Sa 11:00-21:00; Su 11:00-20:00"
   },
   {
-   "id": "osm:way:104290998",
-   "name": "Uniwersytet Medyczny w Łodzi Rektorat",
-   "lat": 51.769859,
-   "lon": 19.454027,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Palace",
-   "type": "palace",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12768612629",
-   "name": "Zbiornik nr2 „Solina\"",
-   "lat": 51.772231,
-   "lon": 19.456667,
-   "category": "photo",
-   "score": 29,
-   "kind": "passby",
-   "reason": "Installation",
-   "type": "installation",
-   "signals": {
-    "photos": 0.399,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1999087685",
-   "name": "Zespół Zakładów Przemysłu Spirytusowego „Monopol Wódczany”",
+   "name": "Vodka Monopoly Factory",
    "lat": 51.762894,
    "lon": 19.485176,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:3672174522",
+   "name": "Weavers' House",
+   "lat": 51.752134,
+   "lon": 19.460384,
+   "category": "photo",
+   "score": 29,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.399,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6176484918",
+   "name": "Łódź Power Station Villa",
+   "lat": 51.763579,
+   "lon": 19.449676,
    "category": "photo",
    "score": 29,
    "kind": "passby",
@@ -11076,26 +11076,9 @@
   },
   {
    "id": "osm:relation:6792939",
-   "name": "Park Staromiejski",
+   "name": "Old Town Park",
    "lat": 51.780093,
    "lon": 19.456294,
-   "category": "photo",
-   "score": 28,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.373,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:173195328",
-   "name": "Park im. Władysława Reymonta",
-   "lat": 51.744858,
-   "lon": 19.464065,
    "category": "photo",
    "score": 28,
    "kind": "passby",
@@ -11178,6 +11161,23 @@
     "independent": true
    },
    "openingHours": "Mo-Sa 09:00-18:00; Su 10:00-14:00"
+  },
+  {
+   "id": "osm:way:173195328",
+   "name": "Reymont Park",
+   "lat": 51.744858,
+   "lon": 19.464065,
+   "category": "photo",
+   "score": 28,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.373,
+    "quality": 0.2,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:5202026428",
@@ -11472,26 +11472,9 @@
   },
   {
    "id": "osm:node:6172775129",
-   "name": "Kamienica Józefa Johna",
+   "name": "Józef John Tenement House",
    "lat": 51.753565,
    "lon": 19.459511,
-   "category": "photo",
-   "score": 27,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6171264109",
-   "name": "Kamienica Michała Kippera",
-   "lat": 51.771074,
-   "lon": 19.44888,
    "category": "photo",
    "score": 27,
    "kind": "passby",
@@ -11523,6 +11506,23 @@
    "openingHours": "08:00-18:00"
   },
   {
+   "id": "osm:node:6179304178",
+   "name": "Leon Allart Villa",
+   "lat": 51.743831,
+   "lon": 19.44697,
+   "category": "photo",
+   "score": 27,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:12061254874",
    "name": "Lodolandia",
    "lat": 51.75894,
@@ -11536,6 +11536,23 @@
     "photos": 0.979,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6171264109",
+   "name": "Michał Kipper Tenement House",
+   "lat": 51.771074,
+   "lon": 19.44888,
+   "category": "photo",
+   "score": 27,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -11661,23 +11678,6 @@
    "openingHours": "Mo-Fr 10:00-18:00; Sa,Su 10:00-15:00"
   },
   {
-   "id": "osm:node:6179304178",
-   "name": "Willa Leona Allarta",
-   "lat": 51.743831,
-   "lon": 19.44697,
-   "category": "photo",
-   "score": 27,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:3764468647",
    "name": "Łódzka Drożdżówka",
    "lat": 51.761842,
@@ -11751,7 +11751,7 @@
   },
   {
    "id": "osm:node:2470838694",
-   "name": "Bohdan Stefanowski",
+   "name": "Bohdan Stefanowski Monument",
    "lat": 51.753857,
    "lon": 19.45284,
    "category": "photo",
@@ -11837,6 +11837,23 @@
    "openingHours": "Mo,We-Fr 09:00-17:00; Tu 09:00-15:00; Sa 09:00-14:00"
   },
   {
+   "id": "osm:way:27747435",
+   "name": "Gdański Square",
+   "lat": 51.788202,
+   "lon": 19.472645,
+   "category": "photo",
+   "score": 26,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:3763145654",
    "name": "Irish Pub",
    "lat": 51.767445,
@@ -11889,6 +11906,40 @@
    }
   },
   {
+   "id": "osm:way:43653102",
+   "name": "Kiliński Park",
+   "lat": 51.752612,
+   "lon": 19.474223,
+   "category": "photo",
+   "score": 26,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:173192958",
+   "name": "Leon Niemczyk Square",
+   "lat": 51.760152,
+   "lon": 19.474874,
+   "category": "photo",
+   "score": 26,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.582,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5743600962",
    "name": "Montag Bistro & Deli",
    "lat": 51.767589,
@@ -11907,26 +11958,9 @@
   },
   {
    "id": "osm:relation:7896802",
-   "name": "Park Podolski",
+   "name": "Podolski Park",
    "lat": 51.741836,
    "lon": 19.496269,
-   "category": "photo",
-   "score": 26,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:43653102",
-   "name": "Park im. Jana Kilińskiego",
-   "lat": 51.752612,
-   "lon": 19.474223,
    "category": "photo",
    "score": 26,
    "kind": "passby",
@@ -11992,40 +12026,6 @@
    "openingHours": "Tu-Fr,Su 10:00-19:00"
   },
   {
-   "id": "osm:way:27747435",
-   "name": "Skwer Gdański",
-   "lat": 51.788202,
-   "lon": 19.472645,
-   "category": "photo",
-   "score": 26,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:173192958",
-   "name": "Skwer im. Leona Niemczyka",
-   "lat": 51.760152,
-   "lon": 19.474874,
-   "category": "photo",
-   "score": 26,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.582,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:7850687748",
    "name": "T.25 CAFE",
    "lat": 51.753833,
@@ -12077,23 +12077,6 @@
    }
   },
   {
-   "id": "osm:node:11395913845",
-   "name": "120-lecie Łódzkiej Straży Pożarnej",
-   "lat": 51.776493,
-   "lon": 19.453203,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Memorial stone",
-   "type": "stone",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:10995005073",
    "name": "A-Dong",
    "lat": 51.765209,
@@ -12133,8 +12116,59 @@
    "openingHours": "Mo-Sa 09:00-21:00; Su 10:00-19:00; PH off"
   },
   {
+   "id": "osm:node:6176289039",
+   "name": "Abraham Dudak Tenement House",
+   "lat": 51.770241,
+   "lon": 19.460802,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:9177439327",
+   "name": "Abramek's Dream Sculpture",
+   "lat": 51.786486,
+   "lon": 19.473798,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:12163832948",
+   "name": "Air Force Training Centre Mural",
+   "lat": 51.759477,
+   "lon": 19.452425,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Mural by Good Looking Studio",
+   "type": "mural",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:5082674264",
-   "name": "Anastazy Pankiewicz",
+   "name": "Anastazy Pankiewicz Statue",
    "lat": 51.787603,
    "lon": 19.48135,
    "category": "photo",
@@ -12161,6 +12195,23 @@
    "type": "shoes",
    "signals": {
     "photos": 0.881,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:9611567335",
+   "name": "Are You Growing? Mural",
+   "lat": 51.772242,
+   "lon": 19.445593,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Mural by Ola Adamczuk, Paulina Nawrot",
+   "type": "mural",
+   "signals": {
+    "photos": 0.301,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -12259,7 +12310,7 @@
   },
   {
    "id": "osm:node:3743286502",
-   "name": "Bookłażan",
+   "name": "Book Swap Box",
    "lat": 51.745741,
    "lon": 19.455253,
    "category": "photo",
@@ -12267,40 +12318,6 @@
    "kind": "passby",
    "reason": "Public artwork",
    "type": "artwork",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:142144462",
-   "name": "Budynek dawnego szpitala Betlejem",
-   "lat": 51.763042,
-   "lon": 19.445289,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:12163832948",
-   "name": "Centrum Przysposobienia Wojskowego Lotniczego",
-   "lat": 51.759477,
-   "lon": 19.452425,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Mural by Good Looking Studio",
-   "type": "mural",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -12339,6 +12356,23 @@
     "photos": 0.301,
     "fame": 0.0,
     "quality": 0.4,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6271975122",
+   "name": "Children of Bałuty Mural",
+   "lat": 51.787632,
+   "lon": 19.457839,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
     "independent": true
    }
   },
@@ -12386,57 +12420,6 @@
     "independent": true
    },
    "openingHours": "12:00-17:00"
-  },
-  {
-   "id": "osm:node:3768531514",
-   "name": "Czółenko",
-   "lat": 51.756987,
-   "lon": 19.431071,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6173146010",
-   "name": "Dom Klemensa Elsnera",
-   "lat": 51.770367,
-   "lon": 19.449072,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6253565189",
-   "name": "Dom rzeźbiarza ozdobiony rzeźbą kobiety",
-   "lat": 51.761227,
-   "lon": 19.444889,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:way:206133473",
@@ -12492,10 +12475,10 @@
    }
   },
   {
-   "id": "osm:node:6171264107",
-   "name": "Fabryka Rudolfa Kellera",
-   "lat": 51.771192,
-   "lon": 19.448054,
+   "id": "osm:node:6176484905",
+   "name": "F. Schmidt Villa",
+   "lat": 51.758977,
+   "lon": 19.448775,
    "category": "photo",
    "score": 25,
    "kind": "passby",
@@ -12509,15 +12492,15 @@
    }
   },
   {
-   "id": "osm:node:6171348972",
-   "name": "Fabryka Wilhelma Lürkensa",
-   "lat": 51.766282,
-   "lon": 19.452742,
+   "id": "osm:node:11476224933",
+   "name": "Face of Beauty Mural",
+   "lat": 51.772097,
+   "lon": 19.458995,
    "category": "photo",
    "score": 25,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Mural by Paulina Nawrot",
+   "type": "mural",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -12526,10 +12509,10 @@
    }
   },
   {
-   "id": "osm:node:6172741206",
-   "name": "Fabryka Winklera i Gaertnera",
-   "lat": 51.757096,
-   "lon": 19.463662,
+   "id": "osm:way:142144462",
+   "name": "Former Bethlehem Hospital",
+   "lat": 51.763042,
+   "lon": 19.445289,
    "category": "photo",
    "score": 25,
    "kind": "passby",
@@ -12595,6 +12578,40 @@
     "independent": true
    },
    "openingHours": "Mo 12:00-17:00; Tu-Fr 11:00-17:00"
+  },
+  {
+   "id": "osm:node:6171348975",
+   "name": "Henryk Brautigam Tenement House",
+   "lat": 51.76377,
+   "lon": 19.454338,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:13806277831",
+   "name": "Hermann Müller and August Seidel Factory",
+   "lat": 51.759501,
+   "lon": 19.453035,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:way:543115266",
@@ -12687,10 +12704,10 @@
    }
   },
   {
-   "id": "osm:node:6176289039",
-   "name": "Kamienica Abrahama Dudaka",
-   "lat": 51.770241,
-   "lon": 19.460802,
+   "id": "osm:node:6173146010",
+   "name": "Klemens Elsner House",
+   "lat": 51.770367,
+   "lon": 19.449072,
    "category": "photo",
    "score": 25,
    "kind": "passby",
@@ -12704,32 +12721,15 @@
    }
   },
   {
-   "id": "osm:node:6171348975",
-   "name": "Kamienica Henryka Brautigama",
-   "lat": 51.76377,
-   "lon": 19.454338,
+   "id": "osm:node:9303657037",
+   "name": "Life Is a State of Mind Mural",
+   "lat": 51.761919,
+   "lon": 19.443773,
    "category": "photo",
    "score": 25,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6272011367",
-   "name": "Kamienica Marii i Stefana Szylke",
-   "lat": 51.785221,
-   "lon": 19.445647,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Mural by Boa Mistura",
+   "type": "mural",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -12759,6 +12759,23 @@
    "openingHours": "Mo-Sa 11:00-22:00; Su 12:00-22:00"
   },
   {
+   "id": "osm:way:187475685",
+   "name": "Ludwik Beutner Villa",
+   "lat": 51.762313,
+   "lon": 19.444719,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:9062865334",
    "name": "Magazyn KAWY",
    "lat": 51.74037,
@@ -12781,15 +12798,32 @@
    "openingHours": "Mo-Su 07:00-10:00; 15:00-18:00"
   },
   {
-   "id": "osm:node:9177439327",
-   "name": "Marzenie Abramka",
-   "lat": 51.786486,
-   "lon": 19.473798,
+   "id": "osm:node:6272011367",
+   "name": "Maria and Stefan Szylke Tenement House",
+   "lat": 51.785221,
+   "lon": 19.445647,
    "category": "photo",
    "score": 25,
    "kind": "passby",
-   "reason": "Sculpture",
-   "type": "sculpture",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6171264108",
+   "name": "Maurycy Poznański Palace",
+   "lat": 51.771815,
+   "lon": 19.44815,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -12889,7 +12923,7 @@
   },
   {
    "id": "osm:way:188326138",
-   "name": "Modernistyczna krańcówka „Północna”",
+   "name": "Modernist \"Północna\" Tram Terminus",
    "lat": 51.779637,
    "lon": 19.458762,
    "category": "photo",
@@ -12905,25 +12939,8 @@
    }
   },
   {
-   "id": "osm:node:6271975122",
-   "name": "Mural „Dzieci Bałut”",
-   "lat": 51.787632,
-   "lon": 19.457839,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:12417394351",
-   "name": "Muzeum Światła",
+   "name": "Museum of Light",
    "lat": 51.773835,
    "lon": 19.45438,
    "category": "photo",
@@ -12960,23 +12977,6 @@
    "openingHours": "Mo-Su 11:00-19:00"
   },
   {
-   "id": "osm:node:9242705663",
-   "name": "Neon Mewa",
-   "lat": 51.765973,
-   "lon": 19.459697,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Installation",
-   "type": "installation",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5743599019",
    "name": "Niebieskie Migdały",
    "lat": 51.77707,
@@ -13010,40 +13010,6 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 10:00-18:00"
-  },
-  {
-   "id": "osm:node:11476224933",
-   "name": "Oblicze piękna",
-   "lat": 51.772097,
-   "lon": 19.458995,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Mural by Paulina Nawrot",
-   "type": "mural",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6171264108",
-   "name": "Pałac Maurycego Poznańskiego",
-   "lat": 51.771815,
-   "lon": 19.44815,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
   },
   {
    "id": "osm:node:7784779805",
@@ -13085,23 +13051,6 @@
    "openingHours": "We-Su 12:00-22:00"
   },
   {
-   "id": "osm:node:8672181614",
-   "name": "Pomnik organizacji podziemnej Rady Pomocy Żydom „Żegota”",
-   "lat": 51.78571,
-   "lon": 19.471523,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Memorial stone",
-   "type": "stone",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:1710755035",
    "name": "Pub Keja",
    "lat": 51.75994,
@@ -13137,6 +13086,23 @@
    "openingHours": "Mo-Fr 10:00-18:00; Sa 10:00-15:00"
   },
   {
+   "id": "osm:node:6270147881",
+   "name": "R. Biedermann Factory",
+   "lat": 51.780826,
+   "lon": 19.464876,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:6244823261",
    "name": "RTV - MAX",
    "lat": 51.759342,
@@ -13153,6 +13119,40 @@
     "independent": true
    },
    "openingHours": "Mo-Fr 10:30-18:00; Sa 11:00-13:00"
+  },
+  {
+   "id": "osm:node:6171264107",
+   "name": "Rudolf Keller Factory",
+   "lat": 51.771192,
+   "lon": 19.448054,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:6244823249",
+   "name": "Ryszard Schimmel Villa",
+   "lat": 51.760906,
+   "lon": 19.441574,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:12382253082",
@@ -13174,6 +13174,23 @@
     "italian"
    ],
    "openingHours": "12:00-22:00"
+  },
+  {
+   "id": "osm:node:6253565189",
+   "name": "Sculptor's House",
+   "lat": 51.761227,
+   "lon": 19.444889,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:4280398075",
@@ -13244,6 +13261,23 @@
    }
   },
   {
+   "id": "osm:node:9242705663",
+   "name": "Seagull Neon",
+   "lat": 51.765973,
+   "lon": 19.459697,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Installation",
+   "type": "installation",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:2874064463",
    "name": "Serenissima",
    "lat": 51.749031,
@@ -13263,6 +13297,23 @@
     "regional"
    ],
    "openingHours": "Mo-Fr 11:30-16:00"
+  },
+  {
+   "id": "osm:node:3768531514",
+   "name": "Shuttle Sculpture",
+   "lat": 51.756987,
+   "lon": 19.431071,
+   "category": "photo",
+   "score": 25,
+   "kind": "passby",
+   "reason": "Sculpture",
+   "type": "sculpture",
+   "signals": {
+    "photos": 0.301,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
   },
   {
    "id": "osm:node:12060796941",
@@ -13319,7 +13370,7 @@
   },
   {
    "id": "osm:node:3688129672",
-   "name": "Still Life",
+   "name": "Still Life Mural",
    "lat": 51.744063,
    "lon": 19.451802,
    "category": "photo",
@@ -13353,10 +13404,10 @@
    "openingHours": "Mo-Th 12:00-21:00; Fr-Sa 12:00-22:00; Su 12:00- 21:00"
   },
   {
-   "id": "osm:node:6176484905",
-   "name": "Willa F. Schmidta",
-   "lat": 51.758977,
-   "lon": 19.448775,
+   "id": "osm:node:6171348972",
+   "name": "Wilhelm Lürkens Factory",
+   "lat": 51.766282,
+   "lon": 19.452742,
    "category": "photo",
    "score": 25,
    "kind": "passby",
@@ -13370,27 +13421,10 @@
    }
   },
   {
-   "id": "osm:way:187475685",
-   "name": "Willa Ludwika Beutnera",
-   "lat": 51.762313,
-   "lon": 19.444719,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:6244823249",
-   "name": "Willa Ryszarda Schimmela",
-   "lat": 51.760906,
-   "lon": 19.441574,
+   "id": "osm:node:6172741206",
+   "name": "Winkler and Gaertner Factory",
+   "lat": 51.757096,
+   "lon": 19.463662,
    "category": "photo",
    "score": 25,
    "kind": "passby",
@@ -13421,23 +13455,6 @@
    }
   },
   {
-   "id": "osm:node:9611567335",
-   "name": "Wzrastasz?",
-   "lat": 51.772242,
-   "lon": 19.445593,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Mural by Ola Adamczuk, Paulina Nawrot",
-   "type": "mural",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5250343121",
    "name": "Zatoka Smaku",
    "lat": 51.746786,
@@ -13459,15 +13476,15 @@
    "openingHours": "Mo-Fr 07:00-21:00; Sa,Su 08:00-20:00"
   },
   {
-   "id": "osm:node:6270147881",
-   "name": "Zespół fabryki R. Biedermanna",
-   "lat": 51.780826,
-   "lon": 19.464876,
+   "id": "osm:node:11395913845",
+   "name": "Łódź Fire Brigade Memorial Stone",
+   "lat": 51.776493,
+   "lon": 19.453203,
    "category": "photo",
    "score": 25,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
+   "reason": "Memorial stone",
+   "type": "stone",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -13476,32 +13493,15 @@
    }
   },
   {
-   "id": "osm:node:13806277831",
-   "name": "fabryk Hermanna Mullera i Augusta Seidlaa",
-   "lat": 51.759501,
-   "lon": 19.453035,
+   "id": "osm:node:8672181614",
+   "name": "Żegota Memorial Stone",
+   "lat": 51.78571,
+   "lon": 19.471523,
    "category": "photo",
    "score": 25,
    "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.301,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:node:9303657037",
-   "name": "Życie jest stanem umysłu",
-   "lat": 51.761919,
-   "lon": 19.443773,
-   "category": "photo",
-   "score": 25,
-   "kind": "passby",
-   "reason": "Mural by Boa Mistura",
-   "type": "mural",
+   "reason": "Memorial stone",
+   "type": "stone",
    "signals": {
     "photos": 0.301,
     "fame": 0.0,
@@ -13681,23 +13681,6 @@
    }
   },
   {
-   "id": "osm:way:174475973",
-   "name": "Park Staszica",
-   "lat": 51.773507,
-   "lon": 19.476608,
-   "category": "photo",
-   "score": 24,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.534,
-    "fame": 0.0,
-    "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:4502944631",
    "name": "Placówka",
    "lat": 51.776979,
@@ -13709,6 +13692,23 @@
    "type": "restaurant",
    "signals": {
     "photos": 0.867,
+    "fame": 0.0,
+    "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:174475973",
+   "name": "Staszic Park",
+   "lat": 51.773507,
+   "lon": 19.476608,
+   "category": "photo",
+   "score": 24,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.534,
     "fame": 0.0,
     "quality": 0.0,
     "independent": true
@@ -13868,23 +13868,6 @@
    }
   },
   {
-   "id": "osm:node:1659517671",
-   "name": "Dom rezydencjonalny Karola Königa",
-   "lat": 51.750968,
-   "lon": 19.460593,
-   "category": "photo",
-   "score": 23,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.0,
-    "fame": 0.296,
-    "quality": 0.2,
-    "independent": true
-   }
-  },
-  {
    "id": "osm:node:5752716245",
    "name": "Euroflorist",
    "lat": 51.758932,
@@ -13952,6 +13935,40 @@
     "photos": 0.81,
     "fame": 0.0,
     "quality": 0.0,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:way:175326536",
+   "name": "Hüffer Villa",
+   "lat": 51.741334,
+   "lon": 19.456445,
+   "category": "photo",
+   "score": 23,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.0,
+    "fame": 0.296,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
+   "id": "osm:node:1659517671",
+   "name": "Karol König Residence",
+   "lat": 51.750968,
+   "lon": 19.460593,
+   "category": "photo",
+   "score": 23,
+   "kind": "passby",
+   "reason": "Landmark",
+   "type": "attraction",
+   "signals": {
+    "photos": 0.0,
+    "fame": 0.296,
+    "quality": 0.2,
     "independent": true
    }
   },
@@ -14112,23 +14129,6 @@
     "photos": 0.81,
     "fame": 0.0,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:175326536",
-   "name": "Willa Hüffera",
-   "lat": 51.741334,
-   "lon": 19.456445,
-   "category": "photo",
-   "score": 23,
-   "kind": "passby",
-   "reason": "Landmark",
-   "type": "attraction",
-   "signals": {
-    "photos": 0.0,
-    "fame": 0.296,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -15032,7 +15032,7 @@
   },
   {
    "id": "osm:way:130386316",
-   "name": "Kamienica Wielkomiejska",
+   "name": "Grand City Tenement House",
    "lat": 51.764476,
    "lon": 19.447704,
    "category": "photo",
@@ -15112,23 +15112,6 @@
     "photos": 0.659,
     "fame": 0.0,
     "quality": 0.0,
-    "independent": true
-   }
-  },
-  {
-   "id": "osm:way:43653178",
-   "name": "Park Źródliska II",
-   "lat": 51.757873,
-   "lon": 19.47529,
-   "category": "photo",
-   "score": 18,
-   "kind": "passby",
-   "reason": "Park",
-   "type": "park",
-   "signals": {
-    "photos": 0.0,
-    "fame": 0.482,
-    "quality": 0.2,
     "independent": true
    }
   },
@@ -15227,6 +15210,23 @@
    }
   },
   {
+   "id": "osm:way:43653178",
+   "name": "Źródliska Park II",
+   "lat": 51.757873,
+   "lon": 19.47529,
+   "category": "photo",
+   "score": 18,
+   "kind": "passby",
+   "reason": "Park",
+   "type": "park",
+   "signals": {
+    "photos": 0.0,
+    "fame": 0.482,
+    "quality": 0.2,
+    "independent": true
+   }
+  },
+  {
    "id": "osm:node:12589835273",
    "name": "Advance Paris",
    "lat": 51.772334,
@@ -15245,7 +15245,7 @@
   },
   {
    "id": "osm:node:6219189750",
-   "name": "Art-Rama - artystyczna oprawa obrazów",
+   "name": "Art-Rama Gallery",
    "lat": 51.764398,
    "lon": 19.449805,
    "category": "photo",
@@ -16707,7 +16707,7 @@
   },
   {
    "id": "osm:node:6219213651",
-   "name": "Muzeum Sportu i Turystyki",
+   "name": "Museum of Sport and Tourism",
    "lat": 51.746646,
    "lon": 19.451563,
    "category": "photo",

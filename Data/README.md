@@ -10,6 +10,12 @@ python3 score.py lodz       # scores + curation → App/Wander/Resources/pois-lo
 
 Only `score.py` needs re-running after editing weights or `curation.csv`.
 
+## English names (`names-en/<city>.csv`)
+
+Sights are shown in English. OSM rarely has `name:en` and Wikidata labels are unreliable,
+so each city has a reviewed `osm_id,name_en,original` file (first drafted by Claude: please check).
+Shops and food keep their own names. `score.py` lists any sight still missing a name.
+
 ## Curation (`curation.csv`)
 
 One row per rule; ids look like `osm:node:123` (copy them from the review CSV).

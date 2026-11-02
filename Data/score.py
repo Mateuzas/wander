@@ -179,6 +179,25 @@ def load_curation():
     return rules
 
 
+def load_english_names(slug):
+    """Reviewed English display names (names-en/<city>.csv). OSM rarely has name:en and
+    Wikidata labels are unreliable, so these are drafted once and edited by hand."""
+    path = DATA / "names-en" / f"{slug}.csv"
+    if not path.exists():
+        return {}
+    with path.open(newline="") as f:
+        return {r["osm_id"]: r["name_en"].strip() for r in csv.DictReader(f) if r.get("name_en", "").strip()}
+
+
+def english_name(p, names_en):
+    """Sights get an English name; shops and food keep their own (they are proper names)."""
+    if p["id"] in names_en:
+        return names_en[p["id"]]
+    if p["category"] == "photo" and p["tags"].get("name:en"):
+        return p["tags"]["name:en"]
+    return p["name"]
+
+
 def apply_curation(pois, rules):
     kept, applied = [], 0
     for p in pois:
@@ -205,8 +224,8 @@ def dedupe(pois):
     pois = sorted(pois, key=lambda p: -p["score"])
     kept = []
     for p in pois:
-        name = p["name"].casefold()
-        if any(q["name"].casefold() == name and
+        name = p["original_name"].casefold()  # stable regardless of translations
+        if any(q["original_name"].casefold() == name and
                metres(p["lat"], p["lon"], q["lat"], q["lon"]) < DUPLICATE_RADIUS_M for q in kept):
             continue
         kept.append(p)
@@ -220,6 +239,10 @@ def main():
     city = load_city(slug)
     pois = json.loads((cache_dir(slug) / "enriched.json").read_text())["pois"]
     pct = photo_percentiles(pois)
+    names_en = load_english_names(slug)
+    for p in pois:
+        p["original_name"] = p["name"]
+        p["name"] = english_name(p, names_en)
 
     for p in pois:
         signals = {
@@ -277,15 +300,21 @@ def main():
                    for p in [q for q in pois if q["category"] == cat][:n]]
     with review.open("w", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["rank", "osm_id", "name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
+        w.writerow(["rank", "osm_id", "name", "original_name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
         for i, p in enumerate(review_rows, 1):
             typ, num = p["id"].split(":")[1:]
-            w.writerow([i, p["id"], p["name"], p["category"], p["score"], p["reason"],
+            w.writerow([i, p["id"], p["name"], p["original_name"], p["category"], p["score"], p["reason"],
                         p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
           f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied)")
+    untranslated = [p for p in pois if p["category"] == "photo" and p["id"] not in names_en
+                    and not p["tags"].get("name:en")]
+    if untranslated:
+        print(f"  ! {len(untranslated)} sights have no English name; add them to names-en/{slug}.csv:")
+        for p in untranslated[:10]:
+            print(f"    {p['id']},,{p['original_name']}")
     print(f"  wrote {out.relative_to(DATA.parent)} ({out.stat().st_size // 1024} KB)")
     print(f"  wrote {review.relative_to(DATA.parent)}")
 
