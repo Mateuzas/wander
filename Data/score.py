@@ -34,10 +34,10 @@ DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
 NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
 NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
-MIN_SCORE = 15
+MIN_SCORE = 15              # drop anything below this from the app file
 MAX_IMAGE_SHARES = 3       # a photo used by this many places is too generic to show
-POPULAR_SCORE = 70         # sights at or above this score are marked popular on the map...
-POPULAR_FAME = 0.6         # ...as are well-known ones (fame signal), whatever their score             # drop anything below this from the app file
+POPULAR_SHARE = 0.05       # top share of each category (by score) marked popular on the map...
+POPULAR_FAME = 0.6         # ...plus sights this well-known (fame signal), whatever their score
 REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
@@ -201,10 +201,20 @@ def commons_category(p):
     return p.get("wikidata_category")
 
 
-def is_popular(p):
-    if "popular_override" in p:
-        return p["popular_override"]
-    return p["category"] == "photo" and (p["score"] >= POPULAR_SCORE or fame_signal(p) >= POPULAR_FAME)
+def popular_ids(pois):
+    """Ids marked popular: the top POPULAR_SHARE of each category by score (at least one),
+    plus well-known sights; curation overrides win over both."""
+    ids = set()
+    for cat in ("photo", "shop", "food"):
+        ranked = sorted((p for p in pois if p["category"] == cat), key=lambda p: (-p["score"], p["id"]))
+        if ranked:
+            k = max(1, math.floor(POPULAR_SHARE * len(ranked) + 0.5))  # round half up
+            ids.update(p["id"] for p in ranked[:k])
+    ids.update(p["id"] for p in pois if p["category"] == "photo" and fame_signal(p) >= POPULAR_FAME)
+    for p in pois:
+        if "popular_override" in p:
+            (ids.add if p["popular_override"] else ids.discard)(p["id"])
+    return ids
 
 
 def load_curation():
@@ -337,6 +347,7 @@ def main():
     pois = [p for p in pois if p["score"] >= MIN_SCORE]
     renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
+    popular = popular_ids(pois)
 
     # A photo shared by several places is a series-level Wikidata image (e.g. one statue
     # standing in for a whole trail of them), so it shows none of them reliably.
@@ -367,7 +378,7 @@ def main():
         cuisine = p["tags"].get("cuisine")
         if p["category"] == "food" and cuisine:
             row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
-        if is_popular(p):
+        if p["id"] in popular:
             row["popular"] = True
         category = commons_category(p) if p["category"] == "photo" else None
         if category and category_uses.get(category, 0) < MAX_IMAGE_SHARES:
@@ -410,6 +421,8 @@ def main():
         print(f"  ! {len(untranslated)} sights have no English name; add them to names-en/{slug}.csv:")
         for p in untranslated[:10]:
             print(f"    {p['id']},,{p['original_name']}")
+    pop_by_cat = {c: sum(p["category"] == c and p["id"] in popular for p in pois) for c in by_cat}
+    print(f"  popular per category: {pop_by_cat}")
     print(f"  wrote {out.relative_to(DATA.parent)} ({out.stat().st_size // 1024} KB)")
     print(f"  wrote {review.relative_to(DATA.parent)}")
 

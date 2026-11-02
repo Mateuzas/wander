@@ -354,7 +354,6 @@
     "quality": 0.2,
     "independent": true
    },
-   "popular": true,
    "commonsCategory": "Sculpture 'Unicorn; a Place for Stars' by Tomohiro Inaba in Łódź",
    "commonsImage": "Lodz Unicorn 2019 01.jpg"
   },
@@ -417,6 +416,7 @@
    "cuisine": [
     "pancake"
    ],
+   "popular": true,
    "openingHours": "Su - Th 10:00 - 22:30, Fr - Sa 10:00 - 23:30"
   },
   {
@@ -458,6 +458,7 @@
    "cuisine": [
     "regional"
    ],
+   "popular": true,
    "openingHours": "Mo-Su 11:00-21:30"
   },
   {
@@ -520,6 +521,7 @@
    "cuisine": [
     "coctail_bar"
    ],
+   "popular": true,
    "openingHours": "Mo-Su 17:00-01:00"
   },
   {
@@ -542,6 +544,7 @@
     "italian",
     "mediterranean"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 12:00-19:00; Fr-Sa 12:00-20:00; Su 12:00-19:00"
   },
   {
@@ -563,6 +566,7 @@
    "cuisine": [
     "pizza"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 12:00-00:00; Fr-Sa 12:00-01:00; Su 12:00-00:00"
   },
   {
@@ -586,6 +590,7 @@
     "burger",
     "asian"
    ],
+   "popular": true,
    "openingHours": "Mo-Sa  10:00-22:00; Su 10:00-20:00"
   },
   {
@@ -607,6 +612,7 @@
    "cuisine": [
     "polish"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 08:30-22:00; Fr 08:30-23:00; Sa 09:30-23:00; Su 09:00-21:00"
   },
   {
@@ -706,6 +712,7 @@
    "cuisine": [
     "indian"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 11:00-22:00; Fr,Sa 11:00-23:00; Su 12:00-20:00"
   },
   {
@@ -807,6 +814,7 @@
    "cuisine": [
     "mexican"
    ],
+   "popular": true,
    "openingHours": "Su-Th 11:00-23:00, Fr-Sa 11:00-00:00"
   },
   {
@@ -828,6 +836,7 @@
    "cuisine": [
     "polish"
    ],
+   "popular": true,
    "openingHours": "Mo-Fr 12:00-17:30; Sa 12:00-16:00"
   },
   {
@@ -889,6 +898,7 @@
    "cuisine": [
     "polish"
    ],
+   "popular": true,
    "openingHours": "Mo-Th,Su 09:00-20:00; Fr-Sa 09:00-21:00"
   },
   {
@@ -1005,6 +1015,7 @@
     "sushi",
     "soup"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 12:00-23:00; Fr,Sa 12:00-24:00; Su 12:00-22:00"
   },
   {
@@ -1026,6 +1037,7 @@
    "cuisine": [
     "italian"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 12:00-22:00 Fr-Sa 12:00-23:00 Su 12:00-21:00"
   },
   {
@@ -1067,6 +1079,7 @@
    "cuisine": [
     "pizza"
    ],
+   "popular": true,
    "openingHours": "Su-Th 12:00-22:00; Fr-Sa 12:00-23:00"
   },
   {
@@ -1129,6 +1142,7 @@
    "cuisine": [
     "polish"
    ],
+   "popular": true,
    "openingHours": "Tu-Th 13:00-22:00; Fr 13:00-23:00; Sa 12:00-23:00; Su 00:00-21:00"
   },
   {
@@ -1150,6 +1164,7 @@
    "cuisine": [
     "ciasta"
    ],
+   "popular": true,
    "openingHours": "Mo-Su 10:00-18:00"
   },
   {
@@ -1171,6 +1186,7 @@
    "cuisine": [
     "dessert"
    ],
+   "popular": true,
    "openingHours": "Mo-Fr 07:00-17:00; Sa 08:00-14:00"
   },
   {
@@ -1232,6 +1248,7 @@
    "cuisine": [
     "pizza"
    ],
+   "popular": true,
    "openingHours": "Mo-Th 11:00-23:00, Fr-Sa 11:00-23:59, Su 12:00-22:00"
   },
   {
@@ -1274,6 +1291,7 @@
     "sushi",
     "japanese"
    ],
+   "popular": true,
    "openingHours": "Tu-Th 12:00-21:00; Fr-Sa 12:00-23:00; Su 12:00-21:00"
   },
   {
@@ -1356,7 +1374,8 @@
    },
    "cuisine": [
     "indian"
-   ]
+   ],
+   "popular": true
   },
   {
    "id": "osm:node:1821342774",
@@ -1802,6 +1821,7 @@
     "quality": 0.8,
     "independent": true
    },
+   "popular": true,
    "openingHours": "Mo-Fr 13:00-18:00"
   },
   {
@@ -2396,6 +2416,7 @@
     "quality": 0.6,
     "independent": true
    },
+   "popular": true,
    "openingHours": "Mo-Fr 10:00-18:00; Sa 10:00-15:00"
   },
   {

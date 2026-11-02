@@ -20,6 +20,13 @@ then the Wikidata English label, then its own name; `score.py` lists any sight s
 Sights named only by their kind ("Mural", "Sculpture") are expanded automatically to
 "Mural by <artist>" or "Mural near <nearest well-known sight>" (within 250 m).
 
+## Popular places
+
+`score.py` marks the best places in every category with `"popular": true` (a map marker):
+the top `POPULAR_SHARE` (5%) of each category's places in the app file, by score
+(at least one per non-empty category; ties by id), plus sights whose fame signal is at least
+`POPULAR_FAME` (0.6). A `popular` curation rule overrides both.
+
 ## Curation (`curation.csv`)
 
 One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
@@ -31,7 +38,7 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 | rename  | new name                  | replace the display name            |
 | reason  | short text                | replace the auto-drafted reason     |
 | image   | Commons file name, or empty | replace or remove the sight's photo |
-| popular | yes (default) or no       | force the "popular" map marker on/off |
+| popular | yes (default) or no       | force the "popular" marker on/off (any category) |
 
 `cache/` is not committed. `review/` and the app's `pois-*.json` are.
 
