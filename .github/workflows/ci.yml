@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  engine:
+    name: RouteEngine tests
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select newest Xcode
+        run: scripts/ci-select-xcode.sh
+      - name: swift test
+        run: scripts/test-engine.sh
+
+  app:
+    name: iOS Simulator build
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select newest Xcode
+        run: scripts/ci-select-xcode.sh
+      - name: xcodebuild
+        # No signing in CI, so the hard-coded DEVELOPMENT_TEAM is irrelevant.
+        run: |
+          xcodebuild -project App/Wander.xcodeproj -scheme Wander \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO build
+
+  data:
+    name: Data pipeline compiles
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: py_compile
+        run: python3 -m py_compile Data/*.py
