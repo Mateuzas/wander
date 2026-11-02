@@ -9,6 +9,7 @@ struct WanderApp: App {
     var body: some Scene {
         WindowGroup {
             MapScreen()
+                .overlay { LaunchCover() }
         }
     }
 }
