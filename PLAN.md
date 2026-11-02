@@ -200,6 +200,8 @@ Additions agreed after the first data run (2026-11-02):
 - Types: `type: String?`; `signals: Signals?` with `photos`, `fame`, `quality` as `Double` 0–1 and `independent` as `Bool`; `cuisine: [String]?` (food only); `openingHours: String?` (raw OSM `opening_hours` syntax, shops and food only). All new fields are optional so older files still decode.
 - `commonsImage: String?` (sights only): Wikimedia Commons file name of the place's own photo, from OSM `wikimedia_commons`/`image` or Wikidata P18. Photos shared by 3+ places are dropped, and `curation.csv` `image` rows fix wrong ones. Show it with author and licence credit.
 - `localName: String?`: the original OSM name when `name` is a translation (sights), used to match Apple Maps places.
+- `commonsCategory: String?` (sights): Commons category with more photos of the place, from OSM `wikimedia_commons` or Wikidata P373, for the photo gallery. Same safeguards as `commonsImage`.
+- `popular: Bool?` (sights): must-see marker for the map (score ≥ 70 or fame ≥ 0.6, overridable in `curation.csv`). Missing means false.
 - Scoring in the app: the plan request carries a weights profile, and a POI's value is 100 × Σ weight × signal, divided by Σ |weight| (negative weights allowed, e.g. hidden gems = low fame) so the value is on the same 0–100 scale as `score` (`independent` counts as 0 or 1). POIs without `signals` use `score`.
 
 ### 5.6 Licensing
