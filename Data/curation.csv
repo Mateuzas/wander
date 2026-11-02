@@ -75,3 +75,7 @@ osm:node:4148501938,reason,Fairytale trail: Łódź cartoon character,Claude dra
 osm:node:1966704088,reason,Fairytale trail: Łódź cartoon character,Claude draft
 osm:node:11884767684,reason,Fairytale trail: Łódź cartoon character,Claude draft
 osm:node:4148465072,reason,Fairytale trail: Łódź cartoon character,Claude draft
+# Wrong Wikidata photos (Claude draft): the linked item is a different place
+osm:way:333043326,image,,Claude draft: Wikidata photo shows the cathedral, not the John Paul II monument
+osm:way:689186938,image,,Claude draft: Wikidata photo shows a shopping centre
+osm:node:1187744318,image,,Claude draft: Wikidata item is Reymont Square, not the statue
