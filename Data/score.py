@@ -3,7 +3,7 @@
     python3 score.py lodz
 
 Reads cache/<city>/enriched.json and curation.csv.
-Writes App/Wander/Resources/pois-<city>.json and review/<city>-top300.csv (for hand review).
+Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
 """
 import csv
 import datetime
@@ -17,9 +17,14 @@ from common import DATA, RESOURCES, cache_dir, load_city, metres
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
 WEIGHTS = {
     "photo": {"photo": 0.45, "landmark": 0.45, "quality": 0.10},
-    "shop":  {"unique": 0.50, "quality": 0.30, "photo": 0.20},
-    "food":  {"unique": 0.50, "quality": 0.30, "photo": 0.20},
+    "shop":  {"quality": 0.60, "photo": 0.40},
+    "food":  {"quality": 0.60, "photo": 0.40},
 }
+# PLAN.md gave shops/food 0.5 for merely being unbranded, so every independent café outranked
+# real sights (Łódź top 300: 244 food, 5 photo). Instead, independence is a multiplier and
+# shop/food scores are capped so the best café can match a mid-level sight but never a landmark.
+CATEGORY_CEILING = {"photo": 1.0, "shop": 0.70, "food": 0.70}
+BRANDED_FACTOR = 0.3       # chains keep 30% of their score
 SITELINK_CAP = 40          # sitelinks at which the fame signal saturates
 LANDMARK_TAG_BONUS = 0.25  # tourism/historic tag alone counts for something
 POPULAR_PHOTO_PCT = 0.80   # photo percentile above which a reason says "popular photo spot"
@@ -27,7 +32,7 @@ FAMOUS_SITELINKS = 10      # sitelinks above which a reason says "well-known"
 DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
 MIN_SCORE = 15             # drop anything below this from the app file
-REVIEW_TOP_N = 300
+REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
 LANDMARK_TOURISM = {"attraction", "museum", "gallery", "viewpoint", "artwork"}
@@ -58,6 +63,9 @@ PHOTO_LABELS = {
     "industrial": "Industrial heritage", "factory": "Historic factory", "ruins": "Ruins",
     "tower": "Tower", "bridge": "Bridge", "park": "Park",
 }
+MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
+                   "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}
+PHOTO_LABELS.update({f"memorial:{k}": v for k, v in MEMORIAL_LABELS.items()})
 ARTWORK_LABELS = {"mural": "Mural", "sculpture": "Sculpture", "statue": "Statue",
                   "installation": "Installation", "relief": "Relief"}
 
@@ -110,16 +118,23 @@ def draft_reason(p, photo_pct):
         else:
             key = t.get("tourism") if t.get("tourism") not in (None, "attraction") else None
             key = key or t.get("historic") or t.get("man_made") or t.get("leisure")
+            if key == "memorial" and t.get("memorial") in MEMORIAL_LABELS:
+                key = "memorial:" + t["memorial"]
+            if key == "castle" and t.get("castle_type") in ("palace", "manor", "stately"):
+                key = "palace" if t["castle_type"] != "manor" else "manor"
             base = PHOTO_LABELS.get(key) or ("Landmark" if t.get("tourism") == "attraction"
                                              else sentence((key or "landmark").replace("_", " ")))
         extras = []
         if p["sitelinks"] >= FAMOUS_SITELINKS:
-            extras.append("well-known landmark")
+            if base == "Landmark":
+                base = "Well-known landmark"
+            else:
+                extras.append("well-known landmark")
         if photo_pct >= POPULAR_PHOTO_PCT:
             extras.append("popular photo spot")
         return ", ".join([base] + extras)
 
-    indie = is_unique(p)
+    # Independence already shapes the score; repeating it in every reason is noise.
     if cat == "food":
         kind = t.get("amenity") if t.get("amenity") in FOOD_LABELS else t.get("shop")
         cuisine = (t.get("cuisine") or "").split(";")[0].replace("_", " ").strip()
@@ -127,13 +142,10 @@ def draft_reason(p, photo_pct):
             label = f"{cuisine} restaurant" if cuisine and cuisine != "regional" else "Restaurant"
         else:
             label = FOOD_LABELS.get(kind, "Food")
-        label = sentence(label)
-        return f"Independent {label[0].lower() + label[1:]}" if indie else label
+        return sentence(label)
 
     label = SHOP_LABELS.get(t.get("shop")) or sentence(f"{t.get('shop', '').replace('_', ' ')} shop")
-    if t.get("shop") == "yes":
-        label = "Shop"
-    return f"Independent {label[0].lower() + label[1:]}" if indie else label
+    return "Shop" if t.get("shop") == "yes" else label
 
 
 def load_curation():
@@ -197,8 +209,12 @@ def main():
             "unique": 1.0 if is_unique(p) else 0.0,
             "quality": quality_signal(p),
         }
-        w = WEIGHTS[p["category"]]
-        p["score"] = round(100 * sum(w[k] * signals[k] for k in w))
+        cat = p["category"]
+        w = WEIGHTS[cat]
+        raw = sum(w[k] * signals[k] for k in w) * CATEGORY_CEILING[cat]
+        if cat != "photo" and not signals["unique"]:
+            raw *= BRANDED_FACTOR
+        p["score"] = round(100 * raw)
         p["reason"] = draft_reason(p, pct[p["id"]])
         p["kind"] = "passby" if p["category"] == "photo" else "stop"
 
@@ -226,11 +242,13 @@ def main():
 
     review_dir = DATA / "review"
     review_dir.mkdir(exist_ok=True)
-    review = review_dir / f"{slug}-top{REVIEW_TOP_N}.csv"
+    review = review_dir / f"{slug}-review.csv"
+    review_rows = [p for cat, n in REVIEW_PER_CATEGORY.items()
+                   for p in [q for q in pois if q["category"] == cat][:n]]
     with review.open("w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["rank", "osm_id", "name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
-        for i, p in enumerate(pois[:REVIEW_TOP_N], 1):
+        for i, p in enumerate(review_rows, 1):
             typ, num = p["id"].split(":")[1:]
             w.writerow([i, p["id"], p["name"], p["category"], p["score"], p["reason"],
                         p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
