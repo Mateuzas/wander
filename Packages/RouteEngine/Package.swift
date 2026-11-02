@@ -8,9 +8,12 @@ let package = Package(
     platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
         .library(name: "RouteEngine", targets: ["RouteEngine"]),
+        .executable(name: "golden-routes", targets: ["GoldenRoutes"]),
     ],
     targets: [
         .target(name: "RouteEngine"),
+        // Prints the golden-route summary table: `swift run golden-routes`.
+        .executableTarget(name: "GoldenRoutes", dependencies: ["RouteEngine"]),
         .testTarget(name: "RouteEngineTests", dependencies: ["RouteEngine"]),
     ]
 )

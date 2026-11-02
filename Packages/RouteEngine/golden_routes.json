@@ -1,0 +1,17 @@
+{
+  "city": "Łódź",
+  "note": "Approximate coordinates of well-known places. pois path is relative to this file.",
+  "pois": "../../App/Wander/Resources/pois-lodz.json",
+  "routes": [
+    { "name": "Łódź Fabryczna → Manufaktura",       "from": [51.7697, 19.4655], "to": [51.7795, 19.4480] },
+    { "name": "Plac Wolności → OFF Piotrkowska",    "from": [51.7766, 19.4547], "to": [51.7600, 19.4580] },
+    { "name": "Manufaktura → Księży Młyn",          "from": [51.7795, 19.4480], "to": [51.7548, 19.4818] },
+    { "name": "EC1 → Park Źródliska",               "from": [51.7675, 19.4689], "to": [51.7590, 19.4794] },
+    { "name": "Pałac Poznańskiego → Teatr Wielki",  "from": [51.7793, 19.4510], "to": [51.7733, 19.4697] },
+    { "name": "Łódź Kaliska → Piotrkowska 104",     "from": [51.7575, 19.4305], "to": [51.7655, 19.4570] },
+    { "name": "OFF Piotrkowska → Pałac Herbsta",    "from": [51.7600, 19.4580], "to": [51.7543, 19.4847] },
+    { "name": "Stary Rynek → EC1",                  "from": [51.7820, 19.4543], "to": [51.7675, 19.4689] },
+    { "name": "Muzeum Sztuki ms1 → Archikatedra",   "from": [51.7717, 19.4479], "to": [51.7489, 19.4597] },
+    { "name": "Park Źródliska → Plac Wolności",     "from": [51.7590, 19.4794], "to": [51.7766, 19.4547] }
+  ]
+}
