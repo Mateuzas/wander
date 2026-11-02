@@ -13,20 +13,12 @@ from common import cache_dir, http_json, load_city, metres
 
 OVERPASS = "https://overpass-api.de/api/interpreter"
 
-# Shops that are errands, not discoveries (PLAN.md 5.1).
-BORING_SHOPS = {
-    "supermarket", "convenience", "chemist", "mobile_phone", "car", "car_repair", "car_parts",
-    "tyres", "fuel", "hairdresser", "beauty", "massage", "optician", "kiosk", "tobacco",
-    "e-cigarette", "lottery", "money_lender", "pawnbroker", "funeral_directors", "dry_cleaning",
-    "laundry", "copyshop", "hardware", "doityourself", "trade", "variety_store", "mall",
-    "insurance", "travel_agency", "bookmaker", "vacant", "storage_rental", "motorcycle",
-    "electrical", "telecommunication", "medical_supply", "hearing_aids", "nutrition_supplements",
-    "alcohol", "beverages", "pet", "pet_grooming", "general", "department_store", "wholesale",
-    "electronics", "computer", "appliance", "bathroom_furnishing", "kitchen", "doors", "windows",
-    "flooring", "paint", "tiles", "curtain", "bed", "lighting", "houseware", "craft", "glaziery",
-    "locksmith", "sewing", "fabric", "shoe_repair", "repair", "agrarian", "gas", "erotic",
-    "weapons", "security", "health_food", "frozen_food", "dairy", "butcher", "greengrocer",
-    "seafood", "cosmetics", "perfumery", "fashion_accessories", "bag", "baby_goods", "fireplace",
+# Shop types a tourist would browse (PLAN.md 5.1). An allowlist: OSM has hundreds of shop
+# values and almost all of them are errands (florists, tailors, bike or shoe shops...).
+TOURIST_SHOPS = {
+    "books", "second_hand", "antiques", "art", "gift", "souvenir", "music", "musical_instrument",
+    "boutique", "wine", "photo", "toys", "games", "collector", "leather", "anime", "comics",
+    "craft_beer", "vintage", "pottery", "glass", "frame",
 }
 FOOD_SHOPS = {"bakery", "pastry", "deli", "confectionery", "chocolate", "coffee", "tea", "cheese"}
 FOOD_AMENITIES = {"cafe", "restaurant", "bar", "ice_cream", "pub"}
@@ -98,7 +90,7 @@ def categorise(tags, size):
     if leisure == "park":
         return "photo" if size >= MIN_PARK_SIZE_M else None
     if shop:
-        return None if shop in BORING_SHOPS else "shop"
+        return "shop" if shop in TOURIST_SHOPS else None
     return None
 
 
