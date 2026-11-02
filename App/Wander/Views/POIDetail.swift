@@ -25,10 +25,12 @@ struct POIDetail: View {
     @State private var connectivity = Connectivity()
     /// The matching Apple Maps place; nil until found, and stays nil if unsure.
     @State private var place: MKMapItem?
-    @State private var commonsPhoto: CommonsPhoto?
 
     var body: some View {
         VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
+            if connectivity.isOnline, let file = poi.commonsImage {
+                CommonsPhotoView(fileName: file)
+            }
             HStack(alignment: .top, spacing: Layout.grid * 1.5) {
                 Bead(category: poi.category)
                     .padding(.top, 2)
@@ -71,32 +73,19 @@ struct POIDetail: View {
 
     // MARK: - Photos and reviews
 
-    // TODO: return `poi.commonsImage` once the data agent adds that field (sights only).
-    private var commonsFileName: String? { nil }
-
     private func loadPlaceInfo() async {
         place = nil
-        commonsPhoto = nil
         let match = await PlaceInfoService.shared.place(for: poi)
         guard !Task.isCancelled else { return }
         place = match
-        guard match == nil, PlaceInfoService.commonsFallbackEnabled,
-              poi.category == .photo, let file = commonsFileName else { return }
-        let photo = await PlaceInfoService.shared.commonsPhoto(fileName: file)
-        guard !Task.isCancelled else { return }
-        commonsPhoto = photo
     }
 
     /// Nothing is shown while looking up, offline, or on iOS 17. Never a spinner.
     @ViewBuilder
     private var placeInfo: some View {
-        if connectivity.isOnline {
-            if let place {
-                if #available(iOS 18, *) {
-                    PlaceCardRow(item: place, placeName: poi.name)
-                }
-            } else if let commonsPhoto {
-                CommonsPhotoView(photo: commonsPhoto)
+        if connectivity.isOnline, let place {
+            if #available(iOS 18, *) {
+                PlaceCardRow(item: place, placeName: poi.name)
             }
         }
     }
@@ -169,33 +158,5 @@ private struct PlaceCardRow: View {
         .accessibilityLabel("Photos and reviews for \(placeName)")
         .accessibilityHint("Opens the Apple Maps place card")
         .mapItemDetailSheet(isPresented: $showCard, item: item, displaysMap: false)
-    }
-}
-
-/// A Commons photo with the author and licence credit Wikimedia requires.
-private struct CommonsPhotoView: View {
-    let photo: CommonsPhoto
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: Layout.grid / 2) {
-            AsyncImage(url: photo.imageURL) { phase in
-                if let image = phase.image {
-                    image.resizable().scaledToFill()
-                } else {
-                    Color.surfaceRaised
-                }
-            }
-            .frame(height: 160)
-            .frame(maxWidth: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
-            .accessibilityHidden(true)
-
-            Text("Photo: \(photo.author), \(photo.license), via Wikimedia Commons")
-                .font(WanderFont.caption)
-                .foregroundStyle(.inkMuted)
-                .fixedSize(horizontal: false, vertical: true)
-        }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Photo by \(photo.author), licence \(photo.license)")
     }
 }
