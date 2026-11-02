@@ -10,6 +10,7 @@ import datetime
 import json
 import math
 import sys
+import urllib.parse
 from pathlib import Path
 
 from common import DATA, RESOURCES, cache_dir, load_city, metres
@@ -33,7 +34,8 @@ DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
 NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
 NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
-MIN_SCORE = 15             # drop anything below this from the app file
+MIN_SCORE = 15
+MAX_IMAGE_SHARES = 3       # a photo used by this many places is too generic to show             # drop anything below this from the app file
 REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
@@ -169,6 +171,24 @@ def draft_reason(p, photo_pct):
     return "Shop" if t.get("shop") == "yes" else label
 
 
+def commons_image(p):
+    """Commons file name (no "File:" prefix) of the place's own photo, or None.
+
+    OSM tags are specific to the object, so they win; Wikidata's main image (P18) is the
+    common fallback. Category links and photos hosted elsewhere are ignored.
+    """
+    if "image_override" in p:
+        return p["image_override"] or None
+    t = p["tags"]
+    tag = t.get("wikimedia_commons", "")
+    if tag.startswith("File:"):
+        return tag[len("File:"):].strip()
+    image = t.get("image", "")
+    if "commons.wikimedia.org/wiki/File:" in image:
+        return urllib.parse.unquote(image.split("/wiki/File:", 1)[1]).replace("_", " ").strip()
+    return p.get("wikidata_image")
+
+
 def load_curation():
     path = DATA / "curation.csv"
     rules = {}
@@ -241,6 +261,8 @@ def apply_curation(pois, rules):
                 p["name"] = value
             elif action == "reason":
                 p["reason"] = value
+            elif action == "image":
+                p["image_override"] = value  # empty value removes the photo
             else:
                 print(f"  ! unknown curation action '{action}' for {p['id']}")
         if not excluded:
@@ -296,6 +318,13 @@ def main():
     renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
 
+    # A photo shared by several places is a series-level Wikidata image (e.g. one statue
+    # standing in for a whole trail of them), so it shows none of them reliably.
+    image_uses = {}
+    for p in pois:
+        if p["category"] == "photo" and commons_image(p):
+            image_uses[commons_image(p)] = image_uses.get(commons_image(p), 0) + 1
+
     out_pois = []
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
@@ -310,6 +339,9 @@ def main():
         cuisine = p["tags"].get("cuisine")
         if p["category"] == "food" and cuisine:
             row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
+        image = commons_image(p) if p["category"] == "photo" else None
+        if image and image_uses.get(image, 0) < MAX_IMAGE_SHARES:
+            row["commonsImage"] = image
         if p["category"] != "photo" and p["tags"].get("opening_hours"):
             row["openingHours"] = p["tags"]["opening_hours"]
         out_pois.append(row)

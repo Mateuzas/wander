@@ -10,7 +10,8 @@ struct POITests {
           "generated": "2026-11-02",
           "pois": [
             {"id": "osm:node:1", "name": "Mural", "lat": 51.77, "lon": 19.45,
-             "category": "photo", "score": 82, "kind": "passby", "reason": "Street art"},
+             "category": "photo", "score": 82, "kind": "passby", "reason": "Street art",
+             "commonsImage": "Mural in Łódź.jpg"},
             {"id": "osm:way:2", "name": "Café", "lat": 51.76, "lon": 19.46,
              "category": "food", "score": 40, "kind": "stop", "type": "cafe",
              "signals": {"photos": 0.82, "fame": 0.4, "quality": 0.6, "independent": true},
@@ -31,6 +32,8 @@ struct POITests {
         #expect(file.pois[1].cuisine == ["italian"])
         #expect(file.pois[1].openingHours == "Mo-Sa 10:00-20:00")
         #expect(file.pois[1].coordinate == Coordinate(lat: 51.76, lon: 19.46))
+        #expect(file.pois[0].commonsImage == "Mural in Łódź.jpg")
+        #expect(file.pois[1].commonsImage == nil)
     }
 
     @Test func roundTrips() throws {

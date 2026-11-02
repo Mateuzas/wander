@@ -5,7 +5,7 @@ import RouteEngine
 ///
 /// RouteEngine has no input for "this POI must be a waypoint", so this inserts
 /// it at the cheapest position, routes the changed legs for real, and keeps it
-/// only if the walk stays within budget, using the engine's own limits.
+/// only if the walk stays within budget, using the engine's own limits (per-mode stop cap, verification tolerance).
 enum PlanEditor {
     enum Outcome {
         case added(WanderPlan)
@@ -40,9 +40,10 @@ enum PlanEditor {
         plan.totalTime + bestInsertion(of: poi, in: plan).extra <= limit(for: plan, budget: budget)
     }
 
-    static func adding(_ poi: POI, to plan: WanderPlan, budget: TimeInterval, pois: [POI],
+    static func adding(_ poi: POI, to plan: WanderPlan, mode: Mode, pois: [POI],
                        interests: Set<POICategory>, provider: WalkingTimeProvider) async throws -> Outcome {
-        guard plan.waypoints.count < config.maxWaypoints else { return .full }
+        guard plan.waypoints.count < mode.maxWaypoints else { return .full }
+        let budget = mode.budget
         var waypoints = plan.waypoints
         waypoints.insert(poi, at: bestInsertion(of: poi, in: plan).index)
 
