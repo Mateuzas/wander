@@ -198,7 +198,7 @@ Additions agreed after the first data run (2026-11-02):
 - `type`: most specific OSM value (`mural`, `museum`, `church`, `cafe`, `books`, …).
 - `signals`: raw 0–1 inputs so the app can weight them **per user** (e.g. photo hunter vs. classic sightseer vs. hidden gems). `photos` = Commons photo-density percentile in the city, `fame` = log-scaled Wikipedia sitelinks, `quality` = OSM data completeness, `independent` = no brand tag. `score` stays as the default blend. A `rating` signal is reserved for later; no free source has ratings, and Google's terms forbid storing them.
 - Types: `type: String?`; `signals: Signals?` with `photos`, `fame`, `quality` as `Double` 0–1 and `independent` as `Bool`; `cuisine: [String]?` (food only); `openingHours: String?` (raw OSM `opening_hours` syntax, shops and food only). All new fields are optional so older files still decode.
-- Scoring in the app: the plan request carries a weights profile, and a POI's value is 100 × Σ weight × signal, with weights normalised to sum to 1 so the value is on the same 0–100 scale as `score` (`independent` counts as 0 or 1). POIs without `signals` use `score`.
+- Scoring in the app: the plan request carries a weights profile, and a POI's value is 100 × Σ weight × signal, divided by Σ |weight| (negative weights allowed, e.g. hidden gems = low fame) so the value is on the same 0–100 scale as `score` (`independent` counts as 0 or 1). POIs without `signals` use `score`.
 
 ### 5.6 Licensing
 OSM data is ODbL: show "© OpenStreetMap contributors" in the app (about screen is fine). Apple Maps attribution is handled by MapKit.
