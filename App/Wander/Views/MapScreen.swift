@@ -131,7 +131,7 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, isSelected: selectedPOI?.id == bead.poi.id, name: bead.poi.name)
+                    Bead(category: bead.poi.category, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
@@ -201,7 +201,8 @@ struct MapScreen: View {
         if let selected = selectedPOI, seen.insert(selected.id).inserted {
             items.append(BeadItem(poi: selected, dimmed: false, shown: true))
         }
-        return items
+        // MapKit draws annotations in order, so popular beads go last to sit on top.
+        return items.filter { $0.poi.popular != true } + items.filter { $0.poi.popular == true }
     }
 
     private var revealedRoute: [Coordinate] {

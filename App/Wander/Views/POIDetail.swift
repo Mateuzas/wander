@@ -25,50 +25,74 @@ struct POIDetail: View {
     @State private var connectivity = Connectivity()
     /// The matching Apple Maps place; nil until found, and stays nil if unsure.
     @State private var place: MKMapItem?
+    @State private var photoFailed = false
+
+    /// A photo (or its placeholder) leads the card; the close button floats over it.
+    private var hasPhoto: Bool {
+        connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
+    }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
-            if connectivity.isOnline, let file = poi.commonsImage {
-                CommonsPhotoView(fileName: file)
-            }
-            HStack(alignment: .top, spacing: Layout.grid * 1.5) {
-                Bead(category: poi.category)
-                    .padding(.top, 2)
-                VStack(alignment: .leading, spacing: Layout.grid / 2) {
-                    Text(poi.name)
-                        .font(WanderFont.heading)
+        ScrollView {
+            VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
+                if connectivity.isOnline, poi.commonsImage != nil || poi.commonsCategory != nil {
+                    CommonsPhotoView(fileName: poi.commonsImage, category: poi.commonsCategory,
+                                     failed: $photoFailed)
+                }
+
+                HStack(alignment: .top, spacing: Layout.grid * 1.5) {
+                    Bead(category: poi.category, isPopular: poi.popular ?? false)
+                        .padding(.top, 2)
+                    VStack(alignment: .leading, spacing: Layout.grid / 2) {
+                        Text(poi.name)
+                            .font(WanderFont.heading)
+                            .foregroundStyle(.ink)
+                        Text(poi.category.spokenName)
+                            .font(WanderFont.caption)
+                            .foregroundStyle(.inkMuted)
+                    }
+                    Spacer(minLength: 0)
+                }
+                // Room for the close button when there is no photo to float it over.
+                .padding(.trailing, hasPhoto ? 0 : Layout.minTouch)
+                .accessibilityElement(children: .contain)
+
+                if !poi.reason.isEmpty {
+                    Text(poi.reason)
+                        .font(WanderFont.body)
                         .foregroundStyle(.ink)
-                    Text(poi.category.spokenName)
-                        .font(WanderFont.caption)
-                        .foregroundStyle(.inkMuted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                Spacer(minLength: Layout.grid)
-                Button(action: onClose) {
-                    Image(systemName: "xmark")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.inkMuted)
-                        .frame(width: Layout.minTouch, height: Layout.minTouch)
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Close")
-            }
-            .accessibilityElement(children: .contain)
 
-            if !poi.reason.isEmpty {
-                Text(poi.reason)
-                    .font(WanderFont.body)
-                    .foregroundStyle(.ink)
-                    .fixedSize(horizontal: false, vertical: true)
+                placeInfo
+                actionView
             }
-
-            placeInfo
-            actionView
-            Spacer(minLength: 0)
+            .padding(.horizontal, Layout.margin)
+            .padding(.top, Layout.margin + Layout.grid)
+            .padding(.bottom, Layout.margin)
         }
-        .padding(.horizontal, Layout.margin)
-        .padding(.top, Layout.margin + Layout.grid)
+        .scrollBounceBehavior(.basedOnSize)
+        .overlay(alignment: .topTrailing) { closeButton }
         .onChange(of: poi.id) { addMessage = nil }
         .task(id: poi.id) { await loadPlaceInfo() }
+    }
+
+    /// 44 × 44 pt hit area with a small material disc, readable on any photo.
+    private var closeButton: some View {
+        Button(action: onClose) {
+            Image(systemName: "xmark")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(.ink)
+                .frame(width: 32, height: 32)
+                .background(.regularMaterial, in: Circle())
+                .frame(width: Layout.minTouch, height: Layout.minTouch)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Close")
+        // Sits inside the photo's corner, or in the card's corner without one.
+        .padding(.top, Layout.margin + Layout.grid - (hasPhoto ? 2 : 0))
+        .padding(.trailing, hasPhoto ? Layout.grid : Layout.margin - 6)
     }
 
     // MARK: - Photos and reviews
