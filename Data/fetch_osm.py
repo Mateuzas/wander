@@ -32,11 +32,13 @@ MAX_SPOT_SIZE_M = 800     # a "spot" bigger than this is an area, not a place yo
 # Notable venues (BE-4): stadiums, theatres, zoos, malls... Big by nature, so they get a larger
 # size limit, but only well-known or large ones count (see venue_category).
 VENUE_TAGS = {
-    "leisure": {"stadium"},
-    "amenity": {"theatre", "arts_centre", "concert_hall"},
+    "leisure": {"stadium", "sports_hall", "sports_centre"},
+    "amenity": {"theatre", "arts_centre", "concert_hall", "events_venue"},
     "tourism": {"zoo", "aquarium", "theme_park"},
     "shop": {"mall"},
 }
+# Sports centres are mostly gyms and pools; only ones on Wikidata/Wikipedia (e.g. Atlas Arena) count.
+FAME_ONLY_VENUES = {"sports_centre"}
 MIN_VENUE_SIZE_M = 150    # without a wikidata/wikipedia tag, a venue must be at least this big
 MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-past spot
 MIN_PARK_SIZE_M = 200     # named parks smaller than this are pocket greens
@@ -55,8 +57,10 @@ def query(bbox, venue_bbox=None):
   nwr["leisure"="park"]["name"]{b};
   nwr["shop"]["name"]{b};
   nwr["amenity"~"^(cafe|restaurant|bar|ice_cream|pub)$"]["name"]{b};
-  nwr["leisure"="stadium"]["name"]{vb};
-  nwr["amenity"~"^(theatre|arts_centre|concert_hall)$"]["name"]{vb};
+  nwr["leisure"~"^(stadium|sports_hall)$"]["name"]{vb};
+  nwr["amenity"~"^(theatre|arts_centre|concert_hall|events_venue)$"]["name"]{vb};
+  nwr["leisure"="sports_centre"]["name"]["wikidata"]{vb};
+  nwr["leisure"="sports_centre"]["name"]["wikipedia"]{vb};
   nwr["tourism"~"^(zoo|aquarium|theme_park)$"]{vb};
   nwr["shop"="mall"]["name"]{vb};
 );
@@ -99,7 +103,8 @@ def venue_category(tags, size):
     kind = venue_kind(tags)
     if not kind or size > MAX_VENUE_SIZE_M:
         return None
-    if not ("wikidata" in tags or "wikipedia" in tags or size >= MIN_VENUE_SIZE_M):
+    big = size >= MIN_VENUE_SIZE_M and kind not in FAME_ONLY_VENUES
+    if not ("wikidata" in tags or "wikipedia" in tags or big):
         return None
     return "shop" if kind == "mall" else "photo"
 

@@ -73,6 +73,7 @@ PHOTO_LABELS = {
     # Venues (BE-4)
     "stadium": "Stadium", "theatre": "Theatre", "concert_hall": "Concert hall", "zoo": "Zoo",
     "aquarium": "Aquarium", "theme_park": "Theme park", "arts_centre": "Arts centre",
+    "events_venue": "Arena", "sports_hall": "Arena", "sports_centre": "Arena",
 }
 MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
                    "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}

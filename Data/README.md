@@ -16,7 +16,8 @@ Photo spots (tourism, historic, notable towers and bridges, parks), browsable in
 (an allowlist of `shop=*` values) and food. See `fetch_osm.py` for the exact tags.
 
 **Venues** (BE-4): stadiums (`leisure=stadium`), theatres, arts centres and concert halls
-(`amenity=theatre|arts_centre|concert_hall`), zoos, aquariums and theme parks
+(`amenity=theatre|arts_centre|concert_hall`), arenas (`amenity=events_venue`, `leisure=sports_hall`, and `leisure=sports_centre`
+only with a `wikidata`/`wikipedia` tag, since most are gyms), zoos, aquariums and theme parks
 (`tourism=zoo|aquarium|theme_park`), and shopping malls (`shop=mall`). Malls are `shop`
 (a stop); the rest are `photo` (a pass-by), with `type` set to the OSM value.
 Only notable venues are kept: one with a `wikidata` or `wikipedia` tag, or with a footprint
