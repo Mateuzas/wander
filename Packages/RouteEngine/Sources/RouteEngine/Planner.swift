@@ -47,7 +47,7 @@ public struct Planner: Sendable {
             if waypointIDs.contains(poi.id) {
                 plan.highlights.append(Highlight(poi: poi, role: .waypoint,
                                                  distanceAlongRoute: near.along, distanceFromRoute: near.distance))
-            } else if poi.kind == .passby, near.distance <= config.passbyRadius {
+            } else if near.distance <= config.passbyRadius {
                 passbyIDs.insert(poi.id)
                 plan.highlights.append(Highlight(poi: poi, role: .passby,
                                                  distanceAlongRoute: near.along, distanceFromRoute: near.distance))
@@ -84,9 +84,13 @@ public struct Planner: Sendable {
 
 /// Tunable planner constants (PLAN.md section 6).
 public struct PlannerConfig: Hashable, Sendable {
-    /// Metres. A `passby` POI this close to the route is a free highlight.
+    /// Metres. A POI this close to the route is a free highlight, whatever its kind.
     public var passbyRadius: Double = 40
     public var maxWaypoints: Int = 3
+    /// 0–100. A POI must be worth at least this much to bend the route for it
+    /// (PLAN.md section 3: no stops that are clearly not worth it). Free
+    /// highlights on the route are not affected.
+    public var minWaypointValue: Double = 35
     /// Metres between any two chosen waypoints.
     public var minWaypointSpacing: Double = 150
     /// Waypoints of one category.

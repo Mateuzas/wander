@@ -118,6 +118,8 @@ public enum RejectionReason: String, Hashable, Sendable {
     case notInInterests
     /// Value is zero or negative under the request's weights.
     case noValue
+    /// Value is below `PlannerConfig.minWaypointValue`, too low to detour for.
+    case lowValue
     /// Its opening hours say it is closed at the request's time.
     case closed
     /// Budget is zero (Direct mode), so no detours are considered.

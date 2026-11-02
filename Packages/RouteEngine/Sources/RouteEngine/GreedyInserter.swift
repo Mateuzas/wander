@@ -95,10 +95,12 @@ struct GreedyInserter {
         for poi in pool {
             let evaluation = evaluate(poi)
             bestExtra[poi.id] = evaluation.cheapest
-            if let reason = blocked(poi) {
-                rejected[poi.id] = reason
-            } else if !evaluation.anyInBudget {
+            // Over budget first: a POI that could never fit is better explained by
+            // that than by whichever cap happened to be reached.
+            if !evaluation.anyInBudget {
                 rejected[poi.id] = .overBudget
+            } else if let reason = blocked(poi) {
+                rejected[poi.id] = reason
             } else {
                 rejected[poi.id] = .backtracks
             }

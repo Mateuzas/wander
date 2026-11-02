@@ -59,9 +59,11 @@ struct PlannerTests {
     }
 
     @Test func respectsMinSpacing() async throws {
-        // A tight cluster of excellent POIs: only one may be chosen.
-        let cluster = (0..<6).map { i in
-            Grid.poi("c\(i)", east: 1000 + Double(i) * 20, north: 200, category: POICategory.allCases[i % 3], score: 100)
+        // A tight cluster of excellent POIs: only one may be chosen. They run
+        // away from the route 50 m apart, so the others stay more than
+        // passbyRadius from the detour and don't become free highlights.
+        let cluster = (0..<3).map { i in
+            Grid.poi("c\(i)", east: 1000, north: 200 + Double(i) * 50, category: POICategory.allCases[i % 3], score: 100)
         }
         let result = try await plan(cluster, budget: 30 * 60)
         #expect(result.waypoints.count == 1)
@@ -158,6 +160,44 @@ struct PlannerTests {
         #expect(abs(scorer.value(withSignals) - 75) < 1e-9)
         #expect(scorer.value(Grid.poi("b", east: 0, north: 0, score: 42)) == 42)
         #expect(scorer.value(Grid.poi("c", east: 0, north: 0, category: .food, score: 42)) == 0)
+    }
+
+    @Test func stopsOnRouteAreFreeAndLeaveSlotsForDetours() async throws {
+        // Cafés right on the fast route used to fill every waypoint slot at ~0 min.
+        // cafe0 sits by the start, so it stays on the route whatever the detour.
+        let onRoute = (0..<4).map { i in
+            Grid.poi("cafe\(i)", east: 30 + Double(i) * 600, north: 10, category: .food, score: 60)
+        }
+        let detour = Grid.poi("palace", east: 1000, north: 300, score: 90, kind: .passby)
+        let result = try await plan(onRoute + [detour], budget: 25 * 60)
+        #expect(result.waypoints.map(\.id) == ["palace"])
+        let free = result.highlights.filter { $0.role == .passby }.map(\.poi.id)
+        #expect(free.contains("cafe0"))
+        #expect(result.candidates.first { $0.poi.id == "cafe0" }?.status == .passby)
+    }
+
+    @Test func belowMinimumValueIsNeverAWaypoint() async throws {
+        let weak = Grid.poi("weak", east: 1000, north: 200, category: .shop, score: 28)
+        let result = try await plan([weak], budget: 25 * 60)
+        #expect(result.waypoints.isEmpty)
+        #expect(result.candidates.first?.status == .rejected(.lowValue))
+
+        var config = PlannerConfig()
+        config.minWaypointValue = 20
+        let lenient = try await plan([weak], budget: 25 * 60, planner: Planner(config: config))
+        #expect(lenient.waypoints.map(\.id) == ["weak"])
+    }
+
+    @Test func overBudgetBeatsMaxWaypointsInDebug() async throws {
+        var config = PlannerConfig()
+        config.maxWaypoints = 1
+        let near = Grid.poi("near", east: 1000, north: 200, score: 90)
+        let far = Grid.poi("far", east: 1000, north: 1500, score: 90)
+        let result = try await plan([near, far], budget: 5 * 60, planner: Planner(config: config))
+        #expect(result.waypoints.map(\.id) == ["near"])
+        // "far" cannot fit the budget at all; that is the more useful label.
+        #expect(result.candidates.first { $0.poi.id == "far" }?.status == .rejected(.overBudget)
+                || result.candidates.first { $0.poi.id == "far" }?.status == .rejected(.outsideCorridor))
     }
 
     @Test func zeroValueIsNeverAWaypoint() async throws {

@@ -6,7 +6,7 @@ struct CandidateFilter {
     var scorer: Scorer
 
     struct Result {
-        /// `passby` POIs already on the fast route, with their route position.
+        /// POIs already on the fast route (any kind), with their route position.
         var freebies: [(poi: POI, distance: Double, along: Double)]
         /// POIs worth trying as waypoints, sorted by id for determinism.
         var candidates: [POI]
@@ -30,19 +30,24 @@ struct CandidateFilter {
                 result.rejected[poi.id] = .closed
                 continue
             }
-            if poi.kind == .passby {
-                let near = line.nearest(to: poi.coordinate)
-                if near.distance <= config.passbyRadius {
-                    result.freebies.append((poi, near.distance, near.along))
-                    continue
-                }
+            // Anything already on the fast route is a free highlight, shops and food
+            // included: otherwise on-route stops fill every waypoint slot at ~0 min.
+            let near = line.nearest(to: poi.coordinate)
+            if near.distance <= config.passbyRadius {
+                result.freebies.append((poi, near.distance, near.along))
+                continue
             }
             guard request.budget > 0 else {
                 result.rejected[poi.id] = .noBudget
                 continue
             }
-            guard scorer.value(poi) > 0 else {
+            let value = scorer.value(poi)
+            guard value > 0 else {
                 result.rejected[poi.id] = .noValue
+                continue
+            }
+            guard value >= config.minWaypointValue else {
+                result.rejected[poi.id] = .lowValue
                 continue
             }
             let via = estimator.seconds(from: request.origin, to: poi.coordinate)
