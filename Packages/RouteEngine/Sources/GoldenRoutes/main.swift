@@ -7,6 +7,9 @@ import RouteEngine
 // Usage: golden-routes [golden_routes.json] [--pois path] [--preset name | --weights photos=1,fame=0.5,...]
 //                      [--time 2026-11-07T14:00]
 //   --preset   a WeightPreset: balanced, photoSpots, famousSights, hiddenGems
+//   --streets  verify on L-shaped streets (like real routing, often shorter than the
+//              planner's 1.3× straight-line estimate) instead of the estimate itself
+//   --passes   also list the free pass-by highlights on each Explorer route
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
 
@@ -37,6 +40,9 @@ func option(_ name: String) -> String? {
 let poisOverride = option("--pois")
 let weightsArg = option("--weights")
 let presetArg = option("--preset")
+let useStreets = args.contains("--streets")
+let showPasses = args.contains("--passes")
+args.removeAll { $0 == "--streets" || $0 == "--passes" }
 let timeArg = option("--time")
 
 let goldenURL = URL(fileURLWithPath: args.first ?? "golden_routes.json")
@@ -85,6 +91,17 @@ if let timeArg {
     time = date
 }
 
+/// Walks along streets in an L (east/west, then north/south): a stand-in for
+/// MKDirections, since real street routes rarely match the 1.3× estimate.
+struct StreetWalkingTime: WalkingTimeProvider {
+    func leg(from: Coordinate, to: Coordinate) async throws -> Leg {
+        let corner = Coordinate(lat: from.lat, lon: to.lon)
+        let distance = from.distance(to: corner) + corner.distance(to: to)
+        return Leg(from: from, to: to, duration: distance / HaversineWalkingTime.defaultSpeed,
+                   distance: distance, polyline: [from, corner, to])
+    }
+}
+
 func minutes(_ seconds: Double) -> String { String(format: "%.1f", seconds / 60) }
 func pad(_ s: String, _ n: Int) -> String {
     s.count >= n ? String(s.prefix(n)) : s + String(repeating: " ", count: n - s.count)
@@ -98,25 +115,28 @@ func glyph(_ c: POICategory) -> String {
 
 let withHours = file.pois.compactMap(\.openingHours)
 let parsed = withHours.filter { OpeningHours($0) != nil }.count
-print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), haversine provider")
+print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), \(useStreets ? "L-shaped street" : "haversine") provider")
 print("Value: " + (presetArg.map { "preset \($0), " } ?? "") + (weights.map { "signals × weights \($0)" } ?? "score")
       + " · time: " + (timeArg.map { "\($0) \(golden.timeZone)" } ?? "not checked")
       + " · opening hours parsed: \(parsed)/\(withHours.count)\n")
 print(pad("#", 3) + pad("Route", 36) + pad("Mode", 9) + lpad("Fast", 6) + lpad("Total", 7) + lpad("Extra", 7)
-      + lpad("Wp", 4) + lpad("Hl", 4) + "  Waypoints (value, +min)")
+      + lpad("Used", 6) + lpad("Wp", 4) + lpad("Hl", 4) + "  Waypoints (value, +min)")
 print(String(repeating: "─", count: 140))
 
 let planner = Planner()
-let provider = HaversineWalkingTime()
+let provider: WalkingTimeProvider = useStreets ? StreetWalkingTime() : HaversineWalkingTime()
 var explorerWithin = 0, explorerTwoHighlights = 0, noFit: [String] = []
 var reasonCounts: [String: Int] = [:]
 var waypointCounts: [String: Int] = [:]
 var foodPerRoute: [Int] = []
+var sameRelaxedExplorer: [String] = []
+var budgetUse: [Mode: [Double]] = [:]
 
 for (index, route) in golden.routes.enumerated() {
     let origin = Coordinate(lat: route.from[0], lon: route.from[1])
     let destination = Coordinate(lat: route.to[0], lon: route.to[1])
     var explorerPlan: WanderPlan?
+    var waypointSets: [Mode: Set<String>] = [:]
     for mode in Mode.allCases {
         let request = PlanRequest(origin: origin, destination: destination, mode: mode, weights: weights,
                                   pois: file.pois, time: time, timeZone: timeZone)
@@ -129,7 +149,9 @@ for (index, route) in golden.routes.enumerated() {
         print(pad(mode == .direct ? "\(index + 1)" : "", 3) + pad(mode == .direct ? route.name : "", 36)
               + pad(mode.rawValue, 9)
               + lpad(minutes(plan.baseline.duration), 6) + lpad(minutes(plan.totalTime), 7)
-              + lpad("+" + minutes(plan.extraTime), 7) + lpad("\(plan.waypoints.count)", 4)
+              + lpad("+" + minutes(plan.extraTime), 7)
+              + lpad(mode.budget > 0 ? "\(Int((plan.extraTime / mode.budget * 100).rounded()))%" : "", 6)
+              + lpad("\(plan.waypoints.count)", 4)
               + lpad("\(plan.highlights.count)", 4) + "  "
               + (plan.noDetourFit ? "(no detour fits)" : names))
         if mode == .explorer {
@@ -143,10 +165,13 @@ for (index, route) in golden.routes.enumerated() {
             }
         }
         if plan.noDetourFit { noFit.append("\(index + 1) \(mode.rawValue)") }
+        waypointSets[mode] = Set(plan.waypoints.map(\.id))
+        if mode.budget > 0 { budgetUse[mode, default: []].append(plan.extraTime / mode.budget) }
     }
+    if waypointSets[.relaxed] == waypointSets[.explorer] { sameRelaxedExplorer.append("\(index + 1)") }
     // Pass-by highlights on the Explorer route, for eyeballing.
     let passby = (explorerPlan?.highlights ?? []).filter { $0.role == .passby }.map { "\($0.poi.name) (\($0.poi.score))" }
-    if !passby.isEmpty {
+    if showPasses, !passby.isEmpty {
         print(pad("", 48) + "explorer passes: " + passby.prefix(6).joined(separator: ", ")
               + (passby.count > 6 ? ", +\(passby.count - 6) more" : ""))
     }
@@ -157,6 +182,13 @@ let n = golden.routes.count
 print("Explorer within budget (+10%): \(explorerWithin)/\(n)   (target: all)")
 print("Explorer with ≥2 highlights:   \(explorerTwoHighlights)/\(n)   (target: ≥8)")
 print("No detour fits: \(noFit.isEmpty ? "none" : noFit.joined(separator: ", "))")
+print("Relaxed and Explorer pick the same stops: " + (sameRelaxedExplorer.isEmpty ? "never" : "routes " + sameRelaxedExplorer.joined(separator: ", ")))
+for mode in [Mode.relaxed, .explorer] {
+    let uses = (budgetUse[mode] ?? []).sorted()
+    guard !uses.isEmpty else { continue }
+    print("\(mode.rawValue.capitalized) budget used: median \(Int((uses[uses.count / 2] * 100).rounded()))%, "
+          + "min \(Int((uses.first! * 100).rounded()))%, under 70% on \(uses.filter { $0 < 0.7 }.count)/\(uses.count)")
+}
 let repeated = waypointCounts.filter { $0.value > 1 }.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
 print("Explorer waypoints used on 2+ routes: " + (repeated.isEmpty ? "none"
     : repeated.map { "\($0.key) ×\($0.value)" }.joined(separator: ", ")))
