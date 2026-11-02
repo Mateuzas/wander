@@ -42,6 +42,7 @@ struct OpeningHoursTests {
         #expect(open(raw, 4, 23) == true)      // Friday
         #expect(open(raw, 3, 23) == false)     // Thursday
         #expect(open("Tu-Sa 15:00-22:00, Mo off", 0, 16) == false)
+        #expect(open("Tu-Fr: 12:00-18:00; Sa-Su: 10:00-18:00", 5, 11) == true)
         #expect(open("Mo off; Tu, Fr-Sa 19:03-02:03; We-Th 18:03-23:03", 4, 20) == true)
         #expect(open("Mo off; Tu, Fr-Sa 19:03-02:03; We-Th 18:03-23:03", 3, 23, 30) == false)
     }

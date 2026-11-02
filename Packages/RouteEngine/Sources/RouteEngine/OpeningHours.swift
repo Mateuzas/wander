@@ -85,6 +85,8 @@ public struct OpeningHours: Hashable, Sendable {
     }
 
     private static func dayRange(_ token: String) -> [Int]? {
+        // Tolerate a trailing colon, a common mapping slip: "Tu-Fr: 12:00-18:00".
+        let token = token.hasSuffix(":") ? String(token.dropLast()) : token
         let ends = token.split(separator: "-", omittingEmptySubsequences: false).map(String.init)
         guard (1...2).contains(ends.count),
               let start = days.firstIndex(of: ends[0]),

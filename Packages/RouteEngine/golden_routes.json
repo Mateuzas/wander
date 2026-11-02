@@ -2,6 +2,7 @@
   "city": "Łódź",
   "note": "Approximate coordinates of well-known places. pois path is relative to this file.",
   "pois": "../../App/Wander/Resources/pois-lodz.json",
+  "timeZone": "Europe/Warsaw",
   "routes": [
     { "name": "Łódź Fabryczna → Manufaktura",       "from": [51.7697, 19.4655], "to": [51.7795, 19.4480] },
     { "name": "Plac Wolności → OFF Piotrkowska",    "from": [51.7766, 19.4547], "to": [51.7600, 19.4580] },
