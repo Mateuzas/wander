@@ -30,7 +30,7 @@ Send me the list and I'll fix them in `Data/curation.csv`, one line each.
 
 Same pairs as the engine's golden routes, so we can compare what it predicted with what happened. Do as many as fit; 5 good ones beat 10 rushed ones.
 
-| # | From → to | Direct, min (engine estimate) |
+| # | From → to | Direct (engine estimate) |
 |---|---|---|
 | 1 | Łódź Fabryczna → Manufaktura | 26 min |
 | 2 | Plac Wolności → OFF Piotrkowska | 30 min |
