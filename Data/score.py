@@ -74,9 +74,28 @@ def sentence(text):
     return text[:1].upper() + text[1:] if text else text
 
 
+def fame_signal(p):
+    """0-1, log-scaled Wikipedia sitelink count (how famous the place is)."""
+    return min(1.0, math.log1p(p["sitelinks"]) / math.log1p(SITELINK_CAP))
+
+
+def poi_type(p):
+    """Most specific OSM value describing the place, e.g. mural, museum, church, cafe, books."""
+    t = p["tags"]
+    if p["category"] == "photo":
+        return (t.get("artwork_type") if t.get("tourism") == "artwork" else None) \
+            or (t.get("memorial") if t.get("historic") == "memorial" else None) \
+            or (t.get("tourism") if t.get("tourism") not in (None, "attraction") else None) \
+            or t.get("historic") or t.get("man_made") or t.get("leisure") or "attraction"
+    if p["category"] == "food":
+        return t.get("amenity") if t.get("amenity") in FOOD_LABELS or t.get("amenity") == "restaurant" \
+            else t.get("shop", "food")
+    return t.get("shop", "shop")
+
+
 def landmark_signal(p):
     t = p["tags"]
-    fame = min(1.0, math.log1p(p["sitelinks"]) / math.log1p(SITELINK_CAP))
+    fame = fame_signal(p)
     bonus = LANDMARK_TAG_BONUS if (t.get("tourism") in LANDMARK_TOURISM or "historic" in t) else 0
     return min(1.0, 0.75 * fame + bonus)
 
@@ -227,6 +246,17 @@ def main():
     out_pois = []
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
+        row["type"] = poi_type(p)
+        # Raw 0-1 signals so the app can weight them per user; `score` is the default blend.
+        row["signals"] = {
+            "photos": round(pct[p["id"]], 3),
+            "fame": round(fame_signal(p), 3),
+            "quality": round(quality_signal(p), 3),
+            "independent": is_unique(p),
+        }
+        cuisine = p["tags"].get("cuisine")
+        if p["category"] == "food" and cuisine:
+            row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
         if p["category"] != "photo" and p["tags"].get("opening_hours"):
             row["openingHours"] = p["tags"]["opening_hours"]
         out_pois.append(row)
