@@ -1,0 +1,7 @@
+// Signing settings for the Wander target.
+// The real team ID is kept SOPS-encrypted in secrets/signing.enc.yaml.
+// Run `scripts/secrets.sh xcconfig` to write the gitignored
+// Signing.local.xcconfig next to this file before building for a device.
+// Without it, DEVELOPMENT_TEAM stays empty: simulator builds and CI still work.
+DEVELOPMENT_TEAM =
+#include? "Signing.local.xcconfig"
