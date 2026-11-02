@@ -1,0 +1,12 @@
+{
+  "lodz": {
+    "name": "Łódź",
+    "note": "Centre: Manufaktura, Piotrkowska, EC1, Księży Młyn, Park Źródliska",
+    "bbox": [51.740, 19.430, 51.790, 19.500]
+  },
+  "vilnius": {
+    "name": "Vilnius",
+    "note": "Old Town, Užupis, Gediminas Avenue, Cathedral, Hill of Three Crosses",
+    "bbox": [54.670, 25.245, 54.705, 25.310]
+  }
+}
