@@ -31,6 +31,7 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 | rename  | new name                  | replace the display name            |
 | reason  | short text                | replace the auto-drafted reason     |
 | image   | Commons file name, or empty | replace or remove the sight's photo |
+| popular | yes (default) or no       | force the "popular" map marker on/off |
 
 `cache/` is not committed. `review/` and the app's `pois-*.json` are.
 
