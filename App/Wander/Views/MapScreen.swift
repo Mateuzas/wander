@@ -29,6 +29,16 @@ struct MapScreen: View {
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
 
+    // Dropped pin (FE-7): long-press on the map.
+    @State private var droppedPin: DroppedPin?
+    @State private var geocodeTask: Task<Void, Never>?
+    /// Bumped on every drop, for the haptic.
+    @State private var pinDrops = 0
+    /// True while a long press is held, and when it last ended, so the lift isn't read as a tap.
+    @State private var longPressing = false
+    @State private var lastLongPress = Date.distantPast
+    private static let mapSpace = NamedCoordinateSpace.named("map")
+
     // Draw-in state for the current plan.
     @State private var routeLine: [Coordinate] = []
     @State private var routeLengths: [Double] = []
@@ -106,6 +116,28 @@ struct MapScreen: View {
     // MARK: - Map
 
     private var map: some View {
+        MapReader { proxy in
+            mapContent
+                .coordinateSpace(Self.mapSpace)
+                .onMapLongPress(in: Self.mapSpace, onPressing: { pressing in
+                    longPressing = pressing
+                    if !pressing { lastLongPress = .now }
+                }, perform: { point in
+                    longPress(at: point, proxy: proxy)
+                })
+                .simultaneousGesture(SpatialTapGesture(coordinateSpace: Self.mapSpace).onEnded { tap in
+                    mapTapped(at: tap.location, proxy: proxy)
+                })
+                .sensoryFeedback(.impact(weight: .light), trigger: pinDrops)
+                // VoiceOver can't long-press a point, so offer the centre instead.
+                .accessibilityAction(named: "Drop pin at map centre") { dropPinAtCentre() }
+        }
+        .ignoresSafeArea()
+        // Full-screen size, so the bead grid matches the region MapKit reports.
+        .onGeometryChange(for: CGSize.self) { $0.size } action: { mapSize = $0 }
+    }
+
+    private var mapContent: some View {
         Map(position: $position) {
             UserAnnotation()
 
@@ -150,6 +182,15 @@ struct MapScreen: View {
                     .tint(Color.wander)
             }
 
+            if let pin = droppedPin {
+                Annotation("", coordinate: pin.coordinate, anchor: .bottom) {
+                    DroppedPinMarker()
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel(pin.place == nil ? "Dropped pin" : "Dropped pin, \(pin.title)")
+                }
+                .annotationTitles(.hidden)
+            }
+
             #if DEBUG
             if debugOverlay, let plan = planner.plan {
                 ForEach(debugRecords(plan), id: \.poi.id) { record in
@@ -169,12 +210,6 @@ struct MapScreen: View {
             visiblePOIs = store.beads(in: context.region, viewSize: mapSize,
                                       keeping: Set(visiblePOIs.map(\.id)), limit: Self.beadLimit)
         }
-        #if DEBUG
-        .simultaneousGesture(LongPressGesture(minimumDuration: 1).onEnded { _ in debugOverlay.toggle() })
-        #endif
-        .ignoresSafeArea()
-        // Full-screen size, so the bead grid matches the region MapKit reports.
-        .onGeometryChange(for: CGSize.self) { $0.size } action: { mapSize = $0 }
     }
 
     private struct BeadItem: Identifiable {
@@ -252,6 +287,8 @@ struct MapScreen: View {
                 // Hidden while walking (the walk sheet replaces the card anyway).
                 onDirections: walk == nil ? { directions(to: poi) } : nil,
                 onClose: { selectedPOI = nil })
+        } else if let pin = droppedPin {
+            DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin)
         } else if let destination = planner.destination {
             planSheet(destination)
         } else {
@@ -297,6 +334,7 @@ struct MapScreen: View {
     private func choose(_ place: Destination) {
         recents.add(place)
         selectedPOI = nil
+        clearPin()
         planner.start(
             destination: place,
             origin: location.location.map { Coordinate($0.coordinate) },
@@ -322,6 +360,7 @@ struct MapScreen: View {
     }
 
     private func select(_ poi: POI) {
+        clearPin()
         selectedPOI = poi
         if detent == .peek || detent == .large { detent = .medium }
     }
@@ -338,6 +377,7 @@ struct MapScreen: View {
             pois: store.pois.filter { !planner.excluded.contains($0.id) }, interests: planner.interests)
         self.walk = walk
         selectedPOI = nil
+        clearPin()
         debugOverlay = false
         location.setWalking(true)
         if let fix = location.location { walk.handle(fix) }
@@ -353,6 +393,74 @@ struct MapScreen: View {
         location.setWalking(false)
         closePlan()
         move(to: .userLocation(fallback: .automatic))
+    }
+
+    // MARK: - Dropped pin (FE-7)
+
+    /// A long press on a bead selects it; anywhere else drops the pin. Nothing while walking.
+    private func longPress(at point: CGPoint, proxy: MapProxy) {
+        guard walk == nil else { return }
+        if let poi = bead(at: point, proxy: proxy) {
+            select(poi)
+        } else if let coordinate = proxy.convert(point, from: Self.mapSpace) {
+            dropPin(at: coordinate)
+        }
+    }
+
+    /// The bead whose 44 pt touch target contains `point`, nearest first.
+    private func bead(at point: CGPoint, proxy: MapProxy) -> POI? {
+        beads
+            .compactMap { item -> (poi: POI, distance: CGFloat)? in
+                guard item.shown,
+                      let p = proxy.convert(item.poi.coordinate.clLocation, to: Self.mapSpace) else { return nil }
+                let distance = hypot(p.x - point.x, p.y - point.y)
+                return distance <= Layout.minTouch / 2 ? (item.poi, distance) : nil
+            }
+            .min { $0.distance < $1.distance }?
+            .poi
+    }
+
+    private func dropPin(at coordinate: CLLocationCoordinate2D) {
+        geocodeTask?.cancel()
+        let pin = DroppedPin(coordinate: coordinate)
+        droppedPin = pin
+        selectedPOI = nil
+        pinDrops += 1
+        if detent == .peek || detent == .large { detent = .medium }
+        // Coordinates show at once; the name replaces them if and when it arrives.
+        geocodeTask = Task {
+            let place = await ReverseGeocoder.place(at: coordinate)
+            guard !Task.isCancelled, let place, droppedPin?.id == pin.id else { return }
+            droppedPin?.place = place
+        }
+    }
+
+    private func dropPinAtCentre() {
+        guard walk == nil, let center = visibleRegion?.center else { return }
+        dropPin(at: center)
+    }
+
+    private func clearPin() {
+        geocodeTask?.cancel()
+        geocodeTask = nil
+        droppedPin = nil
+    }
+
+    /// A tap elsewhere on the map clears the pin. Not a tap on the pin itself, and
+    /// not the lift that ends a long press (checked a moment later, since the two
+    /// gestures end on the same touch in no fixed order).
+    private func mapTapped(at point: CGPoint, proxy: MapProxy) {
+        guard let pin = droppedPin else { return }
+        if let p = proxy.convert(pin.coordinate, to: Self.mapSpace),
+           hypot(point.x - p.x, point.y - (p.y - DroppedPinMarker.height / 2)) <= Layout.minTouch / 2 {
+            return
+        }
+        Task {
+            try? await Task.sleep(for: .milliseconds(80))
+            guard !longPressing, Date.now.timeIntervalSince(lastLongPress) > 0.4,
+                  droppedPin?.id == pin.id else { return }
+            clearPin()
+        }
     }
 
     private func move(to camera: MapCameraPosition) {

@@ -12,24 +12,24 @@ so older data files and app builds keep working.
 
 Machine-readable: [`docs/schema/pois.schema.json`](schema/pois.schema.json) (JSON Schema 2020-12).
 Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (decoder) and `POIStore` (app).
-`<city>` is a lowercase ASCII slug from `Data/cities.json` (`lodz`, `vilnius`).
+`<city>` is a lowercase ASCII slug from `Data/cities.json` (currently only `vilnius`, ADR 007).
 
 ```json
 {
-  "city": "Łódź",
+  "city": "Vilnius",
   "generated": "2026-11-02",
   "attribution": "© OpenStreetMap contributors",
   "pois": [{
-    "id": "osm:way:283202330",
-    "name": "St Stanislaus Kostka Cathedral",
-    "lat": 51.748928, "lon": 19.459686,
-    "category": "photo", "score": 83, "kind": "passby",
-    "reason": "Neo-Gothic cathedral at the south end of Piotrkowska",
+    "id": "osm:way:123456",
+    "name": "Vilnius Cathedral",
+    "lat": 54.6858, "lon": 25.2877,
+    "category": "photo", "score": 88, "kind": "passby",
+    "reason": "Neoclassical cathedral at the foot of Gediminas Hill",
     "type": "church",
-    "signals": { "photos": 0.881, "fame": 0.793, "quality": 0.6, "independent": true },
-    "localName": "Archikatedra pw. Świętego Stanisława Kostki",
-    "commonsImage": "Lodz katedra (dron).jpg",
-    "commonsCategory": "Łódź Cathedral",
+    "signals": { "photos": 0.95, "fame": 0.9, "quality": 0.8, "independent": true },
+    "localName": "Vilniaus arkikatedra bazilika",
+    "commonsImage": "Example.jpg",
+    "commonsCategory": "Vilnius Cathedral",
     "popular": true
   }]
 }
@@ -52,8 +52,13 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `commonsImage` | String | – | Photo only; Commons file name without `File:`; show it with author and licence |
 | `commonsCategory` | String | – | Photo only; Commons category without `Category:`; for the gallery |
 | `popular` | Bool | – | Present only when `true`. Any category: the top 5% of **that category** by score (at least 1 when the category is non-empty), plus sights with fame ≥ 0.6; overridable in `curation.csv` (BE-3) |
+| `description` | String 20–300 | – | 1–2 factual sentences shown in the place card. **Every popular place has one** when a source exists. Sources only: the lead of the English Wikipedia article (sights, venues), or a sentence composed from OSM facts (cuisine, outdoor seating, diet options, opening hours, start date, architect, heritage). Never invented or paraphrased beyond the source |
+| `descriptionSource` | `wikipedia` \| `osm` | – | Present with `description`. `wikipedia` text is CC BY-SA: the app shows "From Wikipedia" with a link |
+| `descriptionUrl` | String (https) | – | Required when `descriptionSource` is `wikipedia`: the article URL |
 
 Unknown fields are ignored by the decoder. A new field needs a schema update here first.
+
+_(Illustrative values, not real data.)_
 
 ## 2. RouteEngine Swift API (`Packages/RouteEngine`, Foundation only)
 
@@ -84,6 +89,9 @@ Unknown fields are ignored by the decoder. A new field needs a schema update her
 - `protocol WalkingTimeProvider { func leg(from: Coordinate, to: Coordinate) async throws -> Leg }`
 - `Leg`: `from`, `to`, `duration` (s), `distance` (m), `polyline: [Coordinate]`, `steps: [RouteStep]` (`instruction`, `distance`).
 - `MapKitWalkingTime` (app) must fill `steps` from `MKRoute.steps` and stay under 40 MKDirections requests per rolling minute.
+
+**Changing (ADR 008, phase 3):** Relaxed/Explorer become one engine-chosen "Recommended" route next to Direct.
+`Mode` and `PlanRequest.budget` change in ARC-5; until then the API below is current.
 
 **Seen places (BE-1, PR #18):** `PlanRequest(..., seen: Set<String> = [])` takes POI ids the user already
 saw today; their value is multiplied by `PlannerConfig.seenFactor`. Zero-cost stops become pass-by
