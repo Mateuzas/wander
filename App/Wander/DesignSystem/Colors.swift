@@ -20,6 +20,10 @@ extension ShapeStyle where Self == Color {
     static var shops: Color { Color(light: 0x1C9E8B, dark: 0x35BBA7) }
     /// Food beads.
     static var food: Color { Color(light: 0xE5532D, dark: 0xF06A45) }
+    /// The user-location dot and its heading beam: MapKit's own dot colour (system
+    /// blue), set explicitly on both so they can't diverge. Not a §10 token: the
+    /// dot is a platform convention, and the route stays violet.
+    static var userLocation: Color { Color(uiColor: .systemBlue) }
 }
 
 extension Color {

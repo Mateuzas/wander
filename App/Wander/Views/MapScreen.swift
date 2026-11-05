@@ -241,7 +241,9 @@ struct MapScreen: View {
                 }
                 .annotationTitles(.hidden)
             }
+            // Tinted explicitly so the dot and the heading beam share one colour.
             UserAnnotation()
+                .tint(Color.userLocation)
 
             if let plan = displayedPlan {
                 if mapStyle.isImagery {
