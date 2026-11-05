@@ -44,12 +44,20 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var commonsCategory: String?
     /// A must-see (high score or well known). Sights only; missing means false.
     public var popular: Bool?
+    /// 1–2 factual sentences for the place card (Wikipedia lead or composed from OSM facts).
+    public var description: String?
+    /// Where `description` came from: "wikipedia" or "osm".
+    public var descriptionSource: String?
+    /// Article URL; present when `descriptionSource` is "wikipedia".
+    public var descriptionUrl: String?
 
     public init(id: String, name: String, lat: Double, lon: Double,
                 category: POICategory, score: Int, kind: POIKind, reason: String = "",
                 type: String? = nil, signals: Signals? = nil, cuisine: [String]? = nil,
                 openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil,
-                commonsCategory: String? = nil, popular: Bool? = nil) {
+                commonsCategory: String? = nil, popular: Bool? = nil,
+                description: String? = nil, descriptionSource: String? = nil,
+                descriptionUrl: String? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -66,6 +74,9 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.localName = localName
         self.commonsCategory = commonsCategory
         self.popular = popular
+        self.description = description
+        self.descriptionSource = descriptionSource
+        self.descriptionUrl = descriptionUrl
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
@@ -73,6 +84,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
         case type, signals, cuisine, openingHours, commonsImage, localName, commonsCategory, popular
+        case description, descriptionSource, descriptionUrl
     }
 
     public init(from decoder: Decoder) throws {
@@ -93,6 +105,9 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         localName = try c.decodeIfPresent(String.self, forKey: .localName)
         commonsCategory = try c.decodeIfPresent(String.self, forKey: .commonsCategory)
         popular = try c.decodeIfPresent(Bool.self, forKey: .popular)
+        description = try c.decodeIfPresent(String.self, forKey: .description)
+        descriptionSource = try c.decodeIfPresent(String.self, forKey: .descriptionSource)
+        descriptionUrl = try c.decodeIfPresent(String.self, forKey: .descriptionUrl)
     }
 }
 
