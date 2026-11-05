@@ -27,7 +27,8 @@ Split into separate features:
 1. **Nightly pipeline skeleton:** a scheduled job, a static-file host, the app downloading the file with a bundled fallback.
 2. **More and newer places:** an extra open source alongside OSM (candidates: Overture Maps Places, Foursquare OS Places), with dedupe against OSM and freshness signals.
 3. **Vilnius events:** scrape the agenda sites the user names, daily; event schema; events on the map with dates.
-4. **Source discovery for new cities:** an open problem; research later.
+4. **Michelin Guide places** (BE-11): starred, Bib Gourmand and selected restaurants as their own layer. Check the source terms before any scraping.
+5. **Source discovery for new cities:** an open problem; research later.
 
 ## 5. Perfect the engine
 With fresh data in place: recommendation quality, variety, "seen" memory (FE-3), and time budgets learned from walks.

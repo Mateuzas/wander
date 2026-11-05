@@ -41,6 +41,7 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | OPS-5 / FE-15 | DevOps / Frontender | Nightly job skeleton; app downloads the current file | 4 |
 | BE-7 | Backender | Second open place source (Overture or Foursquare OS Places), dedupe, freshness | 4 |
 | BE-8 | Backender | Vilnius events scraper, daily; event schema | 4 |
+| BE-11 | Backender | Michelin Guide places (stars, Bib Gourmand, selected) as a separate, clearly marked layer; check the source terms first (prefer open data such as Wikidata over scraping the guide site) | 4 |
 | BE-9 | Backender | Engine tuning on fresh data; FE-3 "seen" memory | 5 |
 | FE-16 / OPS-6 | Frontender / DevOps | Live Activity navigation (Dynamic Island, Lock Screen), widget target, background location during walks (ADR 009) | 6 |
 | – | all | Social "hangout" mode (ADR 011) | 7 |
