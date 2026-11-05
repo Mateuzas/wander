@@ -1,6 +1,6 @@
 """Step 2: add fame and photo-density signals to each POI (PLAN.md 5.2).
 
-    python3 enrich.py lodz
+    python3 enrich.py vilnius
 
 - Wikidata: sitelink count ("how famous is this") and English label for POIs with a `wikidata` tag.
 - Wikimedia Commons: number of geotagged files within 50 m ("do people photograph this"),

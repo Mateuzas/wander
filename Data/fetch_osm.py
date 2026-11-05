@@ -1,7 +1,7 @@
 """Step 1: pull candidate POIs for a city from OpenStreetMap (Overpass API).
 
-    python3 fetch_osm.py lodz            # reuse cached Overpass response if present
-    python3 fetch_osm.py lodz --refresh  # re-download
+    python3 fetch_osm.py vilnius            # reuse cached Overpass response if present
+    python3 fetch_osm.py vilnius --refresh  # re-download
 
 Writes cache/<city>/osm_raw.json (Overpass response) and
 cache/<city>/osm.json (named POIs with a category: photo|shop|food).
@@ -37,7 +37,7 @@ VENUE_TAGS = {
     "tourism": {"zoo", "aquarium", "theme_park"},
     "shop": {"mall"},
 }
-# Sports centres are mostly gyms and pools; only ones on Wikidata/Wikipedia (e.g. Atlas Arena) count.
+# Sports centres are mostly gyms and pools; only ones on Wikidata/Wikipedia (e.g. SEB Arena) count.
 FAME_ONLY_VENUES = {"sports_centre"}
 MIN_VENUE_SIZE_M = 150    # without a wikidata/wikipedia tag, a venue must be at least this big
 MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-past spot

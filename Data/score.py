@@ -1,6 +1,6 @@
 """Step 3: score POIs, apply manual curation, write the app's pois-<city>.json (PLAN.md 5.3-5.5).
 
-    python3 score.py lodz
+    python3 score.py vilnius
 
 Reads cache/<city>/enriched.json and curation.csv.
 Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
@@ -23,7 +23,7 @@ WEIGHTS = {
     "food":  {"quality": 0.60, "photo": 0.40},
 }
 # PLAN.md gave shops/food 0.5 for merely being unbranded, so every independent café outranked
-# real sights (Łódź top 300: 244 food, 5 photo). Instead, independence is a multiplier and
+# real sights (in the first city's top 300: 244 food, 5 photo). Instead, independence is a multiplier and
 # shop/food scores are capped so the best café can match a mid-level sight but never a landmark.
 CATEGORY_CEILING = {"photo": 1.0, "shop": 0.70, "food": 0.70}
 BRANDED_FACTOR = 0.3       # chains keep 30% of their score
