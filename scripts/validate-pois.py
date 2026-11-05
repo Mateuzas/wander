@@ -5,7 +5,7 @@ usage: scripts/validate-pois.py [file ...]
 
 With no arguments, checks every App/Wander/Resources/pois-*.json in the repo.
 Implements the JSON Schema subset the schema uses: type, required, properties,
-additionalProperties: false, enum, const, pattern, minimum/maximum, minLength,
+additionalProperties: false, enum, const, pattern, minimum/maximum, minLength, maxLength,
 items and $ref to #/$defs. Also checks that POI ids are unique within a file.
 Prints `<file>: <json path>: <message>` per problem (at most 50 per file) and
 exits 1 if any file has a problem.
@@ -31,7 +31,7 @@ TYPES = {
 }
 KNOWN = {"$schema", "$id", "$defs", "title", "description", "type", "required",
          "additionalProperties", "properties", "enum", "const", "pattern",
-         "minimum", "maximum", "minLength", "items", "$ref"}
+         "minimum", "maximum", "minLength", "maxLength", "items", "$ref"}
 
 
 def same(a, b):
@@ -77,6 +77,8 @@ class Validator:
         if isinstance(value, str):
             if "minLength" in schema and len(value) < schema["minLength"]:
                 errors.append((path, f"shorter than {schema['minLength']} character(s)"))
+            if "maxLength" in schema and len(value) > schema["maxLength"]:
+                errors.append((path, f"longer than {schema['maxLength']} character(s)"))
             if "pattern" in schema and not re.search(schema["pattern"], value):
                 errors.append((path, f"{json.dumps(value)[:60]} does not match {schema['pattern']}"))
         if TYPES["number"](value):
