@@ -42,23 +42,28 @@ final class POIStore {
         }
     }
 
-    /// The beads to draw for `region` on a map `viewSize` points big (FE-1).
+    /// The beads to draw for `region` on a map `viewSize` points big (FE-1, FE-13).
     ///
-    /// Popular places (a couple of dozen per city) always show. Ordinary POIs are
-    /// thinned with a screen-space grid of `cell`-point squares: at most one per
-    /// cell, the best score wins, and a cell holding a popular place stays empty.
-    /// The grid is anchored to the map, not the screen, so panning doesn't
+    /// Zoom layering (ADR 012 §3): `zoom` picks which tiers are eligible for the
+    /// region's latitude span, and the grid cell to thin them on. Only places in
+    /// `interests` are drawn, at every zoom. Tier 1 places always show in their
+    /// range. Other eligible POIs are thinned with a screen-space grid: at most
+    /// one per cell, the best score wins, and a cell holding a tier 1 place stays
+    /// empty. The grid is anchored to the map, not the screen, so panning doesn't
     /// reshuffle it. Beads in `shown` (the previous result) are kept first when
-    /// more than `limit` cells are filled, so zooming doesn't swap the middle of
-    /// the map for its corners.
+    /// more than `zoom.limit` cells are filled, so zooming doesn't swap the
+    /// middle of the map for its corners.
     func beads(in region: MKCoordinateRegion, viewSize: CGSize, keeping shown: Set<String>,
-               cell: CGFloat = 44, limit: Int) -> [POI] {
+               interests: Set<POICategory>, zoom: ZoomTiers = .standard) -> [POI] {
         let latSpan = region.span.latitudeDelta / 2, lonSpan = region.span.longitudeDelta / 2
         let c = region.center
+        let maxTier = zoom.maxTier(latitudeSpan: region.span.latitudeDelta)
         let inView = pois
+            .filter { $0.mapTier <= maxTier && interests.contains($0.category) }
             .filter { abs($0.coordinate.lat - c.latitude) <= latSpan && abs($0.coordinate.lon - c.longitude) <= lonSpan }
             .sorted { $0.score != $1.score ? $0.score > $1.score : $0.id < $1.id }
-        let popular = inView.filter { $0.popular == true }
+        let top = inView.filter { $0.mapTier == 1 }
+        guard let cell = zoom.cell(latitudeSpan: region.span.latitudeDelta) else { return top }
 
         // Map points per screen point; Mercator keeps both axes at the same scale.
         let west = MKMapPoint(CLLocationCoordinate2D(latitude: c.latitude, longitude: c.longitude - lonSpan))
@@ -72,18 +77,18 @@ final class POIStore {
             return Cell(x: Int((p.x / cellSize).rounded(.down)), y: Int((p.y / cellSize).rounded(.down)))
         }
 
-        var taken = Set(popular.map(cellOf))
+        var taken = Set(top.map(cellOf))
         var winners: [POI] = []  // best score first, one per free cell
-        for poi in inView where poi.popular != true && taken.insert(cellOf(poi)).inserted {
+        for poi in inView where poi.mapTier != 1 && taken.insert(cellOf(poi)).inserted {
             winners.append(poi)
         }
-        if winners.count > limit {
+        if winners.count > zoom.limit {
             // Over the cap: keep what is already on screen, then the best of the rest.
             let kept = winners.filter { shown.contains($0.id) }
             let fresh = winners.filter { !shown.contains($0.id) }
-            winners = Array((kept + fresh).prefix(limit))
+            winners = Array((kept + fresh).prefix(zoom.limit))
         }
-        return popular + winners
+        return top + winners
     }
 
     private static func region(covering pois: [POI]) -> MKCoordinateRegion? {
@@ -99,6 +104,44 @@ final class POIStore {
             span: MKCoordinateSpan(latitudeDelta: (maxLat - minLat) * 1.1, longitudeDelta: (maxLon - minLon) * 1.1)
         )
     }
+}
+
+/// Zoom layering thresholds (ADR 012 §3, "Zoom layering"), in one place for
+/// tuning on the phone. The spans are the map's visible latitude span in
+/// degrees; 0.01° of latitude is about 1.1 km.
+struct ZoomTiers {
+    static let standard = ZoomTiers()
+
+    /// Wider than this (≈ 4.5 km tall): tier 1 only, no grid (ADR 012).
+    var tier1Above = 0.04
+    /// Narrower than this (≈ 1.7 km tall): all tiers (ADR 012).
+    var allTiersBelow = 0.015
+    /// Grid cell in screen points between the two spans, for tiers 1 and 2 (ADR 012).
+    var midCell: CGFloat = 64
+    /// Grid cell in screen points close up, for all tiers (ADR 012, FE-1).
+    var closeCell: CGFloat = 44
+    /// Most non-tier-1 beads drawn at once, for performance (ADR 012, FE-1).
+    var limit = 60
+
+    /// The highest tier drawn at this latitude span.
+    func maxTier(latitudeSpan: Double) -> Int {
+        latitudeSpan > tier1Above ? 1 : latitudeSpan >= allTiersBelow ? 2 : 3
+    }
+
+    /// The grid cell for this span; nil when only tier 1 shows, which is never thinned.
+    func cell(latitudeSpan: Double) -> CGFloat? {
+        switch maxTier(latitudeSpan: latitudeSpan) {
+        case 1: nil
+        case 2: midCell
+        default: closeCell
+        }
+    }
+}
+
+extension POI {
+    /// The map tier (ADR 012): 1 must-see, 2 notable, 3 the rest. Files from
+    /// before tiers have only `popular`, which maps to tier 1, the rest to 3.
+    var mapTier: Int { popular == true ? 1 : 3 }
 }
 
 extension Coordinate {
