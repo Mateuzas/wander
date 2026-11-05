@@ -5,13 +5,14 @@ import SwiftUI
 /// Rows are separated by spacing in their container, never dividers.
 struct HighlightRow: View {
     let category: POICategory
+    var glyph: String?
     let name: String
     var reason: String?
     var distance: String?
 
     var body: some View {
         HStack(alignment: .firstTextBaseline, spacing: Layout.grid * 1.5) {
-            Bead(category: category)
+            Bead(category: category, glyph: glyph)
                 .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 6 }
             VStack(alignment: .leading, spacing: Layout.grid / 2) {
                 Text(name)
@@ -40,7 +41,7 @@ struct HighlightRow: View {
 #Preview {
     VStack(alignment: .leading, spacing: Layout.margin) {
         HighlightRow(category: .photo, name: "Archikatedra", reason: "Historic church, popular photo spot", distance: "220 m")
-        HighlightRow(category: .food, name: "Bułkęs", reason: "Independent bakery", distance: "1.1 km")
+        HighlightRow(category: .food, glyph: "birthday.cake", name: "Bułkęs", reason: "Independent bakery", distance: "1.1 km")
     }
     .padding(Layout.margin)
     .background(.surface)

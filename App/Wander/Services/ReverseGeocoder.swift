@@ -6,9 +6,9 @@ import MapKit
 /// and callers keep showing coordinates.
 enum ReverseGeocoder {
     struct Place: Equatable {
-        /// A place name or the street address, e.g. "Piotrkowska 104".
+        /// A place name or the street address, e.g. "Pilies g. 4".
         var name: String
-        /// Short context under the name, e.g. "Łódź"; nil if nothing useful.
+        /// Short context under the name, e.g. "Vilnius"; nil if nothing useful.
         var detail: String?
     }
 

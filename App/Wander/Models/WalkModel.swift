@@ -26,6 +26,8 @@ final class WalkModel {
     private(set) var isRerouting = false
     /// Last reroute failed (usually no connection); retried while still off route.
     private(set) var rerouteFailed = false
+    /// Highlights the walker skipped, from the "Up ahead" card or a place card.
+    private(set) var skipped: Set<String> = []
 
     /// The "Up ahead" card, if one is showing.
     var nudge: Nudge? { phase == .walking ? update?.nudge : nil }
@@ -78,9 +80,34 @@ final class WalkModel {
     }
 
     func skipNudge() {
-        if let id = update?.nudge?.highlight.poi.id { seen.insert(id) }
+        if let id = update?.nudge?.highlight.poi.id {
+            seen.insert(id)
+            skipped.insert(id)
+        }
         tracker.skipNudge()
         update?.nudge = nil
+    }
+
+    /// True for a highlight still ahead that hasn't been nudged yet, or is the
+    /// current nudge: skipping it means no "Up ahead" card for it.
+    func canSkip(_ id: String) -> Bool {
+        guard phase == .walking, !skipped.contains(id) else { return false }
+        if nudge?.highlight.poi.id == id { return true }
+        guard !seen.contains(id),
+              let highlight = plan.highlights.first(where: { $0.poi.id == id }) else { return false }
+        let progress = update?.progress ?? 0
+        return highlight.distanceAlongRoute - progress >= -WalkConfig.default.nudgePassedMargin
+    }
+
+    /// Skips a highlight from its place card: the current nudge goes away, and a
+    /// later one is never shown. The route itself doesn't change.
+    func skip(_ id: String) {
+        if nudge?.highlight.poi.id == id {
+            skipNudge()
+        } else if canSkip(id) {
+            skipped.insert(id)
+            seen.insert(id)
+        }
     }
 
     func end() {
@@ -98,6 +125,10 @@ final class WalkModel {
         self.update = update
         for event in update.events {
             switch event {
+            case .nudgeShown(let nudge) where skipped.contains(nudge.highlight.poi.id):
+                // Skipped from its place card before it came up: dismiss it unseen.
+                tracker.skipNudge()
+                self.update?.nudge = nil
             case .nudgeShown(let nudge):
                 seen.insert(nudge.highlight.poi.id)
                 haptic.impactOccurred()

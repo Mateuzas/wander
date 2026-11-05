@@ -4,8 +4,15 @@ import SwiftUI
 
 /// Shown in the sheet when a bead on the map is tapped: name, category, reason,
 /// "Directions" (the card's one primary action), and an add or remove action
-/// when there is a plan.
+/// when there is a plan. During a walk: no Directions or add/remove, only Skip.
 struct POIDetail: View {
+    /// Skip for a walk highlight (FE-10).
+    enum WalkSkip {
+        /// Still ahead: Skip stops its "Up ahead" card.
+        case available(() -> Void)
+        case skipped
+    }
+
     enum Action: Equatable {
         /// No plan, so nothing to add to.
         case none
@@ -21,6 +28,8 @@ struct POIDetail: View {
     let onRemove: () -> Void
     /// Plans a walk to this place, as if picked from "Where to?". Nil hides the button (while walking).
     var onDirections: (() -> Void)?
+    /// Set during a walk for one of its highlights; nil hides it.
+    var walkSkip: WalkSkip?
     let onClose: () -> Void
 
     @State private var adding = false
@@ -44,7 +53,7 @@ struct POIDetail: View {
                 }
 
                 HStack(alignment: .top, spacing: Layout.grid * 1.5) {
-                    Bead(category: poi.category, isPopular: poi.popular ?? false)
+                    Bead(category: poi.category, glyph: poi.glyph, isPopular: poi.popular ?? false)
                         .padding(.top, 2)
                     VStack(alignment: .leading, spacing: Layout.grid / 2) {
                         Text(poi.name)
@@ -74,6 +83,7 @@ struct POIDetail: View {
                         .accessibilityLabel("Directions to \(poi.name)")
                 }
                 actionView
+                walkSkipView
             }
             .padding(.horizontal, Layout.margin)
             .padding(.top, Layout.margin + Layout.grid)
@@ -119,6 +129,23 @@ struct POIDetail: View {
             if #available(iOS 18, *) {
                 PlaceCardRow(item: place, placeName: poi.name)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var walkSkipView: some View {
+        switch walkSkip {
+        case .available(let skip):
+            Button("Skip", action: skip)
+                .buttonStyle(.textAction)
+                .accessibilityLabel("Skip \(poi.name)")
+                .accessibilityHint("No Up ahead card for this place")
+        case .skipped:
+            Text("Skipped. No Up ahead card for this one.")
+                .font(WanderFont.body)
+                .foregroundStyle(.inkMuted)
+        case nil:
+            EmptyView()
         }
     }
 

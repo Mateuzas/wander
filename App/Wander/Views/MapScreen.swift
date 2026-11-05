@@ -28,6 +28,7 @@ struct MapScreen: View {
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
+    @State private var rotation = MapRotation()
 
     // Dropped pin (FE-7): long-press on the map.
     @State private var droppedPin: DroppedPin?
@@ -47,6 +48,7 @@ struct MapScreen: View {
     @State private var drawTask: Task<Void, Never>?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         let connectivity = Connectivity()
@@ -56,19 +58,7 @@ struct MapScreen: View {
 
     var body: some View {
         map
-            .overlay(alignment: .topTrailing) {
-                // Hidden while walking: the turn card owns the top of the screen.
-                if walk == nil {
-                    MapStyleControl(style: $mapStyle).padding(Layout.margin)
-                }
-            }
-            .overlay(alignment: .top) {
-                if let walk, walk.phase == .walking {
-                    TurnCard(walk: walk)
-                        .padding(.horizontal, Layout.margin)
-                        .padding(.top, Layout.grid)
-                }
-            }
+            .overlay(alignment: .top) { topControls }
             .overlay(alignment: .bottom) {
                 upAhead
                     .padding(.horizontal, Layout.margin)
@@ -106,12 +96,77 @@ struct MapScreen: View {
             }
             .onChange(of: walk?.phase) { _, phase in
                 if phase == .arrived || phase == .ended {
+                    selectedPOI = nil   // show the arrival / ended state, not a place card
                     location.setWalking(false)
                     detent = .medium
                 }
             }
-            .onDisappear { walk?.tearDown() }
+            // FE-9: compass on while the map is visible, off in the background.
+            .onChange(of: scenePhase, initial: true) { _, phase in
+                location.setHeadingActive(phase == .active)
+            }
+            .onDisappear {
+                walk?.tearDown()
+                location.setHeadingActive(false)
+            }
     }
+
+    // MARK: - Map controls
+
+    /// The turn card while walking, else the map-style menu; the location button
+    /// sits under either. The style menu hides while walking: the turn card owns the top.
+    private var topControls: some View {
+        let walking = walk?.phase == .walking
+        return VStack(alignment: .trailing, spacing: Layout.grid) {
+            if let walk, walking {
+                TurnCard(walk: walk)
+            } else if walk == nil {
+                MapStyleControl(style: $mapStyle)
+            }
+            if location.access == .allowed {
+                LocationButton(mode: LocationFollowMode(position), action: locationTapped)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding(.horizontal, Layout.margin)
+        .padding(.top, walking ? Layout.grid : Layout.margin)
+    }
+
+    /// Centre on the user; when already following, turn with their heading; a third
+    /// tap goes back to north up. Mid-walk this re-engages following after a pan.
+    private func locationTapped() {
+        switch LocationFollowMode(position) {
+        case .none:
+            recentre()
+        case .follow:
+            move(to: .userLocation(followsHeading: true, fallback: .automatic))
+        case .followHeading:
+            move(to: .userLocation(followsHeading: false, fallback: .automatic))
+        }
+    }
+
+    /// Zoomed far out or right in, first fly to a street-level view of the user;
+    /// MapKit then keeps that zoom while following.
+    private func recentre() {
+        let follow = MapCameraPosition.userLocation(followsHeading: false, fallback: .automatic)
+        guard let here = location.location?.coordinate, let span = visibleRegion?.span,
+              !(Self.followSpan ~= span.latitudeDelta) else {
+            move(to: follow)
+            return
+        }
+        let camera = MapCameraPosition.camera(MapCamera(centerCoordinate: here, distance: Self.recentreDistance))
+        move(to: camera)
+        Task {
+            try? await Task.sleep(for: .milliseconds(reduceMotion ? 50 : 650))
+            // Only if the user hasn't moved the map meanwhile.
+            if position == camera { position = follow }
+        }
+    }
+
+    /// Latitude spans (about 250 m to 4 km tall) where recentring keeps the zoom.
+    private static let followSpan = 0.0025...0.04
+    /// Camera distance for a street-level recentre.
+    private static let recentreDistance: CLLocationDistance = 900
 
     // MARK: - Map
 
@@ -139,6 +194,14 @@ struct MapScreen: View {
 
     private var mapContent: some View {
         Map(position: $position) {
+            // Before the dot, so the dot draws on top of its beam. The cone reads the
+            // heading itself, so compass updates don't redraw the whole map.
+            if let here = location.location {
+                Annotation("", coordinate: here.coordinate, anchor: .center) {
+                    HeadingCone(location: location, rotation: rotation)
+                }
+                .annotationTitles(.hidden)
+            }
             UserAnnotation()
 
             if let plan = displayedPlan {
@@ -165,13 +228,14 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
+                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
                         .frame(width: Layout.minTouch, height: Layout.minTouch)
                         .contentShape(Circle())
-                        .onTapGesture { if walk == nil { select(bead.poi) } }
+                        // During a walk only its highlights are drawn, and they open the card too (FE-10).
+                        .onTapGesture { select(bead.poi) }
                         .accessibilityAddTraits(.isButton)
                 }
                 .annotationTitles(.hidden)
@@ -204,6 +268,9 @@ struct MapScreen: View {
         }
         .mapStyle(mapStyle.mapStyle)
         .mapControls {}
+        .onMapCameraChange(frequency: .continuous) { context in
+            if rotation.heading != context.camera.heading { rotation.heading = context.camera.heading }
+        }
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
             search.region = context.region
@@ -270,7 +337,11 @@ struct MapScreen: View {
     @ViewBuilder
     private var sheetContent: some View {
         if let walk {
-            WalkSheet(walk: walk, onDone: finishWalk)
+            if walk.phase == .walking, let poi = selectedPOI {
+                walkDetail(poi, walk: walk)
+            } else {
+                WalkSheet(walk: walk, onDone: finishWalk)
+            }
         } else if let poi = selectedPOI {
             POIDetail(
                 poi: poi,
@@ -284,8 +355,7 @@ struct MapScreen: View {
                     planner.remove(poi)
                     selectedPOI = nil
                 },
-                // Hidden while walking (the walk sheet replaces the card anyway).
-                onDirections: walk == nil ? { directions(to: poi) } : nil,
+                onDirections: { directions(to: poi) },
                 onClose: { selectedPOI = nil })
         } else if let pin = droppedPin {
             DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin)
@@ -300,6 +370,27 @@ struct MapScreen: View {
                 detent: $detent,
                 onChoose: choose)
         }
+    }
+
+    /// A highlight's card over the walk (FE-10): the turn card stays, the walk goes
+    /// on, and there is no Directions or Add to walk; only Skip while it's ahead.
+    private func walkDetail(_ poi: POI, walk: WalkModel) -> some View {
+        let skip: POIDetail.WalkSkip? = if walk.skipped.contains(poi.id) {
+            .skipped
+        } else if walk.canSkip(poi.id) {
+            .available { walk.skip(poi.id) }
+        } else {
+            nil
+        }
+        return POIDetail(
+            poi: poi, action: .none,
+            onAdd: { .failed }, onRemove: {},
+            onDirections: nil,
+            walkSkip: skip,
+            onClose: {
+                selectedPOI = nil
+                detent = .peek
+            })
     }
 
     private func planSheet(_ destination: Destination) -> some View {
