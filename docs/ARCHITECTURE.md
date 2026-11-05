@@ -13,7 +13,7 @@ built; PLAN §4 was the original sketch.
 | Platform | Native iOS (SwiftUI), iOS 17 minimum; tested on an iPhone 17 Pro Max, iOS 27 |
 | Server | **None** (ADR 001). The protocol's defaults for containers and health endpoints don't apply |
 | Auth / accounts | None. No personal data leaves the phone except routing requests to Apple |
-| Cities | Łódź (live field test), Vilnius next; one data file per city |
+| Cities | Vilnius only (ADR 007; Łódź was the 2026-11 field test); one data file per city |
 | Distribution | Free provisioning from Xcode (7-day installs) for now; TestFlight later (DevOps) |
 
 ## Components
@@ -41,6 +41,7 @@ built; PLAN §4 was the original sketch.
 └─────────────────────────────────────────────────────────────────────────────────────────┘
 External at runtime: Apple MapKit (map, search, walking directions, place cards),
 Wikimedia Commons API (photos, read-only), Google/Apple Maps via URL hand-off.
+Planned: nightly data job publishing static files (ADR 010), Live Activity navigation (ADR 009). See ROADMAP.md.
 ```
 
 ## Data flow
