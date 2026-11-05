@@ -141,7 +141,7 @@ struct ZoomTiers {
 extension POI {
     /// The map tier (ADR 012): 1 must-see, 2 notable, 3 the rest. Files from
     /// before tiers have only `popular`, which maps to tier 1, the rest to 3.
-    var mapTier: Int { popular == true ? 1 : 3 }
+    var mapTier: Int { tier ?? (popular == true ? 1 : 3) }
 }
 
 extension Coordinate {
