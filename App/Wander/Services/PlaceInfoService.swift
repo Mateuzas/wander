@@ -22,7 +22,7 @@ enum PlaceMatch {
         return String(text.lowercased().unicodeScalars.filter { CharacterSet.alphanumerics.contains($0) })
     }
 
-    /// Equal, or one contains the other (so "Manufaktura" matches "Manufaktura Łódź").
+    /// Equal, or one contains the other (so "Užupis" matches "Užupis Vilnius").
     static func namesMatch(_ a: String, _ b: String) -> Bool {
         let a = normalized(a), b = normalized(b)
         guard !a.isEmpty, !b.isEmpty else { return false }
@@ -121,7 +121,7 @@ final class CommonsPhotoCache {
     private var galleries: [String: [CommonsPhoto]] = [:]
 
     /// A ~800 px rendition plus author and licence for a Commons file name such as
-    /// "Manufaktura Łódź.jpg". Nil on any failure.
+    /// "Vilnius Cathedral.jpg". Nil on any failure.
     func photo(fileName: String) async -> CommonsPhoto? {
         if let hit = photos[fileName] { return hit }
         let query = [
