@@ -1,7 +1,7 @@
 """Step 1: pull candidate POIs for a city from OpenStreetMap (Overpass API).
 
-    python3 fetch_osm.py lodz            # reuse cached Overpass response if present
-    python3 fetch_osm.py lodz --refresh  # re-download
+    python3 fetch_osm.py vilnius            # reuse cached Overpass response if present
+    python3 fetch_osm.py vilnius --refresh  # re-download
 
 Writes cache/<city>/osm_raw.json (Overpass response) and
 cache/<city>/osm.json (named POIs with a category: photo|shop|food).
@@ -25,16 +25,33 @@ FOOD_AMENITIES = {"cafe", "restaurant", "bar", "ice_cream", "pub"}
 PHOTO_TOURISM = {"attraction", "viewpoint", "artwork", "museum", "gallery"}
 # Historic objects too small or too abstract to be worth walking past.
 BORING_HISTORIC = {
-    "memorial:plaque", "boundary_stone", "milestone", "district", "yes", "building",
+    "memorial:plaque", "memorial:stolperstein", "boundary_stone", "milestone", "district", "yes", "building",
     "stolperstein", "tomb", "grave", "archaeological_site", "aircraft",
 }
 MAX_SPOT_SIZE_M = 800     # a "spot" bigger than this is an area, not a place you walk past
+# Notable venues (BE-4): stadiums, theatres, zoos, malls... Big by nature, so they get a larger
+# size limit, but only well-known or large ones count (see venue_category).
+VENUE_TAGS = {
+    "leisure": {"stadium", "sports_hall", "sports_centre"},
+    "amenity": {"theatre", "arts_centre", "concert_hall", "events_venue"},
+    "tourism": {"zoo", "aquarium", "theme_park"},
+    "shop": {"mall"},
+}
+# Sports centres are mostly gyms and pools; only ones on Wikidata/Wikipedia (e.g. SEB Arena) count.
+FAME_ONLY_VENUES = {"sports_centre"}
+MIN_VENUE_SIZE_M = 150    # without a wikidata/wikipedia tag, a venue must be at least this big
+MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-past spot
 MIN_PARK_SIZE_M = 200     # named parks smaller than this are pocket greens
+# Landmark buildings tagged only by their use (BE-2): in Vilnius the Cathedral, the Town Hall,
+# the University and most Old Town churches carry no tourism/historic tag at all.
+# Notable only, like towers and bridges: described on Wikidata/Wikipedia.
+NOTABLE_BUILDINGS = {"place_of_worship", "townhall", "university"}
 
 
-def query(bbox):
-    s, w, n, e = bbox
-    b = f"({s},{w},{n},{e})"
+def query(bbox, venue_bbox=None):
+    """One Overpass request. Venues may use a wider box (the whole city) than everything else."""
+    b = "({},{},{},{})".format(*bbox)
+    vb = "({},{},{},{})".format(*(venue_bbox or bbox))
     return f"""
 [out:json][timeout:180];
 (
@@ -42,8 +59,16 @@ def query(bbox):
   nwr["historic"]{b};
   nwr["man_made"~"^(tower|lighthouse|bridge)$"]{b};
   nwr["leisure"="park"]["name"]{b};
+  nwr["amenity"~"^(place_of_worship|townhall|university)$"]["name"]["wikidata"]{b};
+  nwr["amenity"~"^(place_of_worship|townhall|university)$"]["name"]["wikipedia"]{b};
   nwr["shop"]["name"]{b};
   nwr["amenity"~"^(cafe|restaurant|bar|ice_cream|pub)$"]["name"]{b};
+  nwr["leisure"~"^(stadium|sports_hall)$"]["name"]{vb};
+  nwr["amenity"~"^(theatre|arts_centre|concert_hall|events_venue)$"]["name"]{vb};
+  nwr["leisure"="sports_centre"]["name"]["wikidata"]{vb};
+  nwr["leisure"="sports_centre"]["name"]["wikipedia"]{vb};
+  nwr["tourism"~"^(zoo|aquarium|theme_park)$"]{vb};
+  nwr["shop"="mall"]["name"]{vb};
 );
 out tags center bb;
 """
@@ -70,8 +95,34 @@ def location(el):
     return None
 
 
+def venue_kind(tags):
+    """The OSM value if the element is a venue (stadium, theatre, zoo, mall...), else None."""
+    for key, values in VENUE_TAGS.items():
+        if tags.get(key) in values:
+            return tags[key]
+    return None
+
+
+def venue_category(tags, size):
+    """Category for a notable venue: malls are shops (a stop), the rest are sights (pass-by).
+    Notable = described on Wikidata/Wikipedia, or a footprint of at least MIN_VENUE_SIZE_M."""
+    kind = venue_kind(tags)
+    if not kind or size > MAX_VENUE_SIZE_M:
+        return None
+    big = size >= MIN_VENUE_SIZE_M and kind not in FAME_ONLY_VENUES
+    if not ("wikidata" in tags or "wikipedia" in tags or big):
+        return None
+    return "shop" if kind == "mall" else "photo"
+
+
 def categorise(tags, size):
     """Return the category for an OSM element, or None to drop it."""
+    # Venues already kept as sights (e.g. a historic theatre) stay as they were.
+    return base_category(tags, size) or venue_category(tags, size)
+
+
+def base_category(tags, size):
+    """Photo spots, tourist shops and food (PLAN.md 5.1)."""
     tourism, historic, shop = tags.get("tourism"), tags.get("historic"), tags.get("shop")
     amenity, man_made, leisure = tags.get("amenity"), tags.get("man_made"), tags.get("leisure")
 
@@ -80,18 +131,42 @@ def categorise(tags, size):
     if tourism in PHOTO_TOURISM:
         return "photo" if size <= MAX_SPOT_SIZE_M else None
     if historic:
-        key = "memorial:plaque" if historic == "memorial" and tags.get("memorial") == "plaque" else historic
-        if key in BORING_HISTORIC:
-            return None
-        return "photo" if size <= MAX_SPOT_SIZE_M else None
+        memorial = tags.get("memorial") if historic == "memorial" else None
+        key = f"memorial:{memorial}" if memorial in ("plaque", "stolperstein") else historic
+        if key not in BORING_HISTORIC:
+            return "photo" if size <= MAX_SPOT_SIZE_M else None
+        # A boring historic tag (often just historic=yes) doesn't rule out the rules below:
+        # Vilnius's Bernardine church is historic=yes + amenity=place_of_worship.
     if man_made in {"tower", "lighthouse", "bridge"}:
         # "Notable only": something someone bothered to describe on Wikidata/Wikipedia.
         return "photo" if ("wikidata" in tags or "wikipedia" in tags) else None
+    if amenity in NOTABLE_BUILDINGS:
+        notable = "wikidata" in tags or "wikipedia" in tags
+        return "photo" if notable and size <= MAX_SPOT_SIZE_M else None
     if leisure == "park":
         return "photo" if size >= MIN_PARK_SIZE_M else None
     if shop:
         return "shop" if shop in TOURIST_SHOPS else None
     return None
+
+
+def historic_kind(tags):
+    """The historic=* value, ignoring the meaningless historic=yes."""
+    historic = tags.get("historic")
+    return historic if historic != "yes" else None
+
+
+def building_kind(tags):
+    """Kind of a landmark building kept only for its use (church, cathedral, townhall...), else None.
+    Places that also carry a tourism or historic tag are described by that tag instead."""
+    amenity = tags.get("amenity")
+    if amenity not in NOTABLE_BUILDINGS or "tourism" in tags or historic_kind(tags):
+        return None
+    if amenity == "place_of_worship":
+        building = tags.get("building")
+        return building if building in {"church", "cathedral", "chapel", "synagogue", "mosque", "temple"} \
+            else "place_of_worship"
+    return amenity
 
 
 def display_name(tags):
@@ -120,8 +195,8 @@ def main():
         print(f"Using cached {raw_path.name} (pass --refresh to re-download)")
         raw = json.loads(raw_path.read_text())
     else:
-        print(f"Fetching OSM data for {city['name']} {city['bbox']} ...")
-        raw = http_json(OVERPASS, data={"data": query(city["bbox"])})
+        print(f"Fetching OSM data for {city['name']} {city['bbox']} (venues: {city.get('venue_bbox')}) ...")
+        raw = http_json(OVERPASS, data={"data": query(city["bbox"], city.get("venue_bbox"))})
         raw_path.write_text(json.dumps(raw, ensure_ascii=False))
     elements = raw.get("elements", [])
     print(f"  {len(elements)} raw elements")

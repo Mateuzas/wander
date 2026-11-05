@@ -3,17 +3,17 @@ import Testing
 @testable import RouteEngine
 
 struct OpeningHoursTests {
-    static let warsaw = TimeZone(identifier: "Europe/Warsaw")!
+    static let vilnius = TimeZone(identifier: "Europe/Vilnius")!
 
     /// 2026-11-02 is a Monday.
     func at(_ day: Int, _ hour: Int, _ minute: Int = 0) -> Date {
         var calendar = Calendar(identifier: .gregorian)
-        calendar.timeZone = Self.warsaw
+        calendar.timeZone = Self.vilnius
         return calendar.date(from: DateComponents(year: 2026, month: 11, day: 2 + day, hour: hour, minute: minute))!
     }
 
     func open(_ raw: String, _ day: Int, _ hour: Int, _ minute: Int = 0) -> Bool? {
-        OpeningHours(raw)?.isOpen(at: at(day, hour, minute), in: Self.warsaw)
+        OpeningHours(raw)?.isOpen(at: at(day, hour, minute), in: Self.vilnius)
     }
 
     @Test func simpleWeekdayRules() {
@@ -75,7 +75,7 @@ struct OpeningHoursTests {
         let sunday = at(6, 12)
 
         let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .explorer,
-                                  pois: [closed, unreadable, open], time: sunday, timeZone: Self.warsaw)
+                                  pois: [closed, unreadable, open], time: sunday, timeZone: Self.vilnius)
         let result = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
         #expect(!result.waypoints.contains { $0.id == "closed" })
         #expect(result.candidates.first { $0.poi.id == "closed" }?.status == .rejected(.closed))

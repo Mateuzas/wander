@@ -27,7 +27,7 @@ public struct Leg: Hashable, Sendable {
 
 /// One turn-by-turn instruction and the distance it covers.
 public struct RouteStep: Hashable, Sendable {
-    /// e.g. "Turn left onto Piotrkowska". May be empty (MapKit's first step often is).
+    /// e.g. "Turn left onto Pilies gatvė". May be empty (MapKit's first step often is).
     public var instruction: String
     /// Metres covered by this step.
     public var distance: Double
