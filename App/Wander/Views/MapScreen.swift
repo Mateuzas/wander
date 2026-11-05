@@ -56,19 +56,7 @@ struct MapScreen: View {
 
     var body: some View {
         map
-            .overlay(alignment: .topTrailing) {
-                // Hidden while walking: the turn card owns the top of the screen.
-                if walk == nil {
-                    MapStyleControl(style: $mapStyle).padding(Layout.margin)
-                }
-            }
-            .overlay(alignment: .top) {
-                if let walk, walk.phase == .walking {
-                    TurnCard(walk: walk)
-                        .padding(.horizontal, Layout.margin)
-                        .padding(.top, Layout.grid)
-                }
-            }
+            .overlay(alignment: .top) { topControls }
             .overlay(alignment: .bottom) {
                 upAhead
                     .padding(.horizontal, Layout.margin)
@@ -112,6 +100,63 @@ struct MapScreen: View {
             }
             .onDisappear { walk?.tearDown() }
     }
+
+    // MARK: - Map controls
+
+    /// The turn card while walking, else the map-style menu; the location button
+    /// sits under either. The style menu hides while walking: the turn card owns the top.
+    private var topControls: some View {
+        let walking = walk?.phase == .walking
+        return VStack(alignment: .trailing, spacing: Layout.grid) {
+            if let walk, walking {
+                TurnCard(walk: walk)
+            } else if walk == nil {
+                MapStyleControl(style: $mapStyle)
+            }
+            if location.access == .allowed {
+                LocationButton(mode: LocationFollowMode(position), action: locationTapped)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
+        .padding(.horizontal, Layout.margin)
+        .padding(.top, walking ? Layout.grid : Layout.margin)
+    }
+
+    /// Centre on the user; when already following, turn with their heading; a third
+    /// tap goes back to north up. Mid-walk this re-engages following after a pan.
+    private func locationTapped() {
+        switch LocationFollowMode(position) {
+        case .none:
+            recentre()
+        case .follow:
+            move(to: .userLocation(followsHeading: true, fallback: .automatic))
+        case .followHeading:
+            move(to: .userLocation(followsHeading: false, fallback: .automatic))
+        }
+    }
+
+    /// Zoomed far out or right in, first fly to a street-level view of the user;
+    /// MapKit then keeps that zoom while following.
+    private func recentre() {
+        let follow = MapCameraPosition.userLocation(followsHeading: false, fallback: .automatic)
+        guard let here = location.location?.coordinate, let span = visibleRegion?.span,
+              !(Self.followSpan ~= span.latitudeDelta) else {
+            move(to: follow)
+            return
+        }
+        let camera = MapCameraPosition.camera(MapCamera(centerCoordinate: here, distance: Self.recentreDistance))
+        move(to: camera)
+        Task {
+            try? await Task.sleep(for: .milliseconds(reduceMotion ? 50 : 650))
+            // Only if the user hasn't moved the map meanwhile.
+            if position == camera { position = follow }
+        }
+    }
+
+    /// Latitude spans (about 250 m to 4 km tall) where recentring keeps the zoom.
+    private static let followSpan = 0.0025...0.04
+    /// Camera distance for a street-level recentre.
+    private static let recentreDistance: CLLocationDistance = 900
 
     // MARK: - Map
 
