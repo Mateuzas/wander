@@ -31,6 +31,8 @@ struct POIDetail: View {
     /// Set during a walk for one of its highlights; nil hides it.
     var walkSkip: WalkSkip?
     let onClose: () -> Void
+    /// The sheet height the card needs to show everything (FE-17).
+    var onHeight: ((CGFloat) -> Void)?
 
     @State private var adding = false
     @State private var addMessage: String?
@@ -44,8 +46,13 @@ struct POIDetail: View {
         connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
     }
 
+    /// Directions, add/remove and Skip: pinned at the bottom, always on screen.
+    private var hasActions: Bool {
+        onDirections != nil || action != .none || walkSkip != nil
+    }
+
     var body: some View {
-        ScrollView {
+        SheetCard(hasActions: hasActions, onHeight: onHeight) {
             VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
                 if connectivity.isOnline, poi.commonsImage != nil || poi.commonsCategory != nil {
                     CommonsPhotoView(fileName: poi.commonsImage, category: poi.commonsCategory,
@@ -78,19 +85,19 @@ struct POIDetail: View {
 
                 descriptionView
                 placeInfo
-                if let onDirections {
-                    Button("Directions", action: onDirections)
-                        .buttonStyle(.primary)
-                        .accessibilityLabel("Directions to \(poi.name)")
-                }
-                actionView
-                walkSkipView
             }
             .padding(.horizontal, Layout.margin)
             .padding(.top, Layout.margin + Layout.grid)
-            .padding(.bottom, Layout.margin)
+            .padding(.bottom, Layout.grid)
+        } actions: {
+            if let onDirections {
+                Button("Directions", action: onDirections)
+                    .buttonStyle(.primary)
+                    .accessibilityLabel("Directions to \(poi.name)")
+            }
+            actionView
+            walkSkipView
         }
-        .scrollBounceBehavior(.basedOnSize)
         .overlay(alignment: .topTrailing) { closeButton }
         .onChange(of: poi.id) { addMessage = nil }
         .task(id: poi.id) { await loadPlaceInfo() }

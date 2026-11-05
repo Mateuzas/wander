@@ -30,6 +30,8 @@ struct MapScreen: View {
     @State private var searchFocus = true
     /// What the sheet last showed, kept on screen while it slides away.
     @State private var lastCard: LastCard?
+    /// The sheet height the open place or pin card needs (FE-17), measured by the card.
+    @State private var cardHeight: CGFloat = 0
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
@@ -97,7 +99,12 @@ struct MapScreen: View {
                     .interactiveDismissDisabled(!isHomeCard)
             }
             .onChange(of: sheetKind) {
-                if !sheetDetents.contains(detent) { detent = .medium }
+                if !sheetDetents.contains(detent) { detent = isCard ? cardDetent : .medium }
+            }
+            // The card's content grew or shrank (photo, Apple place info): follow it,
+            // unless the user dragged the card to large.
+            .onChange(of: cardDetent) { old, new in
+                if isCard, detent == old { detent = new }
             }
             .onChange(of: selectedPOI) { _, poi in
                 if let poi { lastCard = .poi(poi) }
@@ -397,9 +404,11 @@ struct MapScreen: View {
                     selectedPOI = nil
                 },
                 onDirections: { directions(to: poi) },
-                onClose: { selectedPOI = nil })
+                onClose: { selectedPOI = nil },
+                onHeight: setCardHeight)
         } else if let pin = droppedPin {
-            DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin)
+            DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin,
+                           onHeight: setCardHeight)
         } else if let destination = planner.destination {
             planSheet(destination)
         } else {
@@ -430,11 +439,27 @@ struct MapScreen: View {
     /// Place and pin cards open at half the screen or more, never a small peek.
     private var sheetDetents: Set<PresentationDetent> {
         switch sheetKind {
-        case .place, .pin, .walkPlace: [.medium, .large]
+        case .place, .pin, .walkPlace: [cardDetent, .large]
         case .plan: [.peek, .medium, .large]
         case .walk: [.peek, .medium]
         case nil: [.medium]
         }
+    }
+
+    private var isCard: Bool { [.place, .pin, .walkPlace].contains(sheetKind) }
+
+    /// Tall enough to show the whole card, at least half the screen, at most large;
+    /// longer content scrolls with the actions pinned.
+    private var cardDetent: PresentationDetent {
+        let screen = max(mapSize.height, 1)
+        // Whole points in 8 pt steps, so small layout changes don't move the sheet.
+        let needed = (cardHeight / Layout.grid).rounded(.up) * Layout.grid
+        let height = max(needed, screen / 2)
+        return height >= screen * 0.88 ? .large : .height(height)
+    }
+
+    private func setCardHeight(_ height: CGFloat) {
+        if abs(height - cardHeight) >= 1 { cardHeight = height }
     }
 
     /// Home state: no plan or walk, so the search island shows.
@@ -498,7 +523,8 @@ struct MapScreen: View {
             onClose: {
                 selectedPOI = nil
                 detent = .peek
-            })
+            },
+            onHeight: setCardHeight)
     }
 
     private func planSheet(_ destination: Destination) -> some View {
@@ -563,7 +589,7 @@ struct MapScreen: View {
     private func select(_ poi: POI) {
         clearPin()
         selectedPOI = poi
-        if detent == .peek || detent == .large { detent = .medium }
+        if detent != .large || !isCard { detent = cardDetent }
     }
 
     private func focus(_ poi: POI) {
@@ -627,7 +653,7 @@ struct MapScreen: View {
         droppedPin = pin
         selectedPOI = nil
         pinDrops += 1
-        if detent == .peek || detent == .large { detent = .medium }
+        if detent != .large || !isCard { detent = cardDetent }
         // Coordinates show at once; the name replaces them if and when it arrives.
         geocodeTask = Task {
             let place = await ReverseGeocoder.place(at: coordinate)
