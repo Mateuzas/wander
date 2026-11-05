@@ -28,6 +28,7 @@ struct MapScreen: View {
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
+    @State private var rotation = MapRotation()
 
     // Dropped pin (FE-7): long-press on the map.
     @State private var droppedPin: DroppedPin?
@@ -47,6 +48,7 @@ struct MapScreen: View {
     @State private var drawTask: Task<Void, Never>?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         let connectivity = Connectivity()
@@ -98,7 +100,14 @@ struct MapScreen: View {
                     detent = .medium
                 }
             }
-            .onDisappear { walk?.tearDown() }
+            // FE-9: compass on while the map is visible, off in the background.
+            .onChange(of: scenePhase, initial: true) { _, phase in
+                location.setHeadingActive(phase == .active)
+            }
+            .onDisappear {
+                walk?.tearDown()
+                location.setHeadingActive(false)
+            }
     }
 
     // MARK: - Map controls
@@ -184,6 +193,14 @@ struct MapScreen: View {
 
     private var mapContent: some View {
         Map(position: $position) {
+            // Before the dot, so the dot draws on top of its beam. The cone reads the
+            // heading itself, so compass updates don't redraw the whole map.
+            if let here = location.location {
+                Annotation("", coordinate: here.coordinate, anchor: .center) {
+                    HeadingCone(location: location, rotation: rotation)
+                }
+                .annotationTitles(.hidden)
+            }
             UserAnnotation()
 
             if let plan = displayedPlan {
@@ -249,6 +266,9 @@ struct MapScreen: View {
         }
         .mapStyle(mapStyle.mapStyle)
         .mapControls {}
+        .onMapCameraChange(frequency: .continuous) { context in
+            if rotation.heading != context.camera.heading { rotation.heading = context.camera.heading }
+        }
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
             search.region = context.region
