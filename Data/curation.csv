@@ -88,3 +88,137 @@ osm:way:319475663,exclude,,Backender draft: Street Mall Vis a Vis is a small ret
 osm:way:461413300,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
 osm:way:1346902649,exclude,,Backender draft: university sports club grounds, not a destination
 osm:way:386608429,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
+# --- Vilnius, first pass by Claude (2026-11-05, BE-2). Unverified: check on a walk. ---
+# Same place tagged twice: keep one bead per building
+osm:node:325130082,exclude,,Backender draft: Upper Castle point on the same spot as Gediminas Tower (same photo)
+osm:relation:59508,exclude,,Backender draft: Upper Castle outline; Gediminas Tower is the bead on Castle Hill
+osm:node:3592744729,exclude,,Backender draft: the icon hangs inside the Gate of Dawn chapel
+osm:node:9836974419,exclude,,Backender draft: St Casimir's Chapel is inside the Cathedral
+osm:node:308878465,exclude,,Backender draft: viewpoint 6 m from the Three Crosses monument
+osm:way:227166098,exclude,,Backender draft: second outline of the narrowest street (node 59971596)
+osm:node:2788680259,exclude,,Backender draft: Chodkiewicz Palace houses the Vilnius Picture Gallery (way 61980371)
+osm:node:3254847269,exclude,,Backender draft: head office of the Art Museum at the Picture Gallery's address
+osm:node:948810622,exclude,,Backender draft: Church Heritage Museum is inside St Michael's Church
+osm:relation:15314542,exclude,,Backender draft: Dominican monastery; its Church of the Holy Spirit is listed
+osm:relation:1582115,exclude,,Backender draft: Carmelite monastery; its Church of St Theresa is listed
+osm:way:29493645,exclude,,Backender draft: Radziwiłł Palace Museum is the Radziwiłł Palace (node 5013540325)
+osm:node:3629190466,exclude,,Backender draft: old address of the Belarusian Museum (now node 11187842384)
+osm:node:4301253750,exclude,,Backender draft: unnamed sculpture 12 m from the Vasiliauskas memorial (same object)
+osm:node:7906167070,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument; the monument is the bead
+osm:node:7906167067,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167065,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167068,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167066,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167069,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+# Not worth a detour: markers, offices, faculties, commercial activities
+osm:node:9230594382,exclude,,Backender draft: small pavement tile 29 m from the Stebuklas tile
+osm:node:4301251039,exclude,,Backender draft: memorial stone
+osm:node:10862081337,exclude,,Backender draft: memorial stone
+osm:node:10012347408,exclude,,Backender draft: memorial stone
+osm:node:9209279298,exclude,,Backender draft: memorial stone
+osm:way:491662050,exclude,,Backender draft: city council office block
+osm:way:24570238,exclude,,Backender draft: university faculty building, not a sight
+osm:node:276234902,exclude,,Backender draft: university faculty building, not a sight
+osm:node:3748981635,exclude,,Backender draft: escape room
+osm:node:3739000081,exclude,,Backender draft: shooting range
+osm:node:1432729888,exclude,,Backender draft: painter's studio tagged as an artwork
+# Shops that are not for browsing
+osm:node:11025481073,exclude,,Backender draft: picture-framing workshop
+osm:node:6239288885,exclude,,Backender draft: portrait photo studio
+# Chains not tagged as brands in OSM
+osm:node:1547035488,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:1672105610,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:1767996660,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:2759211010,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:6766973580,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:7594336185,exclude,,Backender draft: Knygos.lt is an online bookshop's pick-up point
+osm:node:963757927,exclude,,Backender draft: Charlie Pizza is a national chain
+osm:node:2282022445,exclude,,Backender draft: Charlie Pizza is a national chain
+osm:node:640410417,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:908796990,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:2759175651,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:441284599,exclude,,Backender draft: Čili Pizza is a national chain
+osm:node:668081181,exclude,,Backender draft: Čili Pizza is a national chain
+osm:node:1094139757,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:1432729900,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:4505354367,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:6149631958,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:6741919513,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10216936418,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10280523003,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10280523005,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:12716684483,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:4722263089,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:5527557498,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:9370207773,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:2231699171,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:9252268943,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:12101055454,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:way:1090775917,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:1283022809,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:node:11603099712,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:way:112631256,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:node:1694433146,exclude,,Backender draft: Bernelių Užeiga is a restaurant chain
+osm:node:11988059537,exclude,,Backender draft: Bernelių Užeiga is a restaurant chain
+osm:node:5710765324,exclude,,Backender draft: Holy Donut is a chain
+osm:node:9290676217,exclude,,Backender draft: Holy Donut is a chain
+osm:node:1895505313,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:2513516348,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:4193266180,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:4357685101,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:9661584840,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:9944695240,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:14314460700,exclude,,Backender draft: Huracán Coffee is a café chain
+# Gems that score low because few photos are geotagged exactly there
+osm:way:4870323,boost,10,Backender draft: Vilnius Cathedral is the city's central landmark
+osm:node:1616746326,boost,15,Backender draft: the Užupis Angel is the symbol of Užupis
+osm:node:3138119731,boost,10,Backender draft: Užupis Constitution is a classic stop
+# Long official mall names
+osm:way:5097813,rename,Akropolis,Backender draft: official name "PLC „Akropolis“"
+osm:way:32674905,rename,Ozas,Backender draft: official name "PPC „Ozas“"
+osm:way:55904666,rename,Panorama,Backender draft: official name "PLC „Panorama“"
+osm:way:25489015,rename,Europa,Backender draft: official name "PC „Europa“"
+osm:way:38169160,rename,BIG,Backender draft: official name "PC BIG"
+osm:way:60634048,rename,Mandarinas,Backender draft: official name "PC „Mandarinas“"
+osm:way:93394101,rename,Banginis,Backender draft: official name "PC „Banginis“"
+osm:way:1092409758,rename,Pašilaičiai,Backender draft: official name "PC Pašilaičiai"
+osm:way:251592947,rename,Gariūnai Market,Backender draft: official name "Verslo parkas „Gariūnai“"
+osm:way:5097813,popular,yes,Backender draft: Akropolis is Vilnius's best-known mall
+osm:way:5097813,reason,Big mall by the Neris with an indoor ice rink,Backender draft
+# Human reasons (PLAN.md 10: short, concrete, no marketing)
+osm:way:24569542,reason,Brick castle tower on the hill above the Old Town; views from the top,Backender draft
+osm:way:387669997,reason,Gothic church in ornate red brick,Backender draft
+osm:way:112746030,reason,Last surviving city gate; chapel with a revered icon above the arch,Backender draft
+osm:way:24598347,reason,Lithuanian history in the New Arsenal at the foot of Castle Hill,Backender draft
+osm:way:52710382,reason,Rebuilt palace of the grand dukes behind the Cathedral,Backender draft
+osm:node:3259759997,reason,Where Lithuania's 1918 independence act was signed,Backender draft
+osm:way:24570013,reason,Baroque university church on the Great Courtyard,Backender draft
+osm:node:325083016,reason,White crosses on a hill with one of the best views of the Old Town,Backender draft
+osm:way:531948359,reason,Old university with a maze of Renaissance courtyards,Backender draft
+osm:node:325090882,reason,Poet's monument in the square behind St Anne's,Backender draft
+osm:node:427910141,reason,Former KGB headquarters with prison cells in the basement,Backender draft
+osm:way:61980371,reason,Lithuanian painting from the 16th to the 19th century in the Chodkiewicz Palace,Backender draft
+osm:way:4870323,reason,Neoclassical cathedral on Cathedral Square,Backender draft
+osm:way:24569579,reason,Seat of Lithuania's President on Daukanto Square,Backender draft
+osm:way:111866535,reason,Classical town hall at the top of Didžioji Street,Backender draft
+osm:node:60464945,reason,Statue of the city's legendary founder on Cathedral Square,Backender draft
+osm:node:4515994589,reason,Wall of small artworks for writers linked to Vilnius,Backender draft
+osm:way:88534413,reason,Plain outside; inside over 2000 white stucco figures,Backender draft
+osm:way:29491058,reason,Gothic Franciscan church next to St Anne's,Backender draft
+osm:way:81434371,reason,Late-baroque Dominican church with a richly decorated interior,Backender draft
+osm:node:1616746326,reason,Bronze angel on a column in the middle of Užupis,Backender draft
+osm:node:3138119731,reason,Užupis's tongue-in-cheek constitution on plaques in many languages,Backender draft
+osm:way:81304730,reason,Free-standing bell tower of the Cathedral,Backender draft
+osm:node:5167418039,reason,Tile marking the end of the 1989 Baltic Way human chain,Backender draft
+osm:relation:1447676,reason,Renaissance church; now the Church Heritage Museum,Backender draft
+# Wrong Wikidata photos: the linked item or photo is a different place
+osm:relation:15521581,image,,Backender draft: photo shows the National Museum, not the church foundations
+# Branches tagged with the National Museum's Wikidata id (Q1790447) inherit its fame
+osm:way:110022872,boost,-25,Backender draft: House of Histories is a small branch; its fame is the National Museum's
+osm:way:110022872,popular,no,Backender draft: fame borrowed from the National Museum
+osm:way:110022872,image,,Backender draft: Wikidata photo shows the National Museum
+osm:way:110022851,boost,-25,Backender draft: Former Detention House is a small branch; its fame is the National Museum's
+osm:way:110022851,popular,no,Backender draft: fame borrowed from the National Museum
+osm:way:110022851,image,,Backender draft: Wikidata photo shows the National Museum
+osm:way:110022872,reason,Branch of the National Museum,Backender draft: auto reason called it well-known (borrowed fame)
+osm:way:110022851,reason,Branch of the National Museum in a former jail,Backender draft: auto reason called it well-known (borrowed fame)
