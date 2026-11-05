@@ -1,90 +1,135 @@
 osm_id,action,value,note
-# --- Łódź, first pass by Claude (2026-11-02). Unverified: check during the field test. ---
+# --- Vilnius, first pass by Claude (2026-11-05, BE-2). Unverified: check on a walk. ---
 # Same place tagged twice: keep one bead per building
-osm:node:6173564343,exclude,,Backender draft: Manufaktura sign; the Manufaktura mall (way 174638513) is the single bead
-osm:node:432504799,exclude,,Claude draft: city museum is inside Izrael Poznański Palace (way 37550695)
-osm:node:6176514222,exclude,,Claude draft: same palace as the Museum of Cinematography
-osm:way:405391765,exclude,,Claude draft: textile museum is the White Factory (node 4283899056)
-osm:way:375002193,exclude,,Claude draft: generic EC1 outline; EC1 Science and Technology Centre covers it
-osm:way:987177326,exclude,,Claude draft: second half of the same EC1 machinery display
-osm:way:987137646,exclude,,Claude draft: part of the same EC1 machinery display
-osm:way:987137643,exclude,,Claude draft: part of the same EC1 machinery display
-osm:node:12063407601,exclude,,Claude draft: unnamed sculpture 8 m from Jaracz's Armchair (likely the same object)
-osm:node:12066384545,exclude,,Claude draft: generic gallery name 11 m from Re:Medium Gallery
-osm:node:1659461054,exclude,,Claude draft: villa garden; the villa itself is listed
-osm:node:8786904194,exclude,,Claude draft: drinking fountain tagged as a sculpture
-osm:node:8787258040,exclude,,Claude draft: drinking fountain tagged as a sculpture
-# Not worth a detour: small markers, infrastructure, temporary or closed-door things
-osm:node:8100623031,exclude,,Claude draft: old hydrant
-osm:node:9126111719,exclude,,Claude draft: water tank
-osm:node:12768612629,exclude,,Claude draft: water tank
-osm:node:7922852185,exclude,,Claude draft: plaque marking a park's founding date
-osm:node:1659496881,exclude,,Claude draft: surroundings of a tenement already listed
-osm:node:4138913808,exclude,,Claude draft: memorial plaque
-osm:node:11395913845,exclude,,Claude draft: memorial stone
-osm:node:11758960829,exclude,,Claude draft: memorial stone
-osm:node:10916444154,exclude,,Claude draft: memorial stone
-osm:node:13153242568,exclude,,Claude draft: exhibition that may be temporary
-osm:node:3743286502,exclude,,Claude draft: book-swap box
-osm:node:1624531091,exclude,,Claude draft: former company store, nothing to see
-# Chains not tagged as brands in OSM
-osm:node:475373797,exclude,,Claude draft: Sphinx is a national restaurant chain
-osm:node:475373798,exclude,,Claude draft: Bierhalle is a national restaurant chain
-osm:node:5743600953,exclude,,Claude draft: Świat Książki is a bookshop chain
+osm:node:325130082,exclude,,Backender draft: Upper Castle point on the same spot as Gediminas Tower (same photo)
+osm:relation:59508,exclude,,Backender draft: Upper Castle outline; Gediminas Tower is the bead on Castle Hill
+osm:node:3592744729,exclude,,Backender draft: the icon hangs inside the Gate of Dawn chapel
+osm:node:9836974419,exclude,,Backender draft: St Casimir's Chapel is inside the Cathedral
+osm:node:308878465,exclude,,Backender draft: viewpoint 6 m from the Three Crosses monument
+osm:way:227166098,exclude,,Backender draft: second outline of the narrowest street (node 59971596)
+osm:node:2788680259,exclude,,Backender draft: Chodkiewicz Palace houses the Vilnius Picture Gallery (way 61980371)
+osm:node:3254847269,exclude,,Backender draft: head office of the Art Museum at the Picture Gallery's address
+osm:node:948810622,exclude,,Backender draft: Church Heritage Museum is inside St Michael's Church
+osm:relation:15314542,exclude,,Backender draft: Dominican monastery; its Church of the Holy Spirit is listed
+osm:relation:1582115,exclude,,Backender draft: Carmelite monastery; its Church of St Theresa is listed
+osm:way:29493645,exclude,,Backender draft: Radziwiłł Palace Museum is the Radziwiłł Palace (node 5013540325)
+osm:node:3629190466,exclude,,Backender draft: old address of the Belarusian Museum (now node 11187842384)
+osm:node:4301253750,exclude,,Backender draft: unnamed sculpture 12 m from the Vasiliauskas memorial (same object)
+osm:node:7906167070,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument; the monument is the bead
+osm:node:7906167067,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167065,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167068,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167066,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+osm:node:7906167069,exclude,,Backender draft: one of six small reliefs by the Mickiewicz monument
+# Not worth a detour: markers, offices, faculties, commercial activities
+osm:node:9230594382,exclude,,Backender draft: small pavement tile 29 m from the Stebuklas tile
+osm:node:4301251039,exclude,,Backender draft: memorial stone
+osm:node:10862081337,exclude,,Backender draft: memorial stone
+osm:node:10012347408,exclude,,Backender draft: memorial stone
+osm:node:9209279298,exclude,,Backender draft: memorial stone
+osm:way:491662050,exclude,,Backender draft: city council office block
+osm:way:24570238,exclude,,Backender draft: university faculty building, not a sight
+osm:node:276234902,exclude,,Backender draft: university faculty building, not a sight
+osm:node:3748981635,exclude,,Backender draft: escape room
+osm:node:3739000081,exclude,,Backender draft: shooting range
+osm:node:1432729888,exclude,,Backender draft: painter's studio tagged as an artwork
 # Shops that are not for browsing
-osm:node:12578585904,exclude,,Claude draft: baby goods store
-osm:node:4262872614,exclude,,Claude draft: portrait photo studio
-osm:way:201385570,exclude,,Claude draft: religious bookshop
-osm:way:102851812,exclude,,Claude draft: religious bookshop
+osm:node:11025481073,exclude,,Backender draft: picture-framing workshop
+osm:node:6239288885,exclude,,Backender draft: portrait photo studio
+# Chains not tagged as brands in OSM
+osm:node:1547035488,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:1672105610,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:1767996660,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:2759211010,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:6766973580,exclude,,Backender draft: Vaga is a national bookshop chain
+osm:node:7594336185,exclude,,Backender draft: Knygos.lt is an online bookshop's pick-up point
+osm:node:963757927,exclude,,Backender draft: Charlie Pizza is a national chain
+osm:node:2282022445,exclude,,Backender draft: Charlie Pizza is a national chain
+osm:node:640410417,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:908796990,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:2759175651,exclude,,Backender draft: Can Can Pizza is a national chain
+osm:node:441284599,exclude,,Backender draft: Čili Pizza is a national chain
+osm:node:668081181,exclude,,Backender draft: Čili Pizza is a national chain
+osm:node:1094139757,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:1432729900,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:4505354367,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:6149631958,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:6741919513,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10216936418,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10280523003,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:10280523005,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:12716684483,exclude,,Backender draft: Vero Cafe is a national café chain
+osm:node:4722263089,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:5527557498,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:9370207773,exclude,,Backender draft: Caif Cafe is a national café chain
+osm:node:2231699171,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:9252268943,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:12101055454,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:way:1090775917,exclude,,Backender draft: Chačapuri is a restaurant chain
+osm:node:1283022809,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:node:11603099712,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:way:112631256,exclude,,Backender draft: Etno Dvaras is a restaurant chain
+osm:node:1694433146,exclude,,Backender draft: Bernelių Užeiga is a restaurant chain
+osm:node:11988059537,exclude,,Backender draft: Bernelių Užeiga is a restaurant chain
+osm:node:5710765324,exclude,,Backender draft: Holy Donut is a chain
+osm:node:9290676217,exclude,,Backender draft: Holy Donut is a chain
+osm:node:1895505313,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:2513516348,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:4193266180,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:4357685101,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:9661584840,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:9944695240,exclude,,Backender draft: Huracán Coffee is a café chain
+osm:node:14314460700,exclude,,Backender draft: Huracán Coffee is a café chain
 # Gems that score low because few photos are geotagged exactly there
-osm:relation:12609642,boost,30,Claude draft: Passage of Roses is one of Łódź's signature sights
-osm:node:1842609517,boost,15,Claude draft: Księży Młyn is a must-see industrial village
-osm:way:37550695,boost,10,Claude draft: Poznański Palace is the city's best-known palace
-osm:node:6171264108,boost,15,Claude draft: Maurycy Poznański Palace (MS1 area)
-osm:node:1880679870,boost,10,Claude draft: Tuwim's Bench is a classic Piotrkowska photo stop
-# Generic names the automatic "by artist" / "near X" rule cannot fix
-osm:way:1393941930,rename,Sculpture in Poniatowski Park,Claude draft: inscription reads "Park Poniatowskiego"
-osm:way:174638513,rename,Manufaktura,Backender draft: official name "Centrum Handlowo-Rozrywkowe Manufaktura" is too long
-osm:way:173485216,rename,Tulipan,Backender draft: official name "Centrum Handlowe Tulipan" (OSM short_name CH Tulipan)
+osm:way:4870323,boost,10,Backender draft: Vilnius Cathedral is the city's central landmark
+osm:node:1616746326,boost,15,Backender draft: the Užupis Angel is the symbol of Užupis
+osm:node:3138119731,boost,10,Backender draft: Užupis Constitution is a classic stop
+# Long official mall names
+osm:way:5097813,rename,Akropolis,Backender draft: official name "PLC „Akropolis“"
+osm:way:32674905,rename,Ozas,Backender draft: official name "PPC „Ozas“"
+osm:way:55904666,rename,Panorama,Backender draft: official name "PLC „Panorama“"
+osm:way:25489015,rename,Europa,Backender draft: official name "PC „Europa“"
+osm:way:38169160,rename,BIG,Backender draft: official name "PC BIG"
+osm:way:60634048,rename,Mandarinas,Backender draft: official name "PC „Mandarinas“"
+osm:way:93394101,rename,Banginis,Backender draft: official name "PC „Banginis“"
+osm:way:1092409758,rename,Pašilaičiai,Backender draft: official name "PC Pašilaičiai"
+osm:way:251592947,rename,Gariūnai Market,Backender draft: official name "Verslo parkas „Gariūnai“"
+osm:way:5097813,popular,yes,Backender draft: Akropolis is Vilnius's best-known mall
+osm:way:5097813,reason,Big mall by the Neris with an indoor ice rink,Backender draft
 # Human reasons (PLAN.md 10: short, concrete, no marketing)
-osm:way:174955733,reason,Onion-domed Orthodox cathedral from the 1880s,Claude draft
-osm:way:283202330,reason,Neo-Gothic cathedral at the south end of Piotrkowska,Claude draft
-osm:node:8771864634,reason,Stars of Polish film-makers set into Piotrkowska's pavement,Claude draft
-osm:way:37550695,reason,Palace of textile magnate Izrael Poznański; now the city museum,Claude draft
-osm:way:104252448,reason,Church on Plac Wolności at the top of Piotrkowska,Claude draft
-osm:way:1249270544,reason,Old brick sewer canal you can walk through,Claude draft
-osm:way:683699016,reason,Monument in the middle of Plac Wolności,Claude draft
-osm:node:1624531102,reason,Furnished villa of a factory-owning family; now a museum,Claude draft
-osm:node:7566036517,reason,Tenement with Gutenberg on its facade,Claude draft
-osm:node:4283899056,reason,Early cotton mill; now the Central Museum of Textiles,Claude draft
-osm:node:7312842825,reason,Unicorn sculpture outside Łódź Fabryczna station,Claude draft
-osm:node:1205571104,reason,Bronze industrialists at a table on Piotrkowska,Claude draft
-osm:way:174195288,reason,Film museum inside Karol Scheibler's palace,Claude draft
-osm:node:1842609517,reason,Brick workers' houses of Scheibler's mill town,Claude draft
-osm:node:4459174692,reason,Bronze piano honouring Arthur Rubinstein,Claude draft
-osm:node:432504801,reason,Museum in Manufaktura's old weaving mill,Claude draft
-osm:node:1913405256,reason,Bronze armchair of actor Stefan Jaracz,Claude draft
-osm:node:1880679870,reason,Bronze bench with poet Julian Tuwim,Claude draft
-osm:node:1205571110,reason,Bronze lamplighter on Piotrkowska,Claude draft
-osm:relation:12609642,reason,Courtyard covered in a mirror mosaic of roses,Claude draft
-osm:relation:16510680,reason,Former power station turned science centre,Claude draft
-osm:node:2354558730,reason,Bronze of a classic Łódź-made cartoon bear,Claude draft
-osm:node:4148494249,reason,Fairytale trail: Łódź cartoon character,Claude draft
-osm:node:1989512941,reason,Fairytale trail: Łódź cartoon cats,Claude draft
-osm:node:4148479534,reason,Fairytale trail: Łódź cartoon character,Claude draft
-osm:node:4148501938,reason,Fairytale trail: Łódź cartoon character,Claude draft
-osm:node:1966704088,reason,Fairytale trail: Łódź cartoon character,Claude draft
-osm:node:11884767684,reason,Fairytale trail: Łódź cartoon character,Claude draft
-osm:node:4148465072,reason,Fairytale trail: Łódź cartoon character,Claude draft
-# Wrong Wikidata photos (Claude draft): the linked item is a different place
-osm:way:333043326,image,,Claude draft: Wikidata photo shows the cathedral, not the John Paul II monument
-osm:way:689186938,image,,Claude draft: Wikidata photo shows a shopping centre
-osm:node:1187744318,image,,Claude draft: Wikidata item is Reymont Square, not the statue
-# Venues tagged as something else (BE-4)
-osm:way:104651431,reason,Concert hall of the Łódź Philharmonic,Backender draft: tagged amenity=theatre but it is the philharmonic's concert hall
-osm:way:174638513,popular,yes,Backender draft: Manufaktura is Łódź's biggest destination
-osm:way:174638513,reason,"19th-century cotton mill turned shopping, food and culture complex",Backender draft
-osm:way:319475663,exclude,,Backender draft: Street Mall Vis a Vis is a small retail strip, not a destination
-osm:way:461413300,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
-osm:way:1346902649,exclude,,Backender draft: university sports club grounds, not a destination
-osm:way:386608429,exclude,,Backender draft: sports club grounds (Wikidata is the club), not a destination
+osm:way:24569542,reason,Brick castle tower on the hill above the Old Town; views from the top,Backender draft
+osm:way:387669997,reason,Gothic church in ornate red brick,Backender draft
+osm:way:112746030,reason,Last surviving city gate; chapel with a revered icon above the arch,Backender draft
+osm:way:24598347,reason,Lithuanian history in the New Arsenal at the foot of Castle Hill,Backender draft
+osm:way:52710382,reason,Rebuilt palace of the grand dukes behind the Cathedral,Backender draft
+osm:node:3259759997,reason,Where Lithuania's 1918 independence act was signed,Backender draft
+osm:way:24570013,reason,Baroque university church on the Great Courtyard,Backender draft
+osm:node:325083016,reason,White crosses on a hill with one of the best views of the Old Town,Backender draft
+osm:way:531948359,reason,Old university with a maze of Renaissance courtyards,Backender draft
+osm:node:325090882,reason,Poet's monument in the square behind St Anne's,Backender draft
+osm:node:427910141,reason,Former KGB headquarters with prison cells in the basement,Backender draft
+osm:way:61980371,reason,Lithuanian painting from the 16th to the 19th century in the Chodkiewicz Palace,Backender draft
+osm:way:4870323,reason,Neoclassical cathedral on Cathedral Square,Backender draft
+osm:way:24569579,reason,Seat of Lithuania's President on Daukanto Square,Backender draft
+osm:way:111866535,reason,Classical town hall at the top of Didžioji Street,Backender draft
+osm:node:60464945,reason,Statue of the city's legendary founder on Cathedral Square,Backender draft
+osm:node:4515994589,reason,Wall of small artworks for writers linked to Vilnius,Backender draft
+osm:way:88534413,reason,Plain outside; inside over 2000 white stucco figures,Backender draft
+osm:way:29491058,reason,Gothic Franciscan church next to St Anne's,Backender draft
+osm:way:81434371,reason,Late-baroque Dominican church with a richly decorated interior,Backender draft
+osm:node:1616746326,reason,Bronze angel on a column in the middle of Užupis,Backender draft
+osm:node:3138119731,reason,Užupis's tongue-in-cheek constitution on plaques in many languages,Backender draft
+osm:way:81304730,reason,Free-standing bell tower of the Cathedral,Backender draft
+osm:node:5167418039,reason,Tile marking the end of the 1989 Baltic Way human chain,Backender draft
+osm:relation:1447676,reason,Renaissance church; now the Church Heritage Museum,Backender draft
+# Wrong Wikidata photos: the linked item or photo is a different place
+osm:relation:15521581,image,,Backender draft: photo shows the National Museum, not the church foundations
+# Branches tagged with the National Museum's Wikidata id (Q1790447) inherit its fame
+osm:way:110022872,boost,-25,Backender draft: House of Histories is a small branch; its fame is the National Museum's
+osm:way:110022872,popular,no,Backender draft: fame borrowed from the National Museum
+osm:way:110022872,image,,Backender draft: Wikidata photo shows the National Museum
+osm:way:110022851,boost,-25,Backender draft: Former Detention House is a small branch; its fame is the National Museum's
+osm:way:110022851,popular,no,Backender draft: fame borrowed from the National Museum
+osm:way:110022851,image,,Backender draft: Wikidata photo shows the National Museum
+osm:way:110022872,reason,Branch of the National Museum,Backender draft: auto reason called it well-known (borrowed fame)
+osm:way:110022851,reason,Branch of the National Museum in a former jail,Backender draft: auto reason called it well-known (borrowed fame)

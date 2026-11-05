@@ -1,6 +1,6 @@
 """Step 3: score POIs, apply manual curation, write the app's pois-<city>.json (PLAN.md 5.3-5.5).
 
-    python3 score.py lodz
+    python3 score.py vilnius
 
 Reads cache/<city>/enriched.json and curation.csv.
 Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
@@ -14,7 +14,7 @@ import urllib.parse
 from pathlib import Path
 
 from common import DATA, RESOURCES, cache_dir, load_city, metres
-from fetch_osm import venue_kind
+from fetch_osm import building_kind, historic_kind, venue_kind
 
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
 WEIGHTS = {
@@ -23,7 +23,7 @@ WEIGHTS = {
     "food":  {"quality": 0.60, "photo": 0.40},
 }
 # PLAN.md gave shops/food 0.5 for merely being unbranded, so every independent café outranked
-# real sights (Łódź top 300: 244 food, 5 photo). Instead, independence is a multiplier and
+# real sights (in the first city's top 300: 244 food, 5 photo). Instead, independence is a multiplier and
 # shop/food scores are capped so the best café can match a mid-level sight but never a landmark.
 CATEGORY_CEILING = {"photo": 1.0, "shop": 0.70, "food": 0.70}
 BRANDED_FACTOR = 0.3       # chains keep 30% of their score
@@ -74,6 +74,8 @@ PHOTO_LABELS = {
     "stadium": "Stadium", "theatre": "Theatre", "concert_hall": "Concert hall", "zoo": "Zoo",
     "aquarium": "Aquarium", "theme_park": "Theme park", "arts_centre": "Arts centre",
     "events_venue": "Arena", "sports_hall": "Arena", "sports_centre": "Arena",
+    # Landmark buildings tagged only by their use (BE-2); "cathedral", "chapel"... read fine as is
+    "place_of_worship": "Place of worship", "townhall": "Town hall",
 }
 MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
                    "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}
@@ -98,7 +100,8 @@ def poi_type(p):
         return (t.get("artwork_type") if t.get("tourism") == "artwork" else None) \
             or (t.get("memorial") if t.get("historic") == "memorial" else None) \
             or (t.get("tourism") if t.get("tourism") not in (None, "attraction") else None) \
-            or t.get("historic") or t.get("man_made") or t.get("leisure") or venue_kind(t) or "attraction"
+            or historic_kind(t) or t.get("man_made") or t.get("leisure") or venue_kind(t) \
+            or building_kind(t) or "attraction"
     if p["category"] == "food":
         return t.get("amenity") if t.get("amenity") in FOOD_LABELS or t.get("amenity") == "restaurant" \
             else t.get("shop", "food")
@@ -148,7 +151,8 @@ def draft_reason(p, photo_pct):
                 base += f" by {artist}"
         else:
             key = t.get("tourism") if t.get("tourism") not in (None, "attraction") else None
-            key = key or t.get("historic") or t.get("man_made") or t.get("leisure") or venue_kind(t)
+            key = key or historic_kind(t) or t.get("man_made") or t.get("leisure") or venue_kind(t) \
+                or building_kind(t)
             if key == "memorial" and t.get("memorial") in MEMORIAL_LABELS:
                 key = "memorial:" + t["memorial"]
             if key == "castle" and t.get("castle_type") in ("palace", "manor", "stately"):

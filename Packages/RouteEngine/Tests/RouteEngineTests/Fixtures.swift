@@ -3,7 +3,7 @@ import Foundation
 
 /// Synthetic city around a fixed point; positions are given in metres east/north.
 enum Grid {
-    static let center = Coordinate(lat: 51.76, lon: 19.46)
+    static let center = Coordinate(lat: 54.68, lon: 25.28)
 
     static func at(east: Double, north: Double) -> Coordinate {
         let ky = Coordinate.earthRadius * .pi / 180

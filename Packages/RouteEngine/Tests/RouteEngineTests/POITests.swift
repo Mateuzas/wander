@@ -6,14 +6,14 @@ struct POITests {
     @Test func decodesSchema() throws {
         let json = """
         {
-          "city": "Łódź",
+          "city": "Vilnius",
           "generated": "2026-11-02",
           "pois": [
-            {"id": "osm:node:1", "name": "Mural", "lat": 51.77, "lon": 19.45,
+            {"id": "osm:node:1", "name": "Mural", "lat": 54.68, "lon": 25.28,
              "category": "photo", "score": 82, "kind": "passby", "reason": "Street art",
-             "commonsImage": "Mural in Łódź.jpg", "localName": "Mural przy Piotrkowskiej",
-             "commonsCategory": "Murals in Łódź", "popular": true},
-            {"id": "osm:way:2", "name": "Café", "lat": 51.76, "lon": 19.46,
+             "commonsImage": "Mural in Vilnius.jpg", "localName": "Freskos Pylimo gatvėje",
+             "commonsCategory": "Murals in Vilnius", "popular": true},
+            {"id": "osm:way:2", "name": "Café", "lat": 54.67, "lon": 25.29,
              "category": "food", "score": 40, "kind": "stop", "type": "cafe",
              "signals": {"photos": 0.82, "fame": 0.4, "quality": 0.6, "independent": true},
              "cuisine": ["italian"], "openingHours": "Mo-Sa 10:00-20:00"}
@@ -21,7 +21,7 @@ struct POITests {
         }
         """
         let file = try JSONDecoder().decode(POIFile.self, from: Data(json.utf8))
-        #expect(file.city == "Łódź")
+        #expect(file.city == "Vilnius")
         #expect(file.pois.count == 2)
         #expect(file.pois[0].category == .photo)
         #expect(file.pois[0].kind == .passby)
@@ -32,12 +32,12 @@ struct POITests {
         #expect(file.pois[1].signals == Signals(photos: 0.82, fame: 0.4, quality: 0.6, independent: true))
         #expect(file.pois[1].cuisine == ["italian"])
         #expect(file.pois[1].openingHours == "Mo-Sa 10:00-20:00")
-        #expect(file.pois[1].coordinate == Coordinate(lat: 51.76, lon: 19.46))
-        #expect(file.pois[0].commonsImage == "Mural in Łódź.jpg")
+        #expect(file.pois[1].coordinate == Coordinate(lat: 54.67, lon: 25.29))
+        #expect(file.pois[0].commonsImage == "Mural in Vilnius.jpg")
         #expect(file.pois[1].commonsImage == nil)
-        #expect(file.pois[0].localName == "Mural przy Piotrkowskiej")
+        #expect(file.pois[0].localName == "Freskos Pylimo gatvėje")
         #expect(file.pois[1].localName == nil)
-        #expect(file.pois[0].commonsCategory == "Murals in Łódź" && file.pois[0].popular == true)
+        #expect(file.pois[0].commonsCategory == "Murals in Vilnius" && file.pois[0].popular == true)
         #expect(file.pois[1].commonsCategory == nil && file.pois[1].popular == nil)
     }
 
