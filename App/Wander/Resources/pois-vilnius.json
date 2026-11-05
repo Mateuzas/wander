@@ -22,7 +22,10 @@
    },
    "popular": true,
    "commonsCategory": "Gediminas Tower",
-   "commonsImage": "Gedimino pilis by Augustas Didzgalvis.jpg"
+   "commonsImage": "Gedimino pilis by Augustas Didzgalvis.jpg",
+   "description": "Gediminas's Tower is the remaining part of the Upper Castle on top of the Gediminas Hill in Vilnius, Lithuania. It has a viewing platform that offers scenic views of Vilnius Old Town and Vilnius Central Business District.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Gediminas's_Tower"
   },
   {
    "id": "osm:way:387669997",
@@ -43,7 +46,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Anne in Vilnius",
-   "commonsImage": "St. Anne's Church Exterior 3, Vilnius, Lithuania - Diliff.jpg"
+   "commonsImage": "St. Anne's Church Exterior 3, Vilnius, Lithuania - Diliff.jpg",
+   "description": "St. Anne's Church is a Roman Catholic church in Vilnius' Old Town, on the right bank of the Vilnia river established circa 1495–1500. It is a prominent example of both Flamboyant and Brick Gothic styles.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Anne%2C_Vilnius"
   },
   {
    "id": "osm:way:112746030",
@@ -64,7 +70,10 @@
    },
    "popular": true,
    "commonsCategory": "Gate of Dawn",
-   "commonsImage": "Ausros vartai.jpg"
+   "commonsImage": "Ausros vartai.jpg",
+   "description": "The Gate of Dawn is a city gate in Vilnius, the capital of Lithuania, and one of its most important religious, historical and cultural monuments. It is a major site of Catholic pilgrimage in Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Gate_of_Dawn"
   },
   {
    "id": "osm:way:24598347",
@@ -85,7 +94,10 @@
    },
    "popular": true,
    "commonsCategory": "National Museum of Lithuania",
-   "commonsImage": "LNM by Augustas Didzgalvis.jpg"
+   "commonsImage": "LNM by Augustas Didzgalvis.jpg",
+   "description": "The National Museum of Lithuania, established in 1952, is a state-sponsored historical museum that encompasses several significant structures and a wide collection of written materials and artifacts. It also organizes archeological digs in Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/National_Museum_of_Lithuania"
   },
   {
    "id": "osm:way:52710382",
@@ -106,7 +118,10 @@
    },
    "popular": true,
    "commonsCategory": "Palace of the Grand Dukes of Lithuania",
-   "commonsImage": "Valdovu by Augustas Didzgalvis.jpg"
+   "commonsImage": "Valdovu by Augustas Didzgalvis.jpg",
+   "description": "The Palace of the Grand Dukes of Lithuania is a palace in Vilnius, Lithuania. It was originally constructed in the 15th century for the rulers of the Grand Duchy of Lithuania and the future Kings of Poland.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Palace_of_the_Grand_Dukes_of_Lithuania"
   },
   {
    "id": "osm:way:4870323",
@@ -127,7 +142,10 @@
    },
    "popular": true,
    "commonsCategory": "Vilnius Cathedral",
-   "commonsImage": "Vilnius - Cathedral 01.jpg"
+   "commonsImage": "Vilnius - Cathedral 01.jpg",
+   "description": "The Vilnius Cathedral, formally the Archcathedral Basilica of St. Stanislaus and St. Ladislaus, is the Roman Catholic cathedral of the Archdiocese of Vilnius and a minor basilica in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vilnius_Cathedral"
   },
   {
    "id": "osm:node:3259759997",
@@ -148,7 +166,10 @@
    },
    "popular": true,
    "commonsCategory": "The House of Signatories",
-   "commonsImage": "House of Signatories.jpg"
+   "commonsImage": "House of Signatories.jpg",
+   "description": "The House of the Signatories is a Lithuanian historic landmark on Pilies Street, Vilnius, where on February 16, 1918, the Act of Independence of Lithuania was signed by twenty members of the Council of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/House_of_the_Signatories"
   },
   {
    "id": "osm:node:325083016",
@@ -169,7 +190,10 @@
    },
    "popular": true,
    "commonsCategory": "Three Crosses monument, Vilnius",
-   "commonsImage": "The Hill of Three Crosses, Vilnius (55176284797).jpg"
+   "commonsImage": "The Hill of Three Crosses, Vilnius (55176284797).jpg",
+   "description": "Three Crosses is a prominent monument in Vilnius, Lithuania, on the Hill of Three Crosses, also known as the Bald Hill or Crooked Hill, in Kalnai Park. According to a legend, which finds its source in some historic events, seven Franciscan friars were beheaded on top of this hill.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Three_Crosses"
   },
   {
    "id": "osm:way:24570013",
@@ -190,7 +214,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Johns in Vilnius",
-   "commonsImage": "Vilnius University Great Courtyard 1, Vilnius, Lithuania - Diliff.jpg"
+   "commonsImage": "Vilnius University Great Courtyard 1, Vilnius, Lithuania - Diliff.jpg",
+   "description": "The Church of St. Johns, officially named St. John the Baptist and St. John the Apostle and Evangelist, is located at the Old Town of Vilnius, Lithuania and dominates the university ensemble. The church is dedicated to both John the Baptist and John the Evangelist.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Johns%2C_Vilnius"
   },
   {
    "id": "osm:way:531948359",
@@ -211,7 +238,10 @@
    },
    "popular": true,
    "commonsCategory": "Vilnius University",
-   "commonsImage": "Senamiestis, Vilnius, Lithuania - panoramio (165).jpg"
+   "commonsImage": "Senamiestis, Vilnius, Lithuania - panoramio (165).jpg",
+   "description": "Vilnius University is a public research university, which is the first and largest university in Lithuania, as well as one of the oldest and most prominent higher education institutions in Central and Eastern Europe. Today, it is Lithuania's leading research institution.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vilnius_University"
   },
   {
    "id": "osm:node:325090882",
@@ -232,7 +262,10 @@
    },
    "popular": true,
    "commonsCategory": "Adam Mickiewicz Monument in Vilnius",
-   "commonsImage": "Senamiestis, Vilnius, Lithuania - panoramio (181).jpg"
+   "commonsImage": "Senamiestis, Vilnius, Lithuania - panoramio (181).jpg",
+   "description": "Adam Mickiewicz Monument in Vilnius, Lithuania is a monument in the vicinity of the Saint Anne's Church and the Bernardine Monastery, by Maironio Street along the shores of the Neris River.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Adam_Mickiewicz_Monument%2C_Vilnius"
   },
   {
    "id": "osm:node:427910141",
@@ -253,7 +286,10 @@
    },
    "popular": true,
    "commonsCategory": "Museum of Occupations and Freedom Fights",
-   "commonsImage": "Vilnius, Gedimino prospektas 40 (3).jpg"
+   "commonsImage": "Vilnius, Gedimino prospektas 40 (3).jpg",
+   "description": "The Museum of Occupations and Freedom Fights in Vilnius is dedicated to showing artifacts and records from the 50-year Soviet occupation of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Museum_of_Occupations_and_Freedom_Fights"
   },
   {
    "id": "osm:way:61980371",
@@ -273,7 +309,9 @@
     "independent": true
    },
    "popular": true,
-   "commonsImage": "Art Museum of Lithuania.jpg"
+   "commonsImage": "Art Museum of Lithuania.jpg",
+   "description": "Open Tue–Sat 11:00–18:00, Sun 12:00–17:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:29491058",
@@ -294,7 +332,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Francis of Assisi in Vilnius",
-   "commonsImage": "Bernardine in Vilnius.jpg"
+   "commonsImage": "Bernardine in Vilnius.jpg",
+   "description": "The Church of St. Francis and St. Bernardino is a Roman Catholic church in the Old Town of Vilnius, Lithuania. It is located next to St. Anne's Church.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Francis_and_St._Bernardino%2C_Vilnius"
   },
   {
    "id": "osm:node:1660654788",
@@ -315,7 +356,9 @@
    },
    "popular": true,
    "commonsCategory": "Lithuanian Theatre, Music and Film Museum",
-   "commonsImage": "OskierkiPalac2.jpg"
+   "commonsImage": "OskierkiPalac2.jpg",
+   "description": "Open Wed–Sat 10:00–18:00, Sun 10:00–16:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:325183533",
@@ -336,7 +379,9 @@
    },
    "popular": true,
    "commonsCategory": "Adam Mickiewicz Museum in Vilnius",
-   "commonsImage": "Adam Mickiewicz Museum in Vilnius 02.jpg"
+   "commonsImage": "Adam Mickiewicz Museum in Vilnius 02.jpg",
+   "description": "Open Tue–Fri 10:00–17:00, Sat–Sun 10:00–14:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:24569579",
@@ -357,7 +402,10 @@
    },
    "popular": true,
    "commonsCategory": "Presidential Palace in Vilnius",
-   "commonsImage": "Vilnius presidential palace.jpg"
+   "commonsImage": "Vilnius presidential palace.jpg",
+   "description": "The Presidential Palace is the official residence and workplace of the president of Lithuania. Located in Vilnius Old Town, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Presidential_Palace%2C_Vilnius"
   },
   {
    "id": "osm:node:3765354477",
@@ -398,7 +446,10 @@
    },
    "popular": true,
    "commonsCategory": "Town hall in Vilnius",
-   "commonsImage": "Vilniaus Rotuse by Augustas Didzgalvis.jpg"
+   "commonsImage": "Vilniaus Rotuse by Augustas Didzgalvis.jpg",
+   "description": "Vilnius Town Hall is a historical town hall in the square of the same name in the Old Town of Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Town_Hall%2C_Vilnius"
   },
   {
    "id": "osm:node:60464945",
@@ -459,7 +510,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Peter and St. Paul in Vilnius",
-   "commonsImage": "Vilnius Sts Peter et Paul Church 01.jpg"
+   "commonsImage": "Vilnius Sts Peter et Paul Church 01.jpg",
+   "description": "The Church of St. Peter and St. Paul is a Roman Catholic church located in the Antakalnis neighbourhood of Vilnius, Lithuania, designed and built by Jan Zaor of Kraków. It is the centerpiece of a former monastery complex of the Canons Regular of the Lateran.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Peter_and_St._Paul%2C_Vilnius"
   },
   {
    "id": "osm:node:4515994589",
@@ -479,7 +533,10 @@
     "independent": true
    },
    "commonsCategory": "Literatų Street in Vilnius",
-   "commonsImage": "Literatų Gatve 02(js) Vilnius.jpg"
+   "commonsImage": "Literatų Gatve 02(js) Vilnius.jpg",
+   "description": "Literatų Street is one of streets in the Old Town of Vilnius, the capital of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Literat%C5%B3_Street"
   },
   {
    "id": "osm:way:81434371",
@@ -500,7 +557,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of the Holy Spirit in Vilnius",
-   "commonsImage": "Dominikonų Street in Vilnius, Lithuania in 2007.jpg"
+   "commonsImage": "Dominikonų Street in Vilnius, Lithuania in 2007.jpg",
+   "description": "Dominican Church of the Holy Spirit, Vilnius is a church in Vilnius, Lithuania, a monument of high and late Baroque. Crowned with a cupola, it stands out in the panorama of the old town and can be seen from surrounding streets.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Dominican_Church_of_the_Holy_Spirit"
   },
   {
    "id": "osm:way:24569949",
@@ -540,7 +600,10 @@
     "independent": true
    },
    "commonsCategory": "De Reus Palace in Vilnius",
-   "commonsImage": "De Reus palace in Vilnius (Wilno).JPG"
+   "commonsImage": "De Reus palace in Vilnius (Wilno).JPG",
+   "description": "The de Choiseul Palace is a building in Simonas Daukantas square, Vilnius Old Town, Lithuania. Currently it is used as dwellings and \"Copy1\" company subsidiary.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/%C5%A0uazeliai_Palace"
   },
   {
    "id": "osm:node:2788680220",
@@ -560,7 +623,10 @@
     "independent": true
    },
    "commonsCategory": "Abramowicz Palace in Vilnius",
-   "commonsImage": "Abramowicz Palace in Vilnius1.jpg"
+   "commonsImage": "Abramowicz Palace in Vilnius1.jpg",
+   "description": "Abramavičiai Palace is a building in Vilnius Old Town, Rotušė square. Currently it is owned by Vilnius Juozas Tallat-Kelpša conservatory.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Abramavi%C4%8Diai_Palace"
   },
   {
    "id": "osm:node:3488363281",
@@ -599,7 +665,9 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true
+   "popular": true,
+   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:60774388",
@@ -620,7 +688,10 @@
    },
    "popular": true,
    "commonsCategory": "St. Parasceve Orthodox Church in Vilnius",
-   "commonsImage": "Vilnius, Paraskevos cerkvė.jpg"
+   "commonsImage": "Vilnius, Paraskevos cerkvė.jpg",
+   "description": "St. Paraskeva Church is the oldest Eastern Orthodox church in Lithuania, located in the capital Vilnius, belonging to the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Paraskeva%2C_Vilnius"
   },
   {
    "id": "osm:node:3498880020",
@@ -679,7 +750,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Theresa in Vilnius",
-   "commonsImage": "Church of Saint Teresa and Gate of Dawn in Vilnius, Lithuania (June 14, 2015).jpg"
+   "commonsImage": "Church of Saint Teresa and Gate of Dawn in Vilnius, Lithuania (June 14, 2015).jpg",
+   "description": "Church of St. Theresa is a Roman Catholic church in Vilnius' Old Town, close to the Gate of Dawn. It was completed in 1650, and it is dedicated to Teresa of Ávila.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Theresa%2C_Vilnius"
   },
   {
    "id": "osm:relation:1447676",
@@ -700,7 +774,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Michael in Vilnius",
-   "commonsImage": "Church of St. Michael in Vilnius02(js).jpg"
+   "commonsImage": "Church of St. Michael in Vilnius02(js).jpg",
+   "description": "St Michael's Church or St. Michael the Archangel Church is a former Roman Catholic church in Vilnius' Old Town, on the right bank of the Vilnia River. It now hosts the Church Heritage Museum.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Michael%2C_Vilnius"
   },
   {
    "id": "osm:way:25963398",
@@ -740,7 +817,10 @@
    },
    "popular": true,
    "commonsCategory": "Monastery of the Holy Trinity, Vilnius",
-   "commonsImage": "Vilnia, Trajeckaja. Вільня, Траецкая (I. Trutnev, 1870).jpg"
+   "commonsImage": "Vilnia, Trajeckaja. Вільня, Траецкая (I. Trutnev, 1870).jpg",
+   "description": "Monastery of the Holy Trinity is a monastery built in Vilnius by the Ruthenian Church and Grand Hetman of Lithuania Konstanty Ostrogski as a thanksgiving to the God for the victory in Battle of Orsha. It now belongs to the Order of Saint Basil the Great and the Ukrainian Greek Catholic Church.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Monastery_of_the_Holy_Trinity%2C_Vilnius"
   },
   {
    "id": "osm:way:112386499",
@@ -761,7 +841,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Catherine in Vilnius",
-   "commonsImage": "Catherine's Church.jpg"
+   "commonsImage": "Catherine's Church.jpg",
+   "description": "The Church of St. Catherine is a Roman Catholic church in Vilnius' Old Town. It was founded by the Hetman of the Grand Duchy of Lithuania and Voivode of Vilnius Jan Karol Chodkiewicz in 1618.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Catherine%2C_Vilnius"
   },
   {
    "id": "osm:node:2265668604",
@@ -780,7 +863,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo 17:00-22:00; Tu-Su 15:00-22:00"
+   "openingHours": "Mo 17:00-22:00; Tu-Su 15:00-22:00",
+   "description": "Open Mon 17:00–22:00, Tue–Sun 15:00–22:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:81304730",
@@ -822,7 +907,9 @@
     "steak_house"
    ],
    "popular": true,
-   "openingHours": "Mo-Sa 12:00-23:00; Su 12:00-22:00"
+   "openingHours": "Mo-Sa 12:00-23:00; Su 12:00-22:00",
+   "description": "Open Mon–Sat 12:00–23:00, Sun 12:00–22:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:29503660",
@@ -843,7 +930,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Casimir in Vilnius",
-   "commonsImage": "Church of St. Casimir in Vilnius (Wilno).JPG"
+   "commonsImage": "Church of St. Casimir in Vilnius (Wilno).JPG",
+   "description": "The Church of St. Casimir is a Roman Catholic church in Vilnius' Old Town, close to the Vilnius' Town Hall. It is the first and the oldest baroque church in Vilnius, built in 1618.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Casimir%2C_Vilnius"
   },
   {
    "id": "osm:node:9847986156",
@@ -865,7 +955,9 @@
     "teahouse"
    ],
    "popular": true,
-   "openingHours": "Tu-Sa 12:00-20:00; Su 12:00-19:00"
+   "openingHours": "Tu-Sa 12:00-20:00; Su 12:00-19:00",
+   "description": "Teahouse café with outdoor seating, an all-vegetarian menu and vegan options. Open Tue–Sat 12:00–20:00, Sun 12:00–19:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:2788680231",
@@ -885,7 +977,10 @@
     "independent": true
    },
    "commonsCategory": "Łopaciński Palace in Vilnius",
-   "commonsImage": "SulistrowskiKnackfus.jpg"
+   "commonsImage": "SulistrowskiKnackfus.jpg",
+   "description": "Lopacinskiai Palace is a building in Vilnius Old Town, Skapo st. Currently it is owned by the State Language Inspectorate and Vilnius Archdiocese Economy Council.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Lopacinskiai_Palace_(Skapo_st.)"
   },
   {
    "id": "osm:way:1386286056",
@@ -926,7 +1021,10 @@
    },
    "popular": true,
    "commonsCategory": "Orthodox Cathedral of the Dormition of the Theotokos in Vilnius",
-   "commonsImage": "Cathedral of the Theotokos by Augustas Didzgalvis.jpg"
+   "commonsImage": "Cathedral of the Theotokos by Augustas Didzgalvis.jpg",
+   "description": "The Cathedral of the Theotokos in Vilnius is the episcopal see of the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Cathedral_of_the_Theotokos%2C_Vilnius"
   },
   {
    "id": "osm:node:14095010845",
@@ -987,7 +1085,9 @@
     "regional"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 12:00-24:00"
+   "openingHours": "Mo-Su 12:00-24:00",
+   "description": "Steak restaurant with outdoor seating and vegetarian and vegan options. Open daily 12:00–24:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:61979743",
@@ -1008,7 +1108,10 @@
    },
    "popular": true,
    "commonsCategory": "St. Nicholas Orthodox Church in Vilnius",
-   "commonsImage": "St. Nicholas Orthodox Church, Vilnius, Lithuania - Diliff.jpg"
+   "commonsImage": "St. Nicholas Orthodox Church, Vilnius, Lithuania - Diliff.jpg",
+   "description": "Church of the Transfer of the Relics of St. Nicholas the Wonderworker in Vilnius or St. Nicholas Church is one of the oldest Eastern Orthodox churches in Vilnius, Lithuania, and belongs to the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Orthodox_Church_of_St._Nicholas%2C_Vilnius"
   },
   {
    "id": "osm:node:2788680256",
@@ -1029,7 +1132,10 @@
    },
    "popular": true,
    "commonsCategory": "Tyszkiewicz Palace in Vilnius",
-   "commonsImage": "Vilnius streets 34.JPG"
+   "commonsImage": "Vilnius streets 34.JPG",
+   "description": "Tiškevičiai Palace is a former residential palace in Vilnius Old Town, near the intersection of Trakų and Pylimo streets.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Ti%C5%A1kevi%C4%8Diai_Palace_(Vilnius)"
   },
   {
    "id": "osm:node:3089447066",
@@ -1053,7 +1159,9 @@
     "european"
    ],
    "popular": true,
-   "openingHours": "We-Sa 19:00-23:00"
+   "openingHours": "We-Sa 19:00-23:00",
+   "description": "Fusion, Scandinavian and European restaurant. Open Wed–Sat 19:00–23:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:81296879",
@@ -1073,7 +1181,10 @@
     "independent": true
    },
    "commonsCategory": "Divine Mercy Sanctuary in Vilnius",
-   "commonsImage": "Divine Mercy Sanctuary in Vilnius1.jpg"
+   "commonsImage": "Divine Mercy Sanctuary in Vilnius1.jpg",
+   "description": "The Divine Mercy Sanctuary of Vilnius or the Holy Trinity Church is a shrine in Vilnius dedicated to the Divine Mercy, a devotion originated by Faustina Kowalska.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Sanctuary_of_the_Divine_Mercy%2C_Vilnius"
   },
   {
    "id": "osm:way:391284473",
@@ -1094,7 +1205,10 @@
    },
    "popular": true,
    "commonsCategory": "Green Bridge (Vilnius)",
-   "commonsImage": "Green Bridge of Vilnius 2015.JPG"
+   "commonsImage": "Green Bridge of Vilnius 2015.JPG",
+   "description": "The Green Bridge is a bridge over the Neris River in Vilnius, Lithuania, that connects the city center with the district of Šnipiškės. The original 16th-century bridge was the oldest bridge in Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Green_Bridge_(Vilnius)"
   },
   {
    "id": "osm:node:3629146556",
@@ -1112,7 +1226,10 @@
     "fame": 0.524,
     "quality": 0.6,
     "independent": true
-   }
+   },
+   "description": "The Jonas Mekas Visual Arts Center is an avant-garde arts centre in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Jonas_Mekas_Visual_Arts_Center"
   },
   {
    "id": "osm:way:407497120",
@@ -1133,7 +1250,10 @@
    },
    "popular": true,
    "commonsCategory": "Mindaugas bridge",
-   "commonsImage": "Mindaugo tiltas by Augustas Didzgalvis.jpg"
+   "commonsImage": "Mindaugo tiltas by Augustas Didzgalvis.jpg",
+   "description": "The Mindaugas Bridge is a bridge in Vilnius, Lithuania. It crosses Neris River and connects Žirmūnai elderate with the Old Town of Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Mindaugas_Bridge"
   },
   {
    "id": "osm:node:4107442302",
@@ -1156,7 +1276,9 @@
     "bistro"
    ],
    "popular": true,
-   "openingHours": "Tu,We 17:00-23:00; Th 17:00-24:00; Fr 17:00-02:00, Sa 14:00-02:00, Su 14:00-23:00; Mo off"
+   "openingHours": "Tu,We 17:00-23:00; Th 17:00-24:00; Fr 17:00-02:00, Sa 14:00-02:00, Su 14:00-23:00; Mo off",
+   "description": "Mexican restaurant with outdoor seating.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:1390181604",
@@ -1178,7 +1300,9 @@
     "european"
    ],
    "popular": true,
-   "openingHours": "Mo 12:00-23:00; Tu closed; We-Su 12:00-23:00"
+   "openingHours": "Mo 12:00-23:00; Tu closed; We-Su 12:00-23:00",
+   "description": "Open Mon 12:00–23:00, Wed–Sun 12:00–23:00; closed Tue.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:3371902368",
@@ -1240,7 +1364,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Ignatius in Vilnius",
-   "commonsImage": "Church of St Ignatius in Vilnius2.jpg"
+   "commonsImage": "Church of St Ignatius in Vilnius2.jpg",
+   "description": "The Cathedral of St. Ignatius of Loyola also called Church of St. Ignatius is a religious building of the Roman Catholic Church that serves as the cathedral of the Military Ordinariate of Lithuania. It is located in the capital, Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Cathedral_of_St._Ignatius_of_Loyola%2C_Vilnius"
   },
   {
    "id": "osm:node:2750466229",
@@ -1281,7 +1408,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of All Saints in Vilnius",
-   "commonsImage": "Church of All Saints in Vilnius, Lithuania in 2007.jpg"
+   "commonsImage": "Church of All Saints in Vilnius, Lithuania in 2007.jpg",
+   "description": "The Church of All Saints is a Baroque-style church in Vilnius, Lithuania. The church was built between 1620–1631 and was adopted for Carmelites' needs.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_All_Saints%2C_Vilnius"
   },
   {
    "id": "osm:node:5674924977",
@@ -1396,7 +1526,10 @@
    },
    "popular": true,
    "commonsCategory": "Choral Synagogue in Vilnius",
-   "commonsImage": "Vilniaus sinagoga.jpg"
+   "commonsImage": "Vilniaus sinagoga.jpg",
+   "description": "The Choral Synagogue of Vilnius, officially, Taharat Ha-Kodesh Choral Synagogue in Vilnius, is an Orthodox Jewish congregation and synagogue, located at 39 Pylimo Street, in the Old Town of Vilnius, in the Vilnius County of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Choral_Synagogue_(Vilnius)"
   },
   {
    "id": "osm:way:112746040",
@@ -1416,7 +1549,10 @@
     "independent": true
    },
    "commonsCategory": "Lithuanian National Philharmony",
-   "commonsImage": "Lietuvos nacionaline filharmonija.JPG"
+   "commonsImage": "Lietuvos nacionaline filharmonija.JPG",
+   "description": "Lithuanian National Philharmonic Society also known by its abbreviation LNPS, is a national cultural institution and the largest and oldest state-owned concert organisation in Lithuania headquartered in the nations capital of Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Lithuanian_National_Philharmonic_Society"
   },
   {
    "id": "osm:way:52710379",
@@ -1454,7 +1590,10 @@
     "independent": true
    },
    "popular": true,
-   "commonsImage": "Wilno Radziwiłł Palace Januszowski 2025 (cropped).jpg"
+   "commonsImage": "Wilno Radziwiłł Palace Januszowski 2025 (cropped).jpg",
+   "description": "Radvilas Palace is a Late Renaissance palace in the Old Town of Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Radvila_Palace"
   },
   {
    "id": "osm:node:5904042685",
@@ -1476,7 +1615,9 @@
     "local"
    ],
    "popular": true,
-   "openingHours": "Mo-Fr 08:00-17:30"
+   "openingHours": "Mo-Fr 08:00-17:30",
+   "description": "Open Mon–Fri 8:00–17:30.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:111765516",
@@ -1497,7 +1638,10 @@
    },
    "popular": true,
    "commonsCategory": "Vilnius Art Academy",
-   "commonsImage": "VDA by Augustas Didzgalvis.jpg"
+   "commonsImage": "VDA by Augustas Didzgalvis.jpg",
+   "description": "The Vilnius Academy of Arts in Vilnius, Lithuania, grants a variety of degrees in the arts.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vilnius_Academy_of_Arts"
   },
   {
    "id": "osm:node:3138119731",
@@ -1534,7 +1678,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Th 11:00-03:00; Fr-Sa 11:00-06:00; Su 11:00-03:00"
+   "openingHours": "Mo-Th 11:00-03:00; Fr-Sa 11:00-06:00; Su 11:00-03:00",
+   "description": "Open Mon–Thu 11:00–3:00, Fri–Sat 11:00–6:00, Sun 11:00–3:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:572986085",
@@ -1553,7 +1699,9 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true
+   "popular": true,
+   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:25963535",
@@ -1573,7 +1721,10 @@
     "independent": true
    },
    "commonsCategory": "MO Museum",
-   "commonsImage": "Mo Museum, Vilnius.jpg"
+   "commonsImage": "Mo Museum, Vilnius.jpg",
+   "description": "The MO Museum is a modern art museum in Vilnius, Lithuania. As a private initiative of Lithuanian scientists and philanthropists Danguolė Butkienė and Viktoras Butkus, it functioned as an art museum without walls for about ten years.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/MO_Museum"
   },
   {
    "id": "osm:way:48954340",
@@ -1594,7 +1745,10 @@
    },
    "popular": true,
    "commonsCategory": "Orthodox Church of the Holy Spirit in Vilnius",
-   "commonsImage": "Orthodox Church of the Holy Spirit in Vilnius2.JPG"
+   "commonsImage": "Orthodox Church of the Holy Spirit in Vilnius2.JPG",
+   "description": "The Orthodox Church of the Holy Spirit is a Russian Orthodox church in the Vilnius Old Town, capital of Lithuania, rebuilt 1749–1753 in the Vilnian Baroque style. The monastery serves as the headquarters of the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Orthodox_Church_of_the_Holy_Spirit%2C_Vilnius"
   },
   {
    "id": "osm:node:2517718297",
@@ -1658,7 +1812,9 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Mo-Th 11:00-22:00; Fr 11:00-23:00; Sa 13:00-23:00; Su 13:00-22:00"
+   "openingHours": "Mo-Th 11:00-22:00; Fr 11:00-23:00; Sa 13:00-23:00; Su 13:00-22:00",
+   "description": "Pizza restaurant with outdoor seating.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:1690265433",
@@ -1698,7 +1854,10 @@
    },
    "popular": true,
    "commonsCategory": "Lithuanian Academy of Music and Theatre",
-   "commonsImage": "LMTA by Augustas Didzgalvis.jpg"
+   "commonsImage": "LMTA by Augustas Didzgalvis.jpg",
+   "description": "The Lithuanian Academy of Music and Theatre in Vilnius, Lithuania, is a state-supported conservatory that trains students in music, theatre, and multimedia arts.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Lithuanian_Academy_of_Music_and_Theatre"
   },
   {
    "id": "osm:node:2121911075",
@@ -1720,7 +1879,9 @@
     "regional"
    ],
    "popular": true,
-   "openingHours": "Mo-We 09:00-22:00; Th-Fr 09:00-02:00; Sa-Su 09:00-23:00"
+   "openingHours": "Mo-We 09:00-22:00; Th-Fr 09:00-02:00; Sa-Su 09:00-23:00",
+   "description": "Open Mon–Wed 9:00–22:00, Thu–Fri 9:00–2:00, Sat–Sun 9:00–23:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:4467106989",
@@ -1739,7 +1900,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 11:00-19:00; Sa 10:00-16:00"
+   "openingHours": "Mo-Fr 11:00-19:00; Sa 10:00-16:00",
+   "description": "Open Mon–Fri 11:00–19:00, Sat 10:00–16:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:11131967095",
@@ -1776,7 +1939,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00"
+   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00",
+   "description": "Open Mon–Fri 7:30–21:00, Sat–Sun 8:00–21:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:68586429",
@@ -1796,7 +1961,10 @@
     "independent": true
    },
    "commonsCategory": "Vilnius Energy and Technology Museum",
-   "commonsImage": "Technikosmuziejus1.JPG"
+   "commonsImage": "Technikosmuziejus1.JPG",
+   "description": "Energy and Technology Museum is an institution dedicated to researching and presenting energy history, the industrial heritage of Lithuania, and the history of Vilnius. It is housed in a former Vilnius power plant.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Energy_and_Technology_Museum"
   },
   {
    "id": "osm:node:4009648288",
@@ -1815,7 +1983,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo 11:30-22:00; Tu-Th 11:30-23:00; Fr,Sa 11:30-01:00, Su 11:30-22:00"
+   "openingHours": "Mo 11:30-22:00; Tu-Th 11:30-23:00; Fr,Sa 11:30-01:00, Su 11:30-22:00",
+   "description": "Restaurant with outdoor seating.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:5480180422",
@@ -1838,7 +2008,9 @@
     "belarusian"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 11:00-23:00"
+   "openingHours": "Mo-Su 11:00-23:00",
+   "description": "Belarusian restaurant with takeaway. Open daily 11:00–23:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:2788680246",
@@ -1859,7 +2031,10 @@
    },
    "popular": true,
    "commonsCategory": "Raduszkiewicz Palace in Vilnius",
-   "commonsImage": "Raduszkiewicz House in Vilnius2.jpg"
+   "commonsImage": "Raduszkiewicz House in Vilnius2.jpg",
+   "description": "The Raduškevičius Palace is a building in Vilnius, Kalvarijų st. 1. Currently it is headquarters of the Lithuanian Union of Architects.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Radu%C5%A1kevi%C4%8Dius_Palace"
   },
   {
    "id": "osm:node:5167418039",
@@ -1932,7 +2107,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 10:00-18:00; Sa,Su off"
+   "openingHours": "Mo-Fr 10:00-18:00; Sa,Su off",
+   "description": "Open Mon–Fri 10:00–18:00; closed Sat and Sun.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:4702177689",
@@ -1969,7 +2146,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Th 11:00-24:00; Fr 11:00-23:00; Sa 11:00-02:00; Su 12:00-24:00"
+   "openingHours": "Mo-Th 11:00-24:00; Fr 11:00-23:00; Sa 11:00-02:00; Su 12:00-24:00",
+   "description": "Restaurant with an all-vegetarian menu.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:3461138847",
@@ -2009,7 +2188,9 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Tu-We 17:00-22:00; Th 17:00-23:00; Fr-Sa 17:00-03:00; Su 15:00-22:00"
+   "openingHours": "Tu-We 17:00-22:00; Th 17:00-23:00; Fr-Sa 17:00-03:00; Su 15:00-22:00",
+   "description": "Pizza restaurant with outdoor seating.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:52461050",
@@ -2030,7 +2211,10 @@
    },
    "popular": true,
    "commonsCategory": "Orthodox Church of St. Michael and St. Constantine in Vilnius",
-   "commonsImage": "Romanov church in Vilnius.jpg"
+   "commonsImage": "Romanov church in Vilnius.jpg",
+   "description": "The Orthodox Church of St. Michael and St. Constantine is a Russian Orthodox church in Vilnius, Lithuania, belonging to the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Constantine_and_St._Michael"
   },
   {
    "id": "osm:node:8909369732",
@@ -2088,7 +2272,9 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Su-Mo 11:00-22:00; Tu-Sa 11:00-23:00"
+   "openingHours": "Su-Mo 11:00-22:00; Tu-Sa 11:00-23:00",
+   "description": "Open Sun–Mon 11:00–22:00, Tue–Sat 11:00–23:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:61189004",
@@ -2109,7 +2295,10 @@
    },
    "popular": true,
    "commonsCategory": "Vileišis Palace",
-   "commonsImage": "Vileishis Palace1.jpg"
+   "commonsImage": "Vileishis Palace1.jpg",
+   "description": "Vileišis Palace is a Neo-baroque style architectural ensemble in Vilnius, Lithuania, built for Petras Vileišis. Vileišis was a prominent Lithuanian engineer, political activist, publisher, and philanthropist who commissioned the palace in 1904 and supervised its construction.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vilei%C5%A1is_Palace"
   },
   {
    "id": "osm:way:342104825",
@@ -2129,7 +2318,10 @@
     "independent": true
    },
    "commonsCategory": "Church of the Blessed Virgin Mary of Consolation in Vilnius",
-   "commonsImage": "MaryChurchVilnius3.jpg"
+   "commonsImage": "MaryChurchVilnius3.jpg",
+   "description": "Church of the Blessed Virgin Mary of Consolation is a Roman Catholic church in the Vilnius Old Town which was built by the Augustinians in 1746–1768. It is the last landmark of the Vilnian Baroque architectural style.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Blessed_Virgin_Mary_of_Consolation%2C_Vilnius"
   },
   {
    "id": "osm:way:26282675",
@@ -2150,7 +2342,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of Ascension in Vilnius",
-   "commonsImage": "Ascension church in Vilnius 2026.jpg"
+   "commonsImage": "Ascension church in Vilnius 2026.jpg",
+   "description": "Church of the Ascension is a Roman Catholic church in the Vilnius Old Town. Its construction began in 1695, but due to the lack of funding it was completed only after 35 years in 1730 and in the same year was it was consecrated as Church of the Ascension.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Ascension%2C_Vilnius"
   },
   {
    "id": "osm:way:110022872",
@@ -2187,7 +2382,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 11:00-22:00; Sa 10:00-22:00; Su 10:00-20:00"
+   "openingHours": "Mo-Fr 11:00-22:00; Sa 10:00-22:00; Su 10:00-20:00",
+   "description": "Open Mon–Fri 11:00–22:00, Sat 10:00–22:00, Sun 10:00–20:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:2471812217",
@@ -2227,7 +2424,9 @@
     "coffee_shop"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 10:00-19:00"
+   "openingHours": "Mo-Su 10:00-19:00",
+   "description": "Open daily 10:00–19:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:13953561984",
@@ -2284,7 +2483,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Nicholas in Vilnius",
-   "commonsImage": "Front façade of the Church of Saint Nicholas in Vilnius, Lithuania.jpg"
+   "commonsImage": "Front façade of the Church of Saint Nicholas in Vilnius, Lithuania.jpg",
+   "description": "Saint Nicholas Church is the oldest surviving church in Lithuania, built in the Old Town of the capital city Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_Saint_Nicholas%2C_Vilnius"
   },
   {
    "id": "osm:node:4097005742",
@@ -2307,7 +2509,9 @@
     "thai"
    ],
    "popular": true,
-   "openingHours": "Mo-Fr 11:30-23:00, Sa 12:00-24:00, Su 12:00-22:00"
+   "openingHours": "Mo-Fr 11:30-23:00, Sa 12:00-24:00, Su 12:00-22:00",
+   "description": "Indian and Thai restaurant with vegetarian and vegan options.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:way:24570269",
@@ -2327,7 +2531,10 @@
     "independent": true
    },
    "commonsCategory": "Contemporary Art Centre in Vilnius",
-   "commonsImage": "SMC by Augustas Didzgalvis.jpg"
+   "commonsImage": "SMC by Augustas Didzgalvis.jpg",
+   "description": "Contemporary Art Centre – art institution, established in 1992 by Lithuanian Ministry of Culture. CAC has replaced the Arts Exhibition Palace and took over its building in Vilnius, 2 Vokiečių street.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Contemporary_Art_Centre_(Vilnius)"
   },
   {
    "id": "osm:node:5126368121",
@@ -2367,7 +2574,9 @@
    "cuisine": [
     "coffee_shop"
    ],
-   "popular": true
+   "popular": true,
+   "description": "Café with outdoor seating.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:13706141716",
@@ -2407,7 +2616,9 @@
     "regional"
    ],
    "popular": true,
-   "openingHours": "Mo-Sa 17:00-23:00"
+   "openingHours": "Mo-Sa 17:00-23:00",
+   "description": "Open Mon–Sat 17:00–23:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:7262835127",
@@ -2452,7 +2663,9 @@
     "peruvian"
    ],
    "popular": true,
-   "openingHours": "Mo 17:00-24:00; Tu 17:00-24:00; We 17:00-24:00; Th 17:00-02:00; Fr 17:00-02:00; Sa 17:00-02:00"
+   "openingHours": "Mo 17:00-24:00; Tu 17:00-24:00; We 17:00-24:00; Th 17:00-02:00; Fr 17:00-02:00; Sa 17:00-02:00",
+   "description": "Burger and Peruvian restaurant.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:10554866977",
@@ -2474,7 +2687,9 @@
     "pancake"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 10:00-19:00"
+   "openingHours": "Mo-Su 10:00-19:00",
+   "description": "Open daily 10:00–19:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:4834792641",
@@ -2529,7 +2744,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00"
+   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00",
+   "description": "Open Mon–Fri 7:30–21:00, Sat–Sun 8:00–21:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:9653953496",
@@ -2568,7 +2785,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of the Assumption in Vilnius",
-   "commonsImage": "Church of the Assumption of the Blessed Virgin Mary in Vilnius, Lithuania in 2007.jpg"
+   "commonsImage": "Church of the Assumption of the Blessed Virgin Mary in Vilnius, Lithuania in 2007.jpg",
+   "description": "The Church of the Assumption of the Blessed Virgin Mary is a Roman Catholic church in the Trakų Street, Vilnius' Old Town, which was established by Franciscans.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Assumption_of_the_Blessed_Virgin_Mary%2C_Vilnius"
   },
   {
    "id": "osm:node:6087630577",
@@ -2608,7 +2828,9 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 12:00-24:00"
+   "openingHours": "Mo-Su 12:00-24:00",
+   "description": "Open daily 12:00–24:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:6884305085",
@@ -2705,7 +2927,10 @@
     "independent": true
    },
    "commonsCategory": "White Bridge, Vilnius",
-   "commonsImage": "Baltasis tiltas1 2006-08-08.jpg"
+   "commonsImage": "Baltasis tiltas1 2006-08-08.jpg",
+   "description": "The White Bridge is a pedestrian bridge over the Neris River in Vilnius, Lithuania. It connects Naujamiestis with Vilnius CBD and Šnipiškės.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/White_Bridge_(Vilnius)"
   },
   {
    "id": "osm:node:1578419764",
@@ -2957,7 +3182,10 @@
    },
    "popular": true,
    "commonsCategory": "Orthodox Church of Revelation of the Holy Mother of God in Vilnius",
-   "commonsImage": "Orthodox Church of Revelation of the Holy Mother of God Domes, Vilnius, Lithuania - Diliff.jpg"
+   "commonsImage": "Orthodox Church of Revelation of the Holy Mother of God Domes, Vilnius, Lithuania - Diliff.jpg",
+   "description": "Our Lady of the Sign Church is an Eastern Orthodox church in the Žvėrynas district of Vilnius, built in 1903, belonging to the Russian Orthodox Diocese of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_Our_Lady_of_the_Sign%2C_Vilnius"
   },
   {
    "id": "osm:way:81303383",
@@ -2978,7 +3206,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of the Holy Cross in Vilnius",
-   "commonsImage": "Church of the Holy Cross in Vilnius Bonifratri3.jpg"
+   "commonsImage": "Church of the Holy Cross in Vilnius Bonifratri3.jpg",
+   "description": "Church of the Holy Cross is a Roman Catholic church in the Vilnius Old Town. Initially, in 1543 a chapel was built which was later expanded and rebuilt.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Holy_Cross%2C_Vilnius"
   },
   {
    "id": "osm:node:4264705115",
@@ -3150,7 +3381,10 @@
     "independent": true
    },
    "commonsCategory": "Church of St. Bartholomew in Vilnius",
-   "commonsImage": "Lithuania Vilnius St. Batholomew church.jpg"
+   "commonsImage": "Lithuania Vilnius St. Batholomew church.jpg",
+   "description": "Church of St. Bartholomew is a Roman Catholic church in Užupis, Vilnius which was built in 1824. It is the only church in Vilnius where the masses are held in the Belarusian language.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Bartholomew%2C_Vilnius"
   },
   {
    "id": "osm:node:2778182241",
@@ -3243,7 +3477,10 @@
     "quality": 0.4,
     "independent": true
    },
-   "commonsImage": "Rusdramis by Augustas Didzgalvis.jpg"
+   "commonsImage": "Rusdramis by Augustas Didzgalvis.jpg",
+   "description": "Old Theatre of Vilnius, built in 1913 as Pohulanka Theatre and formerly known as Russian Drama Theatre of Lithuania and other names, is a theatre in the Old Town of Vilnius. It is the only professional theatre in Lithuania that stages performances in Russian.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Old_Theatre_of_Vilnius"
   },
   {
    "id": "osm:node:2778182242",
@@ -3584,7 +3821,10 @@
     "independent": true
    },
    "commonsCategory": "Evangelical Lutheran Church in Vilnius",
-   "commonsImage": "Evangelical Lutheran Church in Vilnius.jpg"
+   "commonsImage": "Evangelical Lutheran Church in Vilnius.jpg",
+   "description": "Evangelical Lutheran Church is a Lutheran church in the Vilnius Old Town. Its parish has 600 members and it is the only Evangelical Lutheran church in Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Evangelical_Lutheran_Church%2C_Vilnius"
   },
   {
    "id": "osm:node:4719222490",
@@ -3914,7 +4154,10 @@
    },
    "popular": true,
    "commonsCategory": "Lukiškės Square",
-   "commonsImage": "Lukiskiu aikste by Augustas Didzgalvis.jpg"
+   "commonsImage": "Lukiskiu aikste by Augustas Didzgalvis.jpg",
+   "description": "Lukiškės Square is the largest square (about 4 hectares in Vilnius, Lithuania, located in the center of the city. A major street in Vilnius, Gediminas Avenue, passes by the southern border of the square.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Luki%C5%A1k%C4%97s_Square"
   },
   {
    "id": "osm:node:14264840896",
@@ -4096,7 +4339,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Philip and St. Jacob in Vilnius",
-   "commonsImage": "JacobPhilip1.jpg"
+   "commonsImage": "JacobPhilip1.jpg",
+   "description": "Church of Saints Philip and James is a Roman Catholic church in Vilnius' Old Town, near the Lukiškės Square. It is famous for the Mother of God of Lukiškės painting.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_Saints_Philip_and_James%2C_Vilnius"
   },
   {
    "id": "osm:node:4051957889",
@@ -4192,7 +4438,10 @@
    },
    "popular": true,
    "commonsCategory": "Lithuanian National Drama Theatre",
-   "commonsImage": "LNDT by Augustas Didzgalvis.jpg"
+   "commonsImage": "LNDT by Augustas Didzgalvis.jpg",
+   "description": "Lithuanian National Drama Theatre, located on Gediminas Avenue in Vilnius, is one of Lithuania's most prominent publicly funded performing arts venues and cultural institutions. Founded as a Vilnius State Theatre in 1940, it became Lithuanian National Drama Theatre in 1998.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Lithuanian_National_Drama_Theatre"
   },
   {
    "id": "osm:node:13357986024",
@@ -4484,7 +4733,9 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Sa 10:00-20:00; Su 11:00-18:00"
+   "openingHours": "Mo-Sa 10:00-20:00; Su 11:00-18:00",
+   "description": "Open Mon–Sat 10:00–20:00, Sun 11:00–18:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:778694973",
@@ -4827,7 +5078,10 @@
     "independent": true
    },
    "commonsCategory": "Žvėrynas bridge",
-   "commonsImage": "Zverynas bridge June 2022.jpg"
+   "commonsImage": "Zverynas bridge June 2022.jpg",
+   "description": "The Žvėrynas Bridge is a bridge over the Neris River in Vilnius, Lithuania. It connects Naujamiestis with the district of Žvėrynas.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/%C5%BDv%C4%97rynas_Bridge"
   },
   {
    "id": "osm:node:8929653017",
@@ -4886,7 +5140,10 @@
     "independent": true
    },
    "commonsCategory": "Church of the Immaculate Conception in Vilnius",
-   "commonsImage": "Zveryno baznycia.jpg"
+   "commonsImage": "Zveryno baznycia.jpg",
+   "description": "Church of the Immaculate Conception of the Blessed Virgin Mary is a Roman Catholic church in Žvėrynas, one of the neighborhoods of Vilnius, which was for the most part completed in 1925.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Immaculate_Conception_of_the_Blessed_Virgin_Mary%2C_Vilnius"
   },
   {
    "id": "osm:node:267135062",
@@ -5128,7 +5385,10 @@
    },
    "popular": true,
    "commonsCategory": "Church of St. Raphael in Vilnius",
-   "commonsImage": "Church of the St Raphael the Archangel in Vilnius12.jpg"
+   "commonsImage": "Church of the St Raphael the Archangel in Vilnius12.jpg",
+   "description": "Church of St. Raphael the Archangel is a Roman Catholic church in Šnipiškės, Vilnius. Former Jesuits monastery ensemble is located nearby which currently is used by the Department of Cultural Heritage of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._Raphael_the_Archangel%2C_Vilnius"
   },
   {
    "id": "osm:node:2759301076",
@@ -5380,7 +5640,10 @@
     "independent": true
    },
    "commonsCategory": "Church of the Sacred Heart of Jesus in Vilnius",
-   "commonsImage": "JesusHeartChurchVilnius.jpg"
+   "commonsImage": "JesusHeartChurchVilnius.jpg",
+   "description": "Church of the Sacred Heart of Jesus is a Roman Catholic church in the Vilnius Old Town, which was built in 1694–1756 and consecrated in 1756.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_the_Sacred_Heart_of_Jesus%2C_Vilnius"
   },
   {
    "id": "osm:node:10216944617",
@@ -6147,7 +6410,9 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true
+   "popular": true,
+   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
+   "descriptionSource": "osm"
   },
   {
    "id": "osm:node:268631673",
@@ -6324,7 +6589,10 @@
     "independent": true
    },
    "commonsCategory": "Žirmūnai bridge",
-   "commonsImage": "Žirmūnai Bridge.jpg"
+   "commonsImage": "Žirmūnai Bridge.jpg",
+   "description": "Žirmūnai Bridge is a bridge across Neris River, that connects Žirmūnai and Antakalnis districts of Vilnius. This is a pier ferroconcrete bridge 181 meters (594 ft) long.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/%C5%BDirm%C5%ABnai_Bridge"
   },
   {
    "id": "osm:node:1323899883",
@@ -7201,7 +7469,10 @@
    },
    "popular": true,
    "commonsCategory": "Karaite synagogue in Vilnius",
-   "commonsImage": "Karaite Kenesa Vilnius.jpg"
+   "commonsImage": "Karaite Kenesa Vilnius.jpg",
+   "description": "The Vilnius Kenesa is a Qaraite Jewish congregation and synagogue, or kenesa, located at 6 Liubarto Street, in Žvėrynas, one of the neighborhoods of Vilnius, in the Vilnius County of Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vilnius_Kenesa"
   },
   {
    "id": "osm:node:10221359217",
@@ -7790,7 +8061,10 @@
     "independent": true
    },
    "commonsCategory": "Sereikiškės Park",
-   "commonsImage": "Bernardinai garden.jpg"
+   "commonsImage": "Bernardinai garden.jpg",
+   "description": "The Bernardine Garden, previously known as Sereikiškės Park, is a public park in the city of Vilnius, Lithuania. It is located on the left bank of the Vilnia River between the Gediminas Tower and Bernardine Monastery and covers over 9 hectares.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Bernardine_Garden"
   },
   {
    "id": "osm:node:6959640485",
@@ -8005,7 +8279,10 @@
     "independent": true
    },
    "commonsCategory": "Evangelical Reformed Church in Vilnius",
-   "commonsImage": "Vilniaus evangelikų reformatų bažnyčia.JPG"
+   "commonsImage": "Vilniaus evangelikų reformatų bažnyčia.JPG",
+   "description": "Evangelical Reformed Church is a Continental Reformed Protestantic church in the Vilnius Old Town which was built in 1830–1835 according to a project of Karol Podczaszyński. In 2008 a new organ was installed in the church.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Evangelical_Reformed_Church%2C_Vilnius"
   },
   {
    "id": "osm:node:268636070",
@@ -8228,7 +8505,10 @@
     "independent": true
    },
    "commonsCategory": "Forum Palace",
-   "commonsImage": "Forum Palace.JPG"
+   "commonsImage": "Forum Palace.JPG",
+   "description": "Forum Palace is a commercial center and indoor arena in Vilnius. The arena is located near to the Vilnius financial centre in Konstitucija avenue.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Forum_Palace"
   },
   {
    "id": "osm:node:9834422621",
@@ -8284,7 +8564,10 @@
     "independent": true
    },
    "commonsCategory": "Geležinis Vilkas bridge",
-   "commonsImage": "Gelezinio Vilko tiltas.JPG"
+   "commonsImage": "Gelezinio Vilko tiltas.JPG",
+   "description": "The Iron Wolf Bridge is a bridge over the Neris River in Vilnius, Lithuania. Named after the legend of Iron Wolf, the bridge connects Naujamiestis with the districts of Žvėrynas and Šnipiškės, as the roundabout is situated at the administrative line.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Iron_Wolf_Bridge"
   },
   {
    "id": "osm:node:9174576278",
@@ -8560,7 +8843,10 @@
    },
    "popular": true,
    "commonsCategory": "Twinsbet Arena",
-   "commonsImage": "Zymensas by Augustas Didzgalvis.jpg"
+   "commonsImage": "Zymensas by Augustas Didzgalvis.jpg",
+   "description": "Arena Vilnius, located in the southern part of Verkiai elderate of Vilnius, is the largest arena in Vilnius and second largest in Lithuania. It generally hosts basketball games as well as concerts.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Arena_Vilnius"
   },
   {
    "id": "osm:node:11645410052",
@@ -8651,7 +8937,10 @@
     "independent": true
    },
    "commonsCategory": "Church of St. George in Vilnius",
-   "commonsImage": "St George, Vilnius.jpg"
+   "commonsImage": "St George, Vilnius.jpg",
+   "description": "Church of St. George is a Roman Catholic church in the Vilnius Old Town which was completed and consecrated in 1765. The church and nearby monastery complex was built by the Radziwiłł family and served as family's mausoleum.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Church_of_St._George%2C_Vilnius"
   },
   {
    "id": "osm:node:7125022485",
@@ -9362,7 +9651,10 @@
    },
    "popular": true,
    "commonsCategory": "Sluškai Palace",
-   "commonsImage": "Slushko Palace.jpg"
+   "commonsImage": "Slushko Palace.jpg",
+   "description": "Slushko Palace in Vilnius, Lithuania is a Baroque palace situated on the left bank of Neris River in the Old Town elderate, former Antakalnis suburb of the city.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Slushko_Palace"
   },
   {
    "id": "osm:node:10151588817",
@@ -10149,7 +10441,10 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true
+   "popular": true,
+   "description": "Lithuanian National Opera and Ballet Theatre (LNOBT), founded as Operos vaidykla, is an opera house and ballet theatre in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Lithuanian_National_Opera_and_Ballet_Theatre"
   },
   {
    "id": "osm:node:5185914653",
@@ -10281,7 +10576,10 @@
     "quality": 0.8,
     "independent": true
    },
-   "openingHours": "Mo-Su 08:00-23:00"
+   "openingHours": "Mo-Su 08:00-23:00",
+   "description": "Panorama is the third largest shopping center in Vilnius and the seventh largest shopping mall in Lithuania with 65,000 m2. It is owned by UAB E.L.L. „Nekilnojamas Turtas“.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/PLC_Panorama"
   },
   {
    "id": "osm:node:5317984779",
@@ -11930,7 +12228,10 @@
     "independent": true
    },
    "commonsCategory": "Tuskulėnai",
-   "commonsImage": "Tuskulenai 2008.jpg"
+   "commonsImage": "Tuskulenai 2008.jpg",
+   "description": "Tuskulėnai Manor is a neoclassical manor in Žirmūnai elderate of Vilnius, Lithuania. It is perhaps best known as a burial ground for people executed by the KGB in 1944–1947.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Tuskul%C4%97nai_Manor"
   },
   {
    "id": "osm:node:4914539422",
@@ -12168,7 +12469,10 @@
    },
    "popular": true,
    "commonsCategory": "LFF stadionas",
-   "commonsImage": "LFF2 by Augustas Didzgalvis.jpg"
+   "commonsImage": "LFF2 by Augustas Didzgalvis.jpg",
+   "description": "FK Žalgiris' Home Stadium, formerly known as Vėtra Stadium and LFF Stadium, is a football stadium in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/LFF_Stadium"
   },
   {
    "id": "osm:node:2759240242",
@@ -13582,7 +13886,10 @@
     "independent": true
    },
    "commonsCategory": "Protestant Cemetery, Vilnius",
-   "commonsImage": "Evangelical cemetery in Vilnius.jpg"
+   "commonsImage": "Evangelical cemetery in Vilnius.jpg",
+   "description": "The Protestant Cemetery in Vilnius, Lithuania, was established in the early 19th century. As the city grew, there was a need to move the old Lutheran cemetery outside the city walls.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Protestant_Cemetery%2C_Vilnius"
   },
   {
    "id": "osm:node:11904674700",
@@ -13763,7 +14070,10 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Su 08:00-23:00"
+   "openingHours": "Mo-Su 08:00-23:00",
+   "description": "Akropolis is the largest shopping mall in the Baltics by floor area, a shopping center and entertainment center in Vilnius, the Lithuanian capital. It was built in Šeškinė by Akropolis Group in 2002 and opened in April 2002.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Akropolis_(Vilnius)"
   },
   {
    "id": "osm:node:3154040246",
@@ -15155,7 +15465,10 @@
    },
    "popular": true,
    "commonsCategory": "Vingis Park",
-   "commonsImage": "Vingio parkas–2019 08 (1).jpg"
+   "commonsImage": "Vingio parkas–2019 08 (1).jpg",
+   "description": "Vingis Park is the largest park in Vilnius, Lithuania, covering 162 hectares. It is located in the Vilkpėdė eldership near a curve of the Neris River, hence its Lithuanian name \"vingis\" which means \"bend\" or \"curve\".",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Vingis_Park"
   },
   {
    "id": "osm:node:10124731638",
@@ -15628,7 +15941,10 @@
     "independent": true
    },
    "commonsCategory": "SEB Arena",
-   "commonsImage": "SEB arena.JPG"
+   "commonsImage": "SEB arena.JPG",
+   "description": "SEB Arena is tennis, squash, badminton, and mini-tennis arena in Vilnius. It is recognized as an ITF Silver Level certified National Training Centre.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/SEB_Arena"
   },
   {
    "id": "osm:way:87207749",
@@ -15647,7 +15963,10 @@
     "independent": true
    },
    "commonsCategory": "Active Vilnius arena",
-   "commonsImage": "Lietuvos Rytas arena.jpg"
+   "commonsImage": "Lietuvos Rytas arena.jpg",
+   "description": "The Active Vilnius Arena is a 2,051-seat basketball arena in Vilnius, Lithuania, built next to Arena Vilnius that is used mostly as a home venue of Kibirkštis Vilnius of the Lithuanian Women's Basketball League.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Active_Vilnius_Arena"
   },
   {
    "id": "osm:node:2334729656",
@@ -15776,7 +16095,10 @@
     "independent": true
    },
    "commonsCategory": "Litexpo",
-   "commonsImage": "LITEXPO 3 parodų ir konferencijų salė..jpg"
+   "commonsImage": "LITEXPO 3 parodų ir konferencijų salė..jpg",
+   "description": "LITEXPO or Lithuanian Exhibition and Congress Centre is the largest exhibition centre in the Baltic states located in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/LITEXPO"
   },
   {
    "id": "osm:node:4204512889",
@@ -16183,7 +16505,10 @@
     "independent": true
    },
    "commonsCategory": "Sportima arena",
-   "commonsImage": "Sportima Arena.JPG"
+   "commonsImage": "Sportima Arena.JPG",
+   "description": "Sportima Arena or Sportima Sports Hall is an indoor arena in Viršuliškės, Vilnius.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Sportima_Arena"
   },
   {
    "id": "osm:node:3681939046",
@@ -16991,7 +17316,10 @@
     "independent": true
    },
    "commonsCategory": "Kalnai Park",
-   "commonsImage": "318 vilnius Old Town (21019708031).jpg"
+   "commonsImage": "318 vilnius Old Town (21019708031).jpg",
+   "description": "Kalnai Park is a 24.5-hectare (61-acre) park between the left bank of the Neris River and right bank of the Vilnia River in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Kalnai_Park"
   },
   {
    "id": "osm:node:12083692069",
@@ -18813,7 +19141,10 @@
     "independent": true
    },
    "commonsCategory": "Pramogų arena",
-   "commonsImage": "Pramogų arena.JPG"
+   "commonsImage": "Pramogų arena.JPG",
+   "description": "Pramogų arena formerly known as Vilnius Ice Palace is an arena in Vilnius, Lithuania.",
+   "descriptionSource": "wikipedia",
+   "descriptionUrl": "https://en.wikipedia.org/wiki/Utenos_pramog%C5%B3_arena"
   },
   {
    "id": "osm:node:14030649866",
