@@ -52,6 +52,9 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `commonsImage` | String | – | Photo only; Commons file name without `File:`; show it with author and licence |
 | `commonsCategory` | String | – | Photo only; Commons category without `Category:`; for the gallery |
 | `popular` | Bool | – | Present only when `true`. Any category: the top 5% of **that category** by score (at least 1 when the category is non-empty), plus sights with fame ≥ 0.6; overridable in `curation.csv` (BE-3) |
+| `description` | String 20–300 | – | 1–2 factual sentences shown in the place card. **Every popular place has one** when a source exists. Sources only: the lead of the English Wikipedia article (sights, venues), or a sentence composed from OSM facts (cuisine, outdoor seating, diet options, opening hours, start date, architect, heritage). Never invented or paraphrased beyond the source |
+| `descriptionSource` | `wikipedia` \| `osm` | – | Present with `description`. `wikipedia` text is CC BY-SA: the app shows "From Wikipedia" with a link |
+| `descriptionUrl` | String (https) | – | Required when `descriptionSource` is `wikipedia`: the article URL |
 
 Unknown fields are ignored by the decoder. A new field needs a schema update here first.
 
