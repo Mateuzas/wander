@@ -1,18 +1,18 @@
 {
-  "city": "Łódź",
+  "city": "Vilnius",
   "note": "Approximate coordinates of well-known places. pois path is relative to this file.",
-  "pois": "../../App/Wander/Resources/pois-lodz.json",
-  "timeZone": "Europe/Warsaw",
+  "pois": "../../App/Wander/Resources/pois-vilnius.json",
+  "timeZone": "Europe/Vilnius",
   "routes": [
-    { "name": "Łódź Fabryczna → Manufaktura",       "from": [51.7697, 19.4655], "to": [51.7795, 19.4480] },
-    { "name": "Plac Wolności → OFF Piotrkowska",    "from": [51.7766, 19.4547], "to": [51.7600, 19.4580] },
-    { "name": "Manufaktura → Księży Młyn",          "from": [51.7795, 19.4480], "to": [51.7548, 19.4818] },
-    { "name": "EC1 → Park Źródliska",               "from": [51.7675, 19.4689], "to": [51.7590, 19.4794] },
-    { "name": "Pałac Poznańskiego → Teatr Wielki",  "from": [51.7793, 19.4510], "to": [51.7733, 19.4697] },
-    { "name": "Łódź Kaliska → Piotrkowska 104",     "from": [51.7575, 19.4305], "to": [51.7655, 19.4570] },
-    { "name": "OFF Piotrkowska → Pałac Herbsta",    "from": [51.7600, 19.4580], "to": [51.7543, 19.4847] },
-    { "name": "Stary Rynek → EC1",                  "from": [51.7820, 19.4543], "to": [51.7675, 19.4689] },
-    { "name": "Muzeum Sztuki ms1 → Archikatedra",   "from": [51.7717, 19.4479], "to": [51.7489, 19.4597] },
-    { "name": "Park Źródliska → Plac Wolności",     "from": [51.7590, 19.4794], "to": [51.7766, 19.4547] }
+    { "name": "Railway station → Cathedral Square",       "from": [54.6707, 25.2834], "to": [54.6855, 25.2873] },
+    { "name": "Gate of Dawn → Užupis Angel",               "from": [54.6741, 25.2896], "to": [54.6806, 25.2954] },
+    { "name": "Town Hall Square → White Bridge",           "from": [54.6776, 25.2872], "to": [54.6925, 25.2735] },
+    { "name": "MO Museum → Vilnius University",            "from": [54.6794, 25.2775], "to": [54.6826, 25.2879] },
+    { "name": "Lukiškės Square → Bernardine Garden",       "from": [54.6897, 25.2708], "to": [54.6837, 25.2962] },
+    { "name": "Kenesa (Žvėrynas) → Cathedral Square",      "from": [54.6887, 25.2554], "to": [54.6855, 25.2873] },
+    { "name": "Lukiškės Prison 2.0 → Halės market",        "from": [54.6880, 25.2620], "to": [54.6745, 25.2846] },
+    { "name": "Užupis Angel → Opera and Ballet Theatre",   "from": [54.6806, 25.2954], "to": [54.6891, 25.2782] },
+    { "name": "Railway station → St Peter and Paul's",     "from": [54.6707, 25.2834], "to": [54.6941, 25.3062] },
+    { "name": "Vingis Park → Gate of Dawn",                "from": [54.6830, 25.2409], "to": [54.6741, 25.2896] }
   ]
 }
