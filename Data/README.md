@@ -10,6 +10,23 @@ python3 score.py lodz       # scores + curation → App/Wander/Resources/pois-lo
 
 Only `score.py` needs re-running after editing weights or `curation.csv`.
 
+## What gets fetched
+
+Photo spots (tourism, historic, notable towers and bridges, parks), browsable independent shops
+(an allowlist of `shop=*` values) and food. See `fetch_osm.py` for the exact tags.
+
+**Venues** (BE-4): stadiums (`leisure=stadium`), theatres, arts centres and concert halls
+(`amenity=theatre|arts_centre|concert_hall`), arenas (`amenity=events_venue`, `leisure=sports_hall`, and `leisure=sports_centre`
+only with a `wikidata`/`wikipedia` tag, since most are gyms), zoos, aquariums and theme parks
+(`tourism=zoo|aquarium|theme_park`), and shopping malls (`shop=mall`). Malls are `shop`
+(a stop); the rest are `photo` (a pass-by), with `type` set to the OSM value.
+Only notable venues are kept: one with a `wikidata` or `wikipedia` tag, or with a footprint
+(bounding-box diagonal) of at least 150 m. Venues may be up to 2,500 m across (other spots: 800 m).
+Venues are searched in the city's optional `venue_bbox` (`cities.json`; for Łódź the whole city),
+everything else in `bbox`. Commons photo counts cover `bbox` only, so outer venues get photos = 0
+and rely on Wikidata fame.
+A venue already kept as a sight through another tag (e.g. `historic=theatre`) stays as it was.
+
 ## English names (`names-en/<city>.csv`)
 
 Sights are shown in English. OSM rarely has `name:en` and Wikidata labels are unreliable,
