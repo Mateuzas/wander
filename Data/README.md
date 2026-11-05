@@ -15,6 +15,15 @@ Only `score.py` needs re-running after editing weights or `curation.csv`.
 Photo spots (tourism, historic, notable towers and bridges, parks), browsable independent shops
 (an allowlist of `shop=*` values) and food. See `fetch_osm.py` for the exact tags.
 
+**Landmark buildings** (BE-2): churches and other places of worship, town halls and universities
+(`amenity=place_of_worship|townhall|university`) count as sights when they have a `wikidata` or
+`wikipedia` tag and are at most 800 m across. In Vilnius the Cathedral, the Town Hall, the
+University and most Old Town churches carry no `tourism`/`historic` tag, so without this rule they
+were missing. Streets (Pilies, Literatų) are not points and are not fetched; an OSM attraction on
+the street (e.g. the Literatų Street project) stands in for it.
+Note: Łódź's cached Overpass response predates this rule; its file changes only after
+`fetch_osm.py lodz --refresh`.
+
 **Venues** (BE-4): stadiums (`leisure=stadium`), theatres, arts centres and concert halls
 (`amenity=theatre|arts_centre|concert_hall`), arenas (`amenity=events_venue`, `leisure=sports_hall`, and `leisure=sports_centre`
 only with a `wikidata`/`wikipedia` tag, since most are gyms), zoos, aquariums and theme parks

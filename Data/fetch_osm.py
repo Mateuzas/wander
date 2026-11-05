@@ -42,6 +42,10 @@ FAME_ONLY_VENUES = {"sports_centre"}
 MIN_VENUE_SIZE_M = 150    # without a wikidata/wikipedia tag, a venue must be at least this big
 MAX_VENUE_SIZE_M = 2500   # zoos and stadium grounds are bigger than any walk-past spot
 MIN_PARK_SIZE_M = 200     # named parks smaller than this are pocket greens
+# Landmark buildings tagged only by their use (BE-2): in Vilnius the Cathedral, the Town Hall,
+# the University and most Old Town churches carry no tourism/historic tag at all.
+# Notable only, like towers and bridges: described on Wikidata/Wikipedia.
+NOTABLE_BUILDINGS = {"place_of_worship", "townhall", "university"}
 
 
 def query(bbox, venue_bbox=None):
@@ -55,6 +59,8 @@ def query(bbox, venue_bbox=None):
   nwr["historic"]{b};
   nwr["man_made"~"^(tower|lighthouse|bridge)$"]{b};
   nwr["leisure"="park"]["name"]{b};
+  nwr["amenity"~"^(place_of_worship|townhall|university)$"]["name"]["wikidata"]{b};
+  nwr["amenity"~"^(place_of_worship|townhall|university)$"]["name"]["wikipedia"]{b};
   nwr["shop"]["name"]{b};
   nwr["amenity"~"^(cafe|restaurant|bar|ice_cream|pub)$"]["name"]{b};
   nwr["leisure"~"^(stadium|sports_hall)$"]["name"]{vb};
@@ -132,11 +138,27 @@ def base_category(tags, size):
     if man_made in {"tower", "lighthouse", "bridge"}:
         # "Notable only": something someone bothered to describe on Wikidata/Wikipedia.
         return "photo" if ("wikidata" in tags or "wikipedia" in tags) else None
+    if amenity in NOTABLE_BUILDINGS:
+        notable = "wikidata" in tags or "wikipedia" in tags
+        return "photo" if notable and size <= MAX_SPOT_SIZE_M else None
     if leisure == "park":
         return "photo" if size >= MIN_PARK_SIZE_M else None
     if shop:
         return "shop" if shop in TOURIST_SHOPS else None
     return None
+
+
+def building_kind(tags):
+    """Kind of a landmark building kept only for its use (church, cathedral, townhall...), else None.
+    Places that also carry a tourism or historic tag are described by that tag instead."""
+    amenity = tags.get("amenity")
+    if amenity not in NOTABLE_BUILDINGS or "tourism" in tags or "historic" in tags:
+        return None
+    if amenity == "place_of_worship":
+        building = tags.get("building")
+        return building if building in {"church", "cathedral", "chapel", "synagogue", "mosque", "temple"} \
+            else "place_of_worship"
+    return amenity
 
 
 def display_name(tags):
