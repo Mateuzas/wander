@@ -7,10 +7,10 @@ import RouteEngine
 @MainActor
 @Observable
 final class POIStore {
-    /// Pilot city slug; matches the file name produced by Data/score.py.
-    nonisolated static let pilotCity = "lodz"
+    /// The app's city slug; matches the file name produced by Data/score.py.
+    nonisolated static let pilotCity = "vilnius"
     /// Opening hours are read in the city's time zone, not the phone's.
-    nonisolated static let timeZones = ["lodz": "Europe/Warsaw", "vilnius": "Europe/Vilnius"]
+    nonisolated static let timeZones = ["vilnius": "Europe/Vilnius"]
 
     let timeZone: TimeZone
 
@@ -18,6 +18,7 @@ final class POIStore {
     private(set) var attribution = ""
     private(set) var pois: [POI] = []
     /// Region covering every POI; the map's fallback when there is no location.
+    /// Nil without a data file, and the map then falls back to MapKit's default.
     private(set) var region: MKCoordinateRegion?
     private(set) var loadError: Error?
 
@@ -33,7 +34,11 @@ final class POIStore {
             self.pois = file.pois
             self.region = Self.region(covering: pois)
         } catch {
+            // A missing or unreadable file leaves an empty store: no beads, no crash.
             loadError = error
+            #if DEBUG
+            print("POIStore: no POIs for \(city): \(error)")
+            #endif
         }
     }
 

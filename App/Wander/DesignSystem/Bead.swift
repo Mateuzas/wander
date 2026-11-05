@@ -6,6 +6,8 @@ import SwiftUI
 /// keep their category color so the color coding still works.
 struct Bead: View {
     let category: POICategory
+    /// SF Symbol for the place's kind (`POI.glyph`); the category's glyph if nil.
+    var glyph: String?
     var isSelected = false
     var isPopular = false
     /// Place name for VoiceOver, read after the category ("Photo spot, Mural on Stiklių").
@@ -26,7 +28,7 @@ struct Bead: View {
         Circle()
             .fill(category.color)
             .overlay {
-                Image(systemName: category.glyph)
+                Image(systemName: glyph ?? category.glyph)
                     .font(.system(size: size * 0.5, weight: .semibold))
                     .foregroundStyle(.white)
             }

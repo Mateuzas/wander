@@ -5,6 +5,7 @@ import SwiftUI
 /// No shadow or border (§10).
 struct NudgeCard: View {
     let category: POICategory
+    var glyph: String?
     let title: String
     let detail: String
     var actionTitle = "Skip"
@@ -12,7 +13,7 @@ struct NudgeCard: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: Layout.grid * 1.5) {
-            Bead(category: category)
+            Bead(category: category, glyph: glyph)
             VStack(alignment: .leading, spacing: Layout.grid / 2) {
                 Text(title)
                     .font(WanderFont.heading)

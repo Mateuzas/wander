@@ -123,6 +123,7 @@ struct UpAheadCard: View {
         let position = WalkModel.position(of: nudge)
         NudgeCard(
             category: poi.category,
+            glyph: poi.glyph,
             title: poi.name,
             detail: poi.reason.isEmpty ? position : "\(poi.reason) · \(position)",
             action: onSkip)
