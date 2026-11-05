@@ -9,6 +9,7 @@ import csv
 import datetime
 import json
 import math
+import re
 import sys
 import urllib.parse
 from pathlib import Path
@@ -245,6 +246,12 @@ def article_title(p, wiki):
     return wiki["enwiki"].get(t.get("wikidata", ""))
 
 
+def article_key(p, wiki):
+    title = article_title(p, wiki)
+    summary = wiki["summaries"].get(title) if title else None
+    return summary["url"] if summary else title
+
+
 def description(p, typ, popular, wiki, article_uses):
     """(text, source, url) for the place card, or None (CONTRACTS §1 `description`).
 
@@ -252,8 +259,11 @@ def description(p, typ, popular, wiki, article_uses):
     sentence composed from their OSM tags. Nothing is written beyond what the source says."""
     title = article_title(p, wiki)
     # An emptied image means the place's Wikidata item is a different place (curation.csv);
-    # an article shared by several places (e.g. a museum's branches) describes none of them.
-    usable = title and p.get("image_override") != "" and article_uses.get(title, 0) == 1
+    # an article shared by several places (e.g. a museum and its branches) describes only the
+    # place it is named after.
+    own = title and (article_uses.get(article_key(p, wiki), 0) == 1
+                     or re.sub(r"\s*\(.*\)$|,.*$", "", title).casefold() == p["name"].casefold())
+    usable = own and p.get("image_override") != ""
     summary = wiki["summaries"].get(title) if usable else None
     if summary and summary.get("type") != "disambiguation":
         text = trim_extract(summary.get("extract"))
@@ -398,10 +408,10 @@ def main():
     pois.sort(key=lambda p: (-p["score"], p["name"]))
     popular = popular_ids(pois)
     wiki = load_wikipedia(slug)
-    article_uses = {}
+    article_uses = {}  # by resolved article URL: two titles can redirect to one article
     for p in pois:
-        if title := article_title(p, wiki):
-            article_uses[title] = article_uses.get(title, 0) + 1
+        if key := article_key(p, wiki):
+            article_uses[key] = article_uses.get(key, 0) + 1
 
     # A photo shared by several places is a series-level Wikidata image (e.g. one statue
     # standing in for a whole trail of them), so it shows none of them reliably.
