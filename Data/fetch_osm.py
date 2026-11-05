@@ -25,7 +25,7 @@ FOOD_AMENITIES = {"cafe", "restaurant", "bar", "ice_cream", "pub"}
 PHOTO_TOURISM = {"attraction", "viewpoint", "artwork", "museum", "gallery"}
 # Historic objects too small or too abstract to be worth walking past.
 BORING_HISTORIC = {
-    "memorial:plaque", "boundary_stone", "milestone", "district", "yes", "building",
+    "memorial:plaque", "memorial:stolperstein", "boundary_stone", "milestone", "district", "yes", "building",
     "stolperstein", "tomb", "grave", "archaeological_site", "aircraft",
 }
 MAX_SPOT_SIZE_M = 800     # a "spot" bigger than this is an area, not a place you walk past
@@ -131,10 +131,12 @@ def base_category(tags, size):
     if tourism in PHOTO_TOURISM:
         return "photo" if size <= MAX_SPOT_SIZE_M else None
     if historic:
-        key = "memorial:plaque" if historic == "memorial" and tags.get("memorial") == "plaque" else historic
-        if key in BORING_HISTORIC:
-            return None
-        return "photo" if size <= MAX_SPOT_SIZE_M else None
+        memorial = tags.get("memorial") if historic == "memorial" else None
+        key = f"memorial:{memorial}" if memorial in ("plaque", "stolperstein") else historic
+        if key not in BORING_HISTORIC:
+            return "photo" if size <= MAX_SPOT_SIZE_M else None
+        # A boring historic tag (often just historic=yes) doesn't rule out the rules below:
+        # Vilnius's Bernardine church is historic=yes + amenity=place_of_worship.
     if man_made in {"tower", "lighthouse", "bridge"}:
         # "Notable only": something someone bothered to describe on Wikidata/Wikipedia.
         return "photo" if ("wikidata" in tags or "wikipedia" in tags) else None
@@ -148,11 +150,17 @@ def base_category(tags, size):
     return None
 
 
+def historic_kind(tags):
+    """The historic=* value, ignoring the meaningless historic=yes."""
+    historic = tags.get("historic")
+    return historic if historic != "yes" else None
+
+
 def building_kind(tags):
     """Kind of a landmark building kept only for its use (church, cathedral, townhall...), else None.
     Places that also carry a tourism or historic tag are described by that tag instead."""
     amenity = tags.get("amenity")
-    if amenity not in NOTABLE_BUILDINGS or "tourism" in tags or "historic" in tags:
+    if amenity not in NOTABLE_BUILDINGS or "tourism" in tags or historic_kind(tags):
         return None
     if amenity == "place_of_worship":
         building = tags.get("building")
