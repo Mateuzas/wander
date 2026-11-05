@@ -3,6 +3,7 @@ import json
 import math
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
@@ -36,8 +37,9 @@ def http_json(url, params=None, data=None, retries=6, timeout=180):
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 return json.load(resp)
         except Exception as exc:  # network errors, 429, 504
-            if attempt == retries - 1:
-                raise
+            missing = isinstance(exc, urllib.error.HTTPError) and exc.code == 404
+            if missing or attempt == retries - 1:
+                raise  # a missing page will not appear on retry
             wait = 5 * (attempt + 1)
             retry_after = getattr(exc, "headers", None) and exc.headers.get("Retry-After")
             if retry_after and retry_after.isdigit():

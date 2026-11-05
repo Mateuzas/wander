@@ -9,11 +9,13 @@ import csv
 import datetime
 import json
 import math
+import re
 import sys
 import urllib.parse
 from pathlib import Path
 
 from common import DATA, RESOURCES, cache_dir, load_city, metres
+from describe import osm_description, trim_extract
 from fetch_osm import building_kind, historic_kind, venue_kind
 
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
@@ -227,6 +229,53 @@ def popular_ids(pois):
     return ids
 
 
+def load_wikipedia(slug):
+    """English Wikipedia summaries fetched by wikipedia.py; empty when it has not been run."""
+    path = cache_dir(slug) / "wikipedia_cache.json"
+    if not path.exists():
+        print("  ! no wikipedia_cache.json: run wikipedia.py for Wikipedia descriptions")
+        return {"enwiki": {}, "summaries": {}}
+    return json.loads(path.read_text())
+
+
+def article_title(p, wiki):
+    """English Wikipedia title for a place: OSM `wikipedia=en:...`, else its Wikidata enwiki link."""
+    t = p["tags"]
+    if t.get("wikipedia", "").startswith("en:"):
+        return t["wikipedia"][3:].strip() or None
+    return wiki["enwiki"].get(t.get("wikidata", ""))
+
+
+def article_key(p, wiki):
+    title = article_title(p, wiki)
+    summary = wiki["summaries"].get(title) if title else None
+    return summary["url"] if summary else title
+
+
+def description(p, typ, popular, wiki, article_uses):
+    """(text, source, url) for the place card, or None (CONTRACTS §1 `description`).
+
+    The English Wikipedia lead wins wherever there is one; popular places without one get a
+    sentence composed from their OSM tags. Nothing is written beyond what the source says."""
+    title = article_title(p, wiki)
+    # An emptied image means the place's Wikidata item is a different place (curation.csv);
+    # an article shared by several places (e.g. a museum and its branches) describes only the
+    # place it is named after.
+    own = title and (article_uses.get(article_key(p, wiki), 0) == 1
+                     or re.sub(r"\s*\(.*\)$|,.*$", "", title).casefold() == p["name"].casefold())
+    usable = own and p.get("image_override") != ""
+    summary = wiki["summaries"].get(title) if usable else None
+    if summary and summary.get("type") != "disambiguation":
+        text = trim_extract(summary.get("extract"))
+        if text:
+            return text, "wikipedia", summary["url"]
+    if popular:
+        text = osm_description(p, typ)
+        if text:
+            return text, "osm", None
+    return None
+
+
 def load_curation():
     path = DATA / "curation.csv"
     rules = {}
@@ -358,6 +407,11 @@ def main():
     renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
     popular = popular_ids(pois)
+    wiki = load_wikipedia(slug)
+    article_uses = {}  # by resolved article URL: two titles can redirect to one article
+    for p in pois:
+        if key := article_key(p, wiki):
+            article_uses[key] = article_uses.get(key, 0) + 1
 
     # A photo shared by several places is a series-level Wikidata image (e.g. one statue
     # standing in for a whole trail of them), so it shows none of them reliably.
@@ -398,6 +452,11 @@ def main():
             row["commonsImage"] = image
         if p["category"] != "photo" and p["tags"].get("opening_hours"):
             row["openingHours"] = p["tags"]["opening_hours"]
+        described = description(p, row["type"], p["id"] in popular, wiki, article_uses)
+        if described:
+            row["description"], row["descriptionSource"] = described[:2]
+            if described[2]:
+                row["descriptionUrl"] = described[2]
         out_pois.append(row)
 
     RESOURCES.mkdir(parents=True, exist_ok=True)
@@ -433,6 +492,14 @@ def main():
             print(f"    {p['id']},,{p['original_name']}")
     pop_by_cat = {c: sum(p["category"] == c and p["id"] in popular for p in pois) for c in by_cat}
     print(f"  popular per category: {pop_by_cat}")
+    described = {r["id"]: r for r in out_pois if "description" in r}
+    pop_desc = {c: sum(p["category"] == c and p["id"] in popular and p["id"] in described for p in pois)
+                for c in by_cat}
+    print(f"  popular with a description: " + ", ".join(f"{c} {pop_desc[c]}/{pop_by_cat[c]}" for c in by_cat))
+    sources = {}
+    for r in described.values():
+        sources[r["descriptionSource"]] = sources.get(r["descriptionSource"], 0) + 1
+    print(f"  descriptions: {len(described)} {sources}")
     print(f"  wrote {out.relative_to(DATA.parent)} ({out.stat().st_size // 1024} KB)")
     print(f"  wrote {review.relative_to(DATA.parent)}")
 
