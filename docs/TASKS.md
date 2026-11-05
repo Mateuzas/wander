@@ -33,8 +33,10 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 
 | Id | Owner | Task | Phase |
 |---|---|---|---|
-| ARC-4 | Architect | Map selection policy: what deserves a bead at each zoom level (feedback #8) | 2 |
-| FE-13 / BE-5 | Frontender / Backender | Implement the selection policy (data floor plus app layering) | 2 |
+| ARC-4 | Architect | Map selection policy: ADR 012 (score floors, tiers, zoom layering) | done |
+| BE-5 | Backender | Floors and `tier` in the pipeline; `POI.tier` in the engine (ADR 012) | in progress |
+| FE-13 | Frontender | Zoom layering by tier (ADR 012) | in progress |
+| OPS-7 | DevOps | CI runs only the jobs a change needs (path-based), skipped jobs still pass | in progress |
 | ARC-5 | Architect | Direct + Recommended contract (engine-chosen budget with a cap) and a filter-set proposal (ADR 008) | 3 |
 | BE-6 / FE-14 | Backender / Frontender | Engine and UI for Direct + Recommended; FE-2 chips folded in | 3 |
 | ARC-6 | Architect | Nightly data design: hosting, file versions, app download with fallback (ADR 010); Vilnius sources from the user | 4 |

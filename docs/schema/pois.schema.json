@@ -147,7 +147,7 @@
         },
         "popular": {
           "const": true,
-          "description": "Present only when true; top share of its category (docs/CONTRACTS.md §1)"
+          "description": "Present only when true; equals tier 1 (ADR 012)"
         },
         "description": {
           "type": "string",
@@ -166,6 +166,14 @@
           "type": "string",
           "pattern": "^https://",
           "description": "Source page for credit; required when descriptionSource is wikipedia"
+        },
+        "tier": {
+          "enum": [
+            1,
+            2,
+            3
+          ],
+          "description": "Map importance within the category (ADR 012): 1 must-see, 2 notable, 3 detail"
         }
       }
     }
