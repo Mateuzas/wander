@@ -155,6 +155,7 @@ struct PlanSheet: View {
             ForEach(plan.highlights, id: \.poi.id) { highlight in
                 HighlightRow(
                     category: highlight.poi.category,
+                    glyph: highlight.poi.glyph,
                     name: highlight.poi.name,
                     reason: highlight.poi.reason.isEmpty ? nil : highlight.poi.reason,
                     distance: Format.distance(highlight.distanceAlongRoute))

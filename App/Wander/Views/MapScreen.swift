@@ -228,7 +228,7 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
+                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
