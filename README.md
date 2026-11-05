@@ -28,3 +28,4 @@ xcodebuild -project App/Wander.xcodeproj -scheme Wander \
 - [docs/BRAND.md](docs/BRAND.md) · [docs/SECRETS.md](docs/SECRETS.md) · [docs/ROADMAP.md](docs/ROADMAP.md)
 
 Map data © OpenStreetMap contributors (ODbL).
+<!-- OPS-7 throwaway docs-only CI test; do not merge -->
