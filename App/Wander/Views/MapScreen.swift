@@ -96,6 +96,7 @@ struct MapScreen: View {
             }
             .onChange(of: walk?.phase) { _, phase in
                 if phase == .arrived || phase == .ended {
+                    selectedPOI = nil   // show the arrival / ended state, not a place card
                     location.setWalking(false)
                     detent = .medium
                 }
@@ -233,7 +234,8 @@ struct MapScreen: View {
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
                         .frame(width: Layout.minTouch, height: Layout.minTouch)
                         .contentShape(Circle())
-                        .onTapGesture { if walk == nil { select(bead.poi) } }
+                        // During a walk only its highlights are drawn, and they open the card too (FE-10).
+                        .onTapGesture { select(bead.poi) }
                         .accessibilityAddTraits(.isButton)
                 }
                 .annotationTitles(.hidden)
@@ -335,7 +337,11 @@ struct MapScreen: View {
     @ViewBuilder
     private var sheetContent: some View {
         if let walk {
-            WalkSheet(walk: walk, onDone: finishWalk)
+            if walk.phase == .walking, let poi = selectedPOI {
+                walkDetail(poi, walk: walk)
+            } else {
+                WalkSheet(walk: walk, onDone: finishWalk)
+            }
         } else if let poi = selectedPOI {
             POIDetail(
                 poi: poi,
@@ -349,8 +355,7 @@ struct MapScreen: View {
                     planner.remove(poi)
                     selectedPOI = nil
                 },
-                // Hidden while walking (the walk sheet replaces the card anyway).
-                onDirections: walk == nil ? { directions(to: poi) } : nil,
+                onDirections: { directions(to: poi) },
                 onClose: { selectedPOI = nil })
         } else if let pin = droppedPin {
             DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin)
@@ -365,6 +370,27 @@ struct MapScreen: View {
                 detent: $detent,
                 onChoose: choose)
         }
+    }
+
+    /// A highlight's card over the walk (FE-10): the turn card stays, the walk goes
+    /// on, and there is no Directions or Add to walk; only Skip while it's ahead.
+    private func walkDetail(_ poi: POI, walk: WalkModel) -> some View {
+        let skip: POIDetail.WalkSkip? = if walk.skipped.contains(poi.id) {
+            .skipped
+        } else if walk.canSkip(poi.id) {
+            .available { walk.skip(poi.id) }
+        } else {
+            nil
+        }
+        return POIDetail(
+            poi: poi, action: .none,
+            onAdd: { .failed }, onRemove: {},
+            onDirections: nil,
+            walkSkip: skip,
+            onClose: {
+                selectedPOI = nil
+                detent = .peek
+            })
     }
 
     private func planSheet(_ destination: Destination) -> some View {
