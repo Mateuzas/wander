@@ -5,6 +5,7 @@ Python 3, standard library only. Cities and their bounding boxes live in `cities
 ```sh
 python3 fetch_osm.py vilnius   # OSM via Overpass → cache/vilnius/osm.json (raw response cached; --refresh to re-download)
 python3 enrich.py vilnius      # Wikidata sitelinks + Commons photo counts (cached, ~10 min first run)
+python3 wikipedia.py vilnius   # English Wikipedia summaries for place descriptions (cached, ~10 min first run)
 python3 score.py vilnius       # scores + curation → App/Wander/Resources/pois-vilnius.json, review/vilnius-review.csv
 ```
 
@@ -50,6 +51,25 @@ Sights named only by their kind ("Mural", "Sculpture") are expanded automaticall
 the top `POPULAR_SHARE` (5%) of each category's places in the app file, by score
 (at least one per non-empty category; ties by id), plus sights whose fame signal is at least
 `POPULAR_FAME` (0.6). A `popular` curation rule overrides both.
+
+## Descriptions (BE-10)
+
+`score.py` gives places a 1–2 sentence `description` for the place card (CONTRACTS §1), from two
+sources only, never invented or paraphrased:
+
+- **Wikipedia** (`descriptionSource: wikipedia`, with `descriptionUrl`): any place whose OSM
+  `wikipedia` tag is `en:<title>`, or whose Wikidata item has an English article (`enwiki`).
+  `wikipedia.py` fetches the REST summary; `describe.py` keeps the first one or two whole sentences
+  of its `extract`, at most 300 characters. No English article means no Wikipedia text (no other
+  languages, no machine translation). Skipped when one article is linked from several places (a
+  museum and its branches) or when curation emptied the place's image (its Wikidata item is a
+  different place).
+- **OSM** (`descriptionSource: osm`, popular places only): composed from tags that are present:
+  cuisine, outdoor seating, vegetarian/vegan options, takeaway, second-hand/organic (shops),
+  start date, architect, heritage, artist, and simple opening hours in plain English (complex
+  ones are left out). Nothing is written when the tags add nothing to the `reason`.
+
+`score.py` prints how many popular places per category have a description.
 
 ## Curation (`curation.csv`)
 
