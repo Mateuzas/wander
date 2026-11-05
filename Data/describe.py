@@ -221,7 +221,8 @@ def _sight_sentences(p, typ):
 
 
 def osm_description(p, typ):
-    """1-2 sentences from OSM tags, or None when the tags add nothing to the reason."""
+    """1-2 sentences from OSM tags, or None when the tags add nothing to the reason.
+    Opening hours are appended to other facts but never stand alone."""
     t, cat = p["tags"], p["category"]
     parts = []
     if cat == "food":
@@ -233,6 +234,8 @@ def osm_description(p, typ):
             parts.append(s)
     else:
         parts += _sight_sentences(p, typ)
+    if not parts:
+        return None  # opening hours alone say nothing about the place
     if len(parts) < 2 and (hours := summarise_hours(t.get("opening_hours"))):
         parts.append(hours)
     text = " ".join(parts)

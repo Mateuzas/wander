@@ -66,8 +66,9 @@ sources only, never invented or paraphrased:
   different place).
 - **OSM** (`descriptionSource: osm`, popular places only): composed from tags that are present:
   cuisine, outdoor seating, vegetarian/vegan options, takeaway, second-hand/organic (shops),
-  start date, architect, heritage, artist, and simple opening hours in plain English (complex
-  ones are left out). Nothing is written when the tags add nothing to the `reason`.
+  start date, architect, heritage, artist. Simple opening hours are appended in plain English
+  (complex ones are left out), but hours alone are never a description. Nothing is written when
+  the tags add nothing to the `reason`.
 
 `score.py` prints how many popular places per category have a description.
 

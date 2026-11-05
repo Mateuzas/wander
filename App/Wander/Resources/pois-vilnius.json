@@ -309,9 +309,7 @@
     "independent": true
    },
    "popular": true,
-   "commonsImage": "Art Museum of Lithuania.jpg",
-   "description": "Open Tue–Sat 11:00–18:00, Sun 12:00–17:00.",
-   "descriptionSource": "osm"
+   "commonsImage": "Art Museum of Lithuania.jpg"
   },
   {
    "id": "osm:way:29491058",
@@ -356,9 +354,7 @@
    },
    "popular": true,
    "commonsCategory": "Lithuanian Theatre, Music and Film Museum",
-   "commonsImage": "OskierkiPalac2.jpg",
-   "description": "Open Wed–Sat 10:00–18:00, Sun 10:00–16:00.",
-   "descriptionSource": "osm"
+   "commonsImage": "OskierkiPalac2.jpg"
   },
   {
    "id": "osm:node:325183533",
@@ -379,9 +375,7 @@
    },
    "popular": true,
    "commonsCategory": "Adam Mickiewicz Museum in Vilnius",
-   "commonsImage": "Adam Mickiewicz Museum in Vilnius 02.jpg",
-   "description": "Open Tue–Fri 10:00–17:00, Sat–Sun 10:00–14:00.",
-   "descriptionSource": "osm"
+   "commonsImage": "Adam Mickiewicz Museum in Vilnius 02.jpg"
   },
   {
    "id": "osm:way:24569579",
@@ -665,9 +659,7 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true,
-   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
-   "descriptionSource": "osm"
+   "popular": true
   },
   {
    "id": "osm:way:60774388",
@@ -863,9 +855,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo 17:00-22:00; Tu-Su 15:00-22:00",
-   "description": "Open Mon 17:00–22:00, Tue–Sun 15:00–22:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo 17:00-22:00; Tu-Su 15:00-22:00"
   },
   {
    "id": "osm:way:81304730",
@@ -907,9 +897,7 @@
     "steak_house"
    ],
    "popular": true,
-   "openingHours": "Mo-Sa 12:00-23:00; Su 12:00-22:00",
-   "description": "Open Mon–Sat 12:00–23:00, Sun 12:00–22:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Sa 12:00-23:00; Su 12:00-22:00"
   },
   {
    "id": "osm:way:29503660",
@@ -1300,9 +1288,7 @@
     "european"
    ],
    "popular": true,
-   "openingHours": "Mo 12:00-23:00; Tu closed; We-Su 12:00-23:00",
-   "description": "Open Mon 12:00–23:00, Wed–Sun 12:00–23:00; closed Tue.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo 12:00-23:00; Tu closed; We-Su 12:00-23:00"
   },
   {
    "id": "osm:node:3371902368",
@@ -1615,9 +1601,7 @@
     "local"
    ],
    "popular": true,
-   "openingHours": "Mo-Fr 08:00-17:30",
-   "description": "Open Mon–Fri 8:00–17:30.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 08:00-17:30"
   },
   {
    "id": "osm:way:111765516",
@@ -1678,9 +1662,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Th 11:00-03:00; Fr-Sa 11:00-06:00; Su 11:00-03:00",
-   "description": "Open Mon–Thu 11:00–3:00, Fri–Sat 11:00–6:00, Sun 11:00–3:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Th 11:00-03:00; Fr-Sa 11:00-06:00; Su 11:00-03:00"
   },
   {
    "id": "osm:way:572986085",
@@ -1699,9 +1681,7 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true,
-   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
-   "descriptionSource": "osm"
+   "popular": true
   },
   {
    "id": "osm:way:25963535",
@@ -1879,9 +1859,7 @@
     "regional"
    ],
    "popular": true,
-   "openingHours": "Mo-We 09:00-22:00; Th-Fr 09:00-02:00; Sa-Su 09:00-23:00",
-   "description": "Open Mon–Wed 9:00–22:00, Thu–Fri 9:00–2:00, Sat–Sun 9:00–23:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-We 09:00-22:00; Th-Fr 09:00-02:00; Sa-Su 09:00-23:00"
   },
   {
    "id": "osm:node:4467106989",
@@ -1900,9 +1878,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 11:00-19:00; Sa 10:00-16:00",
-   "description": "Open Mon–Fri 11:00–19:00, Sat 10:00–16:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 11:00-19:00; Sa 10:00-16:00"
   },
   {
    "id": "osm:node:11131967095",
@@ -1939,9 +1915,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00",
-   "description": "Open Mon–Fri 7:30–21:00, Sat–Sun 8:00–21:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00"
   },
   {
    "id": "osm:way:68586429",
@@ -2107,9 +2081,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 10:00-18:00; Sa,Su off",
-   "description": "Open Mon–Fri 10:00–18:00; closed Sat and Sun.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 10:00-18:00; Sa,Su off"
   },
   {
    "id": "osm:node:4702177689",
@@ -2272,9 +2244,7 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Su-Mo 11:00-22:00; Tu-Sa 11:00-23:00",
-   "description": "Open Sun–Mon 11:00–22:00, Tue–Sat 11:00–23:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Su-Mo 11:00-22:00; Tu-Sa 11:00-23:00"
   },
   {
    "id": "osm:way:61189004",
@@ -2382,9 +2352,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 11:00-22:00; Sa 10:00-22:00; Su 10:00-20:00",
-   "description": "Open Mon–Fri 11:00–22:00, Sat 10:00–22:00, Sun 10:00–20:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 11:00-22:00; Sa 10:00-22:00; Su 10:00-20:00"
   },
   {
    "id": "osm:node:2471812217",
@@ -2424,9 +2392,7 @@
     "coffee_shop"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 10:00-19:00",
-   "description": "Open daily 10:00–19:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Su 10:00-19:00"
   },
   {
    "id": "osm:node:13953561984",
@@ -2616,9 +2582,7 @@
     "regional"
    ],
    "popular": true,
-   "openingHours": "Mo-Sa 17:00-23:00",
-   "description": "Open Mon–Sat 17:00–23:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Sa 17:00-23:00"
   },
   {
    "id": "osm:node:7262835127",
@@ -2687,9 +2651,7 @@
     "pancake"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 10:00-19:00",
-   "description": "Open daily 10:00–19:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Su 10:00-19:00"
   },
   {
    "id": "osm:node:4834792641",
@@ -2744,9 +2706,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00",
-   "description": "Open Mon–Fri 7:30–21:00, Sat–Sun 8:00–21:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Fr 07:30-21:00; Sa-Su 08:00-21:00"
   },
   {
    "id": "osm:node:9653953496",
@@ -2828,9 +2788,7 @@
     "pizza"
    ],
    "popular": true,
-   "openingHours": "Mo-Su 12:00-24:00",
-   "description": "Open daily 12:00–24:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Su 12:00-24:00"
   },
   {
    "id": "osm:node:6884305085",
@@ -4733,9 +4691,7 @@
     "independent": true
    },
    "popular": true,
-   "openingHours": "Mo-Sa 10:00-20:00; Su 11:00-18:00",
-   "description": "Open Mon–Sat 10:00–20:00, Sun 11:00–18:00.",
-   "descriptionSource": "osm"
+   "openingHours": "Mo-Sa 10:00-20:00; Su 11:00-18:00"
   },
   {
    "id": "osm:node:778694973",
@@ -6410,9 +6366,7 @@
     "quality": 0.8,
     "independent": true
    },
-   "popular": true,
-   "description": "Open Tue–Fri 10:00–18:00, Sat–Sun 11:00–18:00.",
-   "descriptionSource": "osm"
+   "popular": true
   },
   {
    "id": "osm:node:268631673",
