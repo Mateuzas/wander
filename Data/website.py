@@ -76,9 +76,12 @@ def about_place(entry, url, names):
     return any(t[:max(4, len(t) - 2)] in hay for t in tokens)
 
 
-def page_facts(entry, url, names):
-    """(title, description) of a homepage that is about the place, junk titles dropped; else (None, None)."""
-    if not entry or entry.get("status") != "ok" or not about_place(entry, url, names):
+def page_facts(entry, url, names, recheck_own_site=True):
+    """(title, description) of a homepage that is about the place, junk titles dropped; else (None, None).
+    The own-site check is repeated here so a NOT_OWN_DOMAINS change applies to cached entries too
+    (recheck_own_site=False: as before BE-17, for hooks.py rekey only)."""
+    if not entry or entry.get("status") != "ok" or (recheck_own_site and not is_own_site(url)) \
+            or not about_place(entry, url, names):
         return None, None
     title = entry.get("title")
     if title and (JUNK_TITLE.match(title.strip()) or len(_compact(title)) < 3):

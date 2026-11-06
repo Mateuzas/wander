@@ -7,6 +7,7 @@ The writing rules and the prompt live in Data/hooks/WRITING.md (read by this scr
     python3 Data/hooks.py export vilnius --out /tmp/facts-vilnius.jsonl [--offline] [--all]
     python3 Data/hooks.py merge vilnius answers.jsonl --written-by "claude-code (claude-opus-5-5)"
     python3 Data/hooks.py validate Data/hooks/vilnius.jsonl
+    python3 Data/hooks.py rekey vilnius
     python3 Data/hooks.py write vilnius --api [--limit N] [--effort low|medium] [--compare-effort 20]
 
 export   one JSON line per candidate place with no committed hook for its current facts:
@@ -16,6 +17,8 @@ merge    adds a writer's answers ({id, facts_hash, hook|null} per line) to the h
          after checking each against the rules and the current facts; rejected lines are listed
          and not merged.
 validate checks a hooks file: format, length, one sentence, banned words.
+rekey    one-off migration to the current facts_hash (v2, BE-17): re-keys committed rows whose
+         legacy hash matches today's facts exactly, using the cached homepages; rewrites no hook.
 write    OPTIONAL, off by default, never used in CI: writes hooks with the Anthropic API
          (official `anthropic` SDK, Data/requirements-hooks.txt) when ANTHROPIC_API_KEY is set.
 
@@ -92,11 +95,12 @@ def wiki_fact(summary):
     return out or text[:WIKI_FACT_CHARS]
 
 
-def facts(p, city_name, sites):
+def facts(p, city_name, sites, legacy=False):
     """The facts bundle a writer sees for a place: only data we hold, nothing derived from scores.
 
     `p` is a place from score.candidates(); `sites` is website.load_cache(). Keys with no value
-    are left out, so adding a source later changes only the places it has data for."""
+    are left out, so adding a source later changes only the places it has data for. legacy=True
+    builds the bundle as hash v1 saw it (rekey only)."""
     t = p["tags"]
     f = {"name": p["name"], "city": city_name, "category": CATEGORY_WORD[p["category"]],
          "kind": REASON_EXTRAS.sub("", p.get("reason") or "") or None, "type": p.get("type")}
@@ -114,16 +118,70 @@ def facts(p, city_name, sites):
     if p.get("ovt_category"):
         f["overture_category"] = p["ovt_category"].replace("_", " ")
     title, desc = website.page_facts(sites.get(p.get("site_url") or ""), p.get("site_url"),
-                                     (p["name"], p.get("original_name")))
+                                     (p["name"], p.get("original_name")), recheck_own_site=not legacy)
     if title:
         f["website_title"] = title
     if desc:
         f["website_description"] = desc
+    if p.get("site_url"):
+        f["website"] = website.domain(p["site_url"])
     return {k: v for k, v in f.items() if v}
 
 
+# The hash covers the facts that say what a place is, normalised, and not the homepage's title and
+# description. Those are context for the writer, but they flap between fetches with nothing changed
+# at the place: a timeout or bot wall drops them, a datacentre IP gets another language or a cookie
+# wall, marketing copy is rewritten (BE-17: 24 of 812 hooks went stale between the writing session
+# and the first nightly, all from refetched homepages). The site's domain stays in the hash: a new
+# website is a real change. A Wikipedia extract counts by its words only (punctuation, quotes and
+# spacing edits do not); a different word does.
+UNHASHED = frozenset({"website_title", "website_description"})
+LEGACY_V1_EXTRA = frozenset({"website"})  # keys added to the bundle after hash v1 (BE-17)
+_PUNCT = re.compile(r"[^\w\s]")
+
+
+def _norm(text):
+    """Text as hashed: NFKC, case-folded, whitespace collapsed."""
+    return " ".join(unicodedata.normalize("NFKC", str(text)).casefold().split())
+
+
+def _words(text):
+    """Only the words of a text: what a punctuation or spacing edit cannot change."""
+    return " ".join(_PUNCT.sub(" ", _norm(text)).split())
+
+
+def hash_basis(f):
+    """The substantive, normalised facts that facts_hash covers (see UNHASHED)."""
+    out = {}
+    for k, v in f.items():
+        if k in UNHASHED or not v:
+            continue
+        if k == "wikipedia":
+            v = _words(v)
+        elif k == "kind":
+            v = _norm(v).replace("well-known landmark", "landmark")  # sitelink count, not the place
+        elif isinstance(v, dict):
+            v = {_norm(a): _norm(b) for a, b in v.items()}
+        elif isinstance(v, list):
+            v = sorted({_norm(x) for x in v})
+        else:
+            v = _norm(v)
+        out[k] = v
+    return out
+
+
+def _sha16(obj):
+    return hashlib.sha256(json.dumps(obj, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
+
+
 def facts_hash(f):
-    return hashlib.sha256(json.dumps(f, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:16]
+    """The key a committed hook is valid for (v2, BE-17): sha256 of hash_basis(f), 16 hex."""
+    return _sha16(hash_basis(f))
+
+
+def legacy_facts_hash(f):
+    """Hash v1 (BE-15, until BE-17): the whole bundle as it was then, verbatim. Only `rekey` uses it."""
+    return _sha16({k: v for k, v in f.items() if k not in LEGACY_V1_EXTRA})
 
 
 # ---- Validation -----------------------------------------------------------------------------
@@ -283,6 +341,40 @@ def cmd_merge(args):
     for r in rejected:
         print(f"  ! {r}")
     return 1 if rejected else 0
+
+
+def rekey_rows(by_id, current, legacy):
+    """Migrate committed rows to the current facts_hash without rewriting any hook. `current` and
+    `legacy` are {id: facts} for today's data, built now and as hash v1 built them. A row is
+    re-keyed only when its hash is the v1 hash of exactly today's facts, i.e. the hook was written
+    for these facts; anything else is left alone (still stale: rewrite it). Returns (rows, counts)."""
+    counts = {"current": 0, "rekeyed": 0, "stale": 0, "not a candidate": 0}
+    out = {}
+    for pid, row in by_id.items():
+        f = current.get(pid)
+        if f is None:
+            counts["not a candidate"] += 1
+        elif row["facts_hash"] == facts_hash(f):
+            counts["current"] += 1
+        elif row["facts_hash"] == legacy_facts_hash(legacy[pid]):
+            row = {**row, "facts_hash": facts_hash(f)}
+            counts["rekeyed"] += 1
+        else:
+            counts["stale"] += 1
+        out[pid] = row
+    return out, counts
+
+
+def cmd_rekey(args):
+    import score  # score imports this module; import it here to avoid a cycle
+    ctx = score.candidates(args.city)
+    sites = website.load_cache(args.city)  # the cached homepages the hooks were written from
+    current = {p["id"]: facts(p, ctx.city["name"], sites) for p in ctx.pois}
+    legacy = {p["id"]: facts(p, ctx.city["name"], sites, legacy=True) for p in ctx.pois}
+    by_id, counts = rekey_rows(load(args.city), current, legacy)
+    write_hooks(args.city, by_id)
+    print(f"hooks rekey {args.city}: {counts}; {hooks_path(args.city).name} has {len(by_id)} lines")
+    return 0
 
 
 def cmd_validate(args):
@@ -446,6 +538,8 @@ def main():
     m.add_argument("city")
     m.add_argument("answers")
     m.add_argument("--written-by", required=True, help='e.g. "claude-code (claude-opus-5-5)"')
+    r = sub.add_parser("rekey", help="migrate committed hooks to the current facts_hash (BE-17); rewrites no hook")
+    r.add_argument("city")
     v = sub.add_parser("validate", help="check a hooks file")
     v.add_argument("file")
     w = sub.add_parser("write", help="OPTIONAL: write hooks with the Anthropic API (off by default)")
@@ -457,7 +551,8 @@ def main():
     w.add_argument("--wait", type=int, default=3 * 3600, help="seconds to wait for a batch")
     w.add_argument("--compare-effort", type=int, metavar="N", help="print low vs medium for N places; writes nothing")
     args = parser.parse_args()
-    return {"export": cmd_export, "merge": cmd_merge, "validate": cmd_validate, "write": cmd_write}[args.cmd](args)
+    return {"export": cmd_export, "merge": cmd_merge, "rekey": cmd_rekey, "validate": cmd_validate,
+            "write": cmd_write}[args.cmd](args)
 
 
 if __name__ == "__main__":
