@@ -18,6 +18,8 @@ final class WalkModel {
 
     /// Seconds between reroute attempts while still off route after a failure.
     static let rerouteRetryInterval: TimeInterval = 30
+    /// A stop this close ahead along the route counts as reached.
+    static let reachedMargin: Double = 30
 
     let destinationName: String
     private(set) var plan: WanderPlan
@@ -28,6 +30,8 @@ final class WalkModel {
     private(set) var rerouteFailed = false
     /// Highlights the walker skipped, from the "Up ahead" card or a place card.
     private(set) var skipped: Set<String> = []
+    /// Stops the walker has reached (swipe memory counts them as seen today).
+    private(set) var reached: Set<String> = []
 
     /// The "Up ahead" card, if one is showing.
     var nudge: Nudge? { phase == .walking ? update?.nudge : nil }
@@ -123,6 +127,10 @@ final class WalkModel {
 
     private func apply(_ update: WalkUpdate, at fix: LocationFix) {
         self.update = update
+        for highlight in plan.highlights where highlight.role == .waypoint
+            && highlight.distanceAlongRoute <= update.progress + Self.reachedMargin {
+            reached.insert(highlight.poi.id)
+        }
         for event in update.events {
             switch event {
             case .nudgeShown(let nudge) where skipped.contains(nudge.highlight.poi.id):
@@ -153,6 +161,7 @@ final class WalkModel {
 
     private func finish(_ phase: Phase) {
         guard self.phase == .walking else { return }
+        if phase == .arrived { reached.formUnion(plan.waypoints.map(\.id)) }
         self.phase = phase
         update?.nudge = nil
         UIApplication.shared.isIdleTimerDisabled = false
@@ -184,7 +193,7 @@ final class WalkModel {
                     baseline: old.baseline, waypoints: remaining, legs: legs, totalTime: total,
                     extraTime: total - old.baseline.duration, highlights: [], noDetourFit: false,
                     candidates: old.candidates)
-                rerouted.highlights = PlanEditor.highlights(
+                rerouted.highlights = Self.highlights(
                     along: rerouted.polyline, waypoints: remaining, pois: pois, interests: interests)
                     .filter { !seen.contains($0.poi.id) || $0.role == .waypoint }
                 plan = rerouted
@@ -220,5 +229,23 @@ final class WalkModel {
         case nil: break
         }
         return text
+    }
+}
+
+extension WalkModel {
+    /// Waypoints plus POIs within the pass-by radius of `line`, ordered along it.
+    static func highlights(along line: [Coordinate], waypoints: [POI], pois: [POI],
+                           interests: Set<POICategory>) -> [Highlight] {
+        let waypointIDs = Set(waypoints.map(\.id))
+        var result: [Highlight] = []
+        for poi in pois where interests.contains(poi.category) || waypointIDs.contains(poi.id) {
+            let near = RouteGeometry.nearest(poi.coordinate, on: line)
+            if waypointIDs.contains(poi.id) {
+                result.append(Highlight(poi: poi, role: .waypoint, distanceAlongRoute: near.along, distanceFromRoute: near.distance))
+            } else if near.distance <= PlannerConfig.default.passbyRadius {
+                result.append(Highlight(poi: poi, role: .passby, distanceAlongRoute: near.along, distanceFromRoute: near.distance))
+            }
+        }
+        return result.sorted { ($0.distanceAlongRoute, $0.poi.id) < ($1.distanceAlongRoute, $1.poi.id) }
     }
 }
