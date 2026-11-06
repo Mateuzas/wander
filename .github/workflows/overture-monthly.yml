@@ -4,12 +4,12 @@ name: Overture monthly
 # Data/cities.json from the latest (or a chosen) Overture Maps release, and open a
 # PR with the change. Overture data never auto-merges: a person reviews and merges it.
 #
-#   python3 Data/overture_extract.py <city> --release <release> --out Data/sources/overture/<city>.json
+#   python3 Data/overture_extract.py <city> --release <input> --out Data/sources/overture/<city>.json
 #
-# "latest" is resolved to a concrete release (stac.overturemaps.org, the entry marked
-# latest) before extracting, so every city in one run uses the same release and the
-# branch is named after it: data/overture-<release>. If the files are unchanged the run
-# ends green with a summary and opens nothing. If the branch already has an open PR
+# The extractor resolves "latest" itself; the run reads the release back from the files
+# (every city must agree) and names the branch after it: data/overture-<release>.
+# A file that differs from main only in its "generated" date counts as unchanged. If no
+# file changed the run ends green with a summary and opens nothing. If the branch already has an open PR
 # (a re-run), the branch is force-pushed and the PR body updated.
 #
 # The PR is opened with this job's GITHUB_TOKEN (no PAT). GitHub does not start other
@@ -64,89 +64,83 @@ jobs:
           python3 -m pip install -r Data/requirements-overture.txt
           python3 -m pip list 2>/dev/null | grep -i duckdb
 
-      - name: Resolve release
-        id: release
+      - name: Extract every city
         run: |
           set -euo pipefail
           if [[ ! "$RELEASE_INPUT" =~ ^(latest|[0-9]{4}-[0-9]{2}-[0-9]{2}\.[0-9]+)$ ]]; then
             echo "::error::release must be \"latest\" or YYYY-MM-DD.N, got: $RELEASE_INPUT"; exit 1
           fi
-          release="$RELEASE_INPUT"
-          if [[ "$release" == latest ]]; then
-            release="$(curl -sS -L --retry 3 --retry-all-errors https://stac.overturemaps.org/catalog.json \
-              | python3 -c 'import json,sys; print(next(l["href"].rstrip("/").split("/")[-2] for l in json.load(sys.stdin)["links"] if l.get("latest")))')"
-          fi
-          [[ "$release" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[0-9]+$ ]] || { echo "::error::could not resolve release: $release"; exit 1; }
-          echo "Release: $release (input: $RELEASE_INPUT)"
-          echo "release=$release" >> "$GITHUB_OUTPUT"
-
-      - name: Extract every city
-        env:
-          RELEASE: ${{ steps.release.outputs.release }}
-        run: |
-          set -euo pipefail
           mkdir -p Data/sources/overture
           for city in $(python3 -c 'import json; print(" ".join(sorted(json.load(open("Data/cities.json")))))'); do
             out="Data/sources/overture/$city.json"
             echo "::group::$city"
-            echo "python3 Data/overture_extract.py $city --release $RELEASE --out $out"
-            python3 Data/overture_extract.py "$city" --release "$RELEASE" --out "$out"
+            echo "python3 Data/overture_extract.py $city --release $RELEASE_INPUT --out $out"
+            python3 Data/overture_extract.py "$city" --release "$RELEASE_INPUT" --out "$out"
             ls -l "$out"
             echo "::endgroup::"
           done
 
-      # Per city: place count and size, before (HEAD) and after. Written to the step
-      # summary and reused as the PR body.
+      # Reads the release back from the files (they must all agree), compares each file
+      # with HEAD ignoring the extractor's "generated" date, restores files that only
+      # differ in that date, and writes per-city counts and sizes to the step summary
+      # (reused as the PR body).
       - name: Summarise
         id: summary
-        env:
-          RELEASE: ${{ steps.release.outputs.release }}
         run: |
           set -euo pipefail
-          git add -A Data/sources/overture
-          changed="$(git diff --cached --name-only -- Data/sources/overture | wc -l | tr -d ' ')"
-          echo "changed=$changed" >> "$GITHUB_OUTPUT"
-          python3 - "$RELEASE" "$changed" > "$RUNNER_TEMP/summary.md" <<'PY'
-          import json, os, subprocess, sys
-          release, changed = sys.argv[1], int(sys.argv[2])
+          python3 - > "$RUNNER_TEMP/summary.md" <<'PY'
+          import json, os, subprocess
 
-          def count(raw):
-              if raw is None:
-                  return None
-              data = json.loads(raw)
-              if isinstance(data, dict):
-                  data = data.get("places", next((v for v in data.values() if isinstance(v, list)), []))
-              return len(data)
+          def load(raw):
+              return None if raw is None else json.loads(raw)
 
           def head(path):
               r = subprocess.run(["git", "show", f"HEAD:{path}"], capture_output=True)
               return r.stdout if r.returncode == 0 else None
 
-          def fmt(n):
-              return "–" if n is None else f"{n:,}"
+          def same(a, b):
+              strip = lambda d: {k: v for k, v in d.items() if k != "generated"}
+              return a is not None and strip(a) == strip(b)
 
-          def delta(a, b):
-              return "new" if a is None else f"{b - a:+,}"
+          fmt = lambda n: "–" if n is None else f"{n:,}"
+          delta = lambda a, b: "new" if a is None else f"{b - a:+,}"
 
           cities = sorted(json.load(open("Data/cities.json")))
-          print(f"## Overture places {release}\n")
-          print("| city | places | Δ places | size (bytes) | Δ size |")
-          print("|---|---:|---:|---:|---:|")
+          rows, changed, releases = [], [], set()
           for c in cities:
               p = f"Data/sources/overture/{c}.json"
-              old, new = head(p), open(p, "rb").read()
-              oc, nc = count(old), count(new)
-              os_, ns = (None if old is None else len(old)), len(new)
-              print(f"| {c} | {fmt(nc)} | {delta(oc, nc)} | {fmt(ns)} | {delta(os_, ns)} |")
+              old_raw, new_raw = head(p), open(p, "rb").read()
+              old, new = load(old_raw), load(new_raw)
+              releases.add(new["release"])
+              if same(old, new):
+                  subprocess.run(["git", "checkout", "HEAD", "--", p], check=True)
+                  new_raw = old_raw
+              else:
+                  changed.append(c)
+              oc = None if old is None else len(old["places"])
+              osz = None if old_raw is None else len(old_raw)
+              prev = "–" if old is None else old["release"]
+              rows.append(f"| {c} | {prev} | {fmt(len(new['places']))} | {delta(oc, len(new['places']))} "
+                          f"| {fmt(len(new_raw))} | {delta(osz, len(new_raw))} | {'yes' if c in changed else 'no'} |")
+          if len(releases) != 1:
+              raise SystemExit(f"cities were extracted from different releases: {sorted(releases)}")
+          release = releases.pop()
+          print(f"## Overture places {release}\n")
+          print("| city | previous release | places | Δ places | size (bytes) | Δ size | changed |")
+          print("|---|---|---:|---:|---:|---:|---|")
+          print("\n".join(rows))
           print()
-          print(f"{changed} file(s) changed." if changed else "No changes: nothing to open.")
+          print(f"{len(changed)} file(s) changed: {', '.join(changed)}." if changed
+                else "No changes (ignoring the generated date): no PR opened.")
+          with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+              out.write(f"release={release}\nchanged={len(changed)}\n")
           PY
-          cat "$RUNNER_TEMP/summary.md" | tee -a "$GITHUB_STEP_SUMMARY"
+          tee -a "$GITHUB_STEP_SUMMARY" < "$RUNNER_TEMP/summary.md"
 
       - name: Open PR
         if: steps.summary.outputs.changed != '0'
         env:
-          RELEASE: ${{ steps.release.outputs.release }}
+          RELEASE: ${{ steps.summary.outputs.release }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -euo pipefail
