@@ -1,10 +1,13 @@
 """Step 3: score POIs, apply manual curation, write the app's pois-<city>.json (PLAN.md 5.3-5.5).
 
-    python3 score.py vilnius
+    python3 score.py vilnius                        # the app's bundled file
+    python3 score.py vilnius --out /tmp/pois.json   # elsewhere (nightly job, ADR 013)
 
 Reads cache/<city>/enriched.json and curation.csv.
 Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
+With --out it writes only the given file: no review CSV, nothing inside the repo.
 """
+import argparse
 import csv
 import datetime
 import json
@@ -396,9 +399,12 @@ def dedupe(pois):
 
 
 def main():
-    if len(sys.argv) != 2:
-        sys.exit("usage: python3 score.py <city>")
-    slug = sys.argv[1]
+    parser = argparse.ArgumentParser(description="Score POIs and write pois-<city>.json.")
+    parser.add_argument("city")
+    parser.add_argument("--out", type=Path, help="output file (default: App/Wander/Resources/pois-<city>.json); "
+                                                 "skips the review CSV")
+    args = parser.parse_args()
+    slug = args.city
     city = load_city(slug)
     pois = json.loads((cache_dir(slug) / "enriched.json").read_text())["pois"]
     pct = photo_percentiles(pois)
@@ -484,8 +490,8 @@ def main():
                 row["descriptionUrl"] = described[2]
         out_pois.append(row)
 
-    RESOURCES.mkdir(parents=True, exist_ok=True)
-    out = RESOURCES / f"pois-{slug}.json"
+    out = args.out or RESOURCES / f"pois-{slug}.json"
+    out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({
         "city": city["name"],
         "generated": datetime.date.today().isoformat(),
@@ -493,18 +499,7 @@ def main():
         "pois": out_pois,
     }, ensure_ascii=False, indent=1))
 
-    review_dir = DATA / "review"
-    review_dir.mkdir(exist_ok=True)
-    review = review_dir / f"{slug}-review.csv"
-    review_rows = [p for cat, n in REVIEW_PER_CATEGORY.items()
-                   for p in [q for q in pois if q["category"] == cat][:n]]
-    with review.open("w", newline="") as f:
-        w = csv.writer(f)
-        w.writerow(["rank", "osm_id", "name", "original_name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
-        for i, p in enumerate(review_rows, 1):
-            typ, num = p["id"].split(":")[1:]
-            w.writerow([i, p["id"], p["name"], p["original_name"], p["category"], p["score"], p["reason"],
-                        p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
+    review = None if args.out else write_review_csv(slug, pois)
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
@@ -531,8 +526,32 @@ def main():
     for r in described.values():
         sources[r["descriptionSource"]] = sources.get(r["descriptionSource"], 0) + 1
     print(f"  descriptions: {len(described)} {sources}")
-    print(f"  wrote {out.relative_to(DATA.parent)} ({out.stat().st_size // 1024} KB)")
-    print(f"  wrote {review.relative_to(DATA.parent)}")
+    print(f"  wrote {display_path(out)} ({out.stat().st_size // 1024} KB)")
+    if review:
+        print(f"  wrote {display_path(review)}")
+
+
+def display_path(path):
+    try:
+        return path.resolve().relative_to(DATA.parent)
+    except ValueError:
+        return path
+
+
+def write_review_csv(slug, pois):
+    review_dir = DATA / "review"
+    review_dir.mkdir(exist_ok=True)
+    review = review_dir / f"{slug}-review.csv"
+    review_rows = [p for cat, n in REVIEW_PER_CATEGORY.items()
+                   for p in [q for q in pois if q["category"] == cat][:n]]
+    with review.open("w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["rank", "osm_id", "name", "original_name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
+        for i, p in enumerate(review_rows, 1):
+            typ, num = p["id"].split(":")[1:]
+            w.writerow([i, p["id"], p["name"], p["original_name"], p["category"], p["score"], p["reason"],
+                        p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
+    return review
 
 
 if __name__ == "__main__":
