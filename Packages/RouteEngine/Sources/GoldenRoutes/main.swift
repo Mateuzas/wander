@@ -14,6 +14,7 @@ import RouteEngine
 //              are added to PlanRequest.seen for the routes after it
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
+//   --worth    override PlannerConfig.minValuePerMinute (for calibration)
 
 struct GoldenFile: Decodable {
     struct Route: Decodable {
@@ -47,6 +48,7 @@ let showPasses = args.contains("--passes")
 let sequence = args.contains("--sequence")
 args.removeAll { $0 == "--streets" || $0 == "--passes" || $0 == "--sequence" }
 let timeArg = option("--time")
+let worthArg = option("--worth")
 
 let goldenURL = URL(fileURLWithPath: args.first ?? "golden_routes.json")
 guard let goldenData = try? Data(contentsOf: goldenURL),
@@ -127,7 +129,12 @@ print(pad("#", 3) + pad("Route", 36) + pad("Mode", 12) + lpad("Fast", 6) + lpad(
       + lpad("Wp", 4) + lpad("Hl", 4) + "  Waypoints (value, +min)")
 print(String(repeating: "─", count: 140))
 
-let planner = Planner()
+var config = PlannerConfig.default
+if let worthArg {
+    guard let worth = Double(worthArg) else { fail("bad --worth \(worthArg)") }
+    config.minValuePerMinute = worth
+}
+let planner = Planner(config: config)
 let cap = planner.config.recommendedMaxExtra
 let provider: WalkingTimeProvider = useStreets ? StreetWalkingTime() : HaversineWalkingTime()
 var withinCap = 0, twoHighlights = 0, noFit: [String] = []
