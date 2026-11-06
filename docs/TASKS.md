@@ -62,6 +62,15 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | FE-16 / OPS-6 | Frontender / DevOps | Live Activity navigation (Dynamic Island, Lock Screen), widget target, background location during walks (ADR 009) | 6 |
 | – | all | Social "hangout" mode (ADR 011) | 7 |
 
+## Phase 4b: Swipe walks (ADR 016) and crowd ratings (ADR 017); after the hooks and photos batch
+
+| Id | Owner | Task | Status |
+|---|---|---|---|
+| ARC-9 | Architect | Iterate open points of ADR 016 with the user; contract for the new engine API and deck | todo |
+| BE-16 | Backender | Engine: must-visit plus optional planning, open end or destination, ordering, add-on insertion, deck and estimate | todo |
+| FE-23 | Frontender | Kinds → area (presets + circle) → swipe deck → walk summary + add-ons; remove Direct, Recommended, moods; local swipe memory | todo |
+| ARC-10 | Architect | Crowd ratings design: backend choice, privacy notice, App Attest, aggregation into `signals.crowd` | todo |
+
 ## Backlog
 
 | Id | Owner | Task | Status |
