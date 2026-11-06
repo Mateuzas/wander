@@ -17,6 +17,9 @@ name: Overture monthly
 # that PR by themselves. To run them: push an empty commit to the branch
 #   git commit --allow-empty -m "ci: run checks" && git push
 # or close and reopen the PR.
+# Opening the PR needs the repo setting Settings > Actions > General > Workflow
+# permissions > "Allow GitHub Actions to create and approve pull requests". Without it
+# the branch is pushed and the run fails with a link to open the PR by hand.
 #
 # Overture's monthly release usually lands around the third week; the 3rd of the next
 # month leaves margin. Data is read anonymously from Overture's public S3 bucket.
@@ -169,7 +172,16 @@ jobs:
             gh pr edit "$existing" --title "$title" --body-file "$RUNNER_TEMP/body.md"
             url="$existing"
           else
-            url="$(gh pr create --base "$BASE" --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/body.md")"
+            # Needs Settings > Actions > General > Workflow permissions > "Allow GitHub Actions
+            # to create and approve pull requests". Without it the branch is still pushed.
+            if ! url="$(gh pr create --base "$BASE" --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/body.md")"; then
+              compare="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/$BASE...$branch?expand=1"
+              { echo; echo "**Could not open the PR.** Branch \`$branch\` is pushed: [open it by hand]($compare)."
+                echo "To let this workflow open PRs, enable Settings > Actions > General > Workflow permissions >"
+                echo "\"Allow GitHub Actions to create and approve pull requests\"."; } >> "$GITHUB_STEP_SUMMARY"
+              echo "::error::gh pr create failed; branch $branch is pushed: $compare (enable 'Allow GitHub Actions to create and approve pull requests')"
+              exit 1
+            fi
           fi
           echo "PR: $url"
           { echo; echo "PR: $url"; } >> "$GITHUB_STEP_SUMMARY"
