@@ -94,13 +94,15 @@ enum Golden {
         return (file.routes, pois)
     }
 
-    /// Explorer plan for golden route `index`, on L-shaped streets.
-    static func explorerPlan(_ index: Int) async throws -> WanderPlan {
+    /// A long detour plan (25 min, up to 5 stops, no worth-it pass) for golden
+    /// route `index`, on L-shaped streets. A fixed budget, not `.recommended`,
+    /// so these tracker walks don't change whenever the engine is retuned.
+    static func detourPlan(_ index: Int) async throws -> WanderPlan {
         let golden = try load()
         let route = golden.routes[index]
         let request = PlanRequest(origin: Coordinate(lat: route.from[0], lon: route.from[1]),
                                   destination: Coordinate(lat: route.to[0], lon: route.to[1]),
-                                  mode: .explorer, pois: golden.pois)
+                                  budget: 25 * 60, pois: golden.pois, maxWaypoints: 5)
         return try await Planner().plan(request, provider: LShapedWalkingTime())
     }
 }

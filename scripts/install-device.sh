@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# Build Wander (Debug) for a connected iPhone and install it with devicectl.
+# Build Wander (Debug) for a paired iPhone (USB or Wi-Fi) and install it with devicectl.
 #
 #   scripts/install-device.sh [--device <udid|name>] [--launch]
 #
-#   --device <udid|name>  use this paired iPhone instead of the first connected one
+#   --device <udid|name>  use this paired iPhone instead of the first reachable one
+#                         (USB is preferred over Wi-Fi)
 #   --launch              open the app after installing (a locked phone only warns)
 #   -h, --help            show this help
 #
@@ -21,7 +22,7 @@ BUNDLE_ID="com.mateuzas.wander"
 die() { echo "install-device: error: $*" >&2; exit 1; }
 warn() { echo "install-device: warning: $*" >&2; }
 info() { echo "install-device: $*"; }
-usage() { sed -n '2,13p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '2,14p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'; }
 
 device_arg=""
 launch=0
@@ -48,38 +49,58 @@ xcrun devicectl list devices --quiet --json-output "$tmp/devices.json" >/dev/nul
   || die "\`xcrun devicectl list devices\` failed:
 $(cat "$tmp/list.err")"
 
-# Prints "<udid>\t<name>" for the chosen phone, or an error code: none | not-connected | no-match.
+# Prints "<udid>\t<name>\t<transport>" for the chosen phone, or an error code:
+# none | not-connected | no-match.
+#
+# A phone is installable when it is paired and devicectl can reach it: tunnelState
+# "connected" (State column "connected") or "disconnected" (State "available (paired)",
+# i.e. reachable over USB or Wi-Fi, devicectl opens the tunnel on demand). "unavailable"
+# means the Mac cannot see it. Among installable phones, USB ("wired") wins over Wi-Fi
+# ("localNetwork"), then an open tunnel over one that still has to be opened.
 pick="$(python3 - "$tmp/devices.json" "$device_arg" <<'PY'
 import json, sys
 path, want = sys.argv[1], sys.argv[2]
 devices = json.load(open(path)).get("result", {}).get("devices", [])
+TRANSPORT = {"wired": "USB", "localNetwork": "Wi-Fi", "network": "Wi-Fi"}
 phones = []
 for d in devices:
     hw = d.get("hardwareProperties", {})
     if hw.get("platform") != "iOS" or hw.get("reality") != "physical" or not hw.get("udid"):
         continue
+    conn = d.get("connectionProperties", {})
+    tunnel = conn.get("tunnelState")
+    paired = conn.get("pairingState", "paired") == "paired"
+    transport = conn.get("transportType") or ""
     phones.append({
         "udid": hw["udid"],
         "name": d.get("deviceProperties", {}).get("name", "?"),
-        "connected": d.get("connectionProperties", {}).get("tunnelState") == "connected",
+        "reachable": paired and tunnel in ("connected", "connecting", "disconnected"),
+        "rank": (transport != "wired", tunnel != "connected"),
+        "transport": TRANSPORT.get(transport, transport or "unknown transport"),
+        "state": "connected" if tunnel == "connected" else "available (paired)",
     })
+def out(p):
+    print(f'{p["udid"]}\t{p["name"]}\t{p["transport"]}, {p["state"]}')
 if want:
     match = [p for p in phones if want in (p["udid"], p["name"])]
     if not match:
         print("no-match\t" + ", ".join(f'{p["name"]} ({p["udid"]})' for p in phones))
     else:
-        print(f'{match[0]["udid"]}\t{match[0]["name"]}')
+        out(match[0])
     sys.exit(0)
 if not phones:
     print("none\t"); sys.exit(0)
-connected = [p for p in phones if p["connected"]]
-if not connected:
+reachable = sorted((p for p in phones if p["reachable"]), key=lambda p: p["rank"])
+if not reachable:
     print("not-connected\t" + ", ".join(f'{p["name"]} ({p["udid"]})' for p in phones)); sys.exit(0)
-print(f'{connected[0]["udid"]}\t{connected[0]["name"]}')
+out(reachable[0])
 PY
 )"
 udid="${pick%%$'\t'*}"
-name="${pick#*$'\t'}"
+rest="${pick#*$'\t'}"
+name="${rest%%$'\t'*}"
+transport=""
+[[ "$rest" == *$'\t'* ]] && transport="${rest#*$'\t'}"
 case "$udid" in
   none) die "no iPhone is paired with this Mac.
   Connect it by USB, tap Trust on the phone, enable Developer Mode, then try again." ;;
@@ -88,7 +109,7 @@ case "$udid" in
   or pass --device <udid|name> to try a specific one anyway." ;;
   no-match) die "no paired iPhone matches '$device_arg' (paired: ${name:-none})." ;;
 esac
-info "device: $name ($udid)"
+info "device: $name ($udid) via ${transport:-unknown transport}"
 
 # Explain failures that mention a locked phone; otherwise show devicectl's own output.
 locked_hint() { grep -qi 'locked' "$1"; }

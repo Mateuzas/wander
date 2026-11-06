@@ -10,38 +10,42 @@ public struct Planner: Sendable {
 
     /// Builds a plan. Real routing goes only through `provider`; detours are
     /// estimated offline with `config.estimator`. When a set fits that has a
-    /// stop none of the `distinctFrom` plans has, the plan uses one (see `plans`).
+    /// stop none of the `distinctFrom` plans has, the plan uses one.
     public func plan(_ request: PlanRequest, provider: WalkingTimeProvider,
                      distinctFrom others: [WanderPlan] = []) async throws -> WanderPlan {
         try await plan(request, store: LegStore(provider: provider), taken: TakenStops(others.map(\.waypoints)))
     }
 
-    /// Plans several modes for one trip, smallest budget first. Each plan
-    /// includes a stop the smaller modes don't have whenever one fits, so
-    /// Relaxed and Explorer don't show the same walk. Real legs are shared,
-    /// so the baseline and common legs cost one provider request each.
-    /// `request.budget` and `request.maxWaypoints` are replaced per mode.
-    public func plans(_ request: PlanRequest, modes: [Mode] = Mode.allCases,
+    /// Plans several modes for one trip (Direct first). Real legs are shared,
+    /// so the baseline costs one provider request for both.
+    /// `request.mode`, `request.budget` and `request.maxWaypoints` are replaced per mode.
+    public func plans(_ request: PlanRequest, modes: [Mode] = [.direct, .recommended],
                       provider: WalkingTimeProvider) async throws -> [Mode: WanderPlan] {
         let store = LegStore(provider: provider)
         var plans: [Mode: WanderPlan] = [:]
-        var taken = TakenStops()
-        for mode in modes.sorted(by: { $0.budget < $1.budget }) {
+        for mode in Mode.allCases where modes.contains(mode) {
             var modeRequest = request
-            modeRequest.budget = mode.budget
+            modeRequest.mode = mode
+            modeRequest.budget = config.budget(for: mode)
             modeRequest.maxWaypoints = mode.maxWaypoints
-            let plan = try await plan(modeRequest, store: store, taken: taken)
-            plans[mode] = plan
-            taken.add(plan.waypoints)
+            plans[mode] = try await plan(modeRequest, store: store, taken: TakenStops())
         }
         return plans
     }
 
     func plan(_ request: PlanRequest, store: LegStore, taken: TakenStops) async throws -> WanderPlan {
+        var request = request
+        if let mode = request.mode {
+            request.budget = config.budget(for: mode)
+            request.maxWaypoints = mode.maxWaypoints
+        }
         let scorer = Scorer(config: config, interests: request.interests, weights: request.weights,
                             seen: request.seen)
         let estimator = config.estimator
-        let selector = WaypointSelector(config: config, scorer: scorer)
+        // Recommended charges each estimated minute, so the set it picks is
+        // the one most worth its time, not the one that fills the cap.
+        let selector = WaypointSelector(config: config, scorer: scorer,
+                                        costPerMinute: request.mode == .recommended ? config.minValuePerMinute : 0)
         let validator = Validator(config: config, scorer: scorer)
         let maxWaypoints = request.maxWaypoints ?? config.maxWaypoints
 
@@ -97,7 +101,7 @@ public struct Planner: Sendable {
                 budget: estimatedExtra + (request.budget - realExtra) * scale,
                 maxWaypoints: maxWaypoints, initial: verified.waypoints, taken: taken)
             let added = more.waypoints.filter { poi in !verified.waypoints.contains { $0.id == poi.id } }
-            // The selector already prefers sets with a stop smaller modes lack.
+            // The selector already prefers sets with a stop the `taken` plans lack.
             guard !added.isEmpty else { break }
             let legs = try await store.legs(origin: request.origin, waypoints: more.waypoints,
                                             destination: request.destination)
@@ -114,11 +118,31 @@ public struct Planner: Sendable {
             tried.formUnion(freed.map(\.id))
         }
 
+        // 9. Worth it (Recommended): drop stops whose real minutes buy too little.
+        var notWorthIt: [POI] = []
+        let recommended = request.mode == .recommended
+        if recommended {
+            let result = try await dropNotWorthIt(origin: request.origin, destination: request.destination,
+                                                  waypoints: verified.waypoints, legs: verified.legs,
+                                                  scorer: scorer, store: store)
+            verified.waypoints = result.waypoints
+            verified.legs = result.legs
+            notWorthIt = result.dropped
+            // Nothing worth a detour: the plan is Direct, highlights included.
+            if verified.waypoints.isEmpty {
+                verified.legs = [baseline]
+                freed = []
+            }
+        }
+
         let totalTime = verified.legs.reduce(0) { $0 + $1.duration }
+        let noDetourFit = recommended
+            ? verified.waypoints.isEmpty
+            : request.budget > 0 && verified.waypoints.isEmpty && freed.isEmpty
         var plan = WanderPlan(
             baseline: baseline, waypoints: verified.waypoints, legs: verified.legs,
             totalTime: totalTime, extraTime: totalTime - baseline.duration,
-            highlights: [], noDetourFit: request.budget > 0 && verified.waypoints.isEmpty && freed.isEmpty,
+            highlights: [], noDetourFit: noDetourFit,
             candidates: [])
 
         // Highlights: waypoints plus pass-by POIs along the final route.
@@ -147,6 +171,7 @@ public struct Planner: Sendable {
         // Debug record per POI.
         let freebieIDs = Set(filtered.freebies.map(\.poi.id))
         let droppedIDs = Set(verified.dropped.map(\.id))
+        let notWorthIDs = Set(notWorthIt.map(\.id))
         plan.candidates = request.pois.map { poi in
             let status: CandidateStatus
             if waypointIDs.contains(poi.id) {
@@ -157,6 +182,8 @@ public struct Planner: Sendable {
                 status = .rejected(reason)
             } else if freebieIDs.contains(poi.id) {
                 status = .rejected(.bypassedByDetour)
+            } else if notWorthIDs.contains(poi.id) {
+                status = .rejected(.notWorthIt)
             } else if droppedIDs.contains(poi.id) {
                 status = .rejected(.failedVerification)
             } else {
@@ -166,6 +193,58 @@ public struct Planner: Sendable {
                                   estimatedExtraTime: inserted.bestExtra[poi.id], status: status)
         }
         return plan
+    }
+
+    /// Recommended's worth-it pass: while the stop with the lowest value per
+    /// real marginal minute is below `minValuePerMinute`, drop it and walk the
+    /// bypass leg instead. A stop's marginal minutes are what removing it would
+    /// save: its two real legs minus the real leg past it. Bypass legs are
+    /// cached, so each round asks the provider only for legs next to the last
+    /// drop; at most `maxWorthChecks` requests, after which marginals come
+    /// from the estimate scaled to the real legs.
+    private func dropNotWorthIt(origin: Coordinate, destination: Coordinate, waypoints: [POI], legs: [Leg],
+                                scorer: Scorer, store: LegStore)
+        async throws -> (waypoints: [POI], legs: [Leg], dropped: [POI]) {
+        let estimator = config.estimator
+        var waypoints = waypoints, legs = legs, dropped: [POI] = []
+        var bypasses: [String: Leg] = [:]   // "i>j" of stop ids → real leg
+        var checks = 0
+        func key(_ a: Coordinate, _ b: Coordinate) -> String { "\(a.lat),\(a.lon)>\(b.lat),\(b.lon)" }
+        while !waypoints.isEmpty {
+            let stops = [origin] + waypoints.map(\.coordinate) + [destination]
+            let realTotal = legs.reduce(0) { $0 + $1.duration }
+            let estimatedTotal = zip(stops, stops.dropFirst()).reduce(0) { $0 + estimator.seconds(from: $1.0, to: $1.1) }
+            let scale = estimatedTotal > 0 ? realTotal / estimatedTotal : 1   // real seconds per estimated second
+            var weakest: (index: Int, perMinute: Double)?
+            for i in waypoints.indices {
+                let a = stops[i], b = stops[i + 2]
+                let bypass: TimeInterval
+                if let leg = bypasses[key(a, b)] {
+                    bypass = leg.duration
+                } else if checks < config.maxWorthChecks {
+                    checks += 1
+                    let leg = try await store.leg(from: a, to: b)
+                    bypasses[key(a, b)] = leg
+                    bypass = leg.duration
+                } else {
+                    bypass = estimator.seconds(from: a, to: b) * scale
+                }
+                let marginal = legs[i].duration + legs[i + 1].duration - bypass
+                let perMinute = scorer.value(waypoints[i]) / (max(marginal, config.minExtraTimeForRatio) / 60)
+                if weakest.map({ perMinute < $0.perMinute }) ?? true { weakest = (i, perMinute) }
+            }
+            guard let weakest, weakest.perMinute < config.minValuePerMinute else { break }
+            let i = weakest.index
+            let bypass: Leg
+            if let leg = bypasses[key(stops[i], stops[i + 2])] {
+                bypass = leg
+            } else {
+                bypass = try await store.leg(from: stops[i], to: stops[i + 2])
+            }
+            dropped.append(waypoints.remove(at: i))
+            legs.replaceSubrange(i...(i + 1), with: [bypass])
+        }
+        return (waypoints, legs, dropped)
     }
 
     /// Removes waypoints whose real detour is under `freeBelow`, one at a
@@ -254,10 +333,27 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Partial waypoint sets kept per step of the selection search. Higher is
     /// closer to the best set and slower.
     public var beamWidth: Int = 16
+    /// Seconds. Most extra time Recommended may add over the fast route; the
+    /// engine picks how much of it to use.
+    public var recommendedMaxExtra: TimeInterval = 25 * 60
+    /// Value points (0–100 scale) per extra minute a Recommended stop must
+    /// bring to stay in the plan, measured on its real marginal detour.
+    public var minValuePerMinute: Double = 6
+    /// Most provider requests per plan for the worth-it pass (bypass legs used
+    /// to measure each Recommended stop's real marginal minutes).
+    public var maxWorthChecks: Int = 10
     /// Offline estimator for the corridor filter and insertion.
     public var estimator: HaversineWalkingTime = HaversineWalkingTime()
 
     public static let `default` = PlannerConfig()
+
+    /// Extra seconds allowed for `mode`: 0 for Direct, `recommendedMaxExtra` for Recommended.
+    public func budget(for mode: Mode) -> TimeInterval {
+        switch mode {
+        case .direct: 0
+        case .recommended: recommendedMaxExtra
+        }
+    }
 
     /// Waypoint cap for `category` given the request's interests and how many
     /// waypoints the plan may have. With more slots the cap grows (3 of 5), so

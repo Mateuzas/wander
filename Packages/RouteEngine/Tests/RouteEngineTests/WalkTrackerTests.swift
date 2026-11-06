@@ -6,7 +6,7 @@ struct WalkTrackerTests {
     // MARK: Golden-route walks
 
     @Test(arguments: Array(0..<20)) func noisyWalkAlongGoldenRoute(seed: Int) async throws {
-        let plan = try await Golden.explorerPlan(seed % 10)
+        let plan = try await Golden.detourPlan(seed % 10)
         #expect(plan.waypoints.count > 0)
         var tracker = WalkTracker(plan: plan)
         var noise = GPSNoise(rng: SplitMix64(seed: UInt64(seed)), sigma: 8)
@@ -61,7 +61,7 @@ struct WalkTrackerTests {
     }
 
     @Test(arguments: Array(0..<20)) func wrongTurnTriggersOffRouteExactlyOnce(seed: Int) async throws {
-        let plan = try await Golden.explorerPlan(seed % 10)
+        let plan = try await Golden.detourPlan(seed % 10)
         var tracker = WalkTracker(plan: plan)
         let route = samples(along: plan.polyline, every: 1.4)
         let turnAt = route.count * 2 / 5
