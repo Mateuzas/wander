@@ -28,6 +28,10 @@ on:
         description: "Re-fetch from the sources (--refresh); off reuses the cache only"
         type: boolean
         default: true
+      allow_growth:
+        description: "Publish gate --allow-growth: count increases above +25% pass (decreases stay gated). One-time, for a new source (ADR 014)"
+        type: boolean
+        default: false
 
 concurrency:
   group: nightly-data
@@ -68,6 +72,8 @@ jobs:
       OUT: ${{ github.workspace }}/out
       # Scheduled runs have no inputs: they always refresh.
       REFRESH: ${{ github.event_name == 'schedule' || inputs.refresh }}
+      # Scheduled runs never allow growth.
+      ALLOW_GROWTH: ${{ github.event_name == 'workflow_dispatch' && inputs.allow_growth }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -133,9 +139,13 @@ jobs:
           set -uo pipefail
           # Actions runs bash with -e: capture the exit code so the summary is written on failure too.
           status=0
-          python3 Data/publish_gate.py --new "$OUT/pois-$CITY.json" --previous "$PREVIOUS" > "$RUNNER_TEMP/gate.md" || status=$?
+          args=(--new "$OUT/pois-$CITY.json" --previous "$PREVIOUS")
+          if [[ "$ALLOW_GROWTH" == true ]]; then args+=(--allow-growth); fi
+          python3 Data/publish_gate.py "${args[@]}" > "$RUNNER_TEMP/gate.md" || status=$?
           {
             echo "## Publish gate: $CITY"
+            echo
+            echo "allow_growth: $ALLOW_GROWTH"
             echo
             cat "$RUNNER_TEMP/gate.md"
             echo
