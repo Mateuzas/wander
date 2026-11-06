@@ -549,17 +549,14 @@ struct MapScreen: View {
     private func detailAction(for poi: POI) -> POIDetail.Action {
         guard let plan = planner.plan else { return .none }
         if plan.highlights.contains(where: { $0.poi.id == poi.id }) { return .remove }
+        // In Direct, "Add to walk" adds the stop to Recommended and switches to it.
         switch planner.addOption(for: poi) {
         case .add:
             return .add
-        case .directMode:
-            return .unavailable("Direct takes the fastest route. Switch to Relaxed or Explorer to add stops.")
         case .full:
-            return .unavailable("This walk already has \(planner.mode.maxWaypoints) stops. Remove one to add this.")
+            return .unavailable("This walk already has \(PlanEditor.maxStops) stops. Remove one to add this.")
         case .doesntFit:
-            return .unavailable(planner.mode == .explorer
-                ? "Too far for a \(planner.mode.budgetLabel) detour."
-                : "Doesn't fit the \(planner.mode.budgetLabel) detour. Try Explorer.")
+            return .unavailable("Too far for a detour on this walk.")
         }
     }
 
@@ -581,7 +578,7 @@ struct MapScreen: View {
     }
 
     /// "Directions" on a place card: the same path as picking it from "Where to?"
-    /// (recents, plan sheet, all three modes, location-denied copy). Replaces any
+    /// (recents, plan sheet, both options, location-denied copy). Replaces any
     /// destination already planned.
     private func directions(to poi: POI) {
         choose(Destination(name: poi.name, subtitle: poi.category.spokenName,
