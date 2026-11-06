@@ -1,0 +1,203 @@
+name: Nightly data
+
+# OPS-5 / ADR 013: build every city in Data/cities.json with the unattended pipeline,
+# gate it against the last published file, and publish to GitHub Pages:
+#
+#   https://mateuzas.github.io/wander/data/v1/manifest.json
+#   https://mateuzas.github.io/wander/data/v1/pois-<city>.json
+#
+# Jobs:
+#   cities  reads the city list from Data/cities.json
+#   build   one per city (matrix): restore Data/cache/<city>, run_nightly, validate,
+#           publish_gate against the live file, upload pois-<city>.json as an artifact
+#   site    collects every city, writes manifest.json (scripts/build-manifest.py),
+#           uploads the Pages artifact
+#   deploy  actions/deploy-pages (the github-pages environment accepts main only)
+#
+# A Pages deploy replaces the whole site, so `site` only runs when every city passed.
+# If any gate fails the run is red and nothing is deployed: the previous files stay live.
+# No secrets: every source is a public API. One Overpass request per city per run
+# (run_nightly), and the caches persist between runs so each night re-fetches only changes.
+
+on:
+  schedule:
+    - cron: "30 2 * * *"
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: "Re-fetch from the sources (--refresh); off reuses the cache only"
+        type: boolean
+        default: true
+
+concurrency:
+  group: nightly-data
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+env:
+  BASE_URL: https://mateuzas.github.io/wander/data/v1/
+
+jobs:
+  cities:
+    name: List cities
+    runs-on: ubuntu-latest
+    outputs:
+      cities: ${{ steps.list.outputs.cities }}
+    steps:
+      - uses: actions/checkout@v7
+      - name: Read Data/cities.json
+        id: list
+        run: |
+          set -euo pipefail
+          cities="$(python3 -c 'import json; print(json.dumps(sorted(json.load(open("Data/cities.json")))))')"
+          echo "cities=$cities" | tee -a "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.city }}
+    needs: cities
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        city: ${{ fromJSON(needs.cities.outputs.cities) }}
+    env:
+      CITY: ${{ matrix.city }}
+      OUT: ${{ github.workspace }}/out
+      # Scheduled runs have no inputs: they always refresh.
+      REFRESH: ${{ github.event_name == 'schedule' || inputs.refresh }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Restore cache
+        id: cache
+        uses: actions/cache/restore@v6
+        with:
+          path: Data/cache/${{ matrix.city }}
+          key: data-cache-${{ matrix.city }}-${{ github.run_id }}
+          restore-keys: data-cache-${{ matrix.city }}-
+
+      - name: run_nightly
+        run: |
+          set -euo pipefail
+          args=("$CITY" --out "$OUT")
+          [[ "$REFRESH" == true ]] && args+=(--refresh)
+          echo "python3 Data/run_nightly.py ${args[*]}"
+          python3 Data/run_nightly.py "${args[@]}"
+          ls -l "$OUT"
+
+      # Saved even when a later step fails, so a failed gate doesn't throw away the night's fetches.
+      - name: Save cache
+        if: always() && steps.cache.outcome == 'success'
+        uses: actions/cache/save@v6
+        with:
+          path: Data/cache/${{ matrix.city }}
+          key: data-cache-${{ matrix.city }}-${{ github.run_id }}
+
+      - name: Validate against schema
+        run: |
+          set -uo pipefail
+          if ! python3 scripts/validate-pois.py "$OUT/pois-$CITY.json" > "$RUNNER_TEMP/validate.txt" 2>&1; then
+            cat "$RUNNER_TEMP/validate.txt"
+            { echo "## Schema check failed: $CITY"; echo; echo '```'; head -50 "$RUNNER_TEMP/validate.txt"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::pois-$CITY.json fails the schema; nothing is published."
+            exit 1
+          fi
+          cat "$RUNNER_TEMP/validate.txt"
+
+      - name: Download the published file
+        id: previous
+        run: |
+          set -euo pipefail
+          url="${BASE_URL}pois-$CITY.json"
+          prev="$RUNNER_TEMP/previous-$CITY.json"
+          code="$(curl -sS -L --retry 3 --retry-all-errors -o "$prev" -w '%{http_code}' "$url" || true)"
+          case "$code" in
+            200) echo "previous=$prev" >> "$GITHUB_OUTPUT"; echo "Previous: $url ($(wc -c < "$prev") bytes)" ;;
+            404) echo "previous=none" >> "$GITHUB_OUTPUT"; echo "No published file yet (404): first publish." ;;
+            *)   echo "::error::Could not fetch $url (HTTP ${code:-none}); refusing to gate against nothing."; exit 1 ;;
+          esac
+
+      - name: Publish gate
+        env:
+          PREVIOUS: ${{ steps.previous.outputs.previous }}
+        run: |
+          set -uo pipefail
+          python3 Data/publish_gate.py --new "$OUT/pois-$CITY.json" --previous "$PREVIOUS" > "$RUNNER_TEMP/gate.md"
+          status=$?
+          {
+            echo "## Publish gate: $CITY"
+            echo
+            cat "$RUNNER_TEMP/gate.md"
+            echo
+          } >> "$GITHUB_STEP_SUMMARY"
+          cat "$RUNNER_TEMP/gate.md"
+          if [[ $status -ne 0 ]]; then
+            echo "::error::Publish gate failed for $CITY (exit $status); nothing is published."
+            exit 1
+          fi
+
+      - name: Needs-review summary
+        if: always()
+        run: |
+          f="$OUT/review-$CITY.md"
+          if [[ -f "$f" ]]; then
+            { echo "## Review: $CITY"; echo; cat "$f"; echo; } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: city-${{ matrix.city }}
+          path: out/pois-${{ matrix.city }}.json
+          if-no-files-found: error
+          retention-days: 7
+
+  site:
+    name: Build site and manifest
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+      - uses: actions/download-artifact@v8
+        with:
+          pattern: city-*
+          path: site/data/v1
+          merge-multiple: true
+      - name: build-manifest
+        run: |
+          set -euo pipefail
+          python3 scripts/build-manifest.py site/data/v1 --base-url "$BASE_URL"
+          {
+            echo "## Manifest"
+            echo
+            echo '```json'
+            cat site/data/v1/manifest.json
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          ls -lR site
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: site
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}data/v1/manifest.json
+    steps:
+      - name: deploy-pages
+        id: deployment
+        uses: actions/deploy-pages@v5
