@@ -66,9 +66,9 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 
 | Id | Owner | Task | Status |
 |---|---|---|---|
-| ARC-9 | Architect | Iterate open points of ADR 016 with the user; contract for the new engine API and deck | todo |
-| BE-16 | Backender | Engine: must-visit plus optional planning, open end or destination, ordering, add-on insertion, deck and estimate | todo |
-| FE-23 | Frontender | Kinds → area (presets + circle) → swipe deck → walk summary + add-ons; remove Direct, Recommended, moods; local swipe memory | todo |
+| ARC-9 | Architect | ADR 016 open points resolved; swipe-walk engine API in CONTRACTS §2 | done |
+| BE-16 | Backender | Engine: must-visit plus optional planning, open end or destination, ordering, add-on insertion, deck and estimate | in progress |
+| FE-23 | Frontender | Kinds → area (presets + circle) → swipe deck → walk summary + add-ons; Walk here / Add to walk; remove Direct, Recommended, moods; local swipe memory | in progress |
 | ARC-10 | Architect | Crowd ratings design: backend choice, privacy notice, App Attest, aggregation into `signals.crowd` | todo |
 
 ## Backlog

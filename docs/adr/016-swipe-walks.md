@@ -1,6 +1,6 @@
 # ADR 016: Swipe walks replace Direct and Recommended routes
 
-**Status:** proposed (user, 2026-11-07; iterated in two rounds). Supersedes ADR 008 (Direct + Recommended) and the moods
+**Status:** accepted (user approved building it, 2026-11-07; iterated in two rounds; open points resolved by the Architect below). Supersedes ADR 008 (Direct + Recommended) and the moods
 (FE-18). Builds on ADR 015: every card has a photo and a hook, so places can be judged at a glance.
 
 ## The flow
@@ -44,7 +44,14 @@ kinds and types boost similar places in future deck ordering. A loved or liked p
   `estimateMinutes(selection:)` for the live counter (haversine with the existing tortuosity, refined after real legs).
 - `PlannerConfig` keeps the time and walking constants; the value-per-minute logic stays for ranking optional places.
 
-## Open (next iterations)
-- Where food nearby and place-card "Directions" fit now that Direct is gone (likely "Add to walk" plus a Maps hand-off).
-- Card design details (thumbnail sizes, how love is distinguished, undo last swipe).
-- Exact time presets and area sizes; behaviour with very few places in the area.
+## Resolved by the Architect (2026-11-07; easy to revisit after the phone test)
+- **Place card and food nearby:** "Directions" becomes **"Walk here"**: a walk with `end = destination(place)` and no swipes (the same
+  engine, not the old Direct mode). While a swipe walk is being built, the card offers **"Add to walk"**
+  (`mustVisit`). Google/Apple Maps hand-off stays.
+- **Undo:** one level ("Undo last swipe").
+- **Too few places:** when the deck runs out before the time is full: "That's everything worth seeing here", plus
+  "Widen the area".
+- **Presets:** 30 min (circle ≈ 600 m), 1 h (≈ 1 km), 2 h (≈ 1.6 km); adjustable 300 m to 3 km. A destination gives a
+  band ±(radius/2) around the start–destination line.
+- **Hidden gems** kind: tier 2–3, independent, quality ≥ 0.6, fame < 0.3, any category.
+- **Time shown:** walking time (no dwell estimate in v1), so "1 h" means about an hour of walking between stops.
