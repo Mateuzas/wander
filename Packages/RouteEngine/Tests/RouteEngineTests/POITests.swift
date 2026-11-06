@@ -57,6 +57,38 @@ struct POITests {
         let poi = try JSONDecoder().decode(POI.self, from: Data(json.utf8))
         #expect(poi.description == nil && poi.descriptionSource == nil && poi.descriptionUrl == nil)
         #expect(poi.tier == nil)
+        #expect(poi.hook == nil && poi.photo == nil)
+    }
+
+    @Test func decodesHookAndPhoto() throws {
+        let json = """
+        {"id": "osm:node:9", "name": "Gate of Dawn", "lat": 1, "lon": 2, "category": "photo", "score": 90,
+         "kind": "passby", "hook": "The only surviving gate of the city's 16th-century walls.",
+         "photo": {"url": "https://upload.wikimedia.org/a.jpg", "source": "commons", "credit": "Jane Doe",
+                   "license": "CC BY-SA 4.0", "page": "https://commons.wikimedia.org/wiki/File:A.jpg"}}
+        """
+        let poi = try JSONDecoder().decode(POI.self, from: Data(json.utf8))
+        #expect(poi.hook == "The only surviving gate of the city's 16th-century walls.")
+        #expect(poi.photo == Photo(url: "https://upload.wikimedia.org/a.jpg", source: .commons, credit: "Jane Doe",
+                                   license: "CC BY-SA 4.0", page: "https://commons.wikimedia.org/wiki/File:A.jpg"))
+    }
+
+    @Test func photoLicenseAndPageAreOptional() throws {
+        let json = """
+        {"url": "https://example.com/og.jpg", "source": "website", "credit": "example.com"}
+        """
+        let photo = try JSONDecoder().decode(Photo.self, from: Data(json.utf8))
+        #expect(photo.source == .website && photo.license == nil && photo.page == nil)
+        let again = try JSONDecoder().decode(Photo.self, from: JSONEncoder().encode(photo))
+        #expect(again == photo)
+    }
+
+    @Test func hookAndPhotoRoundTrip() throws {
+        let poi = POI(id: "x", name: "X", lat: 1, lon: 2, category: .food, score: 5, kind: .stop,
+                      hook: "Dumplings folded by hand at the counter.",
+                      photo: Photo(url: "https://images.mapillary.com/1", source: .mapillary, credit: "alice"))
+        let again = try JSONDecoder().decode(POI.self, from: JSONEncoder().encode(poi))
+        #expect(again == poi)
     }
 
     @Test func roundTrips() throws {
