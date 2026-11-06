@@ -112,6 +112,17 @@ _(Illustrative values, not real data.)_
 saw today; their value is multiplied by `PlannerConfig.seenFactor`. Zero-cost stops become pass-by
 highlights and free their slot. At most 1 food and 1 shop stop per walk, unless that category is the only interest.
 
+**Moods (user decision 2026-11-06, FE-18):** the plan sheet has one single-select row of moods instead of
+interest chips plus a style menu. Each mood maps to existing engine inputs; the engine API is unchanged.
+
+| Mood | `interests` | `weights` (`WeightPreset`) |
+|---|---|---|
+| Best of (default) | photo, shop, food | balanced |
+| Photo spots | photo | photoSpots |
+| Food & drink | food | balanced |
+| Shops | shop | balanced |
+| Hidden gems | photo, shop, food | hiddenGems |
+
 ## 3. Build and configuration
 
 | Item | Contract |
