@@ -8,8 +8,10 @@ import RouteEngine
 /// At most every 6 h it fetches `manifest.json` (ETag / If-None-Match). When the
 /// city's sha256 differs from the data in use, it downloads the city file, checks
 /// the sha256, decodes it with `POIFile`, and only then atomically replaces the
-/// cached copy in Application Support. Any failure leaves the current data alone
-/// and is logged quietly: no error UI, and the bundled file always works.
+/// cached copy in Application Support. It also refuses a file older than the
+/// data in use, or with under half the bundled file's POIs (FE-21). Any failure
+/// leaves the current data alone and is logged quietly: no error UI, and the
+/// bundled file always works.
 @MainActor
 final class DataUpdater {
     /// The published data, schema major version 1 (ADR 013).
@@ -36,9 +38,9 @@ final class DataUpdater {
     }
 
     /// Checks for a newer city file if the last check is 6 h old or more.
-    /// `currentSHA256` is the hex digest of the data in use (cached or bundled).
+    /// `current` describes the data in use (cached or bundled).
     /// Returns the new file once it is verified and safely on disk, otherwise nil.
-    func refreshIfDue(currentSHA256: String?, now: Date = .now) async -> DataFeed.Update? {
+    func refreshIfDue(current: DataFeed.Baseline, now: Date = .now) async -> DataFeed.Update? {
         guard !running else { return nil }
         if let last = defaults.object(forKey: Self.lastCheckKey) as? Date,
            now.timeIntervalSince(last) < Self.minInterval, now >= last {
@@ -47,14 +49,14 @@ final class DataUpdater {
         running = true
         defer { running = false }
         do {
-            return try await refresh(currentSHA256: currentSHA256, now: now)
+            return try await refresh(current: current, now: now)
         } catch {
             DataFeed.log.notice("Update skipped: \(String(describing: error), privacy: .public)")
             return nil
         }
     }
 
-    private func refresh(currentSHA256: String?, now: Date) async throws -> DataFeed.Update? {
+    private func refresh(current: DataFeed.Baseline, now: Date) async throws -> DataFeed.Update? {
         var request = URLRequest(url: DataFeed.manifestURL)
         // Only trust a 304 when there is a cached download it could refer to.
         if let etag = defaults.string(forKey: Self.etagKey), DataFeed.cachedFileExists(city: city) {
@@ -89,7 +91,7 @@ final class DataUpdater {
             markChecked(now: now, etag: etag)
             return nil
         }
-        if let currentSHA256, DataFeed.sameDigest(currentSHA256, entry.sha256) {
+        if let currentSHA256 = current.sha256, DataFeed.sameDigest(currentSHA256, entry.sha256) {
             markChecked(now: now, etag: etag)
             DataFeed.log.debug("City file unchanged")
             return nil
@@ -100,6 +102,13 @@ final class DataUpdater {
         let fileStatus = (fileResponse as? HTTPURLResponse)?.statusCode ?? 0
         guard fileStatus == 200 else { throw DataFeed.Failure.http(fileStatus) }
         let file = try DataFeed.verify(data, sha256: entry.sha256, city: city)
+        do {
+            try DataFeed.accept(file, over: current)
+        } catch {
+            // Not retried until the manifest changes: the same file would fail again.
+            markChecked(now: now, etag: etag)
+            throw error
+        }
         try DataFeed.store(data, city: city)
         // Remember the ETag only now, so a failed download is retried next time.
         markChecked(now: now, etag: etag)
@@ -121,6 +130,15 @@ enum DataFeed {
 
     static var manifestURL: URL { DataUpdater.baseURL.appendingPathComponent("manifest.json") }
 
+    /// The data in use, for judging a download (FE-21).
+    struct Baseline {
+        var sha256: String?
+        /// `generated` of the data in use.
+        var generated: String
+        /// POIs in the bundled file; 0 if it is missing.
+        var bundledCount: Int
+    }
+
     /// A verified city file and the digest of its bytes.
     struct Update {
         var file: POIFile
@@ -133,6 +151,34 @@ enum DataFeed {
         case checksumMismatch
         case wrongCity(String)
         case noPOIs
+        /// Fewer than half the bundled file's POIs: likely a broken publish.
+        case tooSmall(Int)
+        /// Generated before the data in use.
+        case older(String)
+    }
+
+    /// Smallest share of the bundled file's POI count a download may have.
+    static let minShareOfBundled = 0.5
+
+    /// FE-21: a verified download is used only if it isn't suspiciously small and
+    /// isn't older than the data in use.
+    static func accept(_ file: POIFile, over current: Baseline) throws {
+        if current.bundledCount > 0, Double(file.pois.count) < Double(current.bundledCount) * minShareOfBundled {
+            throw Failure.tooSmall(file.pois.count)
+        }
+        if isNewer(current.generated, than: file.generated) { throw Failure.older(file.generated) }
+    }
+
+    /// FE-21 load order: the cached download is used only when it is newer than
+    /// the bundled file; ties go to the bundled one.
+    static func preferCached(_ cached: POIFile, over bundled: POIFile) -> Bool {
+        isNewer(cached.generated, than: bundled.generated)
+    }
+
+    /// Compares two `generated` values as dates; as text if either can't be read.
+    static func isNewer(_ a: String, than b: String) -> Bool {
+        if let da = parseDate(a), let db = parseDate(b) { return da > db }
+        return a > b
     }
 
     /// `manifest.json` (CONTRACTS §3b).
@@ -276,6 +322,24 @@ extension DataFeed {
         assert((try? verify(data, sha256: digest, city: "riga")) == nil, "wrong city rejected")
         let truncated = data.prefix(data.count / 2)
         assert((try? verify(truncated, sha256: sha256Hex(truncated), city: city)) == nil, "corrupt file rejected")
+
+        // FE-21: newest data wins; suspiciously small or older downloads are refused.
+        if let bundled = try? decode(data, city: city) {
+            var older = bundled, newer = bundled
+            older.generated = "2000-01-01T00:00:00Z"
+            newer.generated = "2999-01-01T00:00:00Z"
+            assert(!preferCached(older, over: bundled), "older cached loses to newer bundled")
+            assert(!preferCached(bundled, over: bundled), "tie goes to bundled")
+            assert(preferCached(newer, over: bundled), "newer cached wins")
+            let baseline = Baseline(sha256: digest, generated: bundled.generated, bundledCount: bundled.pois.count)
+            var small = newer
+            small.pois = Array(bundled.pois.prefix(bundled.pois.count / 2 - 1))
+            assert((try? accept(small, over: baseline)) == nil, "too-small download rejected")
+            assert((try? accept(older, over: baseline)) == nil, "older download rejected")
+            assert((try? accept(newer, over: baseline)) != nil, "newer full download accepted")
+        } else {
+            assertionFailure("bundled file decodes")
+        }
 
         let noon = parseDate("2026-11-06T12:00:00Z")!
         assert(parseDate("2026-11-05") != nil && parseDate("nonsense") == nil, "date parse")

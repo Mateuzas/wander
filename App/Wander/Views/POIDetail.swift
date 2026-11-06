@@ -31,6 +31,12 @@ struct POIDetail: View {
     /// Set during a walk for one of its highlights; nil hides it.
     var walkSkip: WalkSkip?
     let onClose: () -> Void
+    /// Replaces the category line (food nearby, FE-19: "Coffee · 6 min walk").
+    var subtitle: String?
+    /// A line above the card (FE-19: "Nothing open nearby").
+    var notice: String?
+    /// "Next option" under Directions (FE-19); nil hides it.
+    var onNext: (() -> Void)?
     /// The sheet height the card needs to show everything (FE-17).
     var onHeight: ((CGFloat) -> Void)?
 
@@ -43,17 +49,27 @@ struct POIDetail: View {
 
     /// A photo (or its placeholder) leads the card; the close button floats over it.
     private var hasPhoto: Bool {
-        connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
+        // A notice heads the card instead of the photo, and the close button sits by it.
+        guard notice == nil else { return false }
+        return connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
     }
 
     /// Directions, add/remove and Skip: pinned at the bottom, always on screen.
     private var hasActions: Bool {
-        onDirections != nil || action != .none || walkSkip != nil
+        onDirections != nil || onNext != nil || action != .none || walkSkip != nil
     }
 
     var body: some View {
         SheetCard(hasActions: hasActions, onHeight: onHeight) {
             VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
+                if let notice {
+                    Text(notice)
+                        .font(WanderFont.title)
+                        .foregroundStyle(.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(.trailing, Layout.minTouch)
+                        .accessibilityAddTraits(.isHeader)
+                }
                 if connectivity.isOnline, poi.commonsImage != nil || poi.commonsCategory != nil {
                     CommonsPhotoView(fileName: poi.commonsImage, category: poi.commonsCategory,
                                      failed: $photoFailed)
@@ -66,14 +82,14 @@ struct POIDetail: View {
                         Text(poi.name)
                             .font(WanderFont.heading)
                             .foregroundStyle(.ink)
-                        Text(poi.category.spokenName)
+                        Text(subtitle ?? poi.category.spokenName)
                             .font(WanderFont.caption)
                             .foregroundStyle(.inkMuted)
                     }
                     Spacer(minLength: 0)
                 }
                 // Room for the close button when there is no photo to float it over.
-                .padding(.trailing, hasPhoto ? 0 : Layout.minTouch)
+                .padding(.trailing, hasPhoto || notice != nil ? 0 : Layout.minTouch)
                 .accessibilityElement(children: .contain)
 
                 if !poi.reason.isEmpty {
@@ -94,6 +110,11 @@ struct POIDetail: View {
                 Button("Directions", action: onDirections)
                     .buttonStyle(.primary)
                     .accessibilityLabel("Directions to \(poi.name)")
+            }
+            if let onNext {
+                Button("Next option", action: onNext)
+                    .buttonStyle(.textAction)
+                    .accessibilityHint("Shows the next closest place")
             }
             actionView
             walkSkipView

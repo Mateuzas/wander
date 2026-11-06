@@ -3,7 +3,7 @@ import SwiftUI
 /// One single-select row of moods (FE-18). Chips wrap onto a second line rather
 /// than scrolling. The selected chip uses the §10 selected style: `surfaceRaised`
 /// with `wander` text; the others are quiet, with no fill. VoiceOver reads the
-/// row as one adjustable control: "Mood, Best of, selected, 1 of 5".
+/// row as one adjustable control: "Mood, Best of, selected, 1 of 4".
 struct MoodRow: View {
     @Binding var selection: Mood
 
