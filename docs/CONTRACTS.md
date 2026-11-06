@@ -71,7 +71,7 @@ _(Illustrative values, not real data.)_
 - `PlanRequest(origin:destination:mode:interests:weights:pois:time:timeZone:)`
   - `weights`: `SignalWeights?`, from `WeightPreset` (`balanced`, `photoSpots`, `famousSights`, `hiddenGems`); `nil` means use `score`.
   - `time`: `Date?`. When set, POIs that are closed are rejected.
-- `Mode`: `direct` / `relaxed` / `explorer` → extra budget 0 / 10 / 25 min, max stops 0 / 3 / 5.
+- `Mode`: `direct` / `recommended` (see above).
 - `WanderPlan`: `baseline: Leg`, `waypoints: [POI]`, `legs: [Leg]`, `totalTime`, `extraTime` (seconds),
   `highlights: [Highlight]` (`role` `.waypoint` or `.passby`, `distanceAlongRoute`, `distanceFromRoute`),
   `noDetourFit: Bool`, `candidates: [CandidateDebug]` (for the debug overlay), `polyline`, `totalDistance`.
@@ -91,8 +91,18 @@ _(Illustrative values, not real data.)_
 - `Leg`: `from`, `to`, `duration` (s), `distance` (m), `polyline: [Coordinate]`, `steps: [RouteStep]` (`instruction`, `distance`).
 - `MapKitWalkingTime` (app) must fill `steps` from `MKRoute.steps` and stay under 40 MKDirections requests per rolling minute.
 
-**Changing (ADR 008, phase 3):** Relaxed/Explorer become one engine-chosen "Recommended" route next to Direct.
-`Mode` and `PlanRequest.budget` change in ARC-5; until then the API below is current.
+**Direct + Recommended (ADR 008, phase 3; BE-6 + FE-14 merge together, breaking change):**
+- `Mode` has exactly two cases: `.direct` (no detour stops; highlights on the way are still listed) and `.recommended`.
+  `.relaxed` and `.explorer` are removed.
+- `.recommended`: the engine chooses the extra time itself, between 0 and `PlannerConfig.recommendedMaxExtra`
+  (default 25 min), with at most 5 stops. After real-route verification, it drops any stop whose value per extra
+  minute is below `PlannerConfig.minValuePerMinute` (tunable), so every remaining minute is "worth it". If no stop is
+  worth it, the plan equals Direct and `noDetourFit == true` (UI: "Nothing worth a detour on this walk").
+- `plans(_:modes:provider:)` defaults to `[.direct, .recommended]`. `WanderPlan.extraTime` is the engine's choice.
+- Filters stay as they are: `interests` (Sights, Food & drink, Shops) and `weights` from `WeightPreset`
+  (Balanced, Photo spots, Famous, Hidden gems). No time slider.
+- Golden-route targets: Recommended extra time median 8–18 min, never above the cap +10%, at least 2 highlights on
+  at least 8 of 10 routes, deterministic.
 
 **Seen places (BE-1, PR #18):** `PlanRequest(..., seen: Set<String> = [])` takes POI ids the user already
 saw today; their value is multiplied by `PlannerConfig.seenFactor`. Zero-cost stops become pass-by
