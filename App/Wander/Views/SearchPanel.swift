@@ -33,8 +33,10 @@ struct SearchIsland: View {
 }
 
 /// The island expanded (FE-17): the search field with Cancel, suggestions while
-/// typing, recent destinations otherwise, the offline and location-denied
-/// messages, and the logo and pitch when there is nothing else to show.
+/// typing; otherwise a compact island of the last few searches (FE-20). Also
+/// the offline and location-denied messages, and the logo and pitch when there
+/// is nothing else to show. The panel hangs from
+/// the top, only as tall as its content; the map shows dimmed below it.
 struct SearchPanel: View {
     let search: SearchService
     let recents: RecentDestinations
@@ -47,6 +49,9 @@ struct SearchPanel: View {
     let onChoose: (Destination) -> Void
     let onCancel: () -> Void
 
+    /// Recents shown in the island (FE-20).
+    static let recentCount = 3
+
     @FocusState private var fieldFocused: Bool
     @State private var resolving = false
     @State private var errorMessage: String?
@@ -54,6 +59,25 @@ struct SearchPanel: View {
     private var isTyping: Bool { !search.query.trimmingCharacters(in: .whitespaces).isEmpty }
 
     var body: some View {
+        ZStack(alignment: .top) {
+            // The map below, dimmed; a tap there closes the panel.
+            Color.black.opacity(0.2)
+                .ignoresSafeArea()
+                .contentShape(Rectangle())
+                .onTapGesture(perform: cancel)
+                .accessibilityHidden(true)
+            panel
+        }
+        .onChange(of: search.query) { errorMessage = nil }
+        .task {
+            guard focusOnAppear else { return }
+            // Let the panel settle first, or the keyboard can drop the focus.
+            try? await Task.sleep(for: .milliseconds(50))
+            fieldFocused = true
+        }
+    }
+
+    private var panel: some View {
         VStack(alignment: .leading, spacing: Layout.margin) {
             HStack(spacing: Layout.grid * 1.5) {
                 searchField
@@ -62,49 +86,53 @@ struct SearchPanel: View {
                     .foregroundStyle(.wander)
                     .frame(minHeight: Layout.minTouch)
             }
-            ScrollView {
-                VStack(alignment: .leading, spacing: Layout.margin) {
-                    if offline {
-                        Text("No connection. Routes need internet; saved places still show.")
-                            .font(WanderFont.body)
-                            .foregroundStyle(.ink)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    if locationDenied {
-                        LocationDeniedMessage()
-                    }
-                    if let errorMessage {
-                        Text(errorMessage)
-                            .font(WanderFont.body)
-                            .foregroundStyle(.ink)
-                    }
-                    if isTyping {
-                        suggestions
-                    } else if !recents.items.isEmpty {
-                        recentList
-                    } else if !offline, !locationDenied, errorMessage == nil {
-                        welcome
-                    }
-                    if !isTyping {
-                        dataFooter
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.bottom, Layout.margin)
+            // As tall as the content; scrolls only when it doesn't fit (FE-20).
+            ViewThatFits(in: .vertical) {
+                panelContent
+                ScrollView { panelContent }
+                    .scrollDismissesKeyboard(.immediately)
             }
-            .scrollDismissesKeyboard(.immediately)
         }
         .padding(.horizontal, Layout.margin)
         .padding(.top, Layout.margin)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(Color.surface.ignoresSafeArea())
-        .onChange(of: search.query) { errorMessage = nil }
-        .task {
-            guard focusOnAppear else { return }
-            // Let the panel settle first, or the keyboard can drop the focus.
-            try? await Task.sleep(for: .milliseconds(50))
-            fieldFocused = true
+        .padding(.bottom, Layout.margin)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background {
+            UnevenRoundedRectangle(bottomLeadingRadius: 24, bottomTrailingRadius: 24, style: .continuous)
+                .fill(Color.surface)
+                .ignoresSafeArea(edges: [.top, .horizontal])
+                .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
         }
+    }
+
+    private var panelContent: some View {
+        VStack(alignment: .leading, spacing: Layout.margin) {
+            if offline {
+                Text("No connection. Routes need internet; saved places still show.")
+                    .font(WanderFont.body)
+                    .foregroundStyle(.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            if locationDenied {
+                LocationDeniedMessage()
+            }
+            if let errorMessage {
+                Text(errorMessage)
+                    .font(WanderFont.body)
+                    .foregroundStyle(.ink)
+            }
+            if isTyping {
+                suggestions
+            } else {
+                if !recents.items.isEmpty {
+                    recentIsland
+                } else if !offline, !locationDenied, errorMessage == nil {
+                    welcome
+                }
+                dataFooter
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Pieces
@@ -136,7 +164,6 @@ struct SearchPanel: View {
         .font(WanderFont.caption)
         .foregroundStyle(.inkMuted)
         .fixedSize(horizontal: false, vertical: true)
-        .padding(.top, Layout.grid * 2)
         .accessibilityElement(children: .combine)
     }
 
@@ -188,18 +215,21 @@ struct SearchPanel: View {
         }
     }
 
-    private var recentList: some View {
-        VStack(alignment: .leading, spacing: Layout.grid) {
-            Text("Recent")
-                .font(WanderFont.heading)
-                .foregroundStyle(.ink)
-                .accessibilityAddTraits(.isHeader)
-            ForEach(recents.items) { place in
-                PlaceRow(systemImage: "clock", title: place.name, subtitle: place.subtitle) {
+    /// The last few searches on one raised island, one line each (FE-20).
+    private var recentIsland: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            ForEach(recents.items.prefix(Self.recentCount)) { place in
+                PlaceRow(systemImage: "clock", title: place.name, subtitle: place.subtitle, compact: true) {
                     finish(with: place)
                 }
             }
         }
+        .padding(.horizontal, Layout.margin)
+        .padding(.vertical, Layout.grid / 2)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(.surfaceRaised, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Recent")
     }
 
     // MARK: - Actions
@@ -246,6 +276,8 @@ private struct PlaceRow: View {
     let systemImage: String
     let title: String
     let subtitle: String
+    /// One line each for the title and subtitle (the recents island, FE-20).
+    var compact = false
     let action: () -> Void
 
     var body: some View {
@@ -259,14 +291,17 @@ private struct PlaceRow: View {
                     Text(title)
                         .font(WanderFont.body)
                         .foregroundStyle(.ink)
+                        .lineLimit(compact ? 1 : nil)
                     if !subtitle.isEmpty {
                         Text(subtitle)
                             .font(WanderFont.caption)
                             .foregroundStyle(.inkMuted)
+                            .lineLimit(compact ? 1 : nil)
                     }
                 }
                 Spacer(minLength: 0)
             }
+            .padding(.vertical, compact ? Layout.grid * 0.75 : 0)
             .frame(minHeight: Layout.minTouch)
             .contentShape(Rectangle())
         }
