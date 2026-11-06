@@ -12,6 +12,8 @@ struct MapScreen: View {
     @State private var location = LocationService()
     @State private var search = SearchService()
     @State private var store = POIStore()
+    /// Fetches the nightly-published places (FE-15, ADR 013).
+    @State private var updater = DataUpdater()
     @State private var recents = RecentDestinations()
     @State private var connectivity: Connectivity
     @State private var planner: PlannerModel
@@ -31,6 +33,8 @@ struct MapScreen: View {
     @State private var cardHeight: CGFloat = 0
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
+    /// The plan sheet's mood (FE-18), kept between launches.
+    @AppStorage(Mood.storageKey) private var mood = Mood.bestOf
     @State private var walk: WalkModel?
     @State private var rotation = MapRotation()
 
@@ -81,6 +85,7 @@ struct MapScreen: View {
                         recents: recents,
                         locationDenied: location.access == .denied,
                         offline: !connectivity.isOnline,
+                        placesGenerated: store.generated,
                         focusOnAppear: searchFocus,
                         onChoose: choose,
                         onCancel: closeSearch)
@@ -143,7 +148,11 @@ struct MapScreen: View {
             // FE-9: compass on while the map is visible, off in the background.
             .onChange(of: scenePhase, initial: true) { _, phase in
                 location.setHeadingActive(phase == .active)
+                // FE-15: at launch and on foreground (the updater keeps to every 6 h).
+                if phase == .active { checkForFreshPlaces() }
             }
+            // A plan or walk ended: swap in places downloaded meanwhile.
+            .onChange(of: isHome) { applyPendingPlaces() }
             .onDisappear {
                 walk?.tearDown()
                 location.setHeadingActive(false)
@@ -321,7 +330,8 @@ struct MapScreen: View {
             search.region = context.region
             refreshBeads()
         }
-        .onChange(of: planner.interests) { refreshBeads() }
+        .onChange(of: beadInterests) { refreshBeads() }
+        .onChange(of: mood) { planner.mood = mood }
         #if DEBUG
         .overlay(alignment: .topLeading) {
             if debugOverlay { tierReadout }
@@ -329,11 +339,34 @@ struct MapScreen: View {
         #endif
     }
 
+    /// Downloads newer places if the nightly publish has them (FE-15). Silent on
+    /// failure: the current data stays.
+    private func checkForFreshPlaces() {
+        Task {
+            let current = store.pending?.sha256 ?? store.sha256
+            guard let update = await updater.refreshIfDue(currentSHA256: current) else { return }
+            store.stage(update)
+            applyPendingPlaces()
+        }
+    }
+
+    /// Reloads the places only on the home map, so an open plan or walk keeps the
+    /// POIs it was built from; otherwise the update waits until it ends.
+    private func applyPendingPlaces() {
+        guard isHome, store.applyPending() else { return }
+        refreshBeads()
+    }
+
     /// Picks the POI beads for the visible region by zoom tier (ADR 012, FE-13).
     private func refreshBeads() {
         guard let region = visibleRegion else { return }
         visiblePOIs = store.beads(in: region, viewSize: mapSize, keeping: Set(visiblePOIs.map(\.id)),
-                                  interests: planner.interests)
+                                  interests: beadInterests)
+    }
+
+    /// While a plan or walk shows, beads follow the mood (FE-18); the home map shows every category.
+    private var beadInterests: Set<POICategory> {
+        isHome ? Set(POICategory.allCases) : planner.interests
     }
 
     private struct BeadItem: Identifiable {
@@ -538,10 +571,10 @@ struct MapScreen: View {
 
     private func planSheet(_ destination: Destination) -> some View {
         #if DEBUG
-        PlanSheet(planner: planner, destination: destination, onClose: closePlan,
+        PlanSheet(planner: planner, destination: destination, mood: $mood, onClose: closePlan,
                   onFocus: focus, onStartWalk: startWalk, debugOverlay: $debugOverlay)
         #else
-        PlanSheet(planner: planner, destination: destination, onClose: closePlan,
+        PlanSheet(planner: planner, destination: destination, mood: $mood, onClose: closePlan,
                   onFocus: focus, onStartWalk: startWalk)
         #endif
     }
@@ -567,6 +600,7 @@ struct MapScreen: View {
         recents.add(place)
         selectedPOI = nil
         clearPin()
+        planner.mood = mood
         planner.start(
             destination: place,
             origin: location.location.map { Coordinate($0.coordinate) },

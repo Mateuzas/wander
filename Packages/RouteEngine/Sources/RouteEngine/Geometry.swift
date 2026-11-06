@@ -45,16 +45,13 @@ struct MeasuredPolyline {
     /// With `near`, of the matches no more than `tolerance` metres farther than
     /// the closest, the one whose position is nearest `near` wins: where a route
     /// runs back along itself, the pass the walker is on is chosen over the
-    /// other one a few metres away. With `travel`, a near-tie heading the
-    /// walker's way replaces one heading against it, if the two are more than
-    /// `directionGap` metres apart along the route.
+    /// other one a few metres away.
     func nearest(to c: Coordinate, within range: ClosedRange<Double>? = nil,
-                 near target: Double? = nil, tolerance: Double = 0,
-                 travel: SIMD2<Double>? = nil, directionGap: Double = 0) -> (distance: Double, along: Double) {
+                 near target: Double? = nil, tolerance: Double = 0) -> (distance: Double, along: Double) {
         let p = projection.point(c)
         guard let first = points.first else { return (.infinity, 0) }
         guard points.count > 1 else { return (length(p - first), 0) }
-        typealias Match = (distance: Double, along: Double, direction: SIMD2<Double>)
+        typealias Match = (distance: Double, along: Double)
         var matches: [Match] = []
         for i in 1..<points.count {
             let start = cumulative[i - 1], end = cumulative[i]
@@ -71,21 +68,12 @@ struct MeasuredPolyline {
             }
             let len2 = dot(ab, ab)
             let t = len2 > 0 ? min(hi, max(lo, dot(p - a, ab) / len2)) : 0
-            matches.append((length(p - (a + t * ab)), start + t * segment, ab))
+            matches.append((length(p - (a + t * ab)), start + t * segment))
         }
         guard let closest = matches.min(by: { $0.distance < $1.distance }) else { return (.infinity, 0) }
         guard let target else { return (closest.distance, closest.along) }
         let ties = matches.filter { $0.distance <= closest.distance + tolerance }
-        let byTarget: (Match, Match) -> Bool = { abs($0.along - target) < abs($1.along - target) }
-        var pick = ties.min(by: byTarget)!
-        // Direction only overrules the prediction when the passes are far apart
-        // along the route. Right at a turnaround they're close and the
-        // prediction is the better judge (a smoothed direction lags a U-turn).
-        if let travel, dot(pick.direction, travel) <= 0,
-           let sameWay = ties.filter({ dot($0.direction, travel) > 0 }).min(by: byTarget),
-           abs(sameWay.along - pick.along) > directionGap {
-            pick = sameWay
-        }
+        let pick = ties.min { abs($0.along - target) < abs($1.along - target) }!
         return (pick.distance, pick.along)
     }
 
