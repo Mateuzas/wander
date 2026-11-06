@@ -74,7 +74,7 @@ struct OpeningHoursTests {
         let open = Grid.poi("noHours", east: 1500, north: 150, category: .shop, score: 70)
         let sunday = at(6, 12)
 
-        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .explorer,
+        let request = PlanRequest(origin: Grid.origin, destination: Grid.destination, mode: .recommended,
                                   pois: [closed, unreadable, open], time: sunday, timeZone: Self.vilnius)
         let result = try await Planner(config: .selection).plan(request, provider: HaversineWalkingTime())
         #expect(!result.waypoints.contains { $0.id == "closed" })

@@ -16,28 +16,29 @@ public struct Planner: Sendable {
         try await plan(request, store: LegStore(provider: provider), taken: TakenStops(others.map(\.waypoints)))
     }
 
-    /// Plans several modes for one trip, smallest budget first. Each plan
-    /// includes a stop the smaller modes don't have whenever one fits, so
-    /// Relaxed and Explorer don't show the same walk. Real legs are shared,
-    /// so the baseline and common legs cost one provider request each.
-    /// `request.budget` and `request.maxWaypoints` are replaced per mode.
-    public func plans(_ request: PlanRequest, modes: [Mode] = Mode.allCases,
+    /// Plans several modes for one trip (Direct first). Real legs are shared,
+    /// so the baseline costs one provider request for both.
+    /// `request.mode`, `request.budget` and `request.maxWaypoints` are replaced per mode.
+    public func plans(_ request: PlanRequest, modes: [Mode] = [.direct, .recommended],
                       provider: WalkingTimeProvider) async throws -> [Mode: WanderPlan] {
         let store = LegStore(provider: provider)
         var plans: [Mode: WanderPlan] = [:]
-        var taken = TakenStops()
-        for mode in modes.sorted(by: { $0.budget < $1.budget }) {
+        for mode in Mode.allCases where modes.contains(mode) {
             var modeRequest = request
-            modeRequest.budget = mode.budget
+            modeRequest.mode = mode
+            modeRequest.budget = config.budget(for: mode)
             modeRequest.maxWaypoints = mode.maxWaypoints
-            let plan = try await plan(modeRequest, store: store, taken: taken)
-            plans[mode] = plan
-            taken.add(plan.waypoints)
+            plans[mode] = try await plan(modeRequest, store: store, taken: TakenStops())
         }
         return plans
     }
 
     func plan(_ request: PlanRequest, store: LegStore, taken: TakenStops) async throws -> WanderPlan {
+        var request = request
+        if let mode = request.mode {
+            request.budget = config.budget(for: mode)
+            request.maxWaypoints = mode.maxWaypoints
+        }
         let scorer = Scorer(config: config, interests: request.interests, weights: request.weights,
                             seen: request.seen)
         let estimator = config.estimator
@@ -254,10 +255,24 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Partial waypoint sets kept per step of the selection search. Higher is
     /// closer to the best set and slower.
     public var beamWidth: Int = 16
+    /// Seconds. Most extra time Recommended may add over the fast route; the
+    /// engine picks how much of it to use.
+    public var recommendedMaxExtra: TimeInterval = 25 * 60
+    /// Value points (0–100 scale) per extra minute a Recommended stop must
+    /// bring to stay in the plan, measured on its real marginal detour.
+    public var minValuePerMinute: Double = 0
     /// Offline estimator for the corridor filter and insertion.
     public var estimator: HaversineWalkingTime = HaversineWalkingTime()
 
     public static let `default` = PlannerConfig()
+
+    /// Extra seconds allowed for `mode`: 0 for Direct, `recommendedMaxExtra` for Recommended.
+    public func budget(for mode: Mode) -> TimeInterval {
+        switch mode {
+        case .direct: 0
+        case .recommended: recommendedMaxExtra
+        }
+    }
 
     /// Waypoint cap for `category` given the request's interests and how many
     /// waypoints the plan may have. With more slots the cap grows (3 of 5), so
