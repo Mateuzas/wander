@@ -52,6 +52,11 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var descriptionSource: String?
     /// Article URL; present when `descriptionSource` is "wikipedia".
     public var descriptionUrl: String?
+    /// One eye-catching factual sentence, at most 80 characters (ADR 015). Required in published files;
+    /// optional here so older bundled files still decode.
+    public var hook: String?
+    /// The card's hero photo (ADR 015). Required in published files; optional here for older files.
+    public var photo: Photo?
 
     public init(id: String, name: String, lat: Double, lon: Double,
                 category: POICategory, score: Int, kind: POIKind, reason: String = "",
@@ -59,7 +64,8 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
                 openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil,
                 commonsCategory: String? = nil, popular: Bool? = nil,
                 description: String? = nil, descriptionSource: String? = nil,
-                descriptionUrl: String? = nil, tier: Int? = nil) {
+                descriptionUrl: String? = nil, tier: Int? = nil,
+                hook: String? = nil, photo: Photo? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -80,6 +86,8 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.descriptionSource = descriptionSource
         self.descriptionUrl = descriptionUrl
         self.tier = tier
+        self.hook = hook
+        self.photo = photo
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
@@ -87,7 +95,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
         case type, signals, cuisine, openingHours, commonsImage, localName, commonsCategory, popular
-        case description, descriptionSource, descriptionUrl, tier
+        case description, descriptionSource, descriptionUrl, tier, hook, photo
     }
 
     public init(from decoder: Decoder) throws {
@@ -112,6 +120,37 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         descriptionSource = try c.decodeIfPresent(String.self, forKey: .descriptionSource)
         descriptionUrl = try c.decodeIfPresent(String.self, forKey: .descriptionUrl)
         tier = try c.decodeIfPresent(Int.self, forKey: .tier)
+        hook = try c.decodeIfPresent(String.self, forKey: .hook)
+        photo = try c.decodeIfPresent(Photo.self, forKey: .photo)
+    }
+}
+
+/// A place's hero photo, matching `photo` in pois.json (ADR 015). Store the URL only; show `credit`
+/// (and `license` when present) next to the image, linking to `page` when present.
+public struct Photo: Codable, Hashable, Sendable {
+    /// Where the photo came from, matching `photo.source`.
+    public enum Source: String, Codable, Hashable, Sendable {
+        case commons
+        case mapillary
+        case website
+    }
+
+    /// Direct https image URL.
+    public var url: String
+    public var source: Source
+    /// Author or site name to show with the image.
+    public var credit: String
+    /// Licence short name, e.g. "CC BY-SA 4.0". Missing for website preview images.
+    public var license: String?
+    /// Attribution page (Commons file page, Mapillary image page, or the place's website).
+    public var page: String?
+
+    public init(url: String, source: Source, credit: String, license: String? = nil, page: String? = nil) {
+        self.url = url
+        self.source = source
+        self.credit = credit
+        self.license = license
+        self.page = page
     }
 }
 

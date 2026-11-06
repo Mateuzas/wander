@@ -1,13 +1,17 @@
 """Publish gate for a nightly POI file (ADR 013, CONTRACTS §3b).
 
     python3 Data/publish_gate.py --new build/pois-vilnius.json --previous <file|URL|none>
-                                 [--curation Data/curation.csv] [--rerun <file>]
+                                 [--curation Data/curation.csv] [--rerun <file>] [--allow-growth]
+                                 [--allow-shrink]
 
 Checks, each reported in a Markdown summary on stdout (fit for $GITHUB_STEP_SUMMARY):
 - the new file validates against docs/schema/pois.schema.json (scripts/validate-pois.py)
 - city and file structure are unchanged: same `city`, same top-level keys, no POI field dropped
-- POI count per category is within ±25% of the previous file
-- every previous tier-1 id is still tier 1, or has a curation row (`exclude`, or `popular no`)
+- POI count per category is within ±25% of the previous file; with --allow-growth (a new source,
+  ADR 014) increases of any size pass, decreases are still limited to -25%; with --allow-shrink
+  (once, for the first hook+photo gate run, ADR 015) decreases of any size pass
+- every previous tier-1 id is still tier 1, or has a curation row (`exclude`, or `popular no`);
+  with --allow-shrink, tier-1 places that are gone or demoted are listed but pass
 - with --rerun: a second build from the same inputs is byte-identical, ignoring `generated`
 
 `--previous none` (first publish) or an HTTP 404 for the URL passes the comparisons with a note.
@@ -156,8 +160,12 @@ def run(args):
                 gate.add(f"Count: {cat}", True, f"{n_new} (previous had none)")
                 continue
             change = (n_new - n_old) / n_old
-            ok = abs(change) <= COUNT_TOLERANCE
-            gate.add(f"Count: {cat}", ok, f"{n_old} -> {n_new} ({change:+.1%}; limit ±{COUNT_TOLERANCE:.0%})")
+            ok = (abs(change) <= COUNT_TOLERANCE or (args.allow_growth and change > 0)
+                  or (args.allow_shrink and change < 0))
+            low = "any decrease allowed" if args.allow_shrink else f"-{COUNT_TOLERANCE:.0%}"
+            high = "growth allowed" if args.allow_growth else f"+{COUNT_TOLERANCE:.0%}"
+            limit = f"{low}, {high}"
+            gate.add(f"Count: {cat}", ok, f"{n_old} -> {n_new} ({change:+.1%}; limit {limit})")
 
         curation = load_curation(args.curation)
         now = {p.get("id"): p for p in new_pois}
@@ -173,7 +181,10 @@ def run(args):
             label = f"{p.get('name')} (`{p['id']}`, {state})"
             (explained if explains_tier1_loss(curation.get(p["id"], ())) else lost).append(label)
         n_prev_t1 = sum(p.get("tier") == 1 or p.get("popular") is True for p in prev_pois)
-        if lost:
+        if lost and args.allow_shrink:
+            gate.add("Tier 1 kept", True, f"--allow-shrink: {len(lost)} tier-1 place(s) lost, allowed this run: "
+                     + "; ".join(lost))
+        elif lost:
             gate.add("Tier 1 kept", False, f"{len(lost)} tier-1 place(s) lost without a curation row "
                                            f"(exclude, or popular no): " + "; ".join(lost))
         else:
@@ -203,7 +214,14 @@ def markdown(gate, notes, new, args):
     n = len(new.get("pois", [])) if isinstance(new, dict) else "?"
     lines = [f"## Publish gate: {'PASS' if ok else 'FAIL'}", "",
              f"`{args.new}`: {city}, {n} POIs, generated {new.get('generated', '?') if isinstance(new, dict) else '?'}.",
-             "", "| Check | Result | Detail |", "|---|---|---|"]
+             ""]
+    if args.allow_growth:
+        lines += ["> **--allow-growth is on:** count increases above +25% pass this run (a new source, ADR 014). "
+                  "Decreases are still limited to -25%.", ""]
+    if args.allow_shrink:
+        lines += ["> [!WARNING]", "> **--allow-shrink is on:** per-category counts may fall by any amount and tier-1 "
+                  "places may be lost this run (the hook+photo gate, ADR 015). Use it once, then drop the flag.", ""]
+    lines += ["| Check | Result | Detail |", "|---|---|---|"]
     for check, passed, detail in gate.rows:
         lines.append(f"| {check} | {'pass' if passed else '**FAIL**'} | {str(detail).replace('|', '/')} |")
     if notes:
@@ -220,7 +238,15 @@ def main():
     parser.add_argument("--previous", required=True, help="last published file: path, URL, or 'none'")
     parser.add_argument("--curation", default=str(ROOT / "Data" / "curation.csv"), help="curation.csv to consult")
     parser.add_argument("--rerun", help="optional second build from the same inputs (determinism check)")
+    parser.add_argument("--allow-growth", action="store_true",
+                        help="let per-category counts grow by more than 25%% (e.g. a new source); decreases are still gated")
+    parser.add_argument("--allow-shrink", action="store_true",
+                        help="ONCE, for the first hook+photo gate run (ADR 015): let counts fall by any amount and "
+                             "tier-1 places go")
     args = parser.parse_args()
+    if args.allow_shrink:
+        print("!!! publish_gate: --allow-shrink is on: count decreases and tier-1 losses pass this run !!!",
+              file=sys.stderr)
     gate, notes, new = run(args)
     sys.stdout.write(markdown(gate, notes, new, args))
     return 1 if gate.failed else 0
