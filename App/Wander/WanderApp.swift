@@ -5,6 +5,7 @@ import SwiftUI
 struct WanderApp: App {
     init() {
         Typography.registerFonts()
+        Mood.migrateStored()
         #if DEBUG
         for glyph in POICategory.allGlyphs {
             assert(UIImage(systemName: glyph) != nil, "Missing SF Symbol: \(glyph)")

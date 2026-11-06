@@ -17,6 +17,8 @@ struct MapScreen: View {
     @State private var recents = RecentDestinations()
     @State private var connectivity: Connectivity
     @State private var planner: PlannerModel
+    /// Food nearby (FE-19): the closest good open place of a kind.
+    @State private var food: FoodFinder
 
     @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     @State private var visibleRegion: MKCoordinateRegion?
@@ -61,7 +63,10 @@ struct MapScreen: View {
     init() {
         let connectivity = Connectivity()
         _connectivity = State(initialValue: connectivity)
-        _planner = State(initialValue: PlannerModel(connectivity: connectivity))
+        let planner = PlannerModel(connectivity: connectivity)
+        _planner = State(initialValue: planner)
+        // Shares the planner's provider, so both keep to one MapKit rate limit.
+        _food = State(initialValue: FoodFinder(provider: planner.provider))
     }
 
     var body: some View {
@@ -87,7 +92,9 @@ struct MapScreen: View {
                         offline: !connectivity.isOnline,
                         placesGenerated: store.generated,
                         focusOnAppear: searchFocus,
+                        cuisinesNearby: cuisinesNearby,
                         onChoose: choose,
+                        onFood: findFood,
                         onCancel: closeSearch)
                     .transition(.opacity)
                 }
@@ -123,6 +130,7 @@ struct MapScreen: View {
             .onChange(of: location.access) { _, access in
                 if access == .denied {
                     planner.originUnavailable()
+                    food.locationDenied()
                     // Say why at once: open the search panel, which carries the message.
                     if sheetKind == nil, !searchOpen { openSearch(focus: false) }
                 }
@@ -133,7 +141,11 @@ struct MapScreen: View {
                     walk.handle(fix)
                 } else {
                     planner.setOrigin(Coordinate(fix.coordinate))
+                    food.setOrigin(Coordinate(fix.coordinate))
                 }
+            }
+            .onChange(of: foodResult) { _, poi in
+                if let poi { showFood(poi) }
             }
             .onChange(of: displayedPlan) { _, plan in
                 showPlan(plan)
@@ -282,7 +294,7 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.mapTier == 1, name: bead.poi.name)
+                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: (selectedPOI ?? foodResult)?.id == bead.poi.id, isPopular: bead.poi.mapTier == 1, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
@@ -395,7 +407,7 @@ struct MapScreen: View {
         for poi in visiblePOIs where seen.insert(poi.id).inserted && !planner.excluded.contains(poi.id) {
             items.append(BeadItem(poi: poi, dimmed: dim, shown: true))
         }
-        if let selected = selectedPOI, seen.insert(selected.id).inserted {
+        if let selected = selectedPOI ?? foodResult, seen.insert(selected.id).inserted {
             items.append(BeadItem(poi: selected, dimmed: false, shown: true))
         }
         // MapKit draws annotations in order, so tier 1 beads go last to sit on top.
@@ -432,6 +444,9 @@ struct MapScreen: View {
             } else {
                 WalkSheet(walk: walk, onDone: finishWalk)
             }
+        } else if let request = food.request, selectedPOI == nil {
+            FoodCard(finder: food, request: request, onDirections: directions(to:), onClose: closeCard,
+                     onHeight: setCardHeight)
         } else if let poi = selectedPOI {
             POIDetail(
                 poi: poi,
@@ -461,7 +476,7 @@ struct MapScreen: View {
     // MARK: - Sheet presentation (FE-17)
 
     private enum SheetKind: Equatable {
-        case place, pin, plan, walk, walkPlace
+        case place, pin, plan, walk, walkPlace, food
     }
 
     private enum LastCard {
@@ -473,6 +488,7 @@ struct MapScreen: View {
     private var sheetKind: SheetKind? {
         if let walk { return walk.phase == .walking && selectedPOI != nil ? .walkPlace : .walk }
         if selectedPOI != nil { return .place }
+        if food.request != nil { return .food }
         if droppedPin != nil { return .pin }
         if planner.destination != nil { return .plan }
         return nil
@@ -481,14 +497,14 @@ struct MapScreen: View {
     /// Place and pin cards open at half the screen or more, never a small peek.
     private var sheetDetents: Set<PresentationDetent> {
         switch sheetKind {
-        case .place, .pin, .walkPlace: [cardDetent, .large]
+        case .place, .pin, .walkPlace, .food: [cardDetent, .large]
         case .plan: [.peek, .medium, .large]
         case .walk: [.peek, .medium]
         case nil: [.medium]
         }
     }
 
-    private var isCard: Bool { [.place, .pin, .walkPlace].contains(sheetKind) }
+    private var isCard: Bool { [.place, .pin, .walkPlace, .food].contains(sheetKind) }
 
     /// Tall enough to show the whole card, at least half the screen, at most large;
     /// longer content scrolls with the actions pinned.
@@ -508,7 +524,7 @@ struct MapScreen: View {
     private var isHome: Bool { walk == nil && planner.destination == nil }
 
     /// A place or pin card with nothing under it: closing it leaves no sheet.
-    private var isHomeCard: Bool { isHome && (sheetKind == .place || sheetKind == .pin) }
+    private var isHomeCard: Bool { isHome && [.place, .pin, .food].contains(sheetKind) }
 
     private var sheetPresented: Binding<Bool> {
         Binding(get: { sheetKind != nil }, set: { shown in
@@ -534,6 +550,7 @@ struct MapScreen: View {
 
     private func closeCard() {
         selectedPOI = nil
+        food.close()
         clearPin()
     }
 
@@ -599,6 +616,7 @@ struct MapScreen: View {
         searchOpen = false
         recents.add(place)
         selectedPOI = nil
+        food.close()
         clearPin()
         planner.mood = mood
         planner.start(
@@ -619,6 +637,42 @@ struct MapScreen: View {
                            coordinate: poi.coordinate.clLocation))
     }
 
+    // MARK: - Food nearby (FE-19)
+
+    /// The place the food card shows, open or (when nothing is) the nearest closed one.
+    private var foodResult: POI? {
+        switch food.phase {
+        case .found(let result) where food.request != nil: result.poi
+        case .nothingOpen(let closed) where food.request != nil: closed
+        default: nil
+        }
+    }
+
+    /// For the restaurant cuisine step; empty without a location.
+    private func cuisinesNearby() -> [String] {
+        guard let here = location.location else { return [] }
+        return FoodPick.cuisines(pois: store.pois, near: Coordinate(here.coordinate))
+    }
+
+    private func findFood(_ kind: FoodKind, cuisine: String?) {
+        withAnimation(reduceMotion ? nil : .snappy(duration: 0.25)) { searchOpen = false }
+        selectedPOI = nil
+        clearPin()
+        food.start(FoodFinder.Request(kind: kind, cuisine: cuisine),
+                   origin: location.location.map { Coordinate($0.coordinate) },
+                   locationDenied: location.access == .denied,
+                   pois: store.pois, timeZone: store.timeZone)
+        detent = cardDetent
+    }
+
+    /// Frames the user and the place above the card.
+    private func showFood(_ poi: POI) {
+        lastCard = .poi(poi)
+        var line = [poi.coordinate]
+        if let here = location.location { line.append(Coordinate(here.coordinate)) }
+        if let region = Self.region(fitting: line) { move(to: .region(region)) }
+    }
+
     /// ✕ on the plan sheet: no sheet left, the search island is back.
     private func closePlan() {
         planner.close()
@@ -627,7 +681,10 @@ struct MapScreen: View {
     }
 
     private func select(_ poi: POI) {
+        // The food result's own bead: its card is already up.
+        if poi.id == foodResult?.id { return }
         clearPin()
+        food.close()
         selectedPOI = poi
         if detent != .large || !isCard { detent = cardDetent }
     }
@@ -692,6 +749,7 @@ struct MapScreen: View {
         let pin = DroppedPin(coordinate: coordinate)
         droppedPin = pin
         selectedPOI = nil
+        food.close()
         pinDrops += 1
         if detent != .large || !isCard { detent = cardDetent }
         // Coordinates show at once; the name replaces them if and when it arrives.

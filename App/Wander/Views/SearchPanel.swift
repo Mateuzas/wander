@@ -33,9 +33,9 @@ struct SearchIsland: View {
 }
 
 /// The island expanded (FE-17): the search field with Cancel, suggestions while
-/// typing; otherwise a compact island of the last few searches (FE-20). Also
-/// the offline and location-denied messages, and the logo and pitch when there
-/// is nothing else to show. The panel hangs from
+/// typing; otherwise the "Nearby" food row (FE-19) and a compact island of the
+/// last few searches (FE-20). Also the offline and location-denied messages, and
+/// the logo and pitch when there is nothing else to show. The panel hangs from
 /// the top, only as tall as its content; the map shows dimmed below it.
 struct SearchPanel: View {
     let search: SearchService
@@ -46,7 +46,11 @@ struct SearchPanel: View {
     var placesGenerated = ""
     /// Focus the field (and raise the keyboard) when the panel opens.
     var focusOnAppear = true
+    /// Cuisines of restaurants near the user, most common first (FE-19).
+    var cuisinesNearby: () -> [String] = { [] }
     let onChoose: (Destination) -> Void
+    /// A "Nearby" kind, and for a restaurant the cuisine (nil means any).
+    var onFood: (FoodKind, String?) -> Void = { _, _ in }
     let onCancel: () -> Void
 
     /// Recents shown in the island (FE-20).
@@ -55,6 +59,8 @@ struct SearchPanel: View {
     @FocusState private var fieldFocused: Bool
     @State private var resolving = false
     @State private var errorMessage: String?
+    /// The restaurant cuisine step; nil shows the kinds.
+    @State private var cuisines: [String]?
 
     private var isTyping: Bool { !search.query.trimmingCharacters(in: .whitespaces).isEmpty }
 
@@ -124,6 +130,11 @@ struct SearchPanel: View {
             if isTyping {
                 suggestions
             } else {
+                if let cuisines {
+                    cuisineStep(cuisines)
+                } else {
+                    nearbyRow
+                }
                 if !recents.items.isEmpty {
                     recentIsland
                 } else if !offline, !locationDenied, errorMessage == nil {
@@ -232,6 +243,83 @@ struct SearchPanel: View {
         .accessibilityLabel("Recent")
     }
 
+    // MARK: - Nearby (FE-19)
+
+    /// "Nearby" and the four kinds on one line; wraps when the text is large.
+    private var nearbyRow: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: Layout.grid) {
+                nearbyLabel
+                HStack(spacing: Layout.grid / 2) { kindChips }
+            }
+            VStack(alignment: .leading, spacing: Layout.grid / 2) {
+                nearbyLabel
+                FlowRow(spacing: Layout.grid / 2, lineSpacing: Layout.grid / 2) { kindChips }
+            }
+        }
+    }
+
+    private var nearbyLabel: some View {
+        Text("Nearby")
+            .font(WanderFont.caption)
+            .foregroundStyle(.inkMuted)
+            .lineLimit(1)
+            .fixedSize()
+            .accessibilityAddTraits(.isHeader)
+    }
+
+    @ViewBuilder
+    private var kindChips: some View {
+        ForEach(FoodKind.allCases) { kind in
+            FoodChip(title: kind.title, glyph: kind.glyph) { pick(kind) }
+                .accessibilityLabel("\(kind.title) nearby")
+                .accessibilityHint(kind == .restaurant ? "Choose a cuisine" : "Shows the closest open place")
+        }
+    }
+
+    /// Restaurant → a cuisine, or Any.
+    private func cuisineStep(_ cuisines: [String]) -> some View {
+        VStack(alignment: .leading, spacing: Layout.grid / 2) {
+            Button {
+                withAnimation(.snappy(duration: 0.2)) { self.cuisines = nil }
+            } label: {
+                HStack(spacing: Layout.grid / 2) {
+                    Image(systemName: "chevron.left")
+                        .font(.system(size: 13, weight: .semibold))
+                    Text("Restaurant")
+                        .font(WanderFont.caption)
+                }
+                .foregroundStyle(.inkMuted)
+                .frame(minHeight: Layout.minTouch)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Back to nearby kinds")
+            FlowRow(spacing: Layout.grid / 2, lineSpacing: Layout.grid / 2) {
+                FoodChip(title: "Any", glyph: FoodKind.restaurant.glyph) { food(.restaurant, nil) }
+                    .accessibilityLabel("Any restaurant")
+                ForEach(cuisines, id: \.self) { cuisine in
+                    FoodChip(title: FoodPick.cuisineTitle(cuisine), glyph: nil) { food(.restaurant, cuisine) }
+                }
+            }
+        }
+    }
+
+    private func pick(_ kind: FoodKind) {
+        guard kind == .restaurant else { return food(kind, nil) }
+        let nearby = cuisinesNearby()
+        // No cuisines to offer (no location, or none tagged): straight to any restaurant.
+        guard !nearby.isEmpty else { return food(.restaurant, nil) }
+        withAnimation(.snappy(duration: 0.2)) { cuisines = nearby }
+    }
+
+    private func food(_ kind: FoodKind, _ cuisine: String?) {
+        fieldFocused = false
+        search.clear()
+        cuisines = nil
+        onFood(kind, cuisine)
+    }
+
     // MARK: - Actions
 
     private func submitText() {
@@ -309,8 +397,38 @@ private struct PlaceRow: View {
     }
 }
 
-/// PLAN.md §7, location denied. Shown in the search panel; the map falls back to the city.
-private struct LocationDeniedMessage: View {
+/// A small raised chip in the "Nearby" row and the cuisine step (FE-19).
+private struct FoodChip: View {
+    let title: String
+    /// The kind's bead glyph, in the food colour; nil for a cuisine.
+    let glyph: String?
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: Layout.grid / 2) {
+                if let glyph {
+                    Image(systemName: glyph)
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.food)
+                        .accessibilityHidden(true)
+                }
+                Text(title)
+                    .font(WanderFont.body)
+                    .foregroundStyle(.ink)
+                    .lineLimit(1)
+            }
+            .padding(.horizontal, Layout.grid)
+            .frame(minHeight: Layout.minTouch)
+            .background(.surfaceRaised, in: Capsule())
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
+    }
+}
+
+/// PLAN.md §7, location denied. Shown in the search panel and the food card; the map falls back to the city.
+struct LocationDeniedMessage: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
