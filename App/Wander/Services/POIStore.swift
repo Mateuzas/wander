@@ -3,7 +3,8 @@ import MapKit
 import Observation
 import RouteEngine
 
-/// Loads the bundled `pois-<city>.json` (PLAN.md §5.5) into RouteEngine POIs.
+/// Loads `pois-<city>.json` (PLAN.md §5.5) into RouteEngine POIs: a valid
+/// download from the nightly publish first (FE-15, ADR 013), else the bundled file.
 @MainActor
 @Observable
 final class POIStore {
@@ -13,26 +14,42 @@ final class POIStore {
     nonisolated static let timeZones = ["vilnius": "Europe/Vilnius"]
 
     let timeZone: TimeZone
+    let slug: String
 
     private(set) var city = ""
     private(set) var attribution = ""
+    /// The data's generation date as written by the pipeline ("Places updated …").
+    private(set) var generated = ""
     private(set) var pois: [POI] = []
     /// Region covering every POI; the map's fallback when there is no location.
     /// Nil without a data file, and the map then falls back to MapKit's default.
     private(set) var region: MKCoordinateRegion?
     private(set) var loadError: Error?
+    /// Hex sha256 of the bytes in use, compared with the published manifest.
+    private(set) var sha256: String?
+    /// A downloaded update waiting for the plan or walk to end.
+    private(set) var pending: DataFeed.Update?
 
     init(city: String = POIStore.pilotCity, bundle: Bundle = .main) {
+        slug = city
         timeZone = Self.timeZones[city].flatMap(TimeZone.init(identifier:)) ?? .current
+        if let url = DataFeed.cacheURL(city: city), let data = try? Data(contentsOf: url) {
+            do {
+                apply(try DataFeed.decode(data, city: city), sha256: DataFeed.sha256Hex(data))
+                return
+            } catch {
+                // A damaged download is removed (so the next check fetches afresh)
+                // and the bundled file is used.
+                try? FileManager.default.removeItem(at: url)
+                DataFeed.log.notice("Cached POIs unusable, using bundled: \(String(describing: error), privacy: .public)")
+            }
+        }
         do {
             guard let url = bundle.url(forResource: "pois-\(city)", withExtension: "json") else {
                 throw CocoaError(.fileNoSuchFile)
             }
-            let file = try JSONDecoder().decode(POIFile.self, from: Data(contentsOf: url))
-            self.city = file.city
-            self.attribution = file.attribution ?? "© OpenStreetMap contributors"
-            self.pois = file.pois
-            self.region = Self.region(covering: pois)
+            let data = try Data(contentsOf: url)
+            apply(try JSONDecoder().decode(POIFile.self, from: data), sha256: DataFeed.sha256Hex(data))
         } catch {
             // A missing or unreadable file leaves an empty store: no beads, no crash.
             loadError = error
@@ -40,6 +57,30 @@ final class POIStore {
             print("POIStore: no POIs for \(city): \(error)")
             #endif
         }
+    }
+
+    /// Keeps a downloaded update until `applyPending()` is called.
+    func stage(_ update: DataFeed.Update) {
+        pending = update
+    }
+
+    /// Swaps in a staged update. Call only when no plan or walk is active.
+    @discardableResult
+    func applyPending() -> Bool {
+        guard let update = pending else { return false }
+        pending = nil
+        apply(update.file, sha256: update.sha256)
+        return true
+    }
+
+    private func apply(_ file: POIFile, sha256: String) {
+        city = file.city
+        attribution = file.attribution ?? "© OpenStreetMap contributors"
+        generated = file.generated
+        pois = file.pois
+        region = Self.region(covering: pois)
+        loadError = nil
+        self.sha256 = sha256
     }
 
     /// The beads to draw for `region` on a map `viewSize` points big (FE-1, FE-13).

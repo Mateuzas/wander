@@ -9,6 +9,8 @@ struct WanderApp: App {
         for glyph in POICategory.allGlyphs {
             assert(UIImage(systemName: glyph) != nil, "Missing SF Symbol: \(glyph)")
         }
+        // FE-15: manifest parse, sha256 check and decode against the bundled file.
+        Task.detached(priority: .utility) { DataFeed.selfCheck() }
         #endif
     }
 
