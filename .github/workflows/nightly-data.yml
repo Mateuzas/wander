@@ -8,8 +8,8 @@ name: Nightly data
 #
 # Jobs:
 #   cities  reads the city list from Data/cities.json
-#   build   one per city (matrix): restore Data/cache/<city>, run_nightly, validate,
-#           publish_gate against the live file, upload pois-<city>.json as an artifact
+#   build   one per city (matrix): restore Data/cache/<city>, fetch the live file, run_nightly,
+#           validate, publish_gate against the live file, upload pois-<city>.json as an artifact
 #   site    collects every city, writes manifest.json (scripts/build-manifest.py),
 #           uploads the Pages artifact
 #   deploy  actions/deploy-pages (the github-pages environment accepts main only)
@@ -82,10 +82,26 @@ jobs:
           key: data-cache-${{ matrix.city }}-${{ github.run_id }}
           restore-keys: data-cache-${{ matrix.city }}-
 
-      - name: run_nightly
+      - name: Download the published file
+        id: previous
         run: |
           set -euo pipefail
-          args=("$CITY" --out "$OUT")
+          url="${BASE_URL}pois-$CITY.json"
+          prev="$RUNNER_TEMP/previous-$CITY.json"
+          code="$(curl -sS -L --retry 3 --retry-all-errors -o "$prev" -w '%{http_code}' "$url" || true)"
+          case "$code" in
+            200) echo "previous=$prev" >> "$GITHUB_OUTPUT"; echo "Previous: $url ($(wc -c < "$prev") bytes)" ;;
+            404) echo "previous=none" >> "$GITHUB_OUTPUT"; echo "No published file yet (404): first publish." ;;
+            *)   echo "::error::Could not fetch $url (HTTP ${code:-none}); refusing to gate against nothing."; exit 1 ;;
+          esac
+
+      # The live file is also run_nightly's baseline for the review summary (tier-1 new/gone).
+      - name: run_nightly
+        env:
+          PREVIOUS: ${{ steps.previous.outputs.previous }}
+        run: |
+          set -euo pipefail
+          args=("$CITY" --out "$OUT" --previous "$PREVIOUS")
           if [[ "$REFRESH" == true ]]; then args+=(--refresh); fi
           echo "python3 Data/run_nightly.py ${args[*]}"
           python3 Data/run_nightly.py "${args[@]}"
@@ -109,19 +125,6 @@ jobs:
             exit 1
           fi
           cat "$RUNNER_TEMP/validate.txt"
-
-      - name: Download the published file
-        id: previous
-        run: |
-          set -euo pipefail
-          url="${BASE_URL}pois-$CITY.json"
-          prev="$RUNNER_TEMP/previous-$CITY.json"
-          code="$(curl -sS -L --retry 3 --retry-all-errors -o "$prev" -w '%{http_code}' "$url" || true)"
-          case "$code" in
-            200) echo "previous=$prev" >> "$GITHUB_OUTPUT"; echo "Previous: $url ($(wc -c < "$prev") bytes)" ;;
-            404) echo "previous=none" >> "$GITHUB_OUTPUT"; echo "No published file yet (404): first publish." ;;
-            *)   echo "::error::Could not fetch $url (HTTP ${code:-none}); refusing to gate against nothing."; exit 1 ;;
-          esac
 
       - name: Publish gate
         env:
