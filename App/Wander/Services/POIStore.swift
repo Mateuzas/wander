@@ -29,34 +29,54 @@ final class POIStore {
     private(set) var sha256: String?
     /// A downloaded update waiting for the plan or walk to end.
     private(set) var pending: DataFeed.Update?
+    /// POIs in the bundled file, the yardstick for downloads (FE-21); 0 if missing.
+    private(set) var bundledCount = 0
+
+    /// What a download is judged against: the newest data this store has.
+    var baseline: DataFeed.Baseline {
+        DataFeed.Baseline(sha256: pending?.sha256 ?? sha256,
+                          generated: pending?.file.generated ?? generated,
+                          bundledCount: bundledCount)
+    }
 
     init(city: String = POIStore.pilotCity, bundle: Bundle = .main) {
         slug = city
         timeZone = Self.timeZones[city].flatMap(TimeZone.init(identifier:)) ?? .current
-        if let url = DataFeed.cacheURL(city: city), let data = try? Data(contentsOf: url) {
-            do {
-                apply(try DataFeed.decode(data, city: city), sha256: DataFeed.sha256Hex(data))
-                return
-            } catch {
-                // A damaged download is removed (so the next check fetches afresh)
-                // and the bundled file is used.
-                try? FileManager.default.removeItem(at: url)
-                DataFeed.log.notice("Cached POIs unusable, using bundled: \(String(describing: error), privacy: .public)")
-            }
-        }
+        var bundled: (file: POIFile, sha256: String)?
         do {
             guard let url = bundle.url(forResource: "pois-\(city)", withExtension: "json") else {
                 throw CocoaError(.fileNoSuchFile)
             }
             let data = try Data(contentsOf: url)
-            apply(try JSONDecoder().decode(POIFile.self, from: data), sha256: DataFeed.sha256Hex(data))
+            bundled = (try JSONDecoder().decode(POIFile.self, from: data), DataFeed.sha256Hex(data))
         } catch {
-            // A missing or unreadable file leaves an empty store: no beads, no crash.
             loadError = error
             #if DEBUG
-            print("POIStore: no POIs for \(city): \(error)")
+            print("POIStore: no bundled POIs for \(city): \(error)")
             #endif
         }
+        bundledCount = bundled?.file.pois.count ?? 0
+
+        // FE-21: the cached download only if it is valid and newer than the bundled
+        // file (an app update may ship newer data). Otherwise it is removed, so the
+        // next check fetches afresh.
+        if let url = DataFeed.cacheURL(city: city), let data = try? Data(contentsOf: url) {
+            do {
+                let cached = try DataFeed.decode(data, city: city)
+                if let bundled, !DataFeed.preferCached(cached, over: bundled.file) {
+                    try? FileManager.default.removeItem(at: url)
+                    DataFeed.log.info("Bundled POIs newer than cached (\(bundled.file.generated, privacy: .public) vs \(cached.generated, privacy: .public)); cache removed")
+                } else {
+                    apply(cached, sha256: DataFeed.sha256Hex(data))
+                    return
+                }
+            } catch {
+                try? FileManager.default.removeItem(at: url)
+                DataFeed.log.notice("Cached POIs unusable, using bundled: \(String(describing: error), privacy: .public)")
+            }
+        }
+        // A missing or unreadable bundled file leaves an empty store: no beads, no crash.
+        if let bundled { apply(bundled.file, sha256: bundled.sha256) }
     }
 
     /// Keeps a downloaded update until `applyPending()` is called.

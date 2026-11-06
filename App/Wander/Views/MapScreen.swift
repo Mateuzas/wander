@@ -355,8 +355,7 @@ struct MapScreen: View {
     /// failure: the current data stays.
     private func checkForFreshPlaces() {
         Task {
-            let current = store.pending?.sha256 ?? store.sha256
-            guard let update = await updater.refreshIfDue(currentSHA256: current) else { return }
+            guard let update = await updater.refreshIfDue(current: store.baseline) else { return }
             store.stage(update)
             applyPendingPlaces()
         }
