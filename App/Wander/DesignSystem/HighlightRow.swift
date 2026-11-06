@@ -41,7 +41,7 @@ struct HighlightRow: View {
 #Preview {
     VStack(alignment: .leading, spacing: Layout.margin) {
         HighlightRow(category: .photo, name: "Archikatedra", reason: "Historic church, popular photo spot", distance: "220 m")
-        HighlightRow(category: .food, glyph: "birthday.cake", name: "Bułkęs", reason: "Independent bakery", distance: "1.1 km")
+        HighlightRow(category: .food, glyph: "cup.and.saucer", name: "Bułkęs", reason: "Independent bakery", distance: "1.1 km")
     }
     .padding(Layout.margin)
     .background(.surface)

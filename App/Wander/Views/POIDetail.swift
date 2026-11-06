@@ -31,6 +31,8 @@ struct POIDetail: View {
     /// Set during a walk for one of its highlights; nil hides it.
     var walkSkip: WalkSkip?
     let onClose: () -> Void
+    /// The sheet height the card needs to show everything (FE-17).
+    var onHeight: ((CGFloat) -> Void)?
 
     @State private var adding = false
     @State private var addMessage: String?
@@ -44,8 +46,13 @@ struct POIDetail: View {
         connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
     }
 
+    /// Directions, add/remove and Skip: pinned at the bottom, always on screen.
+    private var hasActions: Bool {
+        onDirections != nil || action != .none || walkSkip != nil
+    }
+
     var body: some View {
-        ScrollView {
+        SheetCard(hasActions: hasActions, onHeight: onHeight) {
             VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
                 if connectivity.isOnline, poi.commonsImage != nil || poi.commonsCategory != nil {
                     CommonsPhotoView(fileName: poi.commonsImage, category: poi.commonsCategory,
@@ -76,20 +83,21 @@ struct POIDetail: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
+                descriptionView
                 placeInfo
-                if let onDirections {
-                    Button("Directions", action: onDirections)
-                        .buttonStyle(.primary)
-                        .accessibilityLabel("Directions to \(poi.name)")
-                }
-                actionView
-                walkSkipView
             }
             .padding(.horizontal, Layout.margin)
             .padding(.top, Layout.margin + Layout.grid)
-            .padding(.bottom, Layout.margin)
+            .padding(.bottom, Layout.grid)
+        } actions: {
+            if let onDirections {
+                Button("Directions", action: onDirections)
+                    .buttonStyle(.primary)
+                    .accessibilityLabel("Directions to \(poi.name)")
+            }
+            actionView
+            walkSkipView
         }
-        .scrollBounceBehavior(.basedOnSize)
         .overlay(alignment: .topTrailing) { closeButton }
         .onChange(of: poi.id) { addMessage = nil }
         .task(id: poi.id) { await loadPlaceInfo() }
@@ -111,6 +119,36 @@ struct POIDetail: View {
         // Sits inside the photo's corner, or in the card's corner without one.
         .padding(.top, Layout.margin + Layout.grid - (hasPhoto ? 2 : 0))
         .padding(.trailing, hasPhoto ? Layout.grid : Layout.margin - 6)
+    }
+
+    // MARK: - Description (FE-17)
+
+    /// The longer description from the data, under the reason. Wikipedia text is
+    /// CC BY-SA, so it carries a "From Wikipedia" link to the article. Nothing
+    /// shows when the place has no description.
+    @ViewBuilder
+    private var descriptionView: some View {
+        if let text = poi.description?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+            VStack(alignment: .leading, spacing: Layout.grid / 2) {
+                Text(text)
+                    .font(WanderFont.body)
+                    .foregroundStyle(.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                if poi.descriptionSource == "wikipedia",
+                   let link = poi.descriptionUrl.flatMap(URL.init(string:)) {
+                    Link(destination: link) {
+                        Text("From Wikipedia")
+                            .font(WanderFont.caption)
+                            .foregroundStyle(.inkMuted)
+                            .underline()
+                            .frame(minHeight: Layout.minTouch, alignment: .leading)
+                            .contentShape(Rectangle())
+                    }
+                    .accessibilityLabel("From Wikipedia")
+                    .accessibilityHint("Opens the article in Safari")
+                }
+            }
+        }
     }
 
     // MARK: - Photos and reviews
