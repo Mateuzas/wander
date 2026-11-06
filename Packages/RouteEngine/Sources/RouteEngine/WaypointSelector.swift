@@ -2,14 +2,18 @@ import Foundation
 
 /// Chooses waypoints on offline estimates (PLAN.md section 6, step 4).
 ///
-/// Maximises the total value of the waypoints within the budget, with less
+/// Maximises the total value of the waypoints within the budget, minus
+/// `costPerMinute` for each estimated extra minute (Recommended), with less
 /// extra time as the tie-break. Ranking by value per minute instead let
-/// near-free places fill every slot and left Explorer's budget unused.
+/// near-free places fill every slot and left long budgets unused.
 /// A beam search over waypoint sets (at most `maxWaypoints` deep) keeps this
 /// cheap: about `beamWidth × candidates × maxWaypoints` insertion estimates.
 struct WaypointSelector {
     var config: PlannerConfig
     var scorer: Scorer
+    /// Value points charged per estimated extra minute (Recommended's
+    /// `minValuePerMinute`). Zero maximises plain value within the budget.
+    var costPerMinute: Double = 0
 
     struct Result {
         /// Chosen waypoints in walking order.
@@ -30,10 +34,12 @@ struct WaypointSelector {
         var value: Double
         /// Waypoint ids sorted, so the same set in another order is one state.
         var key: String
+        /// `value` minus `costPerMinute` × extra minutes.
+        var net: Double = 0
 
-        /// Higher value first, then less time, then ids for determinism.
+        /// Higher net value first, then less time, then ids for determinism.
         func isBetter(than other: State) -> Bool {
-            if value != other.value { return value > other.value }
+            if net != other.net { return net > other.net }
             if extra != other.extra { return extra < other.extra }
             return key < other.key
         }
@@ -107,10 +113,11 @@ struct WaypointSelector {
         let startRoute = [origin] + initial.map(\.coordinate) + [destination]
         let startExtra = zip(startRoute, startRoute.dropFirst()).reduce(0) { $0 + estimator.seconds(from: $1.0, to: $1.1) }
             - estimator.seconds(from: origin, to: destination)
-        let start = State(route: startRoute, waypoints: initial, extra: startExtra,
+        var start = State(route: startRoute, waypoints: initial, extra: startExtra,
                           value: initial.reduce(0) { $0 + (values[$1.id] ?? 0) }, key: waypointKey(initial))
+        start.net = start.value - costPerMinute * start.extra / 60
         var best = start
-        // Best set with a stop the smaller modes don't have, for when the
+        // Best set with a stop the `taken` plans don't have, for when the
         // overall best is (inside) one of theirs.
         var bestNew: State? = taken.isNew(start.waypoints) ? start : nil
         var beam = [start]
@@ -126,6 +133,7 @@ struct WaypointSelector {
                     child.extra += insertion.extra
                     child.value += values[poi.id] ?? 0
                     child.key = waypointKey(child.waypoints)
+                    child.net = child.value - costPerMinute * child.extra / 60
                     if let existing = children[child.key], !child.isBetter(than: existing) { continue }
                     children[child.key] = child
                 }
@@ -139,7 +147,7 @@ struct WaypointSelector {
                 bestNew = fresh
             }
         }
-        // Never repeat a smaller mode's walk while a set with something new fits.
+        // Never repeat a `taken` walk while a set with something new fits.
         if !taken.isEmpty, !taken.isNew(best.waypoints), let bestNew { best = bestNew }
 
         // Extra time each chosen waypoint added when it was inserted is not
