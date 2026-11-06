@@ -133,3 +133,7 @@ osm:way:110022851,popular,no,Backender draft: fame borrowed from the National Mu
 osm:way:110022851,image,,Backender draft: Wikidata photo shows the National Museum
 osm:way:110022872,reason,Branch of the National Museum,Backender draft: auto reason called it well-known (borrowed fame)
 osm:way:110022851,reason,Branch of the National Museum in a former jail,Backender draft: auto reason called it well-known (borrowed fame)
+# --- Overture (BE-7, 2026-11-06) ---
+ovt:f9be71f7-cc25-42f1-8f8e-72641d3c9a30,exclude,,"Overture duplicate of Senatorių kolonos (osm:node:268636070, same address Tilto 2A) under a wrong name; Backender draft"
+ovt:3fe7d363-8029-4dac-bb2b-ac373cae717d,exclude,,"Overture duplicate of Prancūziškas knygynėlis (osm:node:963655671, 9 m) under its French name; Backender draft"
+ovt:8874e6e9-48c1-4671-898d-17f7df5063c6,exclude,,"A beer spa (bath), not a restaurant: Overture category is wrong; Backender draft"

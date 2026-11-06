@@ -10,18 +10,19 @@ why they'd care. The user's decisions:
 
 **Decision.**
 1. **Hook** (`hook`, ≤ 80 characters, one sentence, eye-catching, sentence case, no emoji or hype words):
-   - Written by Claude via the Anthropic API in the nightly pipeline (`Data/hooks.py`; official `anthropic` Python SDK
-     pinned in `Data/requirements-hooks.txt`; model `claude-opus-5-5`, the default, swappable by one constant). The Batch
-     API is used for full runs.
-   - **Grounding:** the prompt contains only facts we hold: name, kind and cuisine, OSM tags (outdoor seating, diet,
+   - **Written by Claude Code sessions on the user's Claude subscription, not a paid API** (user decision 2026-11-06).
+     `run_nightly.py --export-facts` writes one facts bundle per place that lacks a hook for its current facts hash.
+     A Claude Code session (by hand, or a weekly scheduled routine) writes hooks by the rules in
+     `Data/hooks/WRITING.md`, validates them with `Data/hooks.py validate`, and opens a PR with
+     `Data/hooks/<city>.jsonl` (`{id, facts_hash, hook|null, prompt_version, written_by, date}`). The user reviews it.
+   - **Grounding:** a bundle contains only facts we hold: name, kind and cuisine, OSM tags (outdoor seating, diet,
      heritage, start date, artist), the Wikipedia extract, the place's own website title or meta description, and the
-     Overture category. The model must not add facts; if the facts can't support an intriguing line, it returns
-     `null`, and the place is removed (rule 3).
-   - Structured output (`output_config.format`: JSON schema `{hook: string|null}`), length enforced after parsing.
-   - **Cached** per place by a hash of (facts + prompt version + model) in `Data/cache/<city>/hooks.json`, so nights
-     only pay for new or changed places. A prompt or model change bumps the version and rewrites all hooks.
-   - **The API key** is a GitHub Actions secret `ANTHROPIC_API_KEY` only; never on disk, never in the repo. Without the
-     key (local dev, forks) the step uses cached hooks and drops uncached places, with a loud summary line.
+     Overture category. The writer must not add facts. If the facts can't support an intriguing line, the hook is `null`
+     and the place is removed (rule 3).
+   - **Freshness:** the nightly job uses a hook only when its `facts_hash` matches the place's current facts. New or
+     changed places stay off the map until the next writing session (at most about a week with the scheduled routine).
+   - **Optional API writer:** `Data/hooks.py write --api` with the official `anthropic` SDK exists for when an API key is
+     ever wanted. It's off by default, never used in CI, and the nightly job needs no Anthropic secret.
 2. **Photo** (`photo` object), first available in priority order, scored "better" where several exist:
    1. own Commons image (`commonsImage`), then the Commons category
    2. Mapillary street-level image: the closest image within 40 m whose camera faces the place (compass angle within
@@ -36,6 +37,6 @@ why they'd care. The user's decisions:
    **not** override this; curation can add a hand-written `hook` (new `hook` action) or `photo` (existing `image` action).
 4. **Description:** stays optional, shown under the hook in the card; `reason` stays as the short type label.
 
-**Consequences.** The map shrinks to places that sell themselves. The first full run costs about $1–2 on Opus 5.5
-(about half that with Batch); nightly cost after that is cents. Expect counts well below 812; the publish gate needs a
+**Consequences.** The map shrinks to places that sell themselves. Writing uses the user's subscription limits (about 800
+lines once, then a handful weekly), with no API bill. Every line is reviewed in a PR before it goes live. Expect counts well below 812; the publish gate needs a
 one-time `--allow-shrink` for the first run (decreases are otherwise gated).

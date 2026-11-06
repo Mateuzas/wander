@@ -16,244 +16,107 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 15,osm:node:1660654788,"Theatre, Music and Cinema Museum","Lietuvos teatro, muzikos ir kino muziejus",photo,76,"Museum, popular photo spot",7,17,https://www.openstreetmap.org/node/1660654788
 16,osm:node:325183533,Adam Mickiewicz Memorial Apartment,Adomo Mickevičiaus memorialinis muziejus,photo,75,"Museum, popular photo spot",5,17,https://www.openstreetmap.org/node/325183533
 17,osm:way:24569579,Presidential Palace of the Republic of Lithuania,Lietuvos Respublikos prezidentūra,photo,75,Seat of Lithuania's President on Daukanto Square,26,6,https://www.openstreetmap.org/way/24569579
-18,osm:node:3765354477,Railway Museum,Geležinkelių muziejus,photo,75,"Museum, popular photo spot",6,13,https://www.openstreetmap.org/node/3765354477
-19,osm:way:111866535,Vilnius Town Hall,Vilniaus Rotušė,photo,75,Classical town hall at the top of Didžioji Street,15,44,https://www.openstreetmap.org/way/111866535
-20,osm:node:60464945,Grand Duke Gediminas,Didysis Kunigaikštis Gediminas,photo,74,Statue of the city's legendary founder on Cathedral Square,5,35,https://www.openstreetmap.org/node/60464945
-21,osm:node:1616746326,Užupis Angel,Užupio Angelas,photo,74,Bronze angel on a column in the middle of Užupis,1,20,https://www.openstreetmap.org/node/1616746326
-22,osm:way:88534413,Church of St Peter and St Paul,Šv. apaštalų Petro ir Povilo bažnyčia,photo,73,Plain outside; inside over 2000 white stucco figures,22,34,https://www.openstreetmap.org/way/88534413
-23,osm:node:4515994589,Literatų Street,Literatų gatvės projektas,photo,73,Wall of small artworks for writers linked to Vilnius,8,17,https://www.openstreetmap.org/node/4515994589
-24,osm:way:81434371,Church of the Holy Spirit,Šventosios Dvasios bažnyčia,photo,72,Late-baroque Dominican church with a richly decorated interior,14,39,https://www.openstreetmap.org/way/81434371
-25,osm:way:24569949,National Art Gallery,Nacionalinė dailės galerija,photo,72,"Museum, popular photo spot",5,13,https://www.openstreetmap.org/way/24569949
-26,osm:node:2788680265,de Choiseul (de Reuss) Palace,Šuazelių (De Reusų) rūmai,photo,71,"Manor house, popular photo spot",5,29,https://www.openstreetmap.org/node/2788680265
-27,osm:node:2788680220,Abramowicz Palace,Abramavičių rūmai,photo,70,"Manor house, popular photo spot",5,24,https://www.openstreetmap.org/node/2788680220
-28,osm:node:3488363281,Marija and Jurgis Šlapelis House-Museum,Marijos ir Jurgio Šlapelių namas-muziejus,photo,70,"Museum, popular photo spot",4,13,https://www.openstreetmap.org/node/3488363281
-29,osm:way:554107986,Museum of Culture and Identity of Lithuanian Jews,Lietuvos žydų kultūros ir tapatybės muziejus,photo,70,"Museum, well-known landmark",12,4,https://www.openstreetmap.org/way/554107986
-30,osm:way:60774388,St Paraskeva Orthodox Church,Vilniaus Šv. kankinės Paraskevos cerkvė,photo,70,"Historic church, well-known landmark, popular photo spot",10,68,https://www.openstreetmap.org/way/60774388
-31,osm:node:3498880020,Vilnius Academy of Arts Museum,Vilniaus dailės akademijos muziejus,photo,70,"Museum, popular photo spot",2,19,https://www.openstreetmap.org/node/3498880020
-32,osm:node:1885116687,Bank of Lithuania Money Museum,Lietuvos banko Pinigų muziejus,photo,69,Museum,3,11,https://www.openstreetmap.org/node/1885116687
-33,osm:way:61978296,Church of St Theresa,Šv. Teresės bažnyčia,photo,68,"Historic church, well-known landmark, popular photo spot",10,62,https://www.openstreetmap.org/way/61978296
-34,osm:relation:1447676,St Michael's Church,Šv. arkangelo Mykolo bažnyčia,photo,68,Renaissance church; now the Church Heritage Museum,10,47,https://www.openstreetmap.org/relation/1447676
-35,osm:way:25963398,Vytautas Kasiulis Museum of Art,Vytauto Kasiulio dailės muziejus,photo,68,"Museum, popular photo spot",3,13,https://www.openstreetmap.org/way/25963398
-36,osm:way:112746080,Basilian Church of the Holy Trinity,Švč. Trejybės Graikų apeigų katalikų bažnyčia,photo,67,"Place of worship, well-known landmark, popular photo spot",12,27,https://www.openstreetmap.org/way/112746080
-37,osm:way:112386499,Church of St Catherine,Šv. Kotrynos bažnyčia,photo,67,"Historic church, well-known landmark, popular photo spot",13,16,https://www.openstreetmap.org/way/112386499
-38,osm:way:81304730,Cathedral Bell Tower,Varpinės bokštas,photo,66,Free-standing bell tower of the Cathedral,1,88,https://www.openstreetmap.org/way/81304730
-39,osm:way:29503660,St Casimir's Church,Šv. Kazimiero bažnyčia,photo,66,"Historic church, well-known landmark, popular photo spot",15,20,https://www.openstreetmap.org/way/29503660
-40,osm:node:2788680231,Łopaciński and Sulistrowski Palace,Lopacinskių ir Sulistrovskių rūmai,photo,66,"Manor house, popular photo spot",5,19,https://www.openstreetmap.org/node/2788680231
-41,osm:way:1386286056,Bastion of the City Wall,Vilniaus gynybinės sienos Bastėja,photo,65,Museum,2,12,https://www.openstreetmap.org/way/1386286056
-42,osm:way:343751993,Cathedral of the Theotokos,Vilniaus Dievo Motinos Ėmimo į Dangų katedra,photo,65,"Cathedral, well-known landmark, popular photo spot",17,15,https://www.openstreetmap.org/way/343751993
-43,osm:node:14095010845,Chapel of St Michael the Archangel,Vilniaus šv. arkangelo Mykolo koplyčia,photo,65,"Historic church, popular photo spot",2,30,https://www.openstreetmap.org/node/14095010845
-44,osm:node:3259752814,Kazys Varnelis House-Museum,Kazio Varnelio namai-muziejus,photo,65,"Museum, popular photo spot",0,45,https://www.openstreetmap.org/node/3259752814
-45,osm:way:61979743,St Nicholas Orthodox Church,Vilniaus Šv. Mikolajaus Stebukladario palaikų Pernešimo cerkvė,photo,65,"Historic church, well-known landmark, popular photo spot",10,21,https://www.openstreetmap.org/way/61979743
-46,osm:node:2788680256,Tyszkiewicz Palace,Tiškevičių rūmai,photo,65,Manor house,9,8,https://www.openstreetmap.org/node/2788680256
-47,osm:way:81296879,Divine Mercy Sanctuary,Dievo Gailestingumo šventovė,photo,64,"Place of worship, popular photo spot",8,21,https://www.openstreetmap.org/way/81296879
-48,osm:way:391284473,Green Bridge,Žaliasis tiltas,photo,64,"Bridge, well-known landmark",17,12,https://www.openstreetmap.org/way/391284473
-49,osm:node:3629146556,Jonas Mekas Visual Arts Centre,Jono Meko vizualiųjų menų centras,photo,64,Museum,6,5,https://www.openstreetmap.org/node/3629146556
-50,osm:way:407497120,King Mindaugas Bridge,Karaliaus Mindaugo tiltas,photo,64,"Bridge, well-known landmark",18,12,https://www.openstreetmap.org/way/407497120
-51,osm:way:52710380,Museum of Applied Art,Taikomosios dailės muziejus,photo,63,Museum,2,9,https://www.openstreetmap.org/way/52710380
-52,osm:way:81298425,St Ignatius Church,Vilniaus Šv. Ignoto bažnyčia,photo,63,"Historic church, well-known landmark",15,10,https://www.openstreetmap.org/way/81298425
-53,osm:node:2750466229,Užupis Mermaid,Užupio Undinėlė,photo,63,"Statue, popular photo spot",1,39,https://www.openstreetmap.org/node/2750466229
-54,osm:way:55443728,All Saints Church,Visų Šventųjų bažnyčia,photo,62,"Historic church, well-known landmark",13,12,https://www.openstreetmap.org/way/55443728
-55,osm:node:5674924977,Amber Museum,Gintaro muziejus,photo,62,"Museum, popular photo spot",0,35,https://www.openstreetmap.org/node/5674924977
-56,osm:relation:15521581,Foundations of St Anne and St Barbara's Church,Buvusios Šv. Onos ir Šv. Barboros bažnyčios pamatai,photo,62,"Landmark, popular photo spot",3,17,https://www.openstreetmap.org/relation/15521581
-57,osm:way:89501116,King Mindaugas,Karalius Mindaugas,photo,62,"Statue, popular photo spot",2,18,https://www.openstreetmap.org/way/89501116
-58,osm:node:3597171812,Stanisław Moniuszko Monument,Stanislovas Moniuška,photo,62,"Bust, popular photo spot",2,18,https://www.openstreetmap.org/node/3597171812
-59,osm:node:4196636053,Centre for Civil Education,Valstybės pažinimo centras,photo,61,"Museum, popular photo spot",0,22,https://www.openstreetmap.org/node/4196636053
-60,osm:way:29503299,Choral Synagogue,Vilniaus choralinė sinagoga,photo,61,"Synagogue, well-known landmark",17,8,https://www.openstreetmap.org/way/29503299
-61,osm:way:112746040,Lithuanian National Philharmonic,Lietuvos nacionalinė filharmonija,photo,61,"Theatre, popular photo spot",8,20,https://www.openstreetmap.org/way/112746040
-62,osm:way:52710379,Old Arsenal,Senasis arsenalas,photo,61,"Museum, popular photo spot",0,28,https://www.openstreetmap.org/way/52710379
-63,osm:node:5013540325,Radziwiłł Palace,Radvilų rūmai,photo,61,"Manor house, well-known landmark",12,3,https://www.openstreetmap.org/node/5013540325
-64,osm:way:111765516,Vilnius Academy of Arts,Vilniaus dailės akademija,photo,61,"University, well-known landmark",14,8,https://www.openstreetmap.org/way/111765516
-65,osm:node:3138119731,Constitution of the Republic of Užupis,Užupio konstitucija,photo,60,Užupis's tongue-in-cheek constitution on plaques in many languages,0,15,https://www.openstreetmap.org/node/3138119731
-66,osm:way:572986085,Holocaust exhibition,Holokausto ekspozicija,photo,60,"Museum, well-known landmark",12,1,https://www.openstreetmap.org/way/572986085
-67,osm:way:25963535,MO Museum,MO muziejus,photo,60,Museum,5,3,https://www.openstreetmap.org/way/25963535
-68,osm:way:48954340,Orthodox Church of the Holy Spirit,Vilniaus Šv. Dvasios cerkvė,photo,60,"Historic church, well-known landmark",12,10,https://www.openstreetmap.org/way/48954340
-69,osm:way:506335761,Užupis Bridge,Užupio tiltas,photo,60,"Bridge, popular photo spot",4,39,https://www.openstreetmap.org/way/506335761
-70,osm:node:1690265433,Crooked Hill,Plikasis (Kreivasis) kalnas,photo,59,"Landmark, popular photo spot",1,17,https://www.openstreetmap.org/node/1690265433
-71,osm:way:89594175,Lithuanian Academy of Music and Theatre,Lietuvos muzikos ir teatro akademija,photo,59,"University, well-known landmark",17,5,https://www.openstreetmap.org/way/89594175
-72,osm:node:11131967095,Baltic Amber Art Centre,Baltijos gintaro meno centras,photo,58,"Art gallery, popular photo spot",0,24,https://www.openstreetmap.org/node/11131967095
-73,osm:way:68586429,Energy and Technology Museum,Energetikos ir technikos muziejus,photo,58,Museum,8,1,https://www.openstreetmap.org/way/68586429
-74,osm:node:2788680246,Raduszkiewicz Palace,Hilarijaus Raduškevičiaus rūmai,photo,58,Landmark,9,2,https://www.openstreetmap.org/node/2788680246
-75,osm:node:5167418039,Stebuklas (Miracle) Tile,Plytelė „Stebuklas“,photo,58,Tile marking the end of the 1989 Baltic Way human chain,0,71,https://www.openstreetmap.org/node/5167418039
-76,osm:node:6919610795,Swing,Supynės,photo,58,"Installation, popular photo spot",0,37,https://www.openstreetmap.org/node/6919610795
-77,osm:node:325195468,23 August 1987 Rally Memorial,1987-08-23 mitingas,photo,57,"Sculpture, popular photo spot",0,41,https://www.openstreetmap.org/node/325195468
-78,osm:node:4702177689,Arka Gallery,Arkos galerija,photo,57,"Art gallery, popular photo spot",0,27,https://www.openstreetmap.org/node/4702177689
-79,osm:node:3461138847,Beatričė Grincevičiūtė House-Museum,B. Grincevičiutės memorialinis butas-muziejus Beatričės namai,photo,57,"Museum, popular photo spot",0,22,https://www.openstreetmap.org/node/3461138847
-80,osm:way:52461050,Orthodox Church of St Constantine and St Michael,Vilniaus Šv. Konstantino ir Michailo cerkvė,photo,57,"Historic church, well-known landmark",10,7,https://www.openstreetmap.org/way/52461050
-81,osm:node:8909369732,Portal,Portalas,photo,57,"Installation, popular photo spot",0,44,https://www.openstreetmap.org/node/8909369732
-82,osm:node:2471812239,St John's Bell Tower,Šv. Jonų bažnyčios varpinė,photo,57,"Viewpoint, popular photo spot",0,50,https://www.openstreetmap.org/node/2471812239
-83,osm:way:61189004,Vileišis Palace,Vileišio rūmai,photo,57,"Manor house, well-known landmark",10,2,https://www.openstreetmap.org/way/61189004
-84,osm:way:342104825,Church of Our Lady of Consolation,Švč. M. Marijos Ramintojos bažnyčia,photo,56,Historic church,7,11,https://www.openstreetmap.org/way/342104825
-85,osm:way:26282675,Church of the Ascension,Vilniaus Viešpaties Dangun Žengimo bažnyčia,photo,56,"Historic church, well-known landmark",10,6,https://www.openstreetmap.org/way/26282675
-86,osm:way:110022872,House of Histories,Istorijų namai,photo,56,Branch of the National Museum,20,8,https://www.openstreetmap.org/way/110022872
-87,osm:node:2471812217,Lamplighter,Žibintininkas,photo,56,"Sculpture by Vytautas Nalivaika, popular photo spot",0,34,https://www.openstreetmap.org/node/2471812217
-88,osm:node:13953561984,Sculpture near Southern Tower,Sculpture,photo,56,"Sculpture, popular photo spot",0,112,https://www.openstreetmap.org/node/13953561984
-89,osm:way:29495546,Southern Tower,Pietinis pilies bokštas,photo,56,"Ruins, popular photo spot",0,90,https://www.openstreetmap.org/way/29495546
-90,osm:way:55447268,St Nicholas Church,Šv. Mikalojaus bažnyčia,photo,56,"Historic church, well-known landmark",12,7,https://www.openstreetmap.org/way/55447268
-91,osm:way:24570269,Contemporary Art Centre,Šiuolaikinio meno centras,photo,55,Museum,3,3,https://www.openstreetmap.org/way/24570269
-92,osm:node:13706141716,Divers Graffiti,Nardinai,photo,55,"Public artwork by Vladas Suncovas, popular photo spot",0,50,https://www.openstreetmap.org/node/13706141716
-93,osm:node:4834792641,Ragutis Stone,Ragučio mitologinis akmuo,photo,55,"Landmark, popular photo spot",0,30,https://www.openstreetmap.org/node/4834792641
-94,osm:way:318804917,Castellan's House,Pilininko namas,photo,54,"Museum, popular photo spot",0,15,https://www.openstreetmap.org/way/318804917
-95,osm:node:9653953496,Džiugas Cheese Sculpture,Džiugo sūris,photo,54,"Sculpture by Romualdas Inčirauskas, popular photo spot",0,31,https://www.openstreetmap.org/node/9653953496
-96,osm:way:55447894,Franciscan Church of the Assumption,Vilniaus Švč. Mergelės Marijos Ėmimo į dangų bažnyčia,photo,54,"Historic church, well-known landmark",10,6,https://www.openstreetmap.org/way/55447894
-97,osm:node:6087630577,Jonas Basanavičius Monument,Jonas Basanavičius,photo,54,"Statue, popular photo spot",0,34,https://www.openstreetmap.org/node/6087630577
-98,osm:way:345476736,St Nicholas Orthodox Church at Lukiškės Prison,Šv. Mikalojaus Stebukladario cerkvė,photo,54,"Historic church, popular photo spot",3,17,https://www.openstreetmap.org/way/345476736
-99,osm:node:7831898585,Vilnius 1323–1973 Sculpture,Vilnius 1323-1973,photo,54,"Sculpture, popular photo spot",0,31,https://www.openstreetmap.org/node/7831898585
-100,osm:way:391282314,White Bridge,Baltasis tiltas,photo,54,Bridge,7,9,https://www.openstreetmap.org/way/391282314
-101,osm:way:112377899,Alumnatas Courtyard,Alumnato kiemas,photo,53,"Landmark, popular photo spot",0,16,https://www.openstreetmap.org/way/112377899
-102,osm:node:12092076033,Castle Map of Vilnius,Castle map of Vilnius,photo,53,"Relief, popular photo spot",0,28,https://www.openstreetmap.org/node/12092076033
-103,osm:way:326198500,Konrad's Cell,Konrado celė,photo,53,"Landmark, popular photo spot",0,27,https://www.openstreetmap.org/way/326198500
-104,osm:node:10687010620,Vytautas the Great Monument,Vytautas Didysis,photo,53,"Statue, popular photo spot",0,27,https://www.openstreetmap.org/node/10687010620
-105,osm:way:36242889,Church of Our Lady of the Sign,Vilniaus Dievo Motinos ikonos „Ženklas iš dangaus“ cerkvė,photo,52,Historic church,9,4,https://www.openstreetmap.org/way/36242889
-106,osm:way:81303383,Church of the Holy Cross,Šv. Kryžiaus bažnyčia,photo,52,Historic church,9,4,https://www.openstreetmap.org/way/81303383
-107,osm:node:4568623691,Kristijonas Donelaitis Monument,Kristijonas Donelaitis,photo,52,"Statue, popular photo spot",0,19,https://www.openstreetmap.org/node/4568623691
-108,osm:node:4702086693,Terra Recognita Gallery,Galerija „Terra recognita“,photo,52,"Art gallery, popular photo spot",0,15,https://www.openstreetmap.org/node/4702086693
-109,osm:node:6919141247,Trader Graffiti,Prekeivis,photo,52,"Public artwork by L. Šlipavičiūtė-Černiauskienė, popular photo spot",0,19,https://www.openstreetmap.org/node/6919141247
-110,osm:node:4702161890,Vartai Gallery,Vartai,photo,52,Art gallery,0,10,https://www.openstreetmap.org/node/4702161890
-111,osm:way:407497122,Castle Bridge,Pilies tiltas,photo,51,Bridge,4,10,https://www.openstreetmap.org/way/407497122
-112,osm:way:81426541,Church of St Bartholomew,Vilniaus Šv. apaštalo Baltramiejaus bažnyčia,photo,51,Historic church,8,4,https://www.openstreetmap.org/way/81426541
-113,osm:node:4992535429,Juliusz Słowacki,Juliusz Słowacki,photo,51,"Bust, popular photo spot",0,21,https://www.openstreetmap.org/node/4992535429
-114,osm:node:5624460821,Memorial to Victims of the Soviet Occupation,Sovietinės okupacijos aukoms atminti,photo,51,"War memorial, popular photo spot",0,17,https://www.openstreetmap.org/node/5624460821
-115,osm:way:24571052,Old Theatre of Vilnius,Vilniaus senasis teatras,photo,51,Theatre,8,4,https://www.openstreetmap.org/way/24571052
-116,osm:node:2788680257,Umiastowski Palace,Umiastovskių rūmai,photo,51,Manor house,2,6,https://www.openstreetmap.org/node/2788680257
-117,osm:node:12355180716,Užupis Pig,Uzupis pig,photo,51,"Installation, popular photo spot",0,21,https://www.openstreetmap.org/node/12355180716
-118,osm:node:3260619146,Wave Sculpture,Banga,photo,51,"Sculpture by Gediminas Piekuras, popular photo spot",0,22,https://www.openstreetmap.org/node/3260619146
-119,osm:node:325183408,Amber Museum-Gallery,Gintaro galerija-muziejus,photo,50,Museum,0,7,https://www.openstreetmap.org/node/325183408
-120,osm:node:7819657898,Art Bridge Gallery,Menų tiltas,photo,50,Art gallery,0,8,https://www.openstreetmap.org/node/7819657898
-121,osm:node:4702086695,Art Niche Gallery,Meno niša,photo,50,Art gallery,0,8,https://www.openstreetmap.org/node/4702086695
-122,osm:way:572881351,Bernardine Bridge,Bernardinų tiltas,photo,50,Bridge,3,12,https://www.openstreetmap.org/way/572881351
-123,osm:node:2523981388,Embankment Arch,Krantinės arka,photo,50,Sculpture by Vladas Urbanavičius,2,3,https://www.openstreetmap.org/node/2523981388
-124,osm:way:49509564,Galera Gallery,Galera,photo,50,"Art gallery, popular photo spot",0,14,https://www.openstreetmap.org/way/49509564
-125,osm:node:11281232539,Gediminas's Testament Sculpture,Lietuvos didžiojo kunigaikščio Gedimino priesakai Vilniui ir Lietuvai,photo,50,"Sculpture, popular photo spot",0,19,https://www.openstreetmap.org/node/11281232539
-126,osm:node:2674956265,Lithuanian Ballad Sculpture,Lietuviška baladė,photo,50,Statue,0,10,https://www.openstreetmap.org/node/2674956265
-127,osm:way:112892333,Lutheran Church,Vilniaus evangelikų liuteronų bažnyčia,photo,50,Historic church,6,5,https://www.openstreetmap.org/way/112892333
-128,osm:node:1277407583,View over the Presidential Palace,Vaizdas į Prezidentūrą,photo,50,"Viewpoint, popular photo spot",0,14,https://www.openstreetmap.org/node/1277407583
-129,osm:node:14264903501,Vilnelė Stream,Vilnelė Stream,photo,50,"Sculpture, popular photo spot",0,14,https://www.openstreetmap.org/node/14264903501
-130,osm:node:4260300589,Vilnius Graphic Art Centre,Vilniaus grafikos meno centras,photo,50,Museum,0,8,https://www.openstreetmap.org/node/4260300589
-131,osm:node:12449973892,Brain Sculpture,Smegenys,photo,49,Sculpture,0,12,https://www.openstreetmap.org/node/12449973892
-132,osm:node:3057282633,Chronicler Sculpture,Metraštininkas,photo,49,Sculpture by Vaclovas Krutinis,0,12,https://www.openstreetmap.org/node/3057282633
-133,osm:node:12449973893,Dwarf's House,Nykštuko namas,photo,49,Sculpture,0,12,https://www.openstreetmap.org/node/12449973893
-134,osm:node:1282599858,Easter Egg Sculpture,Margutis,photo,49,Sculpture by Romas Vilčiauskas,1,7,https://www.openstreetmap.org/node/1282599858
-135,osm:node:14264840900,Little Mills,Malūnėliai,photo,49,"Sculpture, popular photo spot",0,13,https://www.openstreetmap.org/node/14264840900
-136,osm:relation:1469436,Lukiškės Square,Lukiškių aikštė,photo,49,"Park, well-known landmark",10,3,https://www.openstreetmap.org/relation/1469436
-137,osm:node:14264840896,Mural near Vilnelė Stream,Mural,photo,49,"Mural, popular photo spot",0,16,https://www.openstreetmap.org/node/14264840896
-138,osm:node:5859260786,Ray Spear Sculpture,Spindulys ietis,photo,49,Sculpture by Kunotas Vidžiūnas; Martynas Lukošius,0,12,https://www.openstreetmap.org/node/5859260786
-139,osm:node:13619049823,Sculpture near Galera Gallery,Sculpture,photo,49,"Sculpture, popular photo spot",0,17,https://www.openstreetmap.org/node/13619049823
-140,osm:node:2051053878,Towards Shelter Mural,Prieglobsčio link,photo,49,"Mural by Jurga Užkuraitytė, popular photo spot",0,17,https://www.openstreetmap.org/node/2051053878
-141,osm:node:14264840899,Washing Machine Sculpture,Skalbimo mašina,photo,49,Sculpture,0,12,https://www.openstreetmap.org/node/14264840899
-142,osm:way:40221014,Church of St Philip and St James,Šv. apaštalų Pilypo ir Jokūbo bažnyčia,photo,48,"Historic church, well-known landmark",11,2,https://www.openstreetmap.org/way/40221014
-143,osm:node:9230585115,Feast of the Muses,Mūzų šventė,photo,48,Sculpture by Stanislovas Kuzma,0,10,https://www.openstreetmap.org/node/9230585115
-144,osm:node:283241039,Kipras Petrauskas Monument,Kipras Petrauskas,photo,48,Statue,0,11,https://www.openstreetmap.org/node/283241039
-145,osm:way:112045115,Lithuanian National Drama Theatre,Lietuvos nacionalinis dramos teatras,photo,48,"Theatre, well-known landmark",15,1,https://www.openstreetmap.org/way/112045115
-146,osm:node:12449973891,Mandala Sculpture,Mandala,photo,48,"Sculpture, popular photo spot",0,14,https://www.openstreetmap.org/node/12449973891
-147,osm:node:2811970427,Museum of Illusions,Iliuzijų muziejus,photo,48,Museum,0,7,https://www.openstreetmap.org/node/2811970427
-148,osm:node:11132417148,Salomėja Nėris Sculpture,Salomėja Nėris,photo,48,"Sculpture, popular photo spot",0,15,https://www.openstreetmap.org/node/11132417148
-149,osm:node:2335224199,Toy Museum,Žaislų muziejus,photo,48,Museum,0,5,https://www.openstreetmap.org/node/2335224199
-150,osm:node:10548307204,Vladas Jurgutis Bust,Vladas Jurgutis,photo,48,"Bust, popular photo spot",0,14,https://www.openstreetmap.org/node/10548307204
-151,osm:node:2265668604,Špunka,Špunka,food,67,Pub,0,21,https://www.openstreetmap.org/node/2265668604
-152,osm:node:2759301073,Markus ir Ko,Markus ir Ko,food,66,Steak house restaurant,0,19,https://www.openstreetmap.org/node/2759301073
-153,osm:node:9847986156,Yugen Tea,Yugen Tea,food,66,Café,0,18,https://www.openstreetmap.org/node/9847986156
-154,osm:node:963774612,Lokys,Lokys,food,65,Steak restaurant,0,15,https://www.openstreetmap.org/node/963774612
-155,osm:node:3089447066,Amandus,Amandus,food,64,Fusion restaurant,0,11,https://www.openstreetmap.org/node/3089447066
-156,osm:node:4107442302,Amigo,Amigo,food,63,Mexican restaurant,0,9,https://www.openstreetmap.org/node/4107442302
-157,osm:node:1390181604,Bistro 18,Bistro 18,food,63,European restaurant,0,9,https://www.openstreetmap.org/node/1390181604
-158,osm:node:3371902368,City Chef,City Chef,food,63,American restaurant,0,10,https://www.openstreetmap.org/node/3371902368
-159,osm:node:5904042685,Stokholmas,Stokholmas,food,61,Local restaurant,0,6,https://www.openstreetmap.org/node/5904042685
-160,osm:node:2769135714,Dirty Duck Pub,Dirty Duck Pub,food,60,Pub,0,39,https://www.openstreetmap.org/node/2769135714
-161,osm:node:2517718297,Tempo,Tempo,food,60,Mediterranean restaurant,0,5,https://www.openstreetmap.org/node/2517718297
-162,osm:node:5449001280,Bonocosì,Bonocosì,food,59,Pizza restaurant,0,4,https://www.openstreetmap.org/node/5449001280
-163,osm:node:2121911075,Prie angelo,Prie angelo,food,59,Restaurant,0,22,https://www.openstreetmap.org/node/2121911075
-164,osm:node:1738416744,Crustum,Crustum,food,58,Bakery,0,19,https://www.openstreetmap.org/node/1738416744
-165,osm:node:4009648288,Grey,Grey,food,58,Restaurant,0,21,https://www.openstreetmap.org/node/4009648288
-166,osm:node:5480180422,Karčma 1863,Karčma 1863,food,58,Restaurant,0,21,https://www.openstreetmap.org/node/5480180422
-167,osm:node:268631931,Balti drambliai,Balti drambliai,food,57,Restaurant,0,18,https://www.openstreetmap.org/node/268631931
-168,osm:node:1341152777,Kiki,Kiki,food,57,Pizza restaurant,0,16,https://www.openstreetmap.org/node/1341152777
-169,osm:way:88582752,Užupio picerija,Užupio picerija,food,57,Pizza restaurant,0,17,https://www.openstreetmap.org/way/88582752
-170,osm:node:6163353285,Kačių kavinė,Kačių kavinė,food,56,Café,0,12,https://www.openstreetmap.org/node/6163353285
-171,osm:node:7125717285,Raštinė,Raštinė,food,56,Café,0,12,https://www.openstreetmap.org/node/7125717285
-172,osm:node:4097005742,Blue Lotus,Blue Lotus,food,55,Indian restaurant,0,2,https://www.openstreetmap.org/node/4097005742
-173,osm:node:5126368121,Craft & Draft,Craft & Draft,food,55,Bar,0,10,https://www.openstreetmap.org/node/5126368121
-174,osm:node:1672105943,Depeche Coffee,Depeche Coffee,food,55,Café,0,10,https://www.openstreetmap.org/node/1672105943
-175,osm:node:12015397722,Džiaugsmas,Džiaugsmas,food,55,Restaurant,0,10,https://www.openstreetmap.org/node/12015397722
-176,osm:node:7262835127,Oišy,Oišy,food,55,Japanese restaurant,0,11,https://www.openstreetmap.org/node/7262835127
-177,osm:node:2303146274,Pachamama Dinner Club,Pachamama Dinner Club,food,55,Burger restaurant,0,2,https://www.openstreetmap.org/node/2303146274
-178,osm:node:10554866977,Pirmas blynas,Pirmas blynas,food,55,Pancake restaurant,0,11,https://www.openstreetmap.org/node/10554866977
-179,osm:node:4624248492,Crustum kepyklėlė,Crustum kepyklėlė,food,54,Café,0,8,https://www.openstreetmap.org/node/4624248492
-180,osm:node:12828433509,Marinara,Marinara,food,54,Pizza restaurant,0,8,https://www.openstreetmap.org/node/12828433509
-181,osm:node:6884305085,RoseHip Vegan Bistro - Pylimo,RoseHip Vegan Bistro - Pylimo,food,54,Restaurant,0,8,https://www.openstreetmap.org/node/6884305085
-182,osm:node:325092832,Vyninė Saint Germain,Vyninė Saint Germain,food,54,French restaurant,0,8,https://www.openstreetmap.org/node/325092832
-183,osm:node:1578419764,Ad Astrum,Ad Astrum,food,53,Restaurant,0,1,https://www.openstreetmap.org/node/1578419764
-184,osm:node:2365571423,Alaus biblioteka,Alaus biblioteka,food,53,Pub,0,7,https://www.openstreetmap.org/node/2365571423
-185,osm:node:2053270656,Böff Steakhouse,Böff Steakhouse,food,53,Steak restaurant,0,1,https://www.openstreetmap.org/node/2053270656
-186,osm:node:2515030592,King & Mouse,King & Mouse,food,53,Bar,0,7,https://www.openstreetmap.org/node/2515030592
-187,osm:node:1614157468,Radharane,Radharane,food,53,Indian restaurant,0,1,https://www.openstreetmap.org/node/1614157468
-188,osm:node:445605454,Universiteto kavinė,Universiteto kavinė,food,53,Café,0,55,https://www.openstreetmap.org/node/445605454
-189,osm:node:5624014521,Bizarre,Bizarre,food,52,Asian restaurant,0,6,https://www.openstreetmap.org/node/5624014521
-190,osm:node:1403269166,Bunte gans,Bunte gans,food,52,German restaurant,0,31,https://www.openstreetmap.org/node/1403269166
-191,osm:node:4264705115,Crazy Bull,Crazy Bull,food,52,Pub,0,35,https://www.openstreetmap.org/node/4264705115
-192,osm:node:14079989301,Norasador,Norasador,food,52,Spanish restaurant,0,6,https://www.openstreetmap.org/node/14079989301
-193,osm:node:4713343691,Sorrentino,Sorrentino,food,52,Italian restaurant,0,45,https://www.openstreetmap.org/node/4713343691
-194,osm:node:2778182241,Fionos cukrainė,Fionos cukrainė,food,51,Café,0,25,https://www.openstreetmap.org/node/2778182241
-195,osm:node:4514390591,Katpėdėlė,Katpėdėlė,food,51,Restaurant,0,5,https://www.openstreetmap.org/node/4514390591
-196,osm:node:2778182242,Pilies kepyklėlė,Pilies kepyklėlė,food,51,Café,0,25,https://www.openstreetmap.org/node/2778182242
-197,osm:node:4764696045,Pronto Pizza,Pronto Pizza,food,51,Pizza restaurant,0,5,https://www.openstreetmap.org/node/4764696045
-198,osm:node:1599323169,Ryžių jūra,Ryžių jūra,food,51,Restaurant,0,24,https://www.openstreetmap.org/node/1599323169
-199,osm:node:2759211001,7 Fridays,7 Fridays,food,50,Pub,0,22,https://www.openstreetmap.org/node/2759211001
-200,osm:node:1994958797,Grill London,Grill London,food,50,Bar,0,4,https://www.openstreetmap.org/node/1994958797
-201,osm:node:963757914,Kavinė-ledainė „Soprano“,Kavinė-ledainė „Soprano“,food,50,Café,0,21,https://www.openstreetmap.org/node/963757914
-202,osm:node:4719222490,Mint Vinetu,Mint Vinetu,food,50,Café,0,23,https://www.openstreetmap.org/node/4719222490
-203,osm:node:12120949071,Niam Niam Sushi,Niam Niam Sushi,food,50,Japanese restaurant,0,4,https://www.openstreetmap.org/node/12120949071
-204,osm:node:5073176409,Plus Plus Plus Gastrobaras,Plus Plus Plus Gastrobaras,food,50,Pub,0,4,https://www.openstreetmap.org/node/5073176409
-205,osm:node:772801413,Trattoria di Ravello,Trattoria di Ravello,food,50,Italian restaurant,0,21,https://www.openstreetmap.org/node/772801413
-206,osm:node:4873505122,Beigelistai,Beigelistai,food,49,Café,0,17,https://www.openstreetmap.org/node/4873505122
-207,osm:node:12798453501,Brussels Mussels,Brussels Mussels,food,49,Seafood restaurant,0,3,https://www.openstreetmap.org/node/12798453501
-208,osm:node:2082800027,Draugai,Draugai,food,49,Restaurant,0,17,https://www.openstreetmap.org/node/2082800027
-209,osm:node:3710261442,Ertlio Namas,Ertlio Namas,food,49,Restaurant,0,17,https://www.openstreetmap.org/node/3710261442
-210,osm:node:12015381058,Nineteen18,Nineteen18,food,49,Restaurant,0,18,https://www.openstreetmap.org/node/12015381058
-211,osm:node:963774608,Stikliai,Stikliai,food,49,Restaurant,0,19,https://www.openstreetmap.org/node/963774608
-212,osm:node:4713744101,The town steakhouse,The town steakhouse,food,49,Restaurant,0,3,https://www.openstreetmap.org/node/4713744101
-213,osm:node:2916376725,Uncle Sam's American Pub,Uncle Sam's American Pub,food,49,Bar,0,3,https://www.openstreetmap.org/node/2916376725
-214,osm:node:4051957889,D'ECO,D'ECO,food,48,Restaurant,0,16,https://www.openstreetmap.org/node/4051957889
-215,osm:way:608109421,Katpėdėlė,Katpėdėlė,food,48,Restaurant,0,15,https://www.openstreetmap.org/way/608109421
-216,osm:node:13357986024,Lodissey Vilnius,Lodissey Vilnius,food,48,Restaurant,0,16,https://www.openstreetmap.org/node/13357986024
-217,osm:node:13626456361,Lucille Blues Bar,Lucille Blues Bar,food,48,Bar,0,16,https://www.openstreetmap.org/node/13626456361
-218,osm:node:11555888667,Nick & Nora Cocktails Bar,Nick & Nora Cocktails Bar,food,48,Bar,0,13,https://www.openstreetmap.org/node/11555888667
-219,osm:node:963757968,13 statinių,13 statinių,food,47,Bar,0,11,https://www.openstreetmap.org/node/963757968
-220,osm:node:621129002,Alaus namai,Alaus namai,food,47,Pub,0,2,https://www.openstreetmap.org/node/621129002
-221,osm:node:13994620202,Art Cafe,Art Cafe,food,47,Café,0,2,https://www.openstreetmap.org/node/13994620202
-222,osm:node:828564091,Būsi trečias,Būsi trečias,food,47,Pub,0,2,https://www.openstreetmap.org/node/828564091
-223,osm:node:7500260485,Dodo,Dodo,food,47,Pizza restaurant,0,2,https://www.openstreetmap.org/node/7500260485
-224,osm:node:778694973,Gogi Guy,Gogi Guy,food,47,Korean restaurant,0,12,https://www.openstreetmap.org/node/778694973
-225,osm:node:4798312551,Paupio 12,Paupio 12,food,47,Restaurant,0,2,https://www.openstreetmap.org/node/4798312551
-226,osm:node:4467106989,Thelonious Hi-Fi,Thelonious Hi-Fi,shop,59,Gift shop,0,25,https://www.openstreetmap.org/node/4467106989
-227,osm:node:1341152768,Akademinė knyga,Akademinė knyga,shop,57,Bookshop,0,16,https://www.openstreetmap.org/node/1341152768
-228,osm:way:24569871,G9,G9,shop,47,Shopping centre,4,2,https://www.openstreetmap.org/way/24569871
-229,osm:node:963655671,Prancūziškas knygynėlis,Prancūziškas knygynėlis,shop,45,Bookshop,0,76,https://www.openstreetmap.org/node/963655671
-230,osm:node:4300095899,Kuro Neko,Kuro Neko,shop,44,Anime shop,0,1,https://www.openstreetmap.org/node/4300095899
-231,osm:node:4467106889,Muzikumas,Muzikumas,shop,44,Record shop,0,43,https://www.openstreetmap.org/node/4467106889
-232,osm:node:12100916528,Amatų Namai,Amatų Namai,shop,42,Gift shop,0,22,https://www.openstreetmap.org/node/12100916528
-233,osm:node:2092984870,Baltic souvenir,Baltic souvenir,shop,42,Gift shop,0,24,https://www.openstreetmap.org/node/2092984870
-234,osm:way:24569934,CUP,CUP,shop,42,Shopping centre,4,4,https://www.openstreetmap.org/way/24569934
-235,osm:node:5163589190,Knygynas „Littera“,Knygynas „Littera“,shop,42,Bookshop,0,24,https://www.openstreetmap.org/node/5163589190
-236,osm:node:12840631102,Sauluva,Sauluva,shop,42,Gift shop,0,25,https://www.openstreetmap.org/node/12840631102
-237,osm:node:12891876891,Vinyloteka,Vinyloteka,shop,42,Record shop,0,0,https://www.openstreetmap.org/node/12891876891
-238,osm:node:11025481072,Zenoteca,Zenoteca,shop,41,Wine shop,0,19,https://www.openstreetmap.org/node/11025481072
-239,osm:node:4118786889,Eureka! - Books in English,Eureka! - Books in English,shop,40,Bookshop,0,15,https://www.openstreetmap.org/node/4118786889
-240,osm:node:11210171238,Keistoteka,Keistoteka,shop,36,Bookshop,0,1,https://www.openstreetmap.org/node/11210171238
-241,osm:node:10855749388,Ragainė,Ragainė,shop,36,Gift shop,0,6,https://www.openstreetmap.org/node/10855749388
-242,osm:node:9932678117,Reformatų knygynas,Reformatų knygynas,shop,36,Bookshop,0,1,https://www.openstreetmap.org/node/9932678117
-243,osm:node:908572062,Vilniaus centrinis knygynas,Vilniaus centrinis knygynas,shop,36,Bookshop,0,7,https://www.openstreetmap.org/node/908572062
-244,osm:node:10971540406,50ct. boutique,50ct. boutique,shop,35,Second-hand shop,0,40,https://www.openstreetmap.org/node/10971540406
-245,osm:node:9942080924,Użupio1postas,Użupio1postas,shop,35,Gift shop,0,36,https://www.openstreetmap.org/node/9942080924
-246,osm:node:13647858705,Cantika,Cantika,shop,34,Gift shop,0,4,https://www.openstreetmap.org/node/13647858705
-247,osm:node:7608702760,Gvido keramika,Gvido keramika,shop,34,Pottery shop,0,0,https://www.openstreetmap.org/node/7608702760
-248,osm:way:52077421,Outlet Park,Outlet Park,shop,34,Shopping centre,0,0,https://www.openstreetmap.org/way/52077421
-249,osm:way:55904666,Panorama,PLC „Panorama“,shop,34,Shopping centre,4,0,https://www.openstreetmap.org/way/55904666
-250,osm:node:2082800048,Versmė,Versmė,shop,34,Bookshop,0,25,https://www.openstreetmap.org/node/2082800048
-251,osm:node:10277807453,florinus.lt,florinus.lt,shop,34,Gift shop,0,0,https://www.openstreetmap.org/node/10277807453
-252,osm:node:963757908,6 blusos,6 blusos,shop,33,Antiques shop,0,21,https://www.openstreetmap.org/node/963757908
-253,osm:node:3627447041,Aromatų sodas,Aromatų sodas,shop,33,Gift shop,0,20,https://www.openstreetmap.org/node/3627447041
-254,osm:node:6691302585,Wine & Smile Wine shop,Wine & Smile Wine shop,shop,33,Wine shop,0,22,https://www.openstreetmap.org/node/6691302585
-255,osm:node:5613906421,balta balta,balta balta,shop,33,Gift shop,0,21,https://www.openstreetmap.org/node/5613906421
-256,osm:node:10154475417,Drabužiai 50c,Drabužiai 50c,shop,32,Second-hand shop,0,3,https://www.openstreetmap.org/node/10154475417
-257,osm:node:4467105492,Vinilo Studija,Vinilo Studija,shop,32,Record shop,0,3,https://www.openstreetmap.org/node/4467105492
-258,osm:way:5097813,Akropolis,PLC „Akropolis“,shop,25,Big mall by the Neris with an indoor ice rink,4,0,https://www.openstreetmap.org/way/5097813
+18,osm:node:60464945,Grand Duke Gediminas,Didysis Kunigaikštis Gediminas,photo,74,Statue of the city's legendary founder on Cathedral Square,5,35,https://www.openstreetmap.org/node/60464945
+19,osm:node:1616746326,Užupis Angel,Užupio Angelas,photo,74,Bronze angel on a column in the middle of Užupis,1,20,https://www.openstreetmap.org/node/1616746326
+20,osm:way:88534413,Church of St Peter and St Paul,Šv. apaštalų Petro ir Povilo bažnyčia,photo,73,Plain outside; inside over 2000 white stucco figures,22,34,https://www.openstreetmap.org/way/88534413
+21,osm:node:4515994589,Literatų Street,Literatų gatvės projektas,photo,73,Wall of small artworks for writers linked to Vilnius,8,17,https://www.openstreetmap.org/node/4515994589
+22,osm:way:81434371,Church of the Holy Spirit,Šventosios Dvasios bažnyčia,photo,72,Late-baroque Dominican church with a richly decorated interior,14,39,https://www.openstreetmap.org/way/81434371
+23,osm:node:2788680220,Abramowicz Palace,Abramavičių rūmai,photo,70,"Manor house, popular photo spot",5,24,https://www.openstreetmap.org/node/2788680220
+24,osm:way:60774388,St Paraskeva Orthodox Church,Vilniaus Šv. kankinės Paraskevos cerkvė,photo,70,"Historic church, well-known landmark, popular photo spot",10,68,https://www.openstreetmap.org/way/60774388
+25,osm:way:61978296,Church of St Theresa,Šv. Teresės bažnyčia,photo,68,"Historic church, well-known landmark, popular photo spot",10,62,https://www.openstreetmap.org/way/61978296
+26,osm:relation:1447676,St Michael's Church,Šv. arkangelo Mykolo bažnyčia,photo,68,Renaissance church; now the Church Heritage Museum,10,47,https://www.openstreetmap.org/relation/1447676
+27,osm:way:112746080,Basilian Church of the Holy Trinity,Švč. Trejybės Graikų apeigų katalikų bažnyčia,photo,67,"Place of worship, well-known landmark, popular photo spot",12,27,https://www.openstreetmap.org/way/112746080
+28,osm:way:112386499,Church of St Catherine,Šv. Kotrynos bažnyčia,photo,67,"Historic church, well-known landmark, popular photo spot",13,16,https://www.openstreetmap.org/way/112386499
+29,osm:way:81304730,Cathedral Bell Tower,Varpinės bokštas,photo,66,Free-standing bell tower of the Cathedral,1,88,https://www.openstreetmap.org/way/81304730
+30,osm:way:29503660,St Casimir's Church,Šv. Kazimiero bažnyčia,photo,66,"Historic church, well-known landmark, popular photo spot",15,20,https://www.openstreetmap.org/way/29503660
+31,osm:way:1386286056,Bastion of the City Wall,Vilniaus gynybinės sienos Bastėja,photo,65,Museum,2,12,https://www.openstreetmap.org/way/1386286056
+32,osm:way:343751993,Cathedral of the Theotokos,Vilniaus Dievo Motinos Ėmimo į Dangų katedra,photo,65,"Cathedral, well-known landmark, popular photo spot",17,15,https://www.openstreetmap.org/way/343751993
+33,osm:way:61979743,St Nicholas Orthodox Church,Vilniaus Šv. Mikolajaus Stebukladario palaikų Pernešimo cerkvė,photo,65,"Historic church, well-known landmark, popular photo spot",10,21,https://www.openstreetmap.org/way/61979743
+34,osm:way:81296879,Divine Mercy Sanctuary,Dievo Gailestingumo šventovė,photo,64,"Place of worship, popular photo spot",8,21,https://www.openstreetmap.org/way/81296879
+35,osm:way:391284473,Green Bridge,Žaliasis tiltas,photo,64,"Bridge, well-known landmark",17,12,https://www.openstreetmap.org/way/391284473
+36,osm:way:407497120,King Mindaugas Bridge,Karaliaus Mindaugo tiltas,photo,64,"Bridge, well-known landmark",18,12,https://www.openstreetmap.org/way/407497120
+37,osm:way:81298425,St Ignatius Church,Vilniaus Šv. Ignoto bažnyčia,photo,63,"Historic church, well-known landmark",15,10,https://www.openstreetmap.org/way/81298425
+38,osm:way:55443728,All Saints Church,Visų Šventųjų bažnyčia,photo,62,"Historic church, well-known landmark",13,12,https://www.openstreetmap.org/way/55443728
+39,osm:way:29503299,Choral Synagogue,Vilniaus choralinė sinagoga,photo,61,"Synagogue, well-known landmark",17,8,https://www.openstreetmap.org/way/29503299
+40,osm:way:112746040,Lithuanian National Philharmonic,Lietuvos nacionalinė filharmonija,photo,61,"Theatre, popular photo spot",8,20,https://www.openstreetmap.org/way/112746040
+41,osm:node:5013540325,Radziwiłł Palace,Radvilų rūmai,photo,61,"Manor house, well-known landmark",12,3,https://www.openstreetmap.org/node/5013540325
+42,osm:way:25963535,MO Museum,MO muziejus,photo,60,Museum,5,3,https://www.openstreetmap.org/way/25963535
+43,osm:way:48954340,Orthodox Church of the Holy Spirit,Vilniaus Šv. Dvasios cerkvė,photo,60,"Historic church, well-known landmark",12,10,https://www.openstreetmap.org/way/48954340
+44,osm:node:1690265433,Crooked Hill,Plikasis (Kreivasis) kalnas,photo,59,"Landmark, popular photo spot",1,17,https://www.openstreetmap.org/node/1690265433
+45,osm:way:89594175,Lithuanian Academy of Music and Theatre,Lietuvos muzikos ir teatro akademija,photo,59,"University, well-known landmark",17,5,https://www.openstreetmap.org/way/89594175
+46,osm:way:68586429,Energy and Technology Museum,Energetikos ir technikos muziejus,photo,58,Museum,8,1,https://www.openstreetmap.org/way/68586429
+47,osm:node:2788680246,Raduszkiewicz Palace,Hilarijaus Raduškevičiaus rūmai,photo,58,Landmark,9,2,https://www.openstreetmap.org/node/2788680246
+48,osm:way:52461050,Orthodox Church of St Constantine and St Michael,Vilniaus Šv. Konstantino ir Michailo cerkvė,photo,57,"Historic church, well-known landmark",10,7,https://www.openstreetmap.org/way/52461050
+49,osm:way:61189004,Vileišis Palace,Vileišio rūmai,photo,57,"Manor house, well-known landmark",10,2,https://www.openstreetmap.org/way/61189004
+50,osm:way:342104825,Church of Our Lady of Consolation,Švč. M. Marijos Ramintojos bažnyčia,photo,56,Historic church,7,11,https://www.openstreetmap.org/way/342104825
+51,osm:way:26282675,Church of the Ascension,Vilniaus Viešpaties Dangun Žengimo bažnyčia,photo,56,"Historic church, well-known landmark",10,6,https://www.openstreetmap.org/way/26282675
+52,osm:way:55447268,St Nicholas Church,Šv. Mikalojaus bažnyčia,photo,56,"Historic church, well-known landmark",12,7,https://www.openstreetmap.org/way/55447268
+53,osm:way:24570269,Contemporary Art Centre,Šiuolaikinio meno centras,photo,55,Museum,3,3,https://www.openstreetmap.org/way/24570269
+54,ovt:3a20c826-429a-4027-b827-0f9bbfa4fdf2,Skersvėjis,Skersvėjis,photo,55,Art gallery,0,17,https://explore.overturemaps.org/?mode=explore&feature=places.place.3a20c826-429a-4027-b827-0f9bbfa4fdf2
+55,osm:way:345476736,St Nicholas Orthodox Church at Lukiškės Prison,Šv. Mikalojaus Stebukladario cerkvė,photo,54,"Historic church, popular photo spot",3,17,https://www.openstreetmap.org/way/345476736
+56,osm:way:36242889,Church of Our Lady of the Sign,Vilniaus Dievo Motinos ikonos „Ženklas iš dangaus“ cerkvė,photo,52,Historic church,9,4,https://www.openstreetmap.org/way/36242889
+57,osm:way:81303383,Church of the Holy Cross,Šv. Kryžiaus bažnyčia,photo,52,Historic church,9,4,https://www.openstreetmap.org/way/81303383
+58,osm:way:81426541,Church of St Bartholomew,Vilniaus Šv. apaštalo Baltramiejaus bažnyčia,photo,51,Historic church,8,4,https://www.openstreetmap.org/way/81426541
+59,osm:way:24571052,Old Theatre of Vilnius,Vilniaus senasis teatras,photo,51,Theatre,8,4,https://www.openstreetmap.org/way/24571052
+60,osm:node:2523981388,Embankment Arch,Krantinės arka,photo,50,Sculpture by Vladas Urbanavičius,2,3,https://www.openstreetmap.org/node/2523981388
+61,osm:way:112892333,Lutheran Church,Vilniaus evangelikų liuteronų bažnyčia,photo,50,Historic church,6,5,https://www.openstreetmap.org/way/112892333
+62,osm:node:1282599858,Easter Egg Sculpture,Margutis,photo,49,Sculpture by Romas Vilčiauskas,1,7,https://www.openstreetmap.org/node/1282599858
+63,osm:relation:1469436,Lukiškės Square,Lukiškių aikštė,photo,49,"Park, well-known landmark",10,3,https://www.openstreetmap.org/relation/1469436
+64,osm:way:40221014,Church of St Philip and St James,Šv. apaštalų Pilypo ir Jokūbo bažnyčia,photo,48,"Historic church, well-known landmark",11,2,https://www.openstreetmap.org/way/40221014
+65,osm:way:112045115,Lithuanian National Drama Theatre,Lietuvos nacionalinis dramos teatras,photo,48,"Theatre, well-known landmark",15,1,https://www.openstreetmap.org/way/112045115
+66,osm:way:27267908,Church of the Immaculate Conception,Švč. Mergelės Marijos Nekaltojo Prasidėjimo bažnyčia,photo,46,Historic church,6,3,https://www.openstreetmap.org/way/27267908
+67,osm:node:267135062,First Swallows,Pirmosios kregždės,photo,46,Sculpture by Juozas Mikėnas,1,3,https://www.openstreetmap.org/node/267135062
+68,osm:way:62045041,Church of St Raphael the Archangel,Šv. Arkangelo Rapolo bažnyčia,photo,45,Historic church,9,2,https://www.openstreetmap.org/way/62045041
+69,osm:way:81437593,Church of the Sacred Heart,Vilniaus Švč. Jėzaus Širdies bažnyčia,photo,44,Historic church,8,2,https://www.openstreetmap.org/way/81437593
+70,osm:node:9654146719,Vilnius City Museum,Vilniaus muziejus,photo,44,Museum,0,5,https://www.openstreetmap.org/node/9654146719
+71,osm:way:112958867,Samuel Bak Museum,Samuelio Bako muziejus,photo,43,"Museum, well-known landmark",12,0,https://www.openstreetmap.org/way/112958867
+72,osm:way:422271676,Žirmūnai Bridge,Žirmūnų tiltas,photo,43,Bridge,7,2,https://www.openstreetmap.org/way/422271676
+73,osm:way:55450403,Karaite Kenesa,Vilniaus kenesa,photo,41,"Historic church, well-known landmark",10,1,https://www.openstreetmap.org/way/55450403
+74,osm:relation:8031046,Bernardine Garden,Bernardinų sodas,photo,39,Park,6,1,https://www.openstreetmap.org/relation/8031046
+75,osm:way:58887819,Reformed Church,Vilniaus evangelikų reformatų bažnyčia,photo,39,Historic church,6,1,https://www.openstreetmap.org/way/58887819
+76,osm:way:89495628,Forum Palace,Forum Palace,photo,38,Arena,3,2,https://www.openstreetmap.org/way/89495628
+77,osm:way:391277033,Iron Wolf Bridge,Geležinio Vilko tiltas,photo,38,Bridge,4,2,https://www.openstreetmap.org/way/391277033
+78,osm:way:87207750,Arena Vilnius,Arena Vilnius,photo,37,"Stadium, well-known landmark",28,0,https://www.openstreetmap.org/way/87207750
+79,osm:way:81299633,St George's Church,Vilniaus Šv. Jurgio bažnyčia,photo,37,Historic church,6,1,https://www.openstreetmap.org/way/81299633
+80,osm:way:110022866,Słuszko Palace,Sluškų rūmai,photo,36,"Manor house, well-known landmark",11,0,https://www.openstreetmap.org/way/110022866
+81,ovt:2dd610ac-a409-4b94-9fb3-7fd5f3c6ff18,Kostmosas,Kostmosas,photo,35,Music venue,0,5,https://explore.overturemaps.org/?mode=explore&feature=places.place.2dd610ac-a409-4b94-9fb3-7fd5f3c6ff18
+82,ovt:e8205796-6c27-4a56-a6bf-568b5c070931,Meno Ja,Meno Ja,photo,34,Art gallery,0,1,https://explore.overturemaps.org/?mode=explore&feature=places.place.e8205796-6c27-4a56-a6bf-568b5c070931
+83,osm:node:3472732637,Venclova House-Museum,Pamėnkalnio vila,photo,32,Museum,4,0,https://www.openstreetmap.org/node/3472732637
+84,ovt:68bbe7d4-1f93-4e01-a2b6-e364e40771b2,Empty Brain Resort,Empty Brain Resort,photo,31,Music venue,0,3,https://explore.overturemaps.org/?mode=explore&feature=places.place.68bbe7d4-1f93-4e01-a2b6-e364e40771b2
+85,osm:node:2591563063,Tuskulėnai Manor Palace,Tuskulėnų dvaras,photo,30,Manor house,5,0,https://www.openstreetmap.org/node/2591563063
+86,osm:node:9847986156,Yugen Tea,Yugen Tea,food,66,Café,0,18,https://www.openstreetmap.org/node/9847986156
+87,osm:node:963774612,Lokys,Lokys,food,65,Steak restaurant,0,15,https://www.openstreetmap.org/node/963774612
+88,osm:node:2303146274,Pachamama Dinner Club,Pachamama Dinner Club,food,55,Burger restaurant,0,2,https://www.openstreetmap.org/node/2303146274
+89,osm:node:6884305085,RoseHip Vegan Bistro - Pylimo,RoseHip Vegan Bistro - Pylimo,food,54,Restaurant,0,8,https://www.openstreetmap.org/node/6884305085
+90,osm:node:325092832,Vyninė Saint Germain,Vyninė Saint Germain,food,54,French restaurant,0,8,https://www.openstreetmap.org/node/325092832
+91,osm:node:2365571423,Alaus biblioteka,Alaus biblioteka,food,53,Pub,0,7,https://www.openstreetmap.org/node/2365571423
+92,ovt:993f4c42-777a-40b4-96b3-76b6546232d7,Namai be gliuteno.Vilnius,Namai be gliuteno.Vilnius,food,53,Café,0,53,https://explore.overturemaps.org/?mode=explore&feature=places.place.993f4c42-777a-40b4-96b3-76b6546232d7
+93,ovt:9c526a75-f3c1-4e6d-a098-75cd09b85c1f,Motif,Motif,food,52,Restaurant,0,40,https://explore.overturemaps.org/?mode=explore&feature=places.place.9c526a75-f3c1-4e6d-a098-75cd09b85c1f
+94,osm:node:2778182241,Fionos cukrainė,Fionos cukrainė,food,51,Café,0,25,https://www.openstreetmap.org/node/2778182241
+95,ovt:96e1c6e3-2220-4848-9248-54020405c830,AJ Šokoladas,AJ Šokoladas,food,50,Café,0,23,https://explore.overturemaps.org/?mode=explore&feature=places.place.96e1c6e3-2220-4848-9248-54020405c830
+96,osm:node:12798453501,Brussels Mussels,Brussels Mussels,food,49,Seafood restaurant,0,3,https://www.openstreetmap.org/node/12798453501
+97,ovt:fa066552-9b95-4c0e-b9ae-fcdbb5f9d7c1,14Horses,14Horses,food,48,Restaurant,0,13,https://explore.overturemaps.org/?mode=explore&feature=places.place.fa066552-9b95-4c0e-b9ae-fcdbb5f9d7c1
+98,osm:node:828564091,Būsi trečias,Būsi trečias,food,47,Pub,0,2,https://www.openstreetmap.org/node/828564091
+99,ovt:6bf29fcc-40c5-40f9-b1ab-589badc9ef09,Crooked Nose & Coffee Stories,Crooked Nose & Coffee Stories,food,47,Café,0,2,https://explore.overturemaps.org/?mode=explore&feature=places.place.6bf29fcc-40c5-40f9-b1ab-589badc9ef09
+100,ovt:4c87d677-e17d-4ae5-91a8-2af982cf3b55,Biblioteka Outside,Biblioteka Outside,food,45,Bar,0,70,https://explore.overturemaps.org/?mode=explore&feature=places.place.4c87d677-e17d-4ae5-91a8-2af982cf3b55
+101,osm:node:3074541071,Šnekutis,Šnekutis,food,45,Pub,0,7,https://www.openstreetmap.org/node/3074541071
+102,osm:node:4713318593,AJ Šokoladas,AJ Šokoladas,food,44,Restaurant,0,66,https://www.openstreetmap.org/node/4713318593
+103,osm:node:4548125954,Galo de Porto,Galo de Porto,food,43,Restaurant,0,37,https://www.openstreetmap.org/node/4548125954
+104,osm:node:13666611059,Oldskūl,Oldskūl,food,43,Café,0,5,https://www.openstreetmap.org/node/13666611059
+105,ovt:5d3345d1-3974-4828-9adc-6e2ffb6b9e83,Soviki,Soviki,food,43,Restaurant,0,5,https://explore.overturemaps.org/?mode=explore&feature=places.place.5d3345d1-3974-4828-9adc-6e2ffb6b9e83
+106,osm:node:6884271985,Brussels Mussels,Brussels Mussels,food,42,Seafood restaurant,0,0,https://www.openstreetmap.org/node/6884271985
+107,osm:node:4107442193,Italala Caffè,Italala Caffè,food,42,Café,0,4,https://www.openstreetmap.org/node/4107442193
+108,osm:node:4845774050,Kanapinė krautuvė,Kanapinė krautuvė,food,41,Café,0,18,https://www.openstreetmap.org/node/4845774050
+109,osm:node:6959640485,Elska Coffee,Elska Coffee,food,39,Café,0,2,https://www.openstreetmap.org/node/6959640485
+110,osm:node:9249745517,Coffee Spells,Coffee Spells,food,38,Café,0,9,https://www.openstreetmap.org/node/9249745517
+111,osm:node:9373242682,Candy POP,Candy POP,food,37,Sweet shop,0,8,https://www.openstreetmap.org/node/9373242682
+112,osm:node:7125022485,Strange Love,Strange Love,food,37,Café,0,8,https://www.openstreetmap.org/node/7125022485
+113,osm:node:9331350218,Brew,Brew,food,36,Café,0,1,https://www.openstreetmap.org/node/9331350218
+114,ovt:0f8e8784-e231-47ec-a8f3-ac0746f258d6,Saint Malo Restaurant,Saint Malo Restaurant,food,36,Restaurant,0,1,https://explore.overturemaps.org/?mode=explore&feature=places.place.0f8e8784-e231-47ec-a8f3-ac0746f258d6
+115,ovt:82b3b53f-285e-45c6-a1ae-7de6569b2019,SÃVA Naugarduko g. 55A,SÃVA Naugarduko g. 55A,food,36,Café,0,1,https://explore.overturemaps.org/?mode=explore&feature=places.place.82b3b53f-285e-45c6-a1ae-7de6569b2019
+116,osm:node:10151588817,Urban Garden,Urban Garden,food,36,Café,0,7,https://www.openstreetmap.org/node/10151588817
+117,osm:node:13248039302,Eskedar Coffee BAR,Eskedar Coffee BAR,food,35,Café,0,29,https://www.openstreetmap.org/node/13248039302
+118,ovt:986c8562-92f8-4f72-a541-cf4d010ae701,Užantis - sendaikčių parduotuvėlė,Užantis - sendaikčių parduotuvėlė,shop,52,Second-hand shop,0,31,https://explore.overturemaps.org/?mode=explore&feature=places.place.986c8562-92f8-4f72-a541-cf4d010ae701
+119,ovt:f250cb02-f655-4528-977f-001afd803a72,Smells Like Spells,Smells Like Spells,shop,43,Craft shop,0,5,https://explore.overturemaps.org/?mode=explore&feature=places.place.f250cb02-f655-4528-977f-001afd803a72
+120,osm:node:11210171238,Keistoteka,Keistoteka,shop,36,Bookshop,0,1,https://www.openstreetmap.org/node/11210171238
+121,osm:way:5097813,Akropolis,PLC „Akropolis“,shop,25,Big mall by the Neris with an indoor ice rink,4,0,https://www.openstreetmap.org/way/5097813
