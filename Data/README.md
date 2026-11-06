@@ -1,12 +1,13 @@
 # POI data pipeline
 
-Python 3, standard library only. Cities and their bounding boxes live in `cities.json`.
+Python 3, standard library only (except the monthly Overture extract, which needs `duckdb`).
+Cities and their bounding boxes live in `cities.json`.
 
 ```sh
 python3 fetch_osm.py vilnius   # OSM via Overpass → cache/vilnius/osm.json (raw response cached; --refresh to re-download)
 python3 enrich.py vilnius      # Wikidata sitelinks + Commons photo counts (cached, ~10 min first run)
 python3 wikipedia.py vilnius   # English Wikipedia summaries for place descriptions (cached, ~10 min first run)
-python3 score.py vilnius       # scores + curation → App/Wander/Resources/pois-vilnius.json, review/vilnius-review.csv
+python3 score.py vilnius       # scores + curation (+ Overture places) → App/Wander/Resources/pois-vilnius.json, review/vilnius-review.csv
 ```
 
 Only `score.py` needs re-running after editing weights or `curation.csv`.
@@ -42,6 +43,9 @@ if any check fails:
   to drop a must-see on purpose, add that row first;
 - with `--rerun <file>` (a second build from the same caches): byte-identical, ignoring `generated`.
 
+`--allow-growth` lets per-category counts grow by more than 25% (decreases are still gated); the
+summary says so in a callout. Use it once, when a new source lands (the first Overture publish).
+
 `--previous none` (first publish) or a 404 from the URL passes, with a note; any other download
 error fails.
 
@@ -68,6 +72,63 @@ Venues are searched in the city's optional `venue_bbox` (`cities.json`; for Viln
 everything else in `bbox`. Commons photo counts cover `bbox` only, so outer venues get photos = 0
 and rely on Wikidata fame.
 A venue already kept as a sight through another tag (e.g. `historic=theatre`) stays as it was.
+
+## Overture Maps Places (ADR 014, BE-7)
+
+OSM misses many small and new cafés, bars, galleries and shops; Overture (mostly Meta pages, plus
+Foursquare and others) has them. Two steps:
+
+**Monthly extract** (DevOps OPS-8; the only step with a non-stdlib dependency):
+
+```sh
+python3 -m venv ~/Library/Caches/wander/venv-overture     # outside the repo
+~/Library/Caches/wander/venv-overture/bin/pip install -r Data/requirements-overture.txt   # duckdb, pinned
+~/Library/Caches/wander/venv-overture/bin/python Data/overture_extract.py vilnius \
+    [--release latest|2026-10-21.0] --out Data/sources/overture/vilnius.json
+```
+
+It reads `s3://overturemaps-us-west-2/release/<release>/theme=places/type=place/*` anonymously for
+the city's `bbox` and keeps places with confidence ≥ 0.5. `latest` is the newest folder in an S3
+listing of `release/` (`https://overturemaps-us-west-2.s3.amazonaws.com/?list-type=2&prefix=release/&delimiter=/`).
+The file is committed (about 3 MB for Vilnius) and is deterministic for a given release apart from
+`generated`: `release`, `generated`, and `places` sorted by id, one per line, each with `id`, `name`,
+`local_name` (Lithuanian, when different), `lat`/`lon`, `basic_category`, `taxonomy`
+(`primary`, `hierarchy`), `confidence`, `brand` (name, `true` if only a Wikidata id, else `false`),
+`website` (first), `instagram` (handle from `socials`), `phone` (present = has one), `address`
+(freeform), `operating_status`, `datasets` (source datasets) and `updated` (newest source update date).
+Absent values are left out.
+
+**Nightly merge** (`overture.py`, called by `score.py`; standard library; no file = no-op):
+
+- **Select**: confidence ≥ 0.7, not closed, not a chain (a brand on 2+ places in the city, a
+  Wikidata-only brand, or the same name on 3+ places), and a category in `CATEGORY_MAP`, the one
+  mapping table (top of `overture.py`): food (restaurants, cafés, coffee shops, bars, pubs,
+  bakeries, ice cream, chocolate...; not fast food), shop (books, records, second-hand, antiques,
+  gifts, souvenirs, art and craft supplies, boutiques, toys, wine...: the `TOURIST_SHOPS` spirit) and
+  photo (art galleries, music venues, theatres, cultural centres). The taxonomy hierarchy is searched
+  from the most specific name up. `score.py` prints the top unmapped `basic_category` values, to tune it.
+- **Dedupe with OSM**: same place if the normalised names (casefold, no diacritics or punctuation,
+  generic words like "cafe", "kavinė", "baras" dropped, Lithuanian endings stripped) are equal within
+  60 m, similar (difflib ratio ≥ 0.85) within 25 m, one contained in the other within 30 m, or the
+  website domain is the same within 60 m. The OSM record wins: it gets `sources: ["osm", "overture"]`
+  and a missing `website`/`instagram`. Duplicates inside Overture are merged the same way.
+- **Overture-only places** become POIs with id `ovt:<Overture id>` and `sources: ["overture"]`,
+  scored like the rest: fame 0, quality = completeness (website, Instagram, address, phone, more than
+  one source dataset), photos from the same Commons tiles (ranked against the OSM distribution, so OSM
+  scores do not move), independent. Then the same curation, floors, tiers and descriptions. Their
+  names are proper names and stay as they are; `reason` is the kind ("Bar", "Italian restaurant",
+  "Art gallery"). Curation rows work with `ovt:` ids too. Overture-only galleries (mostly
+  commercial) stay tier 3 unless they have a Wikidata link or a curation `popular yes` (Architect
+  decision, BE-7 follow-up); matched ones are OSM places and tier normally.
+- **`new`**: `cache/<city>/first_seen.json` (git-ignored) keeps the first date each id was seen;
+  ids first seen in the last 60 days get `new: true`. The run that creates the file is the bootstrap:
+  everything is first seen that day, so nothing is flagged until later runs. The CI cache must keep
+  this file between runs, or every run is a bootstrap.
+- The file's `attribution` becomes "© OpenStreetMap contributors, Overture Maps Foundation".
+  Every place also gets `website`/`instagram` from OSM tags when it has them.
+
+Vilnius, release 2026-10-21.0: 5,060 places with confidence ≥ 0.7; 983 selected; 422 matched 416 OSM
+places; 554 added before the floors, 276 after (food 177, photo 68, shop 31).
 
 ## English names (`names-en/<city>.csv`)
 
@@ -132,4 +193,8 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 
 `cache/` is not committed. `review/` and the app's `pois-*.json` are.
 
-Data © OpenStreetMap contributors (ODbL), Wikidata (CC0), Wikimedia Commons metadata.
+`sources/` is committed (the Overture extract).
+
+Data © OpenStreetMap contributors (ODbL), Wikidata (CC0), Wikimedia Commons metadata, and
+Overture Maps Foundation, CDLA-Permissive-2.0 (places; some source datasets carry their own terms,
+e.g. Foursquare Apache-2.0, listed per place in the extract's `datasets`).

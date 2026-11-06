@@ -3,7 +3,8 @@
     python3 score.py vilnius                        # the app's bundled file
     python3 score.py vilnius --out /tmp/pois.json   # elsewhere (nightly job, ADR 013)
 
-Reads cache/<city>/enriched.json and curation.csv.
+Reads cache/<city>/enriched.json, curation.csv and, when present, sources/overture/<city>.json
+(Overture Maps Places, ADR 014: see overture.py).
 Writes App/Wander/Resources/pois-<city>.json and review/<city>-review.csv (for hand review).
 With --out it writes only the given file: no review CSV, nothing inside the repo.
 """
@@ -17,8 +18,10 @@ import sys
 import urllib.parse
 from pathlib import Path
 
+import overture
 from common import DATA, RESOURCES, cache_dir, load_city, metres
 from describe import osm_description, trim_extract
+from enrich import COMMONS_RADIUS_M, TILE_LIMIT, count_near
 from fetch_osm import building_kind, historic_kind, venue_kind
 
 # ---- Tunable weights (PLAN.md 5.3) -------------------------------------------------------
@@ -83,6 +86,7 @@ PHOTO_LABELS = {
     "events_venue": "Arena", "sports_hall": "Arena", "sports_centre": "Arena",
     # Landmark buildings tagged only by their use (BE-2); "cathedral", "chapel"... read fine as is
     "place_of_worship": "Place of worship", "townhall": "Town hall",
+    "music_venue": "Music venue",  # Overture-only (ADR 014)
 }
 MEMORIAL_LABELS = {"statue": "Statue", "bust": "Bust", "sculpture": "Sculpture", "bench": "Bench sculpture",
                    "stone": "Memorial stone", "obelisk": "Obelisk", "war_memorial": "War memorial"}
@@ -103,6 +107,8 @@ def fame_signal(p):
 def poi_type(p):
     """Most specific OSM value describing the place, e.g. mural, museum, church, cafe, books."""
     t = p["tags"]
+    if p.get("ovt_type"):
+        return p["ovt_type"]  # Overture-only place: the type its category mapping chose
     if p["category"] == "photo":
         return (t.get("artwork_type") if t.get("tourism") == "artwork" else None) \
             or (t.get("memorial") if t.get("historic") == "memorial" else None) \
@@ -122,22 +128,44 @@ def landmark_signal(p):
     return min(1.0, 0.75 * fame + bonus)
 
 
-def photo_percentiles(pois):
-    """Percentile rank of Commons file count within the city; places with no photos get 0."""
+def photo_percentiles(pois, extra=()):
+    """Percentile rank of Commons file count within the city; places with no photos get 0.
+    `extra` places (Overture-only) are ranked against the same OSM distribution without
+    joining it, so adding them never shifts an OSM place's signal."""
     counts = sorted(p["commons"] for p in pois)
     n = len(counts)
     pct = {}
-    for c in set(counts):
+    for c in {p["commons"] for p in [*pois, *extra]}:
         if c == 0:
             pct[c] = 0.0
         else:
             below = sum(x < c for x in counts)
             equal = sum(x == c for x in counts)
             pct[c] = (below + 0.5 * equal) / n
-    return {p["id"]: pct[p["commons"]] for p in pois}
+    return {p["id"]: pct[p["commons"]] for p in [*pois, *extra]}
+
+
+def commons_counter(slug):
+    """Function giving the Commons photo count near each (lat, lon), from enrich.py's tile cache,
+    counted exactly as enrich.py counts them for OSM places."""
+    path = cache_dir(slug) / "commons_tiles.json"
+    tiles = json.loads(path.read_text()) if path.exists() else {}
+    points = set()
+    for files in tiles.values():
+        if len(files) < TILE_LIMIT:  # leaf tiles only, as in enrich.fetch_commons_points
+            points.update(map(tuple, files))
+    points = list(points)
+
+    def counts(latlons):
+        pois = [{"id": i, "lat": lat, "lon": lon} for i, (lat, lon) in enumerate(latlons)]
+        near = count_near(pois, points, COMMONS_RADIUS_M)
+        return [near[i] for i in range(len(latlons))]
+    return counts
 
 
 def quality_signal(p):
+    if "ovt_quality" in p:
+        return p["ovt_quality"]  # Overture-only: completeness of its record (overture.quality)
     t = p["tags"]
     return sum(any(k in t for k in keys) for keys in QUALITY_FIELDS) / len(QUALITY_FIELDS)
 
@@ -150,6 +178,10 @@ def is_unique(p):
 def draft_reason(p, photo_pct):
     """A short, concrete, human reason. Curation can override it."""
     t, cat = p["tags"], p["category"]
+    if cat == "photo" and p.get("ovt_type"):
+        # Overture-only gallery or venue: its kind only. Nearby Commons photos show the street is
+        # photogenic, not that a shop-like gallery is a photo spot.
+        return PHOTO_LABELS.get(p["ovt_type"]) or sentence(p["ovt_type"].replace("_", " "))
     if cat == "photo":
         if t.get("tourism") == "artwork":
             base = ARTWORK_LABELS.get(t.get("artwork_type"), "Public artwork")
@@ -157,7 +189,7 @@ def draft_reason(p, photo_pct):
             if artist and artist not in p["name"]:
                 base += f" by {artist}"
         else:
-            key = t.get("tourism") if t.get("tourism") not in (None, "attraction") else None
+            key = p.get("ovt_type") or (t.get("tourism") if t.get("tourism") not in (None, "attraction") else None)
             key = key or historic_kind(t) or t.get("man_made") or t.get("leisure") or venue_kind(t) \
                 or building_kind(t)
             if key == "memorial" and t.get("memorial") in MEMORIAL_LABELS:
@@ -227,18 +259,33 @@ def below_floor(p):
     return p["score"] < SCORE_FLOOR[p["category"]] and not p.get("popular_override")
 
 
+def tier3_only(p):
+    """Overture-only galleries stay tier 3 (Architect decision, BE-7 follow-up to ADR 014): Overture's
+    art_gallery-like categories are mostly commercial (jewellery schools, shops), so without an OSM
+    match (which would make it an osm: place) or a Wikidata link they never show at city or
+    neighbourhood zoom. A curation `popular yes` still overrides this."""
+    return (p["id"].startswith("ovt:") and p["category"] == "photo" and p.get("ovt_type") == "gallery"
+            and not p["tags"].get("wikidata") and not p.get("popular_override"))
+
+
 def tiers(pois):
     """Map tier per id, within each category (ADR 012): 1 must-see, 2 notable, 3 detail.
 
     Tier 1 is the top TIER1_SHARE by score (at least one; ties by id), plus sights with fame of
     at least TIER1_FAME, with sights capped at TIER1_PHOTO_CAP. Tier 2 is the next TIER2_SHARE.
-    A curation `popular yes` forces tier 1, `popular no` turns tier 1 off (tier 2)."""
+    A curation `popular yes` forces tier 1, `popular no` turns tier 1 off (tier 2).
+    Overture-only galleries are always tier 3 (see tier3_only)."""
     tier = {}
     for cat in ("photo", "shop", "food"):
         ranked = sorted((p for p in pois if p["category"] == cat), key=lambda p: (-p["score"], p["id"]))
         if not ranked:
             continue
-        k = max(1, round_half_up(TIER1_SHARE * len(ranked)))
+        n = len(ranked)  # shares count every place in the category...
+        capped = [p for p in ranked if tier3_only(p)]  # ...but these never take a tier 1-2 slot
+        for p in capped:
+            tier[p["id"]] = 3
+        ranked = [p for p in ranked if not tier3_only(p)]
+        k = max(1, round_half_up(TIER1_SHARE * n))
         top = [p for i, p in enumerate(ranked)
                if i < k or (cat == "photo" and fame_signal(p) >= TIER1_FAME)]
         if cat == "photo":
@@ -248,7 +295,7 @@ def tiers(pois):
             if "popular_override" in p:
                 (top_ids.add if p["popular_override"] else top_ids.discard)(p["id"])
         rest = [p for p in ranked if p["id"] not in top_ids]
-        m = round_half_up(TIER2_SHARE * len(ranked))
+        m = round_half_up(TIER2_SHARE * n)
         for i, p in enumerate(rest):
             tier[p["id"]] = 2 if i < m or p.get("popular_override") is False else 3
         tier.update((i, 1) for i in top_ids)
@@ -407,7 +454,12 @@ def main():
     slug = args.city
     city = load_city(slug)
     pois = json.loads((cache_dir(slug) / "enriched.json").read_text())["pois"]
-    pct = photo_percentiles(pois)
+    ovt_data = overture.load(slug)
+    added, ovt_report = overture.integrate(pois, ovt_data, commons_counter(slug)) if ovt_data else ([], None)
+    pct = photo_percentiles(pois, added)
+    pois += added
+    today = datetime.date.today().isoformat()
+    seen, bootstrap = overture.first_seen(slug, sorted(p["id"] for p in pois), today)
     names_en = load_english_names(slug)
     for p in pois:
         p["original_name"] = p["name"]
@@ -483,6 +535,14 @@ def main():
             row["commonsImage"] = image
         if p["category"] != "photo" and p["tags"].get("opening_hours"):
             row["openingHours"] = p["tags"]["opening_hours"]
+        if "sources" in p:
+            row["sources"] = p["sources"]
+        if website := p.get("website") or overture.website_from_osm(p["tags"]):
+            row["website"] = website
+        if instagram := p.get("instagram") or overture.instagram_from_osm(p["tags"]):
+            row["instagram"] = instagram
+        if overture.is_new(p["id"], seen, bootstrap, today):
+            row["new"] = True
         described = description(p, row["type"], p["id"] in popular, wiki, article_uses)
         if described:
             row["description"], row["descriptionSource"] = described[:2]
@@ -494,14 +554,21 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({
         "city": city["name"],
-        "generated": datetime.date.today().isoformat(),
-        "attribution": "© OpenStreetMap contributors",
+        "generated": today,
+        "attribution": "© OpenStreetMap contributors" + (", Overture Maps Foundation" if ovt_data else ""),
         "pois": out_pois,
     }, ensure_ascii=False, indent=1))
 
     review = None if args.out else write_review_csv(slug, pois)
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
+    if ovt_report:
+        overture.print_report(ovt_report, ovt_data.get("release"))
+        kept = {c: sum(p["category"] == c and p["id"].startswith("ovt:") for p in pois) for c in by_cat}
+        t12 = {c: sum(p["category"] == c and p["id"].startswith("ovt:") and tier[p["id"]] < 3 for p in pois)
+               for c in by_cat}
+        print(f"  overture-only after floors: {kept} (tier 1-2: {t12}); "
+              f"new: {sum('new' in r for r in out_pois)} (first seen on {bootstrap} = bootstrap, never new)")
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
           f"({applied} curation rules applied, {renamed} generic names expanded)")
     print("  score floors: " + ", ".join(f"{c} {before_floor[c]} -> {by_cat[c]} (floor {SCORE_FLOOR[c]})"
@@ -511,7 +578,7 @@ def main():
     print("  tiers 1/2/3 per category: " + ", ".join(f"{c} {'/'.join(map(str, n))}"
                                                      for c, n in tiers_by_cat.items()))
     untranslated = [p for p in pois if p["category"] == "photo" and p["id"] not in names_en
-                    and not p["tags"].get("name:en")]
+                    and not p["tags"].get("name:en") and not p["id"].startswith("ovt:")]
     if untranslated:
         print(f"  ! {len(untranslated)} sights have no English name; add them to names-en/{slug}.csv:")
         for p in untranslated[:10]:
@@ -548,9 +615,13 @@ def write_review_csv(slug, pois):
         w = csv.writer(f)
         w.writerow(["rank", "osm_id", "name", "original_name", "category", "score", "reason", "sitelinks", "commons", "osm_url"])
         for i, p in enumerate(review_rows, 1):
-            typ, num = p["id"].split(":")[1:]
+            if p["id"].startswith("osm:"):
+                typ, num = p["id"].split(":")[1:]
+                url = f"https://www.openstreetmap.org/{typ}/{num}"
+            else:  # ovt:<GERS id>
+                url = f"https://explore.overturemaps.org/?mode=explore&feature=places.place.{p['id'][4:]}"
             w.writerow([i, p["id"], p["name"], p["original_name"], p["category"], p["score"], p["reason"],
-                        p["sitelinks"], p["commons"], f"https://www.openstreetmap.org/{typ}/{num}"])
+                        p["sitelinks"], p["commons"], url])
     return review
 
 
