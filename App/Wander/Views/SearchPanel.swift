@@ -40,6 +40,8 @@ struct SearchPanel: View {
     let recents: RecentDestinations
     let locationDenied: Bool
     var offline = false
+    /// The places file's `generated` date, for the "Places updated" caption (FE-15).
+    var placesGenerated = ""
     /// Focus the field (and raise the keyboard) when the panel opens.
     var focusOnAppear = true
     let onChoose: (Destination) -> Void
@@ -83,6 +85,9 @@ struct SearchPanel: View {
                     } else if !offline, !locationDenied, errorMessage == nil {
                         welcome
                     }
+                    if !isTyping {
+                        dataFooter
+                    }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, Layout.margin)
@@ -118,6 +123,21 @@ struct SearchPanel: View {
                 .fixedSize(horizontal: false, vertical: true)
         }
         .padding(.top, Layout.grid)
+    }
+
+    /// Bottom of the empty state (FE-15): how fresh the places are, and the data credit.
+    private var dataFooter: some View {
+        VStack(alignment: .leading, spacing: 2) {
+            if let updated = DataFeed.relativeDate(placesGenerated) {
+                Text("Places updated \(updated)")
+            }
+            Text("© OpenStreetMap contributors · Wikimedia")
+        }
+        .font(WanderFont.caption)
+        .foregroundStyle(.inkMuted)
+        .fixedSize(horizontal: false, vertical: true)
+        .padding(.top, Layout.grid * 2)
+        .accessibilityElement(children: .combine)
     }
 
     private var searchField: some View {
