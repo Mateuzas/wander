@@ -50,6 +50,43 @@ func samples(along line: [Coordinate], every spacing: Double) -> [Coordinate] {
     return points
 }
 
+/// A wrong turn off `route` (points 1.4 m apart along a plan's polyline) at
+/// index `turnAt`, or the first point after it where one fits (where the
+/// route is tangled, every way out passes close to another of its streets):
+/// a straight walk away that ends more than 120 m from every
+/// part of the route and, once 70 m out, stays more than 60 m from all of it
+/// (so it can't brush past another street of the route on the way). Tries
+/// the shortest length first, and directions square to the route before
+/// slanted ones. Returns where the turn is and the points walked out, 1.4 m
+/// apart, starting there.
+func wrongTurn(off route: [Coordinate], from turnAt: Int, polyline: [Coordinate]) -> (at: Int, path: [Coordinate])? {
+    let line = MeasuredPolyline(polyline, projection: LocalProjection(origin: polyline[0]))
+    for index in stride(from: turnAt, to: route.count - 6, by: 20) {
+        if let path = wrongTurn(off: route, at: index, line: line) { return (index, path) }
+    }
+    return nil
+}
+
+private func wrongTurn(off route: [Coordinate], at turnAt: Int, line: MeasuredPolyline) -> [Coordinate]? {
+    let a = route[turnAt], b = route[turnAt + 5]
+    let routeBearing = atan2((b.lon - a.lon) * cos(a.lat * .pi / 180), b.lat - a.lat)
+    let skews: [Double] = [0, 15, -15, 30, -30, 45, -45, 60, -60, 75, -75, 90]
+    for length in stride(from: 150.0, through: 600, by: 25) {
+        for skew in skews {
+            for side in [90.0, -90.0] {
+                let bearing = routeBearing + (side + skew) * .pi / 180
+                let end = offset(a, east: sin(bearing) * length, north: cos(bearing) * length)
+                guard line.nearest(to: end).distance > 120 else { continue }
+                let path = samples(along: [a, end], every: 1.4)
+                if path.enumerated().allSatisfy({ i, c in Double(i) * 1.4 < 70 || line.nearest(to: c).distance > 60 }) {
+                    return path
+                }
+            }
+        }
+    }
+    return nil
+}
+
 /// Gaussian noise in metres (Box–Muller on a seeded generator).
 struct GPSNoise {
     var rng: SplitMix64
@@ -94,15 +131,25 @@ enum Golden {
         return (file.routes, pois)
     }
 
-    /// A long detour plan (25 min, up to 5 stops, no worth-it pass) for golden
-    /// route `index`, on L-shaped streets. A fixed budget, not `.recommended`,
-    /// so these tracker walks don't change whenever the engine is retuned.
-    static func detourPlan(_ index: Int) async throws -> WanderPlan {
+    /// The Recommended plan for golden route `index` (up to 5 stops, often
+    /// with out-and-back legs), on L-shaped streets: what users walk.
+    static func recommendedPlan(_ index: Int) async throws -> WanderPlan {
+        try await recommendedPlans.value[index]
+    }
+
+    /// Planned once and shared: the walk tests run each route many times.
+    private static let recommendedPlans = Task { () throws -> [WanderPlan] in
         let golden = try load()
-        let route = golden.routes[index]
-        let request = PlanRequest(origin: Coordinate(lat: route.from[0], lon: route.from[1]),
-                                  destination: Coordinate(lat: route.to[0], lon: route.to[1]),
-                                  budget: 25 * 60, pois: golden.pois, maxWaypoints: 5)
-        return try await Planner().plan(request, provider: LShapedWalkingTime())
+        return try await withThrowingTaskGroup(of: (Int, WanderPlan).self) { group in
+            for (i, route) in golden.routes.enumerated() {
+                let request = PlanRequest(origin: Coordinate(lat: route.from[0], lon: route.from[1]),
+                                          destination: Coordinate(lat: route.to[0], lon: route.to[1]),
+                                          mode: .recommended, pois: golden.pois)
+                group.addTask { (i, try await Planner().plan(request, provider: LShapedWalkingTime())) }
+            }
+            var plans: [Int: WanderPlan] = [:]
+            for try await (i, plan) in group { plans[i] = plan }
+            return golden.routes.indices.map { plans[$0]! }
+        }
     }
 }

@@ -10,6 +10,40 @@ python3 score.py vilnius       # scores + curation → App/Wander/Resources/pois
 ```
 
 Only `score.py` needs re-running after editing weights or `curation.csv`.
+`score.py <city> --out <file>` writes the file elsewhere instead (no review CSV, nothing in the repo).
+
+## Nightly job (ADR 013)
+
+The DevOps workflow calls two scripts from the repo root; their flags are a stable interface.
+
+```sh
+python3 Data/run_nightly.py vilnius --out build/data [--refresh] [--previous <file|URL|none>]
+python3 Data/publish_gate.py --new build/data/pois-vilnius.json --previous <file|URL|none> \
+    [--curation Data/curation.csv] [--rerun <file>]
+```
+
+**`run_nightly.py`** runs fetch_osm (`--refresh` passed through), enrich, wikipedia and score for
+the city and writes `<out>/pois-<city>.json`, never `App/Wander/Resources`. It runs score twice in
+separate processes and fails if the two files differ, then validates the file against the schema.
+It also writes `<out>/review-<city>.md`, the "needs review" summary: counts per category and tier,
+description coverage, tier-1 places new or gone since `--previous` (default: the bundled file), and
+sights without an English name. Unattended, such a sight (no `names-en` row, no OSM `name:en`)
+shows its Wikidata English label, else its local name; that never fails the run. Exit status is
+non-zero only on real errors: a step failing (e.g. network down after the retries), or an output
+that is invalid or not deterministic. Nothing is committed to the repo.
+
+**`publish_gate.py`** prints a Markdown summary (append it to `$GITHUB_STEP_SUMMARY`) and exits 1
+if any check fails:
+
+- the file passes `scripts/validate-pois.py` (imported, not copied);
+- same `city`, same top-level keys, no POI field dropped (new fields are fine);
+- POI count per category within ±25% of the previous file;
+- every previous tier-1 id is still tier 1, or has a curation row (`exclude`, or `popular no`):
+  to drop a must-see on purpose, add that row first;
+- with `--rerun <file>` (a second build from the same caches): byte-identical, ignoring `generated`.
+
+`--previous none` (first publish) or a 404 from the URL passes, with a note; any other download
+error fails.
 
 ## What gets fetched
 

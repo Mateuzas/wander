@@ -40,7 +40,8 @@ public struct WalkConfig: Hashable, Sendable {
     public var sideThreshold: Double = 8
     /// Metres from the destination that count as arrived.
     public var arrivalRadius: Double = 25
-    /// Metres behind the last position searched when matching a fix to the route.
+    /// Unused since BE-12 (the route filter replaced the search window); kept
+    /// so existing code still compiles.
     public var searchBehind: Double = 40
     /// Metres. The step shown only goes back if progress falls this far behind
     /// its start, so GPS noise at a turn doesn't flicker the instruction.
@@ -48,21 +49,22 @@ public struct WalkConfig: Hashable, Sendable {
     /// Metres. Matches within this of the closest count as equally good; the
     /// one nearest the expected position along the route wins.
     public var continuityTolerance: Double = 10
-    /// m/s, to predict where along the route the next fix should be.
+    /// m/s, to predict where along the route the next fix should be, and the
+    /// pace the route filter expects (give or take 0.5 m/s).
     public var walkingSpeed: Double = 1.35
     /// Seconds. Longer gaps between fixes don't push the prediction further.
     public var maxPredictionGap: TimeInterval = 10
-    /// Metres. Direction of travel only picks between two passes of the route
-    /// this far apart along it; closer ones are left to the prediction.
+    /// Unused since BE-12 (the route filter tells passes apart by how the
+    /// walker moves along them); kept so existing code still compiles.
     public var directionGap: Double = 40
-    /// Recent fixes used to infer direction of travel when there's no course.
+    /// Unused since BE-12; kept so existing code still compiles.
     public var motionWindow: Int = 20
-    /// Metres the walker must have drifted across `motionWindow` for that
-    /// direction to count.
+    /// Unused since BE-12; kept so existing code still compiles.
     public var minDrift: Double = 5
-    /// Metres ahead searched at least; more if time has passed since the last fix.
+    /// Unused since BE-12 (the route filter replaced the search window); kept
+    /// so existing code still compiles.
     public var searchAhead: Double = 120
-    /// m/s, for widening the search after a gap between fixes.
+    /// m/s, the fastest the route filter expects the walker to move.
     public var maxSpeed: Double = 4
 
     public static let `default` = WalkConfig()
@@ -120,13 +122,15 @@ public struct WalkUpdate: Hashable, Sendable {
 /// Follows a walk along a `WanderPlan` (PLAN.md section 7.4): progress, steps,
 /// off-route detection, arrival and "up ahead" nudges. Feed it fixes in order.
 ///
-/// Fixes are matched to the route near the last known position. Where the
-/// route runs back along the same or a parallel street (out and back to a
-/// waypoint), the passes are equally close under GPS noise, so the match
-/// nearest the predicted position wins, and the direction of travel (course,
-/// or drift across recent fixes) overrules that when the passes are far apart.
-/// If nothing nearby matches, the whole route is searched (the walker took a
-/// shortcut or rejoined elsewhere).
+/// A `RouteFilter` keeps track of where along the route the walker probably
+/// is, from all fixes so far and how far a walker moves between them. Where
+/// the route runs back along the same or a parallel street (out and back to a
+/// stop), the passes are about equally close under GPS noise, and only that
+/// history tells them apart. Each fix is then placed exactly on the route
+/// near the filter's most likely position. A fix near the route but far from
+/// that position (a shortcut, or a long gap) starts the filter afresh.
+/// Off route means farther than `offRouteDistance` from every part of the
+/// route; those fixes leave progress alone.
 public struct WalkTracker: Sendable {
     /// A step placed on the route.
     public struct TrackedStep: Hashable, Sendable {
@@ -157,15 +161,25 @@ public struct WalkTracker: Sendable {
     private var active: Nudge?
     private var lastHeading: Double?
     private var stepIndex = 0
-    /// Projected positions of the latest accepted fixes, for direction of travel.
-    private var recent: [SIMD2<Double>] = []
+    /// Where along the route the walker probably is.
+    private var filter: RouteFilter
+    /// Metres either side of the filter's most likely position searched for
+    /// the exact match.
+    private let matchWindow = 25.0
+    /// Metres. The predicted position breaks ties only within this of the
+    /// filter's most likely position.
+    private let predictionAgreement = 6.0
+    /// Time of the last fix the filter took.
+    private var lastFiltered: Date?
 
     public init(plan: WanderPlan, config: WalkConfig = .default) {
         self.plan = plan
         self.config = config
         let start = plan.legs.first?.from ?? plan.baseline.from
         let projection = LocalProjection(origin: start)
-        line = MeasuredPolyline(plan.polyline, projection: projection)
+        let line = MeasuredPolyline(plan.polyline, projection: projection)
+        self.line = line
+        filter = RouteFilter(line: line)
         destination = plan.legs.last?.to ?? plan.baseline.to
         highlights = plan.highlights.sorted { ($0.distanceAlongRoute, $0.poi.id) < ($1.distanceAlongRoute, $1.poi.id) }
 
@@ -196,43 +210,31 @@ public struct WalkTracker: Sendable {
             return snapshot(events: events)
         }
 
-        // Match to the route near the last position, else anywhere.
         let gap = lastTimestamp.map { max(0, fix.timestamp.timeIntervalSince($0)) } ?? 0
         lastTimestamp = fix.timestamp
-        var near: (distance: Double, along: Double)
-        if hasFix && !isOffRoute {
-            // Search near the last position and, among near-equal matches, keep
-            // the one closest to where the walker should be by now: where the
-            // route runs back along the same or a parallel street, both passes
-            // are about equally close, and only the direction of travel tells
-            // them apart.
-            let ahead = max(config.searchAhead, config.maxSpeed * gap + 50)
-            let expected = progress + config.walkingSpeed * min(gap, config.maxPredictionGap)
-            near = line.nearest(to: fix.coordinate,
-                                within: max(0, progress - config.searchBehind)...(progress + ahead),
-                                near: expected, tolerance: config.continuityTolerance,
-                                travel: travelDirection(fix), directionGap: config.directionGap)
+        let anywhere = line.nearest(to: fix.coordinate)
+        var near = anywhere
+        if anywhere.distance <= config.offRouteDistance {
+            near = match(fix, gap: gap)
             if near.distance > config.offRouteDistance {
-                let anywhere = line.nearest(to: fix.coordinate)
-                if anywhere.distance <= config.offRouteDistance { near = anywhere }
+                // Near the route, but nowhere near where the walker was thought
+                // to be (a shortcut, or the app was asleep): start afresh.
+                filter.reset()
+                near = match(fix, gap: gap)
             }
-        } else {
-            near = line.nearest(to: fix.coordinate)
         }
         hasFix = true
         lastDistanceFromRoute = near.distance
-        recent.append(line.point(fix.coordinate))
-        if recent.count > config.motionWindow { recent.removeFirst(recent.count - config.motionWindow) }
 
         // Off route only after several far fixes in a row; back on only after
         // several clearly near ones (hysteresis on both distance and count).
-        if near.distance > config.offRouteDistance {
+        if anywhere.distance > config.offRouteDistance {
             farFixes += 1
             nearFixes = 0
         } else {
             farFixes = 0
             progress = near.along
-            nearFixes = near.distance <= config.backOnRouteDistance ? nearFixes + 1 : 0
+            nearFixes = anywhere.distance <= config.backOnRouteDistance ? nearFixes + 1 : 0
         }
         if !isOffRoute && farFixes >= config.offRouteFixes {
             isOffRoute = true
@@ -260,21 +262,23 @@ public struct WalkTracker: Sendable {
         stepIndex = index
     }
 
-    /// Direction the walker is moving, as an east/north vector: the fix's
-    /// course when valid, otherwise the drift across recent fixes (half-window
-    /// averages, to beat GPS noise). Nil when unknown, e.g. standing still.
-    private func travelDirection(_ fix: LocationFix) -> SIMD2<Double>? {
-        if let heading = fix.heading, heading >= 0 {
-            let radians = heading * .pi / 180
-            return SIMD2(sin(radians), cos(radians))
-        }
-        guard recent.count >= config.motionWindow / 2 else { return nil }
-        let half = recent.count / 2
-        let older = recent.prefix(half).reduce(SIMD2<Double>.zero, +) / Double(half)
-        let newer = (recent.suffix(recent.count - half) + [line.point(fix.coordinate)])
-            .reduce(SIMD2<Double>.zero, +) / Double(recent.count - half + 1)
-        let drift = newer - older
-        return length(drift) >= config.minDrift ? drift : nil
+    /// Matches a fix near the route: the filter picks the most likely
+    /// position, then the fix is placed exactly on the route near it. Where
+    /// the route passes by twice within that stretch (right at a turnaround),
+    /// the match nearest the predicted position wins, so progress doesn't
+    /// jump back and forth between the two; the prediction only counts while
+    /// it agrees with the filter, so one bad match can't carry over.
+    private mutating func match(_ fix: LocationFix, gap: TimeInterval) -> (distance: Double, along: Double) {
+        let sigma = min(max(fix.horizontalAccuracy ?? 15, 8), 30)
+        let filterGap = lastFiltered.map { max(0, fix.timestamp.timeIntervalSince($0)) } ?? gap
+        lastFiltered = fix.timestamp
+        let likely = min(line.totalLength, filter.update(line.point(fix.coordinate), sigma: sigma,
+                                                          gap: filterGap, config: config))
+        let window = max(0, likely - matchWindow)...min(line.totalLength, likely + matchWindow)
+        var expected = progress + config.walkingSpeed * min(gap, config.maxPredictionGap)
+        if !hasFix || abs(expected - likely) > predictionAgreement { expected = likely }
+        return line.nearest(to: fix.coordinate, within: window, near: expected,
+                            tolerance: config.continuityTolerance)
     }
 
     /// Dismisses the current nudge. It won't come back.
