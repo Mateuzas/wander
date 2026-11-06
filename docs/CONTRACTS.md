@@ -143,6 +143,28 @@ single-select row of moods instead of interest chips plus a style menu. The engi
 
 **Search panel recents (FE-20):** a compact island with the last 3 searches, not a full-screen list.
 
+**Swipe walks (ADR 016; BE-16 engine, FE-23 app). Additive: the old `Mode`/`plans` API stays until FE-23 has
+switched, then a cleanup removes it.**
+- `public enum WalkEnd { case anywhere; case destination(Coordinate) }`
+- `public enum Reaction: String, Codable { case love, like, nope }`
+- `public struct SwipeMemory: Codable` holds `[poiId: (reaction, date)]`, plus `func hidden(now:) -> Set<String>`
+  (nope within 90 days) and `func affinity(for: POI) -> Double` (boost from loved and liked categories and types).
+- `public enum DeckKind: String, CaseIterable { case sights, food, shops, hiddenGems }`
+- `public enum DeckArea { case circle(center: Coordinate, radius: Double); case band(start: Coordinate, end: Coordinate, halfWidth: Double) }`
+- `public func deck(pois: [POI], area: DeckArea, kinds: Set<DeckKind>, memory: SwipeMemory, seen: Set<String>, now: Date) -> [POI]`
+  - order: tier 1, then 2, then 3; spatially spread (one per grid cell first); boosted by affinity; hidden and seen
+    places deprioritised or removed. Deterministic.
+- `public func estimateWalkMinutes(start: Coordinate, end: WalkEnd, stops: [POI]) -> Double`: fast offline estimate
+  (haversine × tortuosity, nearest insertion + 2-opt order), used for the live "38 of 60 min" counter.
+- `Planner.planWalk(start: Coordinate, end: WalkEnd, mustVisit: [POI], optional: [POI], budget: TimeInterval, provider:) async throws -> WalkPlan`
+  - every `mustVisit` is included; if they exceed the budget the walk stretches and `WalkPlan.stretched == true`
+  - `optional` places are added by value per extra minute until the budget
+  - deterministic order; real legs verified via the provider as today
+  - `WalkPlan` wraps a `WanderPlan` (legs, highlights for walking mode) plus `included`, `skipped`, `stretched`,
+    `estimatedMinutes`
+- `Planner.insertCheapest(_ poi: POI, into: WalkPlan, provider:) async throws -> WalkPlan` for the coffee and shop add-ons.
+- `WalkTracker` keeps working on `WalkPlan.plan` (a `WanderPlan`).
+
 ## 3. Build and configuration
 
 | Item | Contract |
