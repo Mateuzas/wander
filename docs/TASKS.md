@@ -33,14 +33,17 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 
 | Id | Owner | Task | Phase |
 |---|---|---|---|
-| ARC-4 | Architect | Map selection policy: what deserves a bead at each zoom level (feedback #8) | 2 |
-| FE-13 / BE-5 | Frontender / Backender | Implement the selection policy (data floor plus app layering) | 2 |
+| ARC-4 | Architect | Map selection policy: ADR 012 (score floors, tiers, zoom layering) | done |
+| BE-5 | Backender | Floors and `tier` in the pipeline; `POI.tier` in the engine (ADR 012) | in progress |
+| FE-13 | Frontender | Zoom layering by tier (ADR 012) | in progress |
+| OPS-7 | DevOps | CI runs only the jobs a change needs (path-based), skipped jobs still pass | in progress |
 | ARC-5 | Architect | Direct + Recommended contract (engine-chosen budget with a cap) and a filter-set proposal (ADR 008) | 3 |
 | BE-6 / FE-14 | Backender / Frontender | Engine and UI for Direct + Recommended; FE-2 chips folded in | 3 |
 | ARC-6 | Architect | Nightly data design: hosting, file versions, app download with fallback (ADR 010); Vilnius sources from the user | 4 |
 | OPS-5 / FE-15 | DevOps / Frontender | Nightly job skeleton; app downloads the current file | 4 |
 | BE-7 | Backender | Second open place source (Overture or Foursquare OS Places), dedupe, freshness | 4 |
 | BE-8 | Backender | Vilnius events scraper, daily; event schema | 4 |
+| BE-11 | Backender | Michelin Guide places (stars, Bib Gourmand, selected) as a separate, clearly marked layer; check the source terms first (prefer open data such as Wikidata over scraping the guide site) | 4 |
 | BE-9 | Backender | Engine tuning on fresh data; FE-3 "seen" memory | 5 |
 | FE-16 / OPS-6 | Frontender / DevOps | Live Activity navigation (Dynamic Island, Lock Screen), widget target, background location during walks (ADR 009) | 6 |
 | – | all | Social "hangout" mode (ADR 011) | 7 |
