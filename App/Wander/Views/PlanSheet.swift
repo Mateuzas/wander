@@ -17,10 +17,10 @@ struct PlanSheet: View {
     var body: some View {
         List {
             header.sheetRow(top: Layout.margin + Layout.grid)
-            ModeControl(selection: $planner.mode).sheetRow()
+            modeControl.sheetRow()
             summary.sheetRow(top: Layout.grid)
-            actions.sheetRow(top: Layout.grid)
             preferences.sheetRow(top: Layout.grid)
+            actions.sheetRow(top: Layout.grid)
             highlightList
             #if DEBUG
             Toggle("Debug overlay", isOn: $debugOverlay)
@@ -54,6 +54,15 @@ struct PlanSheet: View {
         }
     }
 
+    private var modeControl: some View {
+        let ready = planner.phase == .ready
+        return ModeControl(
+            selection: Binding(get: { planner.mode }, set: { planner.select($0) }),
+            directTime: ready ? planner.plans[.direct]?.totalTime : nil,
+            recommendedExtra: ready ? planner.plans[.recommended]?.extraTime : nil,
+            noDetourFit: ready && planner.noDetourFit)
+    }
+
     @ViewBuilder
     private var summary: some View {
         switch planner.phase {
@@ -69,7 +78,7 @@ struct PlanSheet: View {
             FailureMessage(failure: failure, retry: planner.retry)
         case .ready:
             if let plan = planner.plan {
-                PlanSummary(plan: plan, mode: planner.mode)
+                PlanSummary(plan: plan, mode: planner.mode, noDetourFit: planner.noDetourFit)
             }
         }
     }
@@ -106,39 +115,51 @@ struct PlanSheet: View {
         }
     }
 
-    // MARK: - Interests and profile
+    // MARK: - Interests and style
+
+    /// Chip order from the approved design: Sights, Food & drink, Shops.
+    private static let chipOrder: [POICategory] = [.photo, .food, .shop]
 
     private var preferences: some View {
         VStack(alignment: .leading, spacing: Layout.grid) {
-            HStack(spacing: Layout.grid) {
-                ForEach(POICategory.allCases, id: \.self) { category in
-                    InterestChip(category: category, isOn: Binding(
-                        get: { planner.interests.contains(category) },
-                        set: { on in
-                            if on { planner.interests.insert(category) } else { planner.interests.remove(category) }
-                        }))
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: Layout.grid) { chips(Self.chipOrder) }
+                VStack(alignment: .leading, spacing: Layout.grid) {
+                    HStack(spacing: Layout.grid) { chips(Array(Self.chipOrder.prefix(2))) }
+                    HStack(spacing: Layout.grid) { chips(Array(Self.chipOrder.dropFirst(2))) }
                 }
             }
-            HStack {
-                Text("Route style")
+            HStack(spacing: Layout.grid) {
+                Text("Style")
                     .font(WanderFont.body)
                     .foregroundStyle(.ink)
-                Spacer()
                 Menu {
-                    Picker("Route style", selection: $planner.profile) {
+                    Picker("Style", selection: $planner.profile) {
                         ForEach(WeightPreset.allCases) { Text($0.title).tag($0) }
                     }
                 } label: {
                     HStack(spacing: Layout.grid / 2) {
                         Text(planner.profile.title)
                             .font(WanderFont.body)
-                        Image(systemName: "chevron.up.chevron.down")
+                        Image(systemName: "chevron.down")
                             .font(.system(size: 12, weight: .semibold))
                     }
                     .foregroundStyle(.wander)
                     .frame(minHeight: Layout.minTouch)
+                    .contentShape(Rectangle())
                 }
+                .accessibilityLabel("Style, \(planner.profile.title)")
             }
+        }
+    }
+
+    private func chips(_ categories: [POICategory]) -> some View {
+        ForEach(categories, id: \.self) { category in
+            InterestChip(category: category, isOn: Binding(
+                get: { planner.interests.contains(category) },
+                set: { on in
+                    if on { planner.interests.insert(category) } else { planner.interests.remove(category) }
+                }))
         }
     }
 
@@ -177,6 +198,8 @@ struct PlanSheet: View {
 private struct PlanSummary: View {
     let plan: WanderPlan
     let mode: Mode
+    /// Recommended found nothing worth a detour.
+    let noDetourFit: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: Layout.grid / 2) {
@@ -189,10 +212,8 @@ private struct PlanSummary: View {
             Text(highlightLine)
                 .font(WanderFont.body)
                 .foregroundStyle(.inkMuted)
-            if plan.noDetourFit {
-                Text(mode == .explorer
-                     ? "Nothing interesting fits this time."
-                     : "Nothing interesting fits this time. Try Explorer for a longer detour.")
+            if noDetourFit {
+                Text("Nothing worth a detour on this walk")
                     .font(WanderFont.body)
                     .foregroundStyle(.ink)
                     .fixedSize(horizontal: false, vertical: true)
