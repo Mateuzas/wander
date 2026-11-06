@@ -29,12 +29,16 @@ public struct SwipeMemory: Codable, Hashable, Sendable {
         public var date: Date
         public var category: POICategory?
         public var type: String?
+        /// Food only, from `POI.cuisine`.
+        public var cuisine: [String]?
 
-        public init(reaction: Reaction, date: Date, category: POICategory? = nil, type: String? = nil) {
+        public init(reaction: Reaction, date: Date, category: POICategory? = nil, type: String? = nil,
+                    cuisine: [String]? = nil) {
             self.reaction = reaction
             self.date = date
             self.category = category
             self.type = type
+            self.cuisine = cuisine
         }
     }
 
@@ -50,7 +54,8 @@ public struct SwipeMemory: Codable, Hashable, Sendable {
 
     /// Remembers `reaction` to `poi` at `date`, replacing any earlier one.
     public mutating func record(_ reaction: Reaction, for poi: POI, at date: Date) {
-        entries[poi.id] = Entry(reaction: reaction, date: date, category: poi.category, type: poi.type)
+        entries[poi.id] = Entry(reaction: reaction, date: date, category: poi.category, type: poi.type,
+                                cuisine: poi.cuisine)
     }
 
     /// Forgets the reaction to `poiId` (one-level undo).
@@ -65,16 +70,40 @@ public struct SwipeMemory: Codable, Hashable, Sendable {
     }
 
     /// 0–1 boost from loved and liked places of the same type and category.
-    /// Each loved place of the same type adds 0.2 (liked 0.1), each of the same
-    /// category 0.05 (liked 0.025); capped at 1. Nopes don't count.
+    /// Days for a reaction's weight in `affinity` to halve.
+    public static let affinityHalfLifeDays: Double = 60
+    /// Bounds of `affinity`, so it stays a tiebreak and never outweighs tier order.
+    public static let affinityRange: ClosedRange<Double> = -0.3...0.5
+
+    /// Boost for `poi` from past reactions to similar places, in `affinityRange`,
+    /// measured at the newest reaction's date. See `affinity(for:now:)`.
     public func affinity(for poi: POI) -> Double {
+        affinity(for: poi, now: entries.values.map(\.date).max() ?? .distantPast)
+    }
+
+    /// Boost for `poi` from past reactions to other places (ADR 016). Each love
+    /// (weight 1) or like (0.5) adds 0.25 for the same `type`, 0.15 for a shared
+    /// cuisine (food) and 0.05 for the same category; each nope on the same type
+    /// subtracts 0.1. Weights halve every `affinityHalfLifeDays`. The sum is
+    /// clamped to `affinityRange`. Order-independent, so deterministic.
+    public func affinity(for poi: POI, now: Date) -> Double {
+        let cuisines = Set(poi.cuisine ?? [])
         var boost = 0.0
-        for entry in entries.values where entry.reaction != .nope {
-            let weight = entry.reaction == .love ? 1.0 : 0.5
-            if let type = poi.type, entry.type == type { boost += 0.2 * weight }
-            if entry.category == poi.category { boost += 0.05 * weight }
+        for (id, entry) in entries where id != poi.id {
+            let ageDays = max(0, now.timeIntervalSince(entry.date) / 86_400)
+            let decay = pow(0.5, ageDays / Self.affinityHalfLifeDays)
+            let sameType = poi.type != nil && entry.type == poi.type
+            switch entry.reaction {
+            case .nope:
+                if sameType { boost -= 0.1 * decay }
+            case .love, .like:
+                let weight = (entry.reaction == .love ? 1.0 : 0.5) * decay
+                if sameType { boost += 0.25 * weight }
+                if poi.category == .food, !cuisines.isDisjoint(with: entry.cuisine ?? []) { boost += 0.15 * weight }
+                if entry.category == poi.category { boost += 0.05 * weight }
+            }
         }
-        return min(1, boost)
+        return min(Self.affinityRange.upperBound, max(Self.affinityRange.lowerBound, boost))
     }
 }
 
@@ -198,7 +227,7 @@ public func deck(pois: [POI], area: DeckArea, kinds: Set<DeckKind>, memory: Swip
     }
     let cards = kept.map { poi -> Card in
         let p = projection.point(poi.coordinate) / deckCellSize
-        return Card(poi: poi, affinity: memory.affinity(for: poi),
+        return Card(poi: poi, affinity: memory.affinity(for: poi, now: now),
                     cell: SIMD2(Int(p.x.rounded(.down)), Int(p.y.rounded(.down))))
     }
     func spread(_ group: [Card]) -> [POI] {

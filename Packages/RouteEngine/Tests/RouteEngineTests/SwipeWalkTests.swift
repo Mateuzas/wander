@@ -73,6 +73,59 @@ struct SwipeWalkTests {
         #expect(ids(deck(pois: pois, area: everything, kinds: [.sights], memory: memory, seen: [], now: now)) == ["b", "a"])
     }
 
+    @Test func affinityWeighsTypeCuisineAgeAndNopes() {
+        let mural = poi("m", east: 0, north: 0, type: "mural")
+        var ramen = poi("r", east: 0, north: 0, category: .food, type: "restaurant")
+        ramen.cuisine = ["japanese"]
+        let church = poi("c", east: 0, north: 0, type: "church")
+        var memory = SwipeMemory()
+        #expect(memory.affinity(for: mural, now: now) == 0)
+
+        memory.record(.like, for: poi("m1", east: 0, north: 0, type: "mural"), at: now)
+        let liked = memory.affinity(for: mural, now: now)
+        var loved = SwipeMemory()
+        loved.record(.love, for: poi("m1", east: 0, north: 0, type: "mural"), at: now)
+        #expect(loved.affinity(for: mural, now: now) > liked)
+        #expect(liked > memory.affinity(for: church, now: now))   // same type beats same category only
+        #expect(memory.affinity(for: church, now: now) > 0)
+
+        // 60-day half-life.
+        let later = now.addingTimeInterval(60 * 86_400)
+        #expect(abs(loved.affinity(for: mural, now: later) - loved.affinity(for: mural, now: now) / 2) < 1e-9)
+
+        // Cuisine counts for food.
+        var food = SwipeMemory()
+        var sushi = poi("s", east: 0, north: 0, category: .food, type: "cafe")
+        sushi.cuisine = ["japanese", "sushi"]
+        food.record(.love, for: sushi, at: now)
+        var pizza = ramen
+        pizza.cuisine = ["italian"]
+        #expect(food.affinity(for: ramen, now: now) > food.affinity(for: pizza, now: now))
+
+        // Nopes on the same type are a small negative; bounded both ways.
+        var nopes = SwipeMemory()
+        for i in 0..<20 { nopes.record(.nope, for: poi("n\(i)", east: 0, north: 0, type: "church"), at: now) }
+        #expect(nopes.affinity(for: church, now: now) == -0.3)
+        #expect(nopes.affinity(for: mural, now: now) == 0)
+        var fans = SwipeMemory()
+        for i in 0..<20 { fans.record(.love, for: poi("f\(i)", east: 0, north: 0, type: "mural"), at: now) }
+        #expect(fans.affinity(for: mural, now: now) == 0.5)
+        // The reaction to the place itself doesn't count.
+        var own = SwipeMemory()
+        own.record(.love, for: mural, at: now)
+        #expect(own.affinity(for: mural, now: now) == 0)
+    }
+
+    @Test func affinityNeverBeatsTierOrScore() {
+        let pois = [poi("t1", east: 0, north: 0, score: 50, tier: 1, type: "church"),
+                    poi("t2", east: 1000, north: 0, score: 90, tier: 2, type: "mural"),
+                    poi("t2b", east: -1000, north: 0, score: 60, tier: 2, type: "mural")]
+        var memory = SwipeMemory()
+        for i in 0..<10 { memory.record(.love, for: poi("f\(i)", east: 0, north: 0, type: "church"), at: now) }
+        let result = deck(pois: pois, area: everything, kinds: [.sights], memory: memory, seen: [], now: now)
+        #expect(ids(result) == ["t1", "t2", "t2b"])
+    }
+
     @Test func memoryHidesNopesFor90Days() {
         let pois = (0..<4).map { poi("p\($0)", east: Double($0) * 400, north: 0) }
         var memory = SwipeMemory()
