@@ -99,8 +99,7 @@ _(Illustrative values, not real data.)_
   minute is below `PlannerConfig.minValuePerMinute` (tunable), so every remaining minute is "worth it". If no stop is
   worth it, the plan equals Direct and `noDetourFit == true` (UI: "Nothing worth a detour on this walk").
 - `plans(_:modes:provider:)` defaults to `[.direct, .recommended]`. `WanderPlan.extraTime` is the engine's choice.
-- Filters stay as they are: `interests` (Sights, Food & drink, Shops) and `weights` from `WeightPreset`
-  (Balanced, Photo spots, Famous, Hidden gems). No time slider.
+- Filters: one single-select row of **moods** (below), mapped to `interests` and `weights`. No time slider.
 - Implemented in BE-6 (#40): `minValuePerMinute` = 6 value points per extra minute, also charged per estimated
   minute during selection (pruning alone left the median stuck at about 8 min); `maxWorthChecks` = 10 caps the
   worth-it pass's routing requests; `RejectionReason.notWorthIt`; `PlanRequest.mode`. Vilnius golden routes:
@@ -111,6 +110,32 @@ _(Illustrative values, not real data.)_
 **Seen places (BE-1, PR #18):** `PlanRequest(..., seen: Set<String> = [])` takes POI ids the user already
 saw today; their value is multiplied by `PlannerConfig.seenFactor`. Zero-cost stops become pass-by
 highlights and free their slot. At most 1 food and 1 shop stop per walk, unless that category is the only interest.
+
+**Moods (user decisions 2026-11-06; FE-18 shipped in #42, FE-19 removes Food & drink):** the plan sheet has one
+single-select row of moods instead of interest chips plus a style menu. The engine API is unchanged.
+
+| Mood | `interests` | `weights` (`WeightPreset`) |
+|---|---|---|
+| Best of (default) | photo, shop, food | balanced |
+| Photo spots | photo | photoSpots |
+| Shops | shop | balanced |
+| Hidden gems | photo, shop, food | hiddenGems |
+
+**Food nearby (FE-19):** food isn't a route mood; it's a "take me to the closest good one" flow.
+- Entry: in the search panel, a compact row "Nearby: Coffee · Bakery · Restaurant · Bar".
+  - Coffee: cafe, coffee, tea.
+  - Bakery: bakery, pastry, confectionery, chocolate.
+  - Restaurant: restaurant.
+  - Bar: bar, pub.
+  (These are POI `type` values in category food.)
+- Restaurant → cuisine step: chips from the `cuisine` values of restaurants within ~1.5 km (the 8 most common, plus "Any").
+- Pick: candidates of that kind, sorted by straight-line distance; drop places that `OpeningHours` says are closed now
+  (unparseable means keep); real walking time via the provider for the 3 nearest; choose the shortest walk, but prefer a
+  tier 1–2 place over tier 3 when it's at most 3 min further.
+- Result card: name, kind or cuisine, walk minutes, reason and description; "Directions" (primary) plans to it (Recommended
+  still available); "Next option" goes to the next candidate. No result: "Nothing open nearby" plus the nearest closed one.
+
+**Search panel recents (FE-20):** a compact island with the last 3 searches, not a full-screen list.
 
 ## 3. Build and configuration
 
