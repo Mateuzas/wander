@@ -1,0 +1,12 @@
+# gitleaks config for scripts/check-secrets.sh: the default rules (which already include
+# anthropic-api-key, sk-ant-...) plus tokens gitleaks has no rule for.
+title = "wander"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "mapillary-client-token"
+description = "Mapillary client token (MAPILLARY_TOKEN, ADR 015)"
+regex = '''MLY[|][0-9]{5,}[|][0-9a-fA-F]{32}'''
+keywords = ["mly|"]
