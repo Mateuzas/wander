@@ -124,11 +124,14 @@ struct UpAheadCard: View {
         NudgeCard(
             category: poi.category,
             glyph: poi.glyph,
+            poi: poi,
             title: poi.name,
-            detail: poi.reason.isEmpty ? position : "\(poi.reason) · \(position)",
+            pitch: poi.pitch,
+            // With a hook, the type joins the position line; without one the reason is the pitch.
+            detail: poi.hookLine != nil && !poi.reason.isEmpty ? "\(poi.reason) · \(position)" : position,
             action: onSkip)
             .accessibilityElement(children: .ignore)
-            .accessibilityLabel(WalkModel.spoken(nudge))
+            .accessibilityLabel([WalkModel.spoken(nudge), poi.hookLine].compactMap { $0 }.joined(separator: ". "))
             .accessibilityAction(named: "Skip", onSkip)
     }
 }
