@@ -111,6 +111,17 @@ highlights and free their slot. At most 1 food and 1 shop stop per walk, unless 
 | Runtime config | No env vars or URLs to configure; external endpoints are fixed: Commons API `https://commons.wikimedia.org/w/api.php`, Google Maps `https://www.google.com/maps/dir/?api=1` |
 | Permissions | `NSLocationWhenInUseUsageDescription` only; no background modes |
 
+## 3b. Published data (ADR 013; phase 4)
+
+| Item | Contract |
+|---|---|
+| Base URL | `https://mateuzas.github.io/wander/data/v1/` |
+| Manifest | `manifest.json`: `schema` (Int, = 1), `generated` (ISO 8601), `cities.<slug>`: `url`, `sha256` (hex), `bytes`, `pois`, `generated` |
+| City file | `pois-<slug>.json`, same schema as §1 (`docs/schema/pois.schema.json`) |
+| Publish gate | validator passes; per-category count within ±25% of the last publish; no tier-1 loss without a curation row; deterministic |
+| App refresh | at most every 6 h at launch or foreground; ETag; sha256 verified; decoded before swapping; fallback to cached, then bundled |
+| Breaking schema change | publish under `/v2/`; `/v1/` stays frozen for older apps |
+
 ## 4. Naming
 
 - POI ids: `osm:<type>:<n>`. City slugs: lowercase ASCII. Branches: `<area>/<short-name>`.

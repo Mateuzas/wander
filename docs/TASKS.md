@@ -39,8 +39,10 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | OPS-7 | DevOps | CI runs only the jobs a change needs (path-based), skipped jobs still pass | in progress |
 | ARC-5 | Architect | Direct + Recommended contract (engine-chosen budget with a cap) and a filter-set proposal (ADR 008) | 3 |
 | BE-6 / FE-14 | Backender / Frontender | Engine and UI for Direct + Recommended; FE-2 chips folded in | 3 |
-| ARC-6 | Architect | Nightly data design: hosting, file versions, app download with fallback (ADR 010); Vilnius sources from the user | 4 |
-| OPS-5 / FE-15 | DevOps / Frontender | Nightly job skeleton; app downloads the current file | 4 |
+| ARC-6 | Architect | Nightly data design: ADR 013 (Actions → GitHub Pages, manifest, gate, app refresh) | done |
+| OPS-5 | DevOps | Nightly workflow, caches, publish gate, GitHub Pages deploy (ADR 013) | todo |
+| BE-13 | Backender | Pipeline unattended mode: name fallback, "needs review" report, gate checks as a script | todo |
+| FE-15 | Frontender | App fetches manifest and city file, verifies, caches, falls back; "Places updated" line | todo |
 | BE-7 | Backender | Second open place source (Overture or Foursquare OS Places), dedupe, freshness | 4 |
 | BE-8 | Backender | Vilnius events scraper, daily; event schema | 4 |
 | BE-11 | Backender | Michelin Guide places (stars, Bib Gourmand, selected) as a separate, clearly marked layer; check the source terms first (prefer open data such as Wikidata over scraping the guide site) | 4 |
