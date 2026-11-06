@@ -57,6 +57,8 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `website` | String (http/https) | – | Official website from OSM or Overture |
 | `instagram` | String | – | Instagram handle without @, from Overture socials (for link-outs and later social mode) |
 | `new` | Bool | – | Present only when `true`: first seen in the last 60 days |
+| `hook` | String 10–80 | ✓ (ADR 015) | One eye-catching, factual sentence, AI-written from our facts only; the card's headline line |
+| `photo` | object | ✓ (ADR 015) | `{url, source: commons\|mapillary\|website, credit, license?, page?}`; the card's hero image. Places without hook and photo aren't published |
 | `description` | String 20–300 | – | 1–2 factual sentences shown in the place card. **Every popular place has one** when a source exists. Sources only: the lead of the English Wikipedia article (sights, venues), or a sentence composed from OSM facts (cuisine, outdoor seating, diet options, opening hours, start date, architect, heritage). Never invented or paraphrased beyond the source |
 | `descriptionSource` | `wikipedia` \| `osm` | – | Present with `description`. `wikipedia` text is CC BY-SA: the app shows "From Wikipedia" with a link |
 | `descriptionUrl` | String (https) | – | Required when `descriptionSource` is `wikipedia`: the article URL |

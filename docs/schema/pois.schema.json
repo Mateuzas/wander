@@ -42,7 +42,9 @@
         "category",
         "score",
         "kind",
-        "reason"
+        "reason",
+        "hook",
+        "photo"
       ],
       "additionalProperties": false,
       "properties": {
@@ -198,6 +200,46 @@
         "new": {
           "const": true,
           "description": "First seen in the last 60 days (ADR 014); present only when true"
+        },
+        "hook": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 80,
+          "description": "One eye-catching factual sentence (ADR 015); required for every published place"
+        },
+        "photo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "url",
+            "source",
+            "credit"
+          ],
+          "properties": {
+            "url": {
+              "type": "string",
+              "pattern": "^https://"
+            },
+            "source": {
+              "enum": [
+                "commons",
+                "mapillary",
+                "website"
+              ]
+            },
+            "credit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "license": {
+              "type": "string"
+            },
+            "page": {
+              "type": "string",
+              "pattern": "^https?://"
+            }
+          },
+          "description": "Photo shown in the card (ADR 015); required for every published place"
         }
       }
     }
