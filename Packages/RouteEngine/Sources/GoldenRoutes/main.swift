@@ -15,6 +15,8 @@ import RouteEngine
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
 //   --worth    override PlannerConfig.minValuePerMinute (for calibration)
+//   --swipe    swipe walks instead (ADR 016): from each route's start, a 1 h walk ending anywhere in a
+//              1 km circle, all deck kinds, loving the top 3 deck cards and liking the next 4
 
 struct GoldenFile: Decodable {
     struct Route: Decodable {
@@ -46,7 +48,8 @@ let presetArg = option("--preset")
 let useStreets = args.contains("--streets")
 let showPasses = args.contains("--passes")
 let sequence = args.contains("--sequence")
-args.removeAll { $0 == "--streets" || $0 == "--passes" || $0 == "--sequence" }
+let swipe = args.contains("--swipe")
+args.removeAll { $0 == "--streets" || $0 == "--passes" || $0 == "--sequence" || $0 == "--swipe" }
 let timeArg = option("--time")
 let worthArg = option("--worth")
 
@@ -116,6 +119,40 @@ func lpad(_ s: String, _ n: Int) -> String {
 }
 func glyph(_ c: POICategory) -> String {
     switch c { case .photo: "📷"; case .shop: "🛍"; case .food: "🍴" }
+}
+
+if swipe {
+    let planner = Planner()
+    let provider: WalkingTimeProvider = useStreets ? StreetWalkingTime() : HaversineWalkingTime()
+    let budget: TimeInterval = 60 * 60
+    let now = time ?? Date()
+    print("Swipe walks: \(golden.city), \(file.pois.count) POIs, \(useStreets ? "L-shaped street" : "haversine") provider, "
+          + "1 h, end anywhere, 1 km circle, all kinds, love top 3 + like next 4; Hl includes deck places passed\n")
+    print(pad("#", 3) + pad("Start", 36) + lpad("Deck", 5) + lpad("Est", 6) + lpad("Real", 6) + lpad("Stops", 6)
+          + lpad("Love", 5) + lpad("Like", 5) + lpad("Hl", 4) + "  Str  Stops in order (♥ loved, + liked)")
+    print(String(repeating: "─", count: 150))
+    var reals: [Double] = []
+    for (index, route) in golden.routes.prefix(10).enumerated() {
+        let start = Coordinate(lat: route.from[0], lon: route.from[1])
+        let cards = deck(pois: file.pois, area: .circle(center: start, radius: 1000), kinds: Set(DeckKind.allCases),
+                         memory: SwipeMemory(), seen: [], now: now)
+        let loved = Array(cards.prefix(3)), liked = Array(cards.dropFirst(3).prefix(4))
+        let walk = try await planner.planWalk(start: start, end: .anywhere, mustVisit: loved, optional: liked,
+                                              budget: budget, passing: cards, provider: provider)
+        let lovedIDs = Set(loved.map(\.id))
+        let names = walk.included.map { (lovedIDs.contains($0.id) ? "♥ " : "+ ") + $0.name }.joined(separator: " · ")
+        reals.append(walk.plan.totalTime)
+        print(pad("\(index + 1)", 3) + pad(route.name.components(separatedBy: " → ").first ?? route.name, 36)
+              + lpad("\(cards.count)", 5) + lpad(String(format: "%.0f", walk.estimatedMinutes), 6)
+              + lpad(minutes(walk.plan.totalTime), 6) + lpad("\(walk.included.count)", 6)
+              + lpad("\(walk.included.filter { lovedIDs.contains($0.id) }.count)", 5)
+              + lpad("\(walk.included.filter { !lovedIDs.contains($0.id) }.count)", 5)
+              + lpad("\(walk.plan.highlights.count)", 4) + "  " + pad(walk.stretched ? "yes" : "no", 5) + names)
+    }
+    let sorted = reals.sorted()
+    print("\nReal minutes: min \(minutes(sorted.first ?? 0)), median \(minutes(sorted[sorted.count / 2])), "
+          + "max \(minutes(sorted.last ?? 0))   (budget 60, tolerance +10%)")
+    exit(0)
 }
 
 let withHours = file.pois.compactMap(\.openingHours)

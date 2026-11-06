@@ -13,8 +13,10 @@ actor LegStore {
     /// Provider calls made, for tests and diagnostics.
     private(set) var requests = 0
 
-    init(provider: WalkingTimeProvider) {
+    /// `known` legs are cached up front and cost no requests.
+    init(provider: WalkingTimeProvider, known: [Leg] = []) {
         self.provider = provider
+        for leg in known { cache[Key(from: leg.from, to: leg.to)] = leg }
     }
 
     func leg(from: Coordinate, to: Coordinate) async throws -> Leg {

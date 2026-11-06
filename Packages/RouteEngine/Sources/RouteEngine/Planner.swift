@@ -342,6 +342,9 @@ public struct PlannerConfig: Hashable, Sendable {
     /// Most provider requests per plan for the worth-it pass (bypass legs used
     /// to measure each Recommended stop's real marginal minutes).
     public var maxWorthChecks: Int = 10
+    /// Swipe walks: insertion positions checked with real legs per add-on
+    /// (`Planner.insertCheapest`), best estimates first.
+    public var maxInsertChecks: Int = 3
     /// Offline estimator for the corridor filter and insertion.
     public var estimator: HaversineWalkingTime = HaversineWalkingTime()
 
