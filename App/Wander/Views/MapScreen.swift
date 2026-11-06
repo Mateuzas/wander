@@ -6,9 +6,6 @@ import SwiftUI
 /// has no sheet, only the floating "Where to?" island (FE-17); the sheet appears
 /// for a place card, a dropped pin, the plan, or the walk. No tab or navigation bar.
 struct MapScreen: View {
-    /// Most ordinary (non-popular) beads drawn at once, for performance. The
-    /// 44 pt grid in `POIStore.beads` usually thins them well below this.
-    private static let beadLimit = 60
     /// §10 Motion: the Wander line draws in over ~0.9 s.
     private static let drawDuration = 0.9
 
@@ -276,7 +273,7 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
+                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.mapTier == 1, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
@@ -322,9 +319,21 @@ struct MapScreen: View {
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
             search.region = context.region
-            visiblePOIs = store.beads(in: context.region, viewSize: mapSize,
-                                      keeping: Set(visiblePOIs.map(\.id)), limit: Self.beadLimit)
+            refreshBeads()
         }
+        .onChange(of: planner.interests) { refreshBeads() }
+        #if DEBUG
+        .overlay(alignment: .topLeading) {
+            if debugOverlay { tierReadout }
+        }
+        #endif
+    }
+
+    /// Picks the POI beads for the visible region by zoom tier (ADR 012, FE-13).
+    private func refreshBeads() {
+        guard let region = visibleRegion else { return }
+        visiblePOIs = store.beads(in: region, viewSize: mapSize, keeping: Set(visiblePOIs.map(\.id)),
+                                  interests: planner.interests)
     }
 
     private struct BeadItem: Identifiable {
@@ -356,8 +365,8 @@ struct MapScreen: View {
         if let selected = selectedPOI, seen.insert(selected.id).inserted {
             items.append(BeadItem(poi: selected, dimmed: false, shown: true))
         }
-        // MapKit draws annotations in order, so popular beads go last to sit on top.
-        return items.filter { $0.poi.popular != true } + items.filter { $0.poi.popular == true }
+        // MapKit draws annotations in order, so tier 1 beads go last to sit on top.
+        return items.filter { $0.poi.mapTier != 1 } + items.filter { $0.poi.mapTier == 1 }
     }
 
     private var revealedRoute: [Coordinate] {
@@ -778,6 +787,23 @@ struct MapScreen: View {
     // MARK: - Debug overlay
 
     #if DEBUG
+    /// Zoom-layering tuning aid (FE-13): visible latitude span and beads drawn per tier.
+    private var tierReadout: some View {
+        let span = visibleRegion?.span.latitudeDelta ?? 0
+        let counts = Dictionary(grouping: beads, by: \.poi.mapTier).mapValues(\.count)
+        let tiers = (1...3).map { "t\($0) \(counts[$0] ?? 0)" }.joined(separator: "  ")
+        let maxTier = ZoomTiers.standard.maxTier(latitudeSpan: span)
+        return Text("span \(span, format: .number.precision(.fractionLength(4)))°  ≤t\(maxTier)\n\(tiers)")
+            .font(.system(size: 11, weight: .medium).monospacedDigit())
+            .foregroundStyle(.ink)
+            .padding(6)
+            .background(Color.surfaceRaised.opacity(0.85), in: RoundedRectangle(cornerRadius: 6))
+            .padding(.leading, 12)
+            .padding(.top, 60)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+    }
+
     /// Candidates in view, most valuable first, capped so the map stays usable.
     private func debugRecords(_ plan: WanderPlan) -> [CandidateDebug] {
         let region = visibleRegion
