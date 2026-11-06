@@ -48,7 +48,7 @@
       "properties": {
         "id": {
           "type": "string",
-          "pattern": "^osm:(node|way|relation):[0-9]+$"
+          "pattern": "^(osm:(node|way|relation):[0-9]+|ovt:[0-9a-zA-Z_-]+)$"
         },
         "name": {
           "type": "string",
@@ -174,6 +174,30 @@
             3
           ],
           "description": "Map importance within the category (ADR 012): 1 must-see, 2 notable, 3 detail"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "osm",
+              "overture"
+            ]
+          },
+          "description": "Where the place was found (ADR 014); absent means osm only"
+        },
+        "website": {
+          "type": "string",
+          "pattern": "^https?://",
+          "description": "Official website, if known"
+        },
+        "instagram": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9._]{1,30}$",
+          "description": "Instagram handle without @, if known"
+        },
+        "new": {
+          "const": true,
+          "description": "First seen in the last 60 days (ADR 014); present only when true"
         }
       }
     }
