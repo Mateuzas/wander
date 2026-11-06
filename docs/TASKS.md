@@ -43,6 +43,10 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | FE-19 | Frontender | Food nearby flow (CONTRACTS §2): type, then cuisine, then closest good open place; Food & drink mood removed | todo (after FE-15) |
 | FE-20 | Frontender | Recents as a compact island with the last 3 searches | todo (after FE-15) |
 | ARC-7 | Architect | Source research (docs/research/vilnius-sources.md): Overture for places; vilnius-events.lt then bilietai.lt for events; crawl what robots.txt allows (user) | done |
+| BE-14 | Backender | Photos for every place: Commons, Mapillary (facing the place), website og:image; best per place (ADR 015) | todo |
+| BE-15 | Backender | Grounded AI hooks via the Anthropic SDK (Batch, structured output, cached by hash); gate: no hook or photo means removed (ADR 015) | todo |
+| OPS-9 | DevOps | Secrets ANTHROPIC_API_KEY and MAPILLARY_TOKEN in nightly-data; pinned deps; `--allow-shrink` dispatch input | todo |
+| FE-22 | Frontender | Card and bead preview show hook and photo with credit; schema now requires both | todo |
 | BE-12 | Backender | (done, #45) WalkTracker robustness on Recommended plans (5 stops): golden route 4 seed 13 has a 65 m progress error (bound 60 m); the wrong-turn test geometry fails on routes 1 and 7. Fix the tracker rather than loosening bounds; test fixtures back on real Recommended plans | todo (before phase 6) |
 | FE-14 | Frontender | Plan sheet: Direct / Recommended (+N min), chips and style menu; Relaxed/Explorer removed | in progress |
 | ARC-6 | Architect | Nightly data design: ADR 013 (Actions → GitHub Pages, manifest, gate, app refresh) | done |
