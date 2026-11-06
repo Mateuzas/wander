@@ -36,11 +36,13 @@ struct DroppedPinCard: View {
     /// Plans a walk to the pin. Nil hides the button.
     var onDirections: (() -> Void)?
     let onClose: () -> Void
+    /// The sheet height the card needs to show everything (FE-17).
+    var onHeight: ((CGFloat) -> Void)?
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        ScrollView {
+        SheetCard(hasActions: onDirections != nil, onHeight: onHeight) {
             VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
                 HStack(alignment: .top, spacing: Layout.grid * 1.5) {
                     PinGlyph()
@@ -63,18 +65,17 @@ struct DroppedPinCard: View {
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(accessibilityLabel)
                 .accessibilityAddTraits(.isHeader)
-
-                if let onDirections {
-                    Button("Directions", action: onDirections)
-                        .buttonStyle(.primary)
-                        .accessibilityLabel("Directions to \(pin.title)")
-                }
             }
             .padding(.horizontal, Layout.margin)
             .padding(.top, Layout.margin + Layout.grid)
-            .padding(.bottom, Layout.margin)
+            .padding(.bottom, Layout.grid)
+        } actions: {
+            if let onDirections {
+                Button("Directions", action: onDirections)
+                    .buttonStyle(.primary)
+                    .accessibilityLabel("Directions to \(pin.title)")
+            }
         }
-        .scrollBounceBehavior(.basedOnSize)
         .overlay(alignment: .topTrailing) { closeButton }
     }
 

@@ -39,9 +39,9 @@ extension POI {
     /// There is no ice cream symbol, so a snowflake stands in for it.
     static let foodGlyphs: [(types: Set<String>, glyph: String)] = [
         (["restaurant"], "fork.knife"),
-        (["cafe", "tea"], "cup.and.saucer"),
+        // Coffee-like places, bakeries and sweets share the cup (FE-17).
+        (["cafe", "coffee", "tea", "bakery", "pastry", "confectionery", "chocolate"], "cup.and.saucer"),
         (["bar", "pub", "biergarten"], "wineglass"),
-        (["bakery", "pastry", "confectionery", "chocolate"], "birthday.cake"),
         (["ice_cream"], "snowflake"),
     ]
     /// Other food (deli, fast food, anything new in the data).

@@ -11,23 +11,26 @@ final class MapRotation {
     var heading: CLLocationDirection = 0
 }
 
-/// A soft `wander` beam under the user dot pointing the way the phone faces, so
+/// A beam in the dot's own colour (`userLocation`) under the user dot pointing the way the phone faces, so
 /// the walker can tell which way they're facing. SwiftUI's `UserAnnotation` doesn't
 /// draw the system heading cone, so this draws one. Hidden without a reliable heading.
 struct HeadingCone: View {
     let location: LocationService
     let rotation: MapRotation
 
-    static let size: CGFloat = 96
+    /// Twice the beam's length: long enough to read at a glance, like Apple Maps'.
+    static let size: CGFloat = 132
     /// Beam width in degrees.
-    private static let spread: Double = 70
+    private static let spread: Double = 65
 
     var body: some View {
         if let heading = location.heading {
             Beam(spread: Self.spread)
                 .fill(RadialGradient(
-                    colors: [Color.wander.opacity(0.45), Color.wander.opacity(0)],
-                    center: .center, startRadius: 6, endRadius: Self.size / 2))
+                    stops: [.init(color: Color.userLocation.opacity(0.55), location: 0),
+                            .init(color: Color.userLocation.opacity(0.3), location: 0.5),
+                            .init(color: Color.userLocation.opacity(0), location: 1)],
+                    center: .center, startRadius: 4, endRadius: Self.size / 2))
                 .frame(width: Self.size, height: Self.size)
                 // Annotations stay upright, so take away the map's own rotation.
                 .rotationEffect(.degrees(heading - rotation.heading))

@@ -1,15 +1,49 @@
 import MapKit
 import SwiftUI
 
-/// Bottom sheet on the home screen: "Where to?" search, suggestions while typing,
-/// recent destinations otherwise, and the location-denied message (PLAN.md §7).
-struct HomeSheet: View {
+/// Home state (FE-17): a floating "Where to?" island at the top of the map. It
+/// replaces PLAN.md §7.1's bottom sheet; tapping it opens `SearchPanel`.
+struct SearchIsland: View {
+    static let height: CGFloat = 52
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: Layout.grid * 1.5) {
+                Image(systemName: "magnifyingglass")
+                    .font(.system(size: 17, weight: .semibold))
+                    .foregroundStyle(.inkMuted)
+                    .accessibilityHidden(true)
+                Text("Where to?")
+                    .font(WanderFont.body)
+                    .foregroundStyle(.inkMuted)
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, Layout.margin)
+            .frame(maxWidth: .infinity, minHeight: Self.height)
+            .background(.surfaceRaised, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+            // Same lift as the map controls, so it reads as floating over the map.
+            .shadow(color: .black.opacity(0.12), radius: 4, y: 1)
+            .contentShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel("Where to?")
+        .accessibilityHint("Search for a place to walk to")
+    }
+}
+
+/// The island expanded (FE-17): the search field with Cancel, suggestions while
+/// typing, recent destinations otherwise, the offline and location-denied
+/// messages, and the logo and pitch when there is nothing else to show.
+struct SearchPanel: View {
     let search: SearchService
     let recents: RecentDestinations
     let locationDenied: Bool
     var offline = false
-    @Binding var detent: PresentationDetent
+    /// Focus the field (and raise the keyboard) when the panel opens.
+    var focusOnAppear = true
     let onChoose: (Destination) -> Void
+    let onCancel: () -> Void
 
     @FocusState private var fieldFocused: Bool
     @State private var resolving = false
@@ -19,7 +53,13 @@ struct HomeSheet: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Layout.margin) {
-            searchField
+            HStack(spacing: Layout.grid * 1.5) {
+                searchField
+                Button("Cancel", action: cancel)
+                    .font(WanderFont.body.weight(.semibold))
+                    .foregroundStyle(.wander)
+                    .frame(minHeight: Layout.minTouch)
+            }
             ScrollView {
                 VStack(alignment: .leading, spacing: Layout.margin) {
                     if offline {
@@ -45,15 +85,21 @@ struct HomeSheet: View {
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.bottom, Layout.margin)
             }
             .scrollDismissesKeyboard(.immediately)
         }
         .padding(.horizontal, Layout.margin)
-        .padding(.top, Layout.margin + Layout.grid)
-        .onChange(of: fieldFocused) { _, focused in
-            if focused { detent = .large }
-        }
+        .padding(.top, Layout.margin)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .background(Color.surface.ignoresSafeArea())
         .onChange(of: search.query) { errorMessage = nil }
+        .task {
+            guard focusOnAppear else { return }
+            // Let the panel settle first, or the keyboard can drop the focus.
+            try? await Task.sleep(for: .milliseconds(50))
+            fieldFocused = true
+        }
     }
 
     // MARK: - Pieces
@@ -77,6 +123,7 @@ struct HomeSheet: View {
     private var searchField: some View {
         HStack(spacing: Layout.grid) {
             Image(systemName: "magnifyingglass")
+                .font(.system(size: 17, weight: .semibold))
                 .foregroundStyle(.inkMuted)
                 .accessibilityHidden(true)
             TextField("Where to?", text: Binding(get: { search.query }, set: { search.query = $0 }))
@@ -99,9 +146,9 @@ struct HomeSheet: View {
                 .accessibilityLabel("Clear search")
             }
         }
-        .padding(.leading, Layout.grid * 1.5)
-        .frame(minHeight: Layout.minTouch)
-        .background(.surfaceRaised, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .padding(.leading, Layout.margin)
+        .frame(minHeight: SearchIsland.height)
+        .background(.surfaceRaised, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 
     @ViewBuilder
@@ -165,6 +212,13 @@ struct HomeSheet: View {
         search.clear()
         onChoose(place)
     }
+
+    private func cancel() {
+        fieldFocused = false
+        search.clear()
+        errorMessage = nil
+        onCancel()
+    }
 }
 
 /// One tappable place: glyph, name, optional subtitle. Separated by spacing, not dividers.
@@ -200,7 +254,7 @@ private struct PlaceRow: View {
     }
 }
 
-/// PLAN.md §7, location denied. Shown in the sheet; the map falls back to the city.
+/// PLAN.md §7, location denied. Shown in the search panel; the map falls back to the city.
 private struct LocationDeniedMessage: View {
     @Environment(\.openURL) private var openURL
 

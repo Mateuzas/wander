@@ -101,6 +101,10 @@ _(Illustrative values, not real data.)_
 - `plans(_:modes:provider:)` defaults to `[.direct, .recommended]`. `WanderPlan.extraTime` is the engine's choice.
 - Filters stay as they are: `interests` (Sights, Food & drink, Shops) and `weights` from `WeightPreset`
   (Balanced, Photo spots, Famous, Hidden gems). No time slider.
+- Implemented in BE-6 (#40): `minValuePerMinute` = 6 value points per extra minute, also charged per estimated
+  minute during selection (pruning alone left the median stuck at about 8 min); `maxWorthChecks` = 10 caps the
+  worth-it pass's routing requests; `RejectionReason.notWorthIt`; `PlanRequest.mode`. Vilnius golden routes:
+  extra time 9.1 / 13.0 / 19.1 min (min / median / max), ≥ 2 highlights on 10/10.
 - Golden-route targets: Recommended extra time median 8–18 min, never above the cap +10%, at least 2 highlights on
   at least 8 of 10 routes, deterministic.
 

@@ -2,13 +2,10 @@ import MapKit
 import RouteEngine
 import SwiftUI
 
-/// Home, plan and walking states (PLAN.md §7.1–7.4) on one full-bleed map. The
-/// sheet shows search, the plan, a tapped bead's details, or the walk. No tab or
-/// navigation bar.
+/// Home, plan and walking states (PLAN.md §7.1–7.4) on one full-bleed map. Home
+/// has no sheet, only the floating "Where to?" island (FE-17); the sheet appears
+/// for a place card, a dropped pin, the plan, or the walk. No tab or navigation bar.
 struct MapScreen: View {
-    /// Most ordinary (non-popular) beads drawn at once, for performance. The
-    /// 44 pt grid in `POIStore.beads` usually thins them well below this.
-    private static let beadLimit = 60
     /// §10 Motion: the Wander line draws in over ~0.9 s.
     private static let drawDuration = 0.9
 
@@ -23,8 +20,15 @@ struct MapScreen: View {
     @State private var visibleRegion: MKCoordinateRegion?
     @State private var visiblePOIs: [POI] = []
     @State private var mapSize: CGSize = .zero
-    @State private var detent: PresentationDetent = .peek
+    @State private var detent: PresentationDetent = .medium
     @State private var selectedPOI: POI?
+    /// The "Where to?" island expanded into the search panel (FE-17).
+    @State private var searchOpen = false
+    @State private var searchFocus = true
+    /// What the sheet last showed, kept on screen while it slides away.
+    @State private var lastCard: LastCard?
+    /// The sheet height the open place or pin card needs (FE-17), measured by the card.
+    @State private var cardHeight: CGFloat = 0
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
     @State private var walk: WalkModel?
@@ -58,18 +62,52 @@ struct MapScreen: View {
 
     var body: some View {
         map
-            .overlay(alignment: .top) { topControls }
+            .accessibilityHidden(searchOpen)
+            .overlay(alignment: .top) {
+                if !searchOpen {
+                    // VoiceOver reads the island and map controls before the map.
+                    topControls.accessibilitySortPriority(1)
+                }
+            }
             .overlay(alignment: .bottom) {
                 upAhead
                     .padding(.horizontal, Layout.margin)
                     .padding(.bottom, Layout.peekHeight + Layout.grid)
             }
-            .sheet(isPresented: .constant(true)) {
+            .overlay {
+                if searchOpen {
+                    SearchPanel(
+                        search: search,
+                        recents: recents,
+                        locationDenied: location.access == .denied,
+                        offline: !connectivity.isOnline,
+                        focusOnAppear: searchFocus,
+                        onChoose: choose,
+                        onCancel: closeSearch)
+                    .transition(.opacity)
+                }
+            }
+            .sheet(isPresented: sheetPresented) {
                 sheetContent
-                    .presentationDetents(walk == nil ? [.peek, .medium, .large] : [.peek, .medium], selection: $detent)
+                    .presentationDetents(sheetDetents, selection: $detent)
                     .presentationBackground(.surface)
                     .presentationBackgroundInteraction(.enabled(upThrough: .medium))
-                    .interactiveDismissDisabled()
+                    // A card over the home map swipes away; over a plan or walk it closes with ✕.
+                    .interactiveDismissDisabled(!isHomeCard)
+            }
+            .onChange(of: sheetKind) {
+                if !sheetDetents.contains(detent) { detent = isCard ? cardDetent : .medium }
+            }
+            // The card's content grew or shrank (photo, Apple place info): follow it,
+            // unless the user dragged the card to large.
+            .onChange(of: cardDetent) { old, new in
+                if isCard, detent == old { detent = new }
+            }
+            .onChange(of: selectedPOI) { _, poi in
+                if let poi { lastCard = .poi(poi) }
+            }
+            .onChange(of: droppedPin) { _, pin in
+                if let pin { lastCard = .pin(pin) }
             }
             .task {
                 if let region = store.region {
@@ -80,7 +118,8 @@ struct MapScreen: View {
             .onChange(of: location.access) { _, access in
                 if access == .denied {
                     planner.originUnavailable()
-                    if detent == .peek, planner.destination == nil { detent = .medium }
+                    // Say why at once: open the search panel, which carries the message.
+                    if sheetKind == nil, !searchOpen { openSearch(focus: false) }
                 }
             }
             .onChange(of: location.location) { _, fix in
@@ -113,11 +152,15 @@ struct MapScreen: View {
 
     // MARK: - Map controls
 
-    /// The turn card while walking, else the map-style menu; the location button
-    /// sits under either. The style menu hides while walking: the turn card owns the top.
+    /// Home: the "Where to?" island, with the map-style menu and location button
+    /// below it on the right. Plan: just the two buttons. Walking: the turn card owns
+    /// the top and the style menu hides; the location button sits under it.
     private var topControls: some View {
         let walking = walk?.phase == .walking
         return VStack(alignment: .trailing, spacing: Layout.grid) {
+            if isHome {
+                SearchIsland { openSearch() }
+            }
             if let walk, walking {
                 TurnCard(walk: walk)
             } else if walk == nil {
@@ -202,7 +245,9 @@ struct MapScreen: View {
                 }
                 .annotationTitles(.hidden)
             }
+            // Tinted explicitly so the dot and the heading beam share one colour.
             UserAnnotation()
+                .tint(Color.userLocation)
 
             if let plan = displayedPlan {
                 if mapStyle.isImagery {
@@ -228,7 +273,7 @@ struct MapScreen: View {
 
             ForEach(beads) { bead in
                 Annotation(bead.poi.name, coordinate: bead.poi.coordinate.clLocation, anchor: .center) {
-                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.popular ?? false, name: bead.poi.name)
+                    Bead(category: bead.poi.category, glyph: bead.poi.glyph, isSelected: selectedPOI?.id == bead.poi.id, isPopular: bead.poi.mapTier == 1, name: bead.poi.name)
                         .opacity(bead.dimmed ? 0.55 : 1)
                         .scaleEffect(bead.shown ? 1 : 0.01)
                         .animation(reduceMotion ? nil : .spring(duration: 0.3, bounce: 0.4), value: bead.shown)
@@ -274,9 +319,21 @@ struct MapScreen: View {
         .onMapCameraChange(frequency: .onEnd) { context in
             visibleRegion = context.region
             search.region = context.region
-            visiblePOIs = store.beads(in: context.region, viewSize: mapSize,
-                                      keeping: Set(visiblePOIs.map(\.id)), limit: Self.beadLimit)
+            refreshBeads()
         }
+        .onChange(of: planner.interests) { refreshBeads() }
+        #if DEBUG
+        .overlay(alignment: .topLeading) {
+            if debugOverlay { tierReadout }
+        }
+        #endif
+    }
+
+    /// Picks the POI beads for the visible region by zoom tier (ADR 012, FE-13).
+    private func refreshBeads() {
+        guard let region = visibleRegion else { return }
+        visiblePOIs = store.beads(in: region, viewSize: mapSize, keeping: Set(visiblePOIs.map(\.id)),
+                                  interests: planner.interests)
     }
 
     private struct BeadItem: Identifiable {
@@ -308,8 +365,8 @@ struct MapScreen: View {
         if let selected = selectedPOI, seen.insert(selected.id).inserted {
             items.append(BeadItem(poi: selected, dimmed: false, shown: true))
         }
-        // MapKit draws annotations in order, so popular beads go last to sit on top.
-        return items.filter { $0.poi.popular != true } + items.filter { $0.poi.popular == true }
+        // MapKit draws annotations in order, so tier 1 beads go last to sit on top.
+        return items.filter { $0.poi.mapTier != 1 } + items.filter { $0.poi.mapTier == 1 }
     }
 
     private var revealedRoute: [Coordinate] {
@@ -356,20 +413,105 @@ struct MapScreen: View {
                     selectedPOI = nil
                 },
                 onDirections: { directions(to: poi) },
-                onClose: { selectedPOI = nil })
+                onClose: { selectedPOI = nil },
+                onHeight: setCardHeight)
         } else if let pin = droppedPin {
-            DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin)
+            DroppedPinCard(pin: pin, onDirections: { choose(pin.destination) }, onClose: clearPin,
+                           onHeight: setCardHeight)
         } else if let destination = planner.destination {
             planSheet(destination)
         } else {
-            HomeSheet(
-                search: search,
-                recents: recents,
-                locationDenied: location.access == .denied,
-                offline: !connectivity.isOnline,
-                detent: $detent,
-                onChoose: choose)
+            closingCard
         }
+    }
+
+    // MARK: - Sheet presentation (FE-17)
+
+    private enum SheetKind: Equatable {
+        case place, pin, plan, walk, walkPlace
+    }
+
+    private enum LastCard {
+        case poi(POI)
+        case pin(DroppedPin)
+    }
+
+    /// What the sheet shows; nil means no sheet (home: map and search island).
+    private var sheetKind: SheetKind? {
+        if let walk { return walk.phase == .walking && selectedPOI != nil ? .walkPlace : .walk }
+        if selectedPOI != nil { return .place }
+        if droppedPin != nil { return .pin }
+        if planner.destination != nil { return .plan }
+        return nil
+    }
+
+    /// Place and pin cards open at half the screen or more, never a small peek.
+    private var sheetDetents: Set<PresentationDetent> {
+        switch sheetKind {
+        case .place, .pin, .walkPlace: [cardDetent, .large]
+        case .plan: [.peek, .medium, .large]
+        case .walk: [.peek, .medium]
+        case nil: [.medium]
+        }
+    }
+
+    private var isCard: Bool { [.place, .pin, .walkPlace].contains(sheetKind) }
+
+    /// Tall enough to show the whole card, at least half the screen, at most large;
+    /// longer content scrolls with the actions pinned.
+    private var cardDetent: PresentationDetent {
+        let screen = max(mapSize.height, 1)
+        // Whole points in 8 pt steps, so small layout changes don't move the sheet.
+        let needed = (cardHeight / Layout.grid).rounded(.up) * Layout.grid
+        let height = max(needed, screen / 2)
+        return height >= screen * 0.88 ? .large : .height(height)
+    }
+
+    private func setCardHeight(_ height: CGFloat) {
+        if abs(height - cardHeight) >= 1 { cardHeight = height }
+    }
+
+    /// Home state: no plan or walk, so the search island shows.
+    private var isHome: Bool { walk == nil && planner.destination == nil }
+
+    /// A place or pin card with nothing under it: closing it leaves no sheet.
+    private var isHomeCard: Bool { isHome && (sheetKind == .place || sheetKind == .pin) }
+
+    private var sheetPresented: Binding<Bool> {
+        Binding(get: { sheetKind != nil }, set: { shown in
+            if !shown { closeCard() }
+        })
+    }
+
+    /// The card the sheet showed last, frozen while the sheet slides away.
+    @ViewBuilder
+    private var closingCard: some View {
+        switch lastCard {
+        case .poi(let poi):
+            POIDetail(poi: poi, action: .none, onAdd: { .failed }, onRemove: {},
+                      onDirections: {}, onClose: {})
+                .allowsHitTesting(false)
+        case .pin(let pin):
+            DroppedPinCard(pin: pin, onDirections: {}, onClose: {})
+                .allowsHitTesting(false)
+        case nil:
+            Color.clear
+        }
+    }
+
+    private func closeCard() {
+        selectedPOI = nil
+        clearPin()
+    }
+
+    private func openSearch(focus: Bool = true) {
+        closeCard()
+        searchFocus = focus
+        withAnimation(reduceMotion ? nil : .snappy(duration: 0.25)) { searchOpen = true }
+    }
+
+    private func closeSearch() {
+        withAnimation(reduceMotion ? nil : .snappy(duration: 0.25)) { searchOpen = false }
     }
 
     /// A highlight's card over the walk (FE-10): the turn card stays, the walk goes
@@ -390,7 +532,8 @@ struct MapScreen: View {
             onClose: {
                 selectedPOI = nil
                 detent = .peek
-            })
+            },
+            onHeight: setCardHeight)
     }
 
     private func planSheet(_ destination: Destination) -> some View {
@@ -423,6 +566,7 @@ struct MapScreen: View {
     // MARK: - Actions
 
     private func choose(_ place: Destination) {
+        searchOpen = false
         recents.add(place)
         selectedPOI = nil
         clearPin()
@@ -444,16 +588,17 @@ struct MapScreen: View {
                            coordinate: poi.coordinate.clLocation))
     }
 
+    /// ✕ on the plan sheet: no sheet left, the search island is back.
     private func closePlan() {
         planner.close()
         selectedPOI = nil
-        detent = .peek
+        detent = .medium
     }
 
     private func select(_ poi: POI) {
         clearPin()
         selectedPOI = poi
-        if detent == .peek || detent == .large { detent = .medium }
+        if detent != .large || !isCard { detent = cardDetent }
     }
 
     private func focus(_ poi: POI) {
@@ -517,7 +662,7 @@ struct MapScreen: View {
         droppedPin = pin
         selectedPOI = nil
         pinDrops += 1
-        if detent == .peek || detent == .large { detent = .medium }
+        if detent != .large || !isCard { detent = cardDetent }
         // Coordinates show at once; the name replaces them if and when it arrives.
         geocodeTask = Task {
             let place = await ReverseGeocoder.place(at: coordinate)
@@ -537,10 +682,23 @@ struct MapScreen: View {
         droppedPin = nil
     }
 
+    /// A tap elsewhere on the map closes the place card (not a tap on a bead).
+    private func mapTapped(at point: CGPoint, proxy: MapProxy) {
+        guard let poi = selectedPOI else { return clearPinOnTap(at: point, proxy: proxy) }
+        guard bead(at: point, proxy: proxy) == nil else { return }
+        Task {
+            try? await Task.sleep(for: .milliseconds(80))
+            guard !longPressing, Date.now.timeIntervalSince(lastLongPress) > 0.4,
+                  selectedPOI?.id == poi.id else { return }
+            selectedPOI = nil
+            if walk != nil { detent = .peek }
+        }
+    }
+
     /// A tap elsewhere on the map clears the pin. Not a tap on the pin itself, and
     /// not the lift that ends a long press (checked a moment later, since the two
     /// gestures end on the same touch in no fixed order).
-    private func mapTapped(at point: CGPoint, proxy: MapProxy) {
+    private func clearPinOnTap(at point: CGPoint, proxy: MapProxy) {
         guard let pin = droppedPin else { return }
         if let p = proxy.convert(pin.coordinate, to: Self.mapSpace),
            hypot(point.x - p.x, point.y - (p.y - DroppedPinMarker.height / 2)) <= Layout.minTouch / 2 {
@@ -629,6 +787,23 @@ struct MapScreen: View {
     // MARK: - Debug overlay
 
     #if DEBUG
+    /// Zoom-layering tuning aid (FE-13): visible latitude span and beads drawn per tier.
+    private var tierReadout: some View {
+        let span = visibleRegion?.span.latitudeDelta ?? 0
+        let counts = Dictionary(grouping: beads, by: \.poi.mapTier).mapValues(\.count)
+        let tiers = (1...3).map { "t\($0) \(counts[$0] ?? 0)" }.joined(separator: "  ")
+        let maxTier = ZoomTiers.standard.maxTier(latitudeSpan: span)
+        return Text("span \(span, format: .number.precision(.fractionLength(4)))°  ≤t\(maxTier)\n\(tiers)")
+            .font(.system(size: 11, weight: .medium).monospacedDigit())
+            .foregroundStyle(.ink)
+            .padding(6)
+            .background(Color.surfaceRaised.opacity(0.85), in: RoundedRectangle(cornerRadius: 6))
+            .padding(.leading, 12)
+            .padding(.top, 60)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+    }
+
     /// Candidates in view, most valuable first, capped so the map stays usable.
     private func debugRecords(_ plan: WanderPlan) -> [CandidateDebug] {
         let region = visibleRegion
