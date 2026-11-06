@@ -40,7 +40,7 @@ merge after each chunk, so a long session never loses work.
 
 `facts` holds only data we have: name, kind, cuisine, selected OSM tags (artist, architect, start
 date, heritage, inscription, outdoor seating, diet options...), the English Wikipedia extract, the
-Overture category, and the place's own homepage title and meta description. Some values are in
+Overture category, the website domain, and the place's own homepage title and meta description. Some values are in
 Lithuanian; translating them is fine, adding to them is not.
 
 ## Output: one answer per line

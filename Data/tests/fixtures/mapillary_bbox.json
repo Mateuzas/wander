@@ -1,0 +1,47 @@
+{
+ "data": [
+  {
+   "id": "2001",
+   "compass_angle": 92.3,
+   "computed_compass_angle": null,
+   "is_pano": false,
+   "captured_at": 1690000000000,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.28688922927062,
+     54.681592202659
+    ]
+   },
+   "creator": {
+    "username": "vilniusmapper",
+    "id": "7"
+   }
+  },
+  {
+   "id": "2002",
+   "compass_angle": 268.0,
+   "computed_compass_angle": 271.4,
+   "is_pano": false,
+   "captured_at": 1690000001000,
+   "geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.28747969365644,
+     54.681592202659
+    ]
+   },
+   "computed_geometry": {
+    "type": "Point",
+    "coordinates": [
+     25.28746415511997,
+     54.68160118577075
+    ]
+   },
+   "creator": {
+    "username": "vilniusmapper",
+    "id": "7"
+   }
+  }
+ ]
+}

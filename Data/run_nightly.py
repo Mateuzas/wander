@@ -1,7 +1,7 @@
 """Unattended nightly pipeline for one city (ADR 013).
 
     python3 Data/run_nightly.py vilnius --out build/data [--refresh] [--previous FILE|URL|none]
-                                [--export-facts FILE.jsonl]
+                                [--export-facts FILE.jsonl] [--diagnose-mapillary N]
 
 Runs fetch_osm (--refresh passed through), enrich, wikipedia, photos (ADR 015: Commons, Mapillary
 when MAPILLARY_TOKEN is set, website preview images; also fetches homepage metadata) and score,
@@ -20,11 +20,17 @@ Hooks (ADR 015) are never written here: score.py reads the committed Data/hooks/
 --export-facts it also writes the fact bundles of places that need a hook (hooks.py export), for
 the next writing session (Data/hooks/WRITING.md).
 
+--diagnose-mapillary N passes through to photos.py: the raw Mapillary candidates of N sample places
+go to the run summary. It defaults to DIAGNOSE_ON_BRANCH for a workflow_dispatch on any branch but
+main (GitHub sets GITHUB_EVENT_NAME and GITHUB_REF_NAME; Pages only deploys from main), so a
+branch dispatch of the nightly is a diagnostic run with no workflow change; 0 otherwise.
+
 Exits non-zero only on real errors: a step failing (e.g. network down after the retries), or an
 output that is invalid or not deterministic.
 """
 import argparse
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -35,6 +41,13 @@ from publish_gate import load_previous, validate
 from score import load_curation, load_english_names
 
 CATEGORIES = ("photo", "shop", "food")
+DIAGNOSE_ON_BRANCH = 12
+
+
+def default_diagnose(env=os.environ):
+    """Sample places for the Mapillary diagnostics: DIAGNOSE_ON_BRANCH on a manual run from a branch."""
+    on_branch = env.get("GITHUB_EVENT_NAME") == "workflow_dispatch" and env.get("GITHUB_REF_NAME", "main") != "main"
+    return DIAGNOSE_ON_BRANCH if on_branch else 0
 
 
 def step(*args):
@@ -132,6 +145,9 @@ def main():
                              "(default: the bundled App/Wander/Resources/pois-<city>.json)")
     parser.add_argument("--export-facts", type=Path, metavar="FILE",
                         help="also write the fact bundles of places needing a hook (JSON lines, ADR 015)")
+    parser.add_argument("--diagnose-mapillary", type=int, default=default_diagnose(), metavar="N",
+                        help="log the raw Mapillary candidates of N sample places to the run summary "
+                             f"(default {DIAGNOSE_ON_BRANCH} on a workflow_dispatch from a branch, else 0)")
     args = parser.parse_args()
     slug = args.city
     load_city(slug)  # exits on an unknown city
@@ -144,7 +160,7 @@ def main():
     step("fetch_osm.py", slug, *(["--refresh"] if args.refresh else []))
     step("enrich.py", slug)
     step("wikipedia.py", slug)
-    step("photos.py", slug)
+    step("photos.py", slug, *(["--diagnose-mapillary", str(args.diagnose_mapillary)] if args.diagnose_mapillary else []))
     if args.export_facts:
         step("hooks.py", "export", slug, "--offline", "--out", str(args.export_facts.resolve()))
     step("score.py", slug, "--out", str(out))

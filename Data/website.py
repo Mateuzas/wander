@@ -43,6 +43,20 @@ JUNK_TITLE = re.compile(r"^(\W*|404.*|not found|page not found|home|homepage|ind
                         r"pradžia|untitled|coming soon|under construction)$", re.I)
 
 
+TRACKING_PARAM = re.compile(r"^(utm_\w*|fbclid|gclid|mc_cid|mc_eid)$", re.I)
+
+
+def strip_tracking(url):
+    """The URL without utm_* and similar tracking parameters (other query parameters kept: a CDN or
+    a signed URL needs them) and without a fragment."""
+    if not url:
+        return url
+    parts = urllib.parse.urlsplit(url)
+    query = [(k, v) for k, v in urllib.parse.parse_qsl(parts.query, keep_blank_values=True)
+             if not TRACKING_PARAM.match(k)]
+    return urllib.parse.urlunsplit(parts._replace(query=urllib.parse.urlencode(query, safe=":/,"), fragment=""))
+
+
 def domain(url):
     host = (urllib.parse.urlsplit(url or "").hostname or "").lower()
     return host[4:] if host.startswith("www.") else host
@@ -76,9 +90,12 @@ def about_place(entry, url, names):
     return any(t[:max(4, len(t) - 2)] in hay for t in tokens)
 
 
-def page_facts(entry, url, names):
-    """(title, description) of a homepage that is about the place, junk titles dropped; else (None, None)."""
-    if not entry or entry.get("status") != "ok" or not about_place(entry, url, names):
+def page_facts(entry, url, names, recheck_own_site=True):
+    """(title, description) of a homepage that is about the place, junk titles dropped; else (None, None).
+    The own-site check is repeated here so a NOT_OWN_DOMAINS change applies to cached entries too
+    (recheck_own_site=False: as before BE-17, for hooks.py rekey only)."""
+    if not entry or entry.get("status") != "ok" or (recheck_own_site and not is_own_site(url)) \
+            or not about_place(entry, url, names):
         return None, None
     title = entry.get("title")
     if title and (JUNK_TITLE.match(title.strip()) or len(_compact(title)) < 3):
@@ -197,7 +214,7 @@ def fetch(url, today):
     images = []
     for key in ("og:image:secure_url", "og:image", "og:image:url", "twitter:image", "twitter:image:src"):
         if head.meta.get(key):
-            img = urllib.parse.urljoin(final, html.unescape(head.meta[key]).strip())
+            img = strip_tracking(urllib.parse.urljoin(final, html.unescape(head.meta[key]).strip()))
             if img.startswith("http://"):
                 img = "https://" + img[len("http://"):]  # the schema wants https; probe_image checks it works
             if img not in images:
