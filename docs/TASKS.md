@@ -49,7 +49,8 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | OPS-5 | DevOps | Nightly workflow, caches, publish gate, GitHub Pages deploy (ADR 013) | todo |
 | BE-13 | Backender | Pipeline unattended mode: name fallback, "needs review" report, gate checks as a script | todo |
 | FE-15 | Frontender | App fetches manifest and city file, verifies, caches, falls back; "Places updated" line | todo |
-| BE-7 | Backender | Second open place source (Overture or Foursquare OS Places), dedupe, freshness | 4 |
+| OPS-8 | DevOps | Monthly Overture extraction workflow (pinned duckdb) → PR with Data/sources/overture/<city>.json (ADR 014) | todo |
+| BE-7 | Backender | Overture places: selection, OSM dedupe, scoring, `sources`/`website`/`instagram`/`new`, `--allow-growth` gate flag (ADR 014) | todo |
 | BE-8 | Backender | Vilnius events scraper, daily; event schema | 4 |
 | BE-11 | Backender | Michelin Guide places (stars, Bib Gourmand, selected) as a separate, clearly marked layer; check the source terms first (prefer open data such as Wikidata over scraping the guide site) | 4 |
 | BE-9 | Backender | Engine tuning on fresh data; FE-3 "seen" memory | 5 |

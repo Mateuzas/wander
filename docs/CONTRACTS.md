@@ -37,7 +37,7 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 
 | Field | Type | Req. | Rules |
 |---|---|---|---|
-| `id` | String | ✓ | `osm:(node\|way\|relation):<n>`, stable across runs; used for curation, `seen` lists, caches |
+| `id` | String | ✓ | `osm:(node\|way\|relation):<n>`, or `ovt:<overture id>` for Overture-only places (ADR 014); stable across runs; used for curation, `seen` lists, caches |
 | `name` | String | ✓ | Display name. Sights: English (`Data/names-en/<city>.csv`). Shops and food: their own name |
 | `lat`, `lon` | Double | ✓ | WGS84; centroid for ways and relations |
 | `category` | `photo` \| `shop` \| `food` | ✓ | Swift `POICategory`. Notable venues (BE-4) use the same categories: stadiums, arenas, theatres, concert halls, zoos, aquariums and theme parks are `photo`; shopping malls are `shop` |
@@ -53,6 +53,10 @@ Producer: `Data/score.py <city>`. Consumers: `RouteEngine.POIFile` / `POI` (deco
 | `commonsCategory` | String | – | Photo only; Commons category without `Category:`; for the gallery |
 | `popular` | Bool | – | Present only when `true`; equals `tier == 1` (ADR 012) |
 | `tier` | Int 1–3 | – | Map importance within the category (ADR 012): 1 must-see (top 4%, plus sights with fame ≥ 0.8; sights capped at 25), 2 notable (next 15%), 3 detail. Places under the category score floor aren't in the file |
+| `sources` | [String] | – | `osm`, `overture` (ADR 014); absent means OSM only |
+| `website` | String (http/https) | – | Official website from OSM or Overture |
+| `instagram` | String | – | Instagram handle without @, from Overture socials (for link-outs and later social mode) |
+| `new` | Bool | – | Present only when `true`: first seen in the last 60 days |
 | `description` | String 20–300 | – | 1–2 factual sentences shown in the place card. **Every popular place has one** when a source exists. Sources only: the lead of the English Wikipedia article (sights, venues), or a sentence composed from OSM facts (cuisine, outdoor seating, diet options, opening hours, start date, architect, heritage). Never invented or paraphrased beyond the source |
 | `descriptionSource` | `wikipedia` \| `osm` | – | Present with `description`. `wikipedia` text is CC BY-SA: the app shows "From Wikipedia" with a link |
 | `descriptionUrl` | String (https) | – | Required when `descriptionSource` is `wikipedia`: the article URL |
