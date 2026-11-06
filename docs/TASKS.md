@@ -39,6 +39,7 @@ in roadmap order ([ROADMAP.md](ROADMAP.md)).
 | OPS-7 | DevOps | CI runs only the jobs a change needs (path-based), skipped jobs still pass | in progress |
 | ARC-5 | Architect | Direct + Recommended contract (CONTRACTS §2); filters approved as they are (interests + style) | done |
 | BE-6 | Backender | Engine: `Mode` = direct/recommended, engine-chosen extra time with a cap, worth-it pruning, golden targets | in progress |
+| BE-12 | Backender | WalkTracker robustness on Recommended plans (5 stops): golden route 4 seed 13 has a 65 m progress error (bound 60 m); the wrong-turn test geometry fails on routes 1 and 7. Fix the tracker rather than loosening bounds; test fixtures back on real Recommended plans | todo (before phase 6) |
 | FE-14 | Frontender | Plan sheet: Direct / Recommended (+N min), chips and style menu; Relaxed/Explorer removed | in progress |
 | ARC-6 | Architect | Nightly data design: hosting, file versions, app download with fallback (ADR 010); Vilnius sources from the user | 4 |
 | OPS-5 / FE-15 | DevOps / Frontender | Nightly job skeleton; app downloads the current file | 4 |
