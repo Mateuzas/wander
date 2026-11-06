@@ -1,0 +1,27 @@
+{
+ "2002": {
+  "id": "2002",
+  "thumb_1024_url": "https://scontent.example/2002.jpg?oe=6A000000",
+  "compass_angle": 268.0,
+  "computed_compass_angle": 271.4,
+  "geometry": {
+   "type": "Point",
+   "coordinates": [
+    25.28747969365644,
+    54.681592202659
+   ]
+  },
+  "computed_geometry": {
+   "type": "Point",
+   "coordinates": [
+    25.28746415511997,
+    54.68160118577075
+   ]
+  },
+  "is_pano": false,
+  "creator": {
+   "username": "vilniusmapper",
+   "id": "7"
+  }
+ }
+}

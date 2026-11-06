@@ -157,11 +157,24 @@ Per place, in priority order (ADR 015):
    (a series image). The URL is a Commons thumbnail 1280 px wide from an original at least 800 px
    wide; credit (author) and licence come from the Commons API `extmetadata`.
 2. **Mapillary** (only when `MAPILLARY_TOKEN` is set; otherwise skipped with a `!!!` line): the
-   image in the OSM `mapillary` tag if a mapper set one, else the closest non-panorama image within
-   40 m whose camera faces the place (compass within ±50° of the bearing from the camera to the
-   place), via the API v4 `images` bbox search (`thumb_1024_url`, `compass_angle`, `captured_at`,
-   `creator`). Licence CC BY-SA 4.0, credit "<username> / Mapillary", page
-   `https://www.mapillary.com/app/?pKey=<id>`.
+   image in the OSM `mapillary` tag if a mapper set one, else the best non-panorama image within
+   60 m that has the place in its frame (BE-17). Candidates come from the coverage vector tiles
+   (`mly1_public`, z14 `image` layer, one request per tile for the whole city, decoded with the
+   standard library); the Graph API bbox search is only the fallback for a tile that fails. "In
+   frame": the bearing from the camera to the place differs from its compass by at most
+   min(70°, 35° + atan(8 m / distance)) (half a typical field of view plus half a shop front),
+   about 70° at 10 m, 57° at 20 m, 46° at 40 m; closer than 3 m the bearing is GPS noise. The most
+   central and closest image wins (newest, then id, on a tie). The best 3 are looked up by id
+   (`thumb_1024_url`, `creator`, `computed_compass_angle`, `computed_geometry`) and checked again
+   on the corrected values. Panoramas are never published (the thumbnail is the whole sphere).
+   Licence CC BY-SA 4.0, credit "<username> / Mapillary", page `https://www.mapillary.com/app/?pKey=<id>`.
+   Each search is cached with the rules version (`MAPILLARY_RULES`); a search under older rules is
+   redone on the next run. The log prints a funnel (images in tiles; places with any image, a
+   non-panorama, a facing one, picked) and the failed requests grouped by error.
+   `--diagnose-mapillary N` (photos.py and run_nightly.py) writes, for N sample places, every
+   candidate (id, distance, compass, bearing, difference, tolerance, panorama, verdict) from the
+   tiles and from the bbox search to `$GITHUB_STEP_SUMMARY`. run_nightly turns it on (12 places)
+   for a `workflow_dispatch` from any branch but main, so a branch dispatch is a diagnostic run.
 3. **Website preview** (`og:image`, `twitter:image`) from the place's own homepage (`website.py`),
    only where robots.txt allows our user agent; profiles on other platforms (Facebook, Treatwell,
    Tripadvisor...) are not "own" sites. A range GET of the first 64 KB reads the image size. Never
@@ -186,7 +199,7 @@ photo and which sources had one; plus the per-source lookups) and `cache/<city>/
 (Commons file/category, website, position, `mapillary` tag, category, type) are unchanged, so it
 stays deterministic and offline. Network cost: one Commons API call per 50 files plus one per
 category, one homepage (and robots.txt) per website, a 64 KB range GET per preview image, one
-Mapillary call per place without a Commons photo. First Vilnius run: a few minutes.
+Mapillary coverage tile per 1.4 km square with places to search, and up to 3 image lookups per such place. First Vilnius run: a few minutes.
 
 ### Hooks (`hooks.py`, `Data/hooks/<city>.jsonl`)
 
@@ -199,7 +212,18 @@ routine), reviewed and committed. The nightly job never calls an API.
   seating, diet options...), the Wikidata English label, the English Wikipedia extract (up to 900
   characters, whole sentences), the Overture category, and the homepage `<title>` and
   `<meta name=description>` (fetched only where robots.txt allows; cached, see above).
-  `facts_hash` is the first 16 hex characters of sha256 of the facts as sorted JSON.
+  The bundle also names the website's domain. `facts_hash` (v2, BE-17) is the first 16 hex
+  characters of sha256 of the *substantive* facts as sorted JSON (`hooks.hash_basis`): every key
+  except the homepage title and description, text NFKC-normalised, case-folded and
+  whitespace-collapsed, lists sorted, the Wikipedia extract reduced to its words, "Well-known
+  landmark" counted as "Landmark" (a sitelink count, not the place). The homepage text is context
+  for the writer but not hashed: it flaps between fetches with nothing changed at the place (a
+  timeout or bot wall drops it, a datacentre IP gets another language, copy is rewritten): 24 of
+  812 hooks went stale between the writing session and the first nightly that way. A different
+  website domain, Wikipedia wording, OSM tag, cuisine, kind or name still makes the hook stale.
+  `hooks.py rekey <city>` migrated the v1 hashes (whole bundle, verbatim): a row is re-keyed only
+  when its v1 hash equals the v1 hash of today's facts from the cached homepages, so no hook is
+  rewritten and a really stale one stays stale.
   `run_nightly.py --export-facts <file>` does the same from the nightly caches.
 - The writer follows `Data/hooks/WRITING.md` (rules, prompt, input and output format) and merges
   the answers with `hooks.py merge <city> answers.jsonl --written-by "..."`, which rejects lines

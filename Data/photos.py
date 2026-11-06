@@ -1,6 +1,6 @@
 """Step 4a: a photo for every place (ADR 015, BE-14). Standard library only.
 
-    python3 photos.py vilnius [--max-age-days 30]
+    python3 photos.py vilnius [--max-age-days 30] [--diagnose-mapillary N]
 
 For every candidate place (score.candidates: after curation, de-duplication and the floors) it
 looks for, in priority order:
@@ -9,8 +9,9 @@ looks for, in priority order:
    from its Commons category. A thumbnail URL at most THUMB_WIDTH wide, from an original at least
    COMMONS_MIN_WIDTH wide, with the author and licence from the Commons API.
 2. Mapillary (only with MAPILLARY_TOKEN in the environment): the image a mapper put in the OSM
-   `mapillary` tag, else the closest image within MAPILLARY_RADIUS_M whose camera faces the place
-   (compass within FACING_DEG of the bearing to it). Never panoramas.
+   `mapillary` tag, else, from the coverage tiles, the image within MAPILLARY_RADIUS_M that has the
+   place most central in its frame and is closest (facing_tolerance(), see the Mapillary section),
+   checked again on its corrected position and compass. Never panoramas.
 3. The website preview image (`og:image` / `twitter:image`) from the place's own homepage, where
    robots.txt allows it; never an svg, a likely logo (square-ish under LOGO_MAX px or "logo" in
    the file name) or a tiny image.
@@ -28,14 +29,17 @@ score.py reads only this file: a place whose inputs changed since the last run h
 import argparse
 import concurrent.futures
 import datetime
+import gzip
 import hashlib
 import html
 import json
 import math
 import os
 import re
+import struct
 import sys
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -48,8 +52,16 @@ COMMONS_MIN_WIDTH = 800
 CATEGORY_SAMPLE = 40         # files read from a Commons category to pick one
 MAX_IMAGE_SHARES = 3         # a Commons file used by this many places is too generic (as in score.py)
 MAPILLARY_API = "https://graph.mapillary.com"
-MAPILLARY_RADIUS_M = 40
-FACING_DEG = 50
+MAPILLARY_TILES = "https://tiles.mapillary.com/maps/vtp/mly1_public/2"
+TILE_ZOOM = 14               # the coverage tiles' `image` layer exists at z14 only
+MAPILLARY_RADIUS_M = 60
+MAPILLARY_MIN_M = 3          # closer than this, GPS error makes the bearing to the place meaningless
+HALF_FOV_DEG = 35            # half a typical phone or action camera's horizontal field of view
+FACADE_HALF_M = 8            # half the width of a typical shop front or small building
+MAX_FACING_DEG = 70
+MAPILLARY_VERIFY = 3         # best candidates looked up by id and checked on corrected values
+MAPILLARY_RULES = 2          # bump when the search or selection changes: older cached searches are redone
+DIAG_ROWS = 12
 MAPILLARY_REFRESH_DAYS = 7   # refresh a signed thumbnail URL this long before it expires
 MAPILLARY_FIELDS = "id,thumb_1024_url,compass_angle,computed_compass_angle,captured_at,creator,geometry," \
                    "computed_geometry,is_pano"
@@ -182,6 +194,22 @@ def fetch_commons_category(cat):
 
 
 # ---- Mapillary ----------------------------------------------------------------------------
+#
+# Finding images (BE-17): the coverage vector tiles (z14 `image` layer: every image's id, position,
+# compass and is_pano), one request per tile for the whole city, which is how Mapillary's own SDK
+# searches an area. The Graph API bbox search returned nothing usable on the first nightly (695
+# searches, 0 photos), so it is only the fallback for a tile that fails. The few best candidates are
+# then looked up by id (thumbnail URL, creator and the SfM-corrected position and compass) and
+# checked again on those corrected values.
+#
+# Choosing one: the place must be in the frame. A camera sees about HALF_FOV_DEG either side of its
+# compass, and a place's front is about 2 * FACADE_HALF_M wide, so from d metres it is in view when
+# the bearing differs by at most HALF_FOV_DEG + atan(FACADE_HALF_M / d) (capped at MAX_FACING_DEG):
+# about 70° at 10 m, 57° at 20 m, 46° at 40 m and 43° at 60 m. The old flat ±50° within 40 m
+# rejected the close, oblique shots street-level imagery mostly has (cameras face along the street;
+# a shop beside it is at 60-90°). Among the images in view, the most central and closest wins.
+# Panoramas are never published: the thumbnail is the whole equirectangular sphere, which a card
+# crop shows as a distorted strip; they are counted in the diagnostics.
 
 def bearing(lat1, lon1, lat2, lon2):
     """Initial compass bearing in degrees from point 1 to point 2."""
@@ -193,7 +221,13 @@ def bearing(lat1, lon1, lat2, lon2):
 
 
 def angle_diff(a, b):
+    """The smallest difference between two compass angles, 0-180 (359° and 1° differ by 2°)."""
     return abs((a - b + 180) % 360 - 180)
+
+
+def facing_tolerance(d):
+    """How far (degrees) the camera may point away from the place's centre at distance d metres."""
+    return min(MAX_FACING_DEG, HALF_FOV_DEG + math.degrees(math.atan2(FACADE_HALF_M, max(d, 0.1))))
 
 
 def thumb_expiry(url):
@@ -218,21 +252,49 @@ def image_point(img):
     return (c[1], c[0]) if c else None
 
 
+def image_compass(img):
+    c = img.get("computed_compass_angle")
+    return c if c is not None else img.get("compass_angle")
+
+
+def assess(lat, lon, img):
+    """How an image relates to the place: distance, compass, bearing to the place, their difference,
+    the tolerance at that distance and a verdict ("ok" or why not)."""
+    pt, compass = image_point(img), image_compass(img)
+    if not pt:
+        return {"img": img, "verdict": "no position"}
+    d = metres(pt[0], pt[1], lat, lon)
+    row = {"img": img, "d": d, "compass": compass, "pano": bool(img.get("is_pano"))}
+    if compass is None:
+        return {**row, "verdict": "no compass"}
+    b = bearing(pt[0], pt[1], lat, lon)
+    row.update(bearing=b, diff=angle_diff(compass, b), tol=facing_tolerance(d))
+    if d > MAPILLARY_RADIUS_M:
+        verdict = "too far"
+    elif d < MAPILLARY_MIN_M:
+        verdict = "too close (bearing unreliable)"
+    elif row["pano"]:
+        verdict = "panorama"  # every direction is in it; the card would show a distorted sphere
+    elif row["diff"] > row["tol"]:
+        verdict = "faces away"
+    else:
+        verdict = "ok"
+    return {**row, "verdict": verdict}
+
+
+def mapillary_ranked(lat, lon, images):
+    """The usable images for a place, best first: the place most central in the frame (bearing
+    difference relative to the tolerance) and the camera closest, then the newest, then by id."""
+    rows = [a for a in (assess(lat, lon, img) for img in images) if a["verdict"] == "ok"]
+    rows.sort(key=lambda a: (round(a["diff"] / a["tol"] + a["d"] / MAPILLARY_RADIUS_M, 3),
+                             -(a["img"].get("captured_at") or 0), str(a["img"]["id"])))
+    return rows
+
+
 def mapillary_pick(lat, lon, images):
-    """The closest non-panorama image within MAPILLARY_RADIUS_M whose camera faces (lat, lon)."""
-    best = None
-    for img in images:
-        pt = image_point(img)
-        compass = img.get("computed_compass_angle", img.get("compass_angle"))
-        if not pt or compass is None or img.get("is_pano") or not img.get("thumb_1024_url"):
-            continue
-        d = metres(pt[0], pt[1], lat, lon)
-        if d > MAPILLARY_RADIUS_M or angle_diff(compass, bearing(pt[0], pt[1], lat, lon)) > FACING_DEG:
-            continue
-        rank = (round(d, 1), -(img.get("captured_at") or 0), str(img["id"]))
-        if best is None or rank < best[0]:
-            best = (rank, img, d)
-    return (best[1], best[2]) if best else (None, None)
+    """(image, distance) of the best usable image for (lat, lon), or (None, None)."""
+    rows = mapillary_ranked(lat, lon, images)
+    return (rows[0]["img"], rows[0]["d"]) if rows else (None, None)
 
 
 def mapillary_candidate(img, distance=None):
@@ -245,19 +307,198 @@ def mapillary_candidate(img, distance=None):
     return out
 
 
-def fetch_mapillary(p, token):
-    """A Mapillary candidate for a place, or None."""
+# -- Coverage vector tiles (Mapbox Vector Tile protobuf, decoded with the standard library) --
+
+def tile_xy(lat, lon, z=TILE_ZOOM):
+    n = 2 ** z
+    x = int((lon + 180) / 360 * n)
+    y = int((1 - math.asinh(math.tan(math.radians(lat))) / math.pi) / 2 * n)
+    return x, y
+
+
+def tile_lonlat(z, fx, fy):
+    """(lon, lat) of fractional tile coordinates."""
+    n = 2 ** z
+    return fx / n * 360 - 180, math.degrees(math.atan(math.sinh(math.pi * (1 - 2 * fy / n))))
+
+
+def tiles_around(lat, lon, radius=MAPILLARY_RADIUS_M):
+    dlat = radius * 1.2 / 111_320
+    dlon = dlat / max(0.2, math.cos(math.radians(lat)))
+    (x0, y0), (x1, y1) = tile_xy(lat + dlat, lon - dlon), tile_xy(lat - dlat, lon + dlon)
+    return {(TILE_ZOOM, x, y) for x in range(x0, x1 + 1) for y in range(y0, y1 + 1)}
+
+
+def _varint(buf, i):
+    out = shift = 0
+    while True:
+        b = buf[i]
+        i += 1
+        out |= (b & 0x7F) << shift
+        if b < 0x80:
+            return out, i
+        shift += 7
+
+
+def _fields(buf):
+    """(field number, wire type, value) of a protobuf message; length-delimited values are views."""
+    i, n = 0, len(buf)
+    while i < n:
+        key, i = _varint(buf, i)
+        wire = key & 7
+        if wire == 0:
+            v, i = _varint(buf, i)
+        elif wire == 1:
+            v, i = buf[i:i + 8], i + 8
+        elif wire == 2:
+            size, i = _varint(buf, i)
+            v, i = buf[i:i + size], i + size
+        elif wire == 5:
+            v, i = buf[i:i + 4], i + 4
+        else:
+            raise ValueError(f"protobuf wire type {wire}")
+        yield key >> 3, wire, v
+
+
+def _packed(buf):
+    out, i = [], 0
+    while i < len(buf):
+        v, i = _varint(buf, i)
+        out.append(v)
+    return out
+
+
+def _zigzag(n):
+    return (n >> 1) ^ -(n & 1)
+
+
+def _mvt_value(buf):
+    for f, _, v in _fields(buf):
+        if f == 1:
+            return bytes(v).decode("utf-8", "replace")
+        if f == 2:
+            return struct.unpack("<f", v)[0]
+        if f == 3:
+            return struct.unpack("<d", v)[0]
+        if f == 4:
+            return v - (1 << 64) if v >= 1 << 63 else v
+        if f == 5:
+            return v
+        if f == 6:
+            return _zigzag(v)
+        if f == 7:
+            return bool(v)
+    return None
+
+
+def mvt_points(data, layer_name, z, x, y):
+    """[(properties, lat, lon)] for the point features of one layer of a vector tile."""
+    buf = memoryview(gzip.decompress(data) if data[:2] == b"\x1f\x8b" else data)
+    out = []
+    for f, _, layer in _fields(buf):
+        if f != 3:
+            continue
+        name, keys, values, feats, extent = None, [], [], [], 4096
+        for lf, _, lv in _fields(layer):
+            if lf == 1:
+                name = bytes(lv).decode()
+            elif lf == 2:
+                feats.append(lv)
+            elif lf == 3:
+                keys.append(bytes(lv).decode())
+            elif lf == 4:
+                values.append(_mvt_value(lv))
+            elif lf == 5:
+                extent = lv
+        if name != layer_name:
+            continue
+        for feat in feats:
+            tags, geom, gtype = [], [], 0
+            for ff, fw, fv in _fields(feat):
+                if ff == 2:
+                    tags += _packed(fv) if fw == 2 else [fv]
+                elif ff == 3:
+                    gtype = fv
+                elif ff == 4:
+                    geom = _packed(fv) if fw == 2 else [fv]
+            if gtype != 1 or not geom or geom[0] & 7 != 1:
+                continue  # not a point
+            props = {keys[tags[k]]: values[tags[k + 1]] for k in range(0, len(tags) - 1, 2)}
+            px = py = 0
+            for k in range(geom[0] >> 3):  # MoveTo count: one point, or several for a multipoint
+                px += _zigzag(geom[1 + 2 * k])
+                py += _zigzag(geom[2 + 2 * k])
+                lon, lat = tile_lonlat(z, x + px / extent, y + py / extent)
+                out.append((props, lat, lon))
+    return out
+
+
+def tile_images(data, z, x, y):
+    """Images (Graph-API-shaped dicts) from a coverage tile's `image` layer."""
+    out = []
+    for props, lat, lon in mvt_points(data, "image", z, x, y):
+        if props.get("id") is None:
+            continue
+        out.append({"id": str(int(props["id"])), "compass_angle": props.get("compass_angle"),
+                    "is_pano": bool(props.get("is_pano")), "captured_at": props.get("captured_at"),
+                    "geometry": {"type": "Point", "coordinates": [lon, lat]}, "from_tile": True})
+    return out
+
+
+def fetch_tile(tile, token):
+    z, x, y = tile
+    url = f"{MAPILLARY_TILES}/{z}/{x}/{y}?{urllib.parse.urlencode({'access_token': token})}"
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return tile_images(resp.read(), z, x, y)
+
+
+def bbox_images(p, token, fields=MAPILLARY_FIELDS):
+    """The Graph API bbox search around a place (minLon,minLat,maxLon,maxLat): the fallback."""
+    dlat = MAPILLARY_RADIUS_M * 1.2 / 111_320
+    dlon = dlat / max(0.2, math.cos(math.radians(p["lat"])))
+    bbox = f"{p['lon'] - dlon:.6f},{p['lat'] - dlat:.6f},{p['lon'] + dlon:.6f},{p['lat'] + dlat:.6f}"
+    return mapillary_get("images", {"fields": fields, "bbox": bbox, "limit": 500}, token).get("data", [])
+
+
+def fetch_mapillary(p, token, images=None, stats=None):
+    """A Mapillary candidate for a place, or None. `images` are the candidates from the coverage
+    tiles (None: search with the Graph API). `stats` counts how far places get (diagnostics)."""
+    stats = stats if stats is not None else {}
+
+    def count(k):
+        stats[k] = stats.get(k, 0) + 1
     tagged = p["tags"].get("mapillary", "").strip()
     if tagged.isdigit():
         img = mapillary_get(tagged, {"fields": MAPILLARY_FIELDS}, token)
         if img.get("thumb_1024_url") and not img.get("is_pano"):
+            count("picked (OSM mapillary tag)")
             return mapillary_candidate(img)
-    dlat = MAPILLARY_RADIUS_M * 1.2 / 111_320
-    dlon = dlat / max(0.2, math.cos(math.radians(p["lat"])))
-    bbox = f"{p['lon'] - dlon:.6f},{p['lat'] - dlat:.6f},{p['lon'] + dlon:.6f},{p['lat'] + dlat:.6f}"
-    data = mapillary_get("images", {"fields": MAPILLARY_FIELDS, "bbox": bbox, "limit": 200}, token)
-    img, d = mapillary_pick(p["lat"], p["lon"], data.get("data", []))
-    return mapillary_candidate(img, d) if img else None
+    if images is None:
+        images = bbox_images(p, token)
+        count("searched with the Graph API (tile failed)")
+    rows = [assess(p["lat"], p["lon"], img) for img in images]
+    near = [r for r in rows if r.get("d", 1e9) <= MAPILLARY_RADIUS_M]
+    if near:
+        count("any image within radius")
+    if any(not r["pano"] for r in near):
+        count("a non-panorama within radius")
+    if any(r["verdict"] == "panorama" for r in near):
+        count("a panorama within radius")
+    ranked = mapillary_ranked(p["lat"], p["lon"], images)
+    if ranked:
+        count("a non-panorama facing it (tile data)")
+    for r in ranked[:MAPILLARY_VERIFY]:
+        img = r["img"]
+        if img.get("from_tile") or not img.get("thumb_1024_url"):
+            img = {**{k: v for k, v in img.items() if k != "from_tile"},
+                   **mapillary_get(str(img["id"]), {"fields": MAPILLARY_FIELDS}, token)}
+        again = assess(p["lat"], p["lon"], img)  # on the corrected position and compass
+        if again["verdict"] == "ok" and img.get("thumb_1024_url"):
+            count("picked")
+            return mapillary_candidate(img, again["d"])
+        count("rejected on corrected position/compass or no thumbnail")
+    return None
 
 
 def refresh_mapillary_url(cand, token):
@@ -265,6 +506,63 @@ def refresh_mapillary_url(cand, token):
     if img.get("thumb_1024_url"):
         cand = {**cand, "url": img["thumb_1024_url"], "expires": thumb_expiry(img["thumb_1024_url"])}
     return cand
+
+
+def redact(text, token):
+    return str(text).replace(token, "***") if token else str(text)
+
+
+def diagnose_mapillary(sample, tile_cache, token):
+    """Markdown: for each sample place, the raw candidates from the coverage tiles and from the
+    Graph API bbox search (id, distance, compass, bearing difference, tolerance, is_pano, verdict)."""
+    lines = [f"## Mapillary diagnostics ({len(sample)} places)", "",
+             f"Rules: radius {MAPILLARY_RADIUS_M} m, min {MAPILLARY_MIN_M} m, facing within "
+             f"min({MAX_FACING_DEG}°, {HALF_FOV_DEG}° + atan({FACADE_HALF_M} m / d)), no panoramas.", ""]
+
+    def table(rows):
+        rows = sorted(rows, key=lambda r: (r["verdict"] != "ok", r.get("d", 1e9)))[:DIAG_ROWS]
+        out = ["| id | dist m | compass | bearing | diff | tol | pano | thumb | verdict |",
+               "|---|---|---|---|---|---|---|---|---|"]
+        for r in rows:
+            f = lambda k, fmt="{:.0f}": fmt.format(r[k]) if r.get(k) is not None else "-"  # noqa: E731
+            out.append(f"| {r['img'].get('id')} | {f('d', '{:.1f}')} | {f('compass')} | {f('bearing')} | "
+                       f"{f('diff')} | {f('tol')} | {r.get('pano', '-')} | "
+                       f"{'yes' if r['img'].get('thumb_1024_url') else 'no'} | {r['verdict']} |")
+        return out
+    for p in sample:
+        lines.append(f"### {p['name']} ({p['id']}, {p['category']}, {p['lat']:.6f},{p['lon']:.6f})")
+        tiles = tiles_around(p["lat"], p["lon"])
+        if all(t in tile_cache and tile_cache[t] is not None for t in tiles):
+            imgs = [i for t in tiles for i in tile_cache[t]]
+            rows = [assess(p["lat"], p["lon"], i) for i in imgs]
+            near = [r for r in rows if r.get("d", 1e9) <= MAPILLARY_RADIUS_M * 1.5]
+            lines += [f"Tiles: {len(imgs)} images in {len(tiles)} tile(s), {len(near)} within "
+                      f"{MAPILLARY_RADIUS_M * 1.5:.0f} m:", ""] + table(near) + [""]
+        else:
+            lines += ["Tiles: not available (fetch failed)", ""]
+        try:
+            raw = bbox_images(p, token)
+            rows = [assess(p["lat"], p["lon"], i) for i in raw]
+            lines += [f"Graph API bbox search: {len(raw)} images returned"
+                      + (f"; fields on the first: {sorted(raw[0])}" if raw else ""), ""] + table(rows) + [""]
+        except Exception as exc:
+            body = ""
+            if isinstance(exc, urllib.error.HTTPError):
+                try:
+                    body = exc.read(300).decode("utf-8", "replace")
+                except Exception:
+                    pass
+            lines += [f"Graph API bbox search failed: {redact(exc, token)} {redact(body, token)}", ""]
+        try:
+            stats = {}
+            imgs = [i for t in tiles for i in (tile_cache.get(t) or [])] if all(tile_cache.get(t) is not None
+                                                                                for t in tiles) else None
+            cand = fetch_mapillary(p, token, imgs, stats)
+            lines += [f"Result: {cand['page'] + ' at ' + str(cand.get('distance_m')) + ' m' if cand else 'none'} "
+                      f"{stats}", ""]
+        except Exception as exc:
+            lines += [f"Result: error {redact(exc, token)}", ""]
+    return "\n".join(lines) + "\n"
 
 
 # ---- Website preview ------------------------------------------------------------------------
@@ -320,7 +618,7 @@ def public(photo):
     return {k: photo[k] for k in ("url", "source", "credit", "license", "page") if photo.get(k)}
 
 
-def run(ctx, max_age_days, token, today=None):
+def run(ctx, max_age_days, token, today=None, diagnose=0):
     slug, pois = ctx.slug, ctx.pois
     today = today or datetime.date.today()
     stale = (today - datetime.timedelta(days=max_age_days)).isoformat()
@@ -369,35 +667,69 @@ def run(ctx, max_age_days, token, today=None):
     def mkey(p):
         return f"{p['id']}@{p['lat']:.6f},{p['lon']:.6f},{p['tags'].get('mapillary', '')}"
 
-    mly_note = None
+    mly_note, mly_report = None, ""
     if token:
         need = [p for p in pois if not commons_for(p)]
         soon = (datetime.datetime.combine(today, datetime.time()) +
                 datetime.timedelta(days=MAPILLARY_REFRESH_DAYS)).timestamp()
-        todo = [p for p in need if old(data["mapillary"].get(mkey(p)))]
+
+        def mold(entry):  # searched with older rules (BE-17: the 40 m / ±50° bbox search found nothing)
+            return old(entry) or entry.get("rules") != MAPILLARY_RULES
+        todo = [p for p in need if mold(data["mapillary"].get(mkey(p)))]
         refresh = [p for p in need if p not in todo and (data["mapillary"][mkey(p)].get("photo") or {}).get("expires")
                    and data["mapillary"][mkey(p)]["photo"]["expires"] < soon]
-        print(f"  mapillary: {len(todo)} searches, {len(refresh)} URL refreshes", flush=True)
+        sample = sorted(need, key=lambda p: hashlib.sha256(p["id"].encode()).hexdigest())[:diagnose]
+        tiles = sorted({t for p in todo + sample for t in tiles_around(p["lat"], p["lon"])})
+        print(f"  mapillary: {len(todo)} searches in {len(tiles)} coverage tiles, {len(refresh)} URL refreshes",
+              flush=True)
+        errors = {}
+
+        def note(exc):
+            msg = redact(f"{type(exc).__name__}: {exc}", token)[:120]
+            errors[msg] = errors.get(msg, 0) + 1
+
+        def get_tile(t):
+            try:
+                return fetch_tile(t, token)
+            except Exception as exc:
+                note(exc)
+                return None
+        tile_cache = {}
+        with concurrent.futures.ThreadPoolExecutor(WORKERS) as pool:
+            for t, imgs in zip(tiles, pool.map(get_tile, tiles)):
+                tile_cache[t] = imgs
+        failed_tiles = sum(v is None for v in tile_cache.values())
+        stats = {}
 
         def search(p):
+            ts = tiles_around(p["lat"], p["lon"])
+            imgs = None if any(tile_cache.get(t) is None for t in ts) else [i for t in ts for i in tile_cache[t]]
+            mine = {}
             try:
-                return fetch_mapillary(p, token), None
+                return fetch_mapillary(p, token, imgs, mine), None, mine
             except Exception as exc:  # leave it unchecked; tried again next run
-                return None, exc
+                return None, exc, mine
         with concurrent.futures.ThreadPoolExecutor(WORKERS) as pool:
-            errors = 0
-            for p, (cand, exc) in zip(todo, pool.map(search, todo)):
+            for p, (cand, exc, mine) in zip(todo, pool.map(search, todo)):
+                for k, v in mine.items():
+                    stats[k] = stats.get(k, 0) + v
                 if exc:
-                    errors += 1
+                    note(exc)
                     continue
-                data["mapillary"][mkey(p)] = {"checked": today.isoformat(), "photo": cand}
+                data["mapillary"][mkey(p)] = {"checked": today.isoformat(), "photo": cand, "rules": MAPILLARY_RULES}
             for p in refresh:
                 try:
                     data["mapillary"][mkey(p)]["photo"] = refresh_mapillary_url(data["mapillary"][mkey(p)]["photo"], token)
-                except Exception:
-                    errors += 1
-            if errors:
-                print(f"  ! mapillary: {errors} requests failed (retried next run)")
+                except Exception as exc:
+                    note(exc)
+        n_img = sum(len(v) for v in tile_cache.values() if v)
+        print(f"  mapillary: {n_img} images in {len(tiles) - failed_tiles}/{len(tiles)} tiles; of {len(todo)} "
+              f"places: " + ", ".join(f"{k} {v}" for k, v in sorted(stats.items())), flush=True)
+        if errors:
+            print(f"  ! mapillary: {sum(errors.values())} requests failed (retried next run): "
+                  + "; ".join(f"{m} (x{n})" for m, n in sorted(errors.items(), key=lambda e: -e[1])[:5]))
+        if sample:
+            mly_report = diagnose_mapillary(sample, tile_cache, token)
     else:
         mly_note = "MAPILLARY_TOKEN not set: Mapillary skipped (cached Mapillary photos still used until they expire)"
 
@@ -422,6 +754,12 @@ def run(ctx, max_age_days, token, today=None):
         counts.setdefault(p["category"], {}).setdefault(src, 0)
         counts[p["category"]][src] += 1
     save(slug, data)
+    if mly_report:
+        summary = os.environ.get("GITHUB_STEP_SUMMARY")
+        if summary:
+            with open(summary, "a", encoding="utf-8") as f:
+                f.write(mly_report)
+        print(mly_report)
     return counts, mly_note
 
 
@@ -430,9 +768,12 @@ def main():
     parser = argparse.ArgumentParser(description="Find a photo for every candidate place (ADR 015).")
     parser.add_argument("city")
     parser.add_argument("--max-age-days", type=int, default=30, help="re-check cached lookups older than this")
+    parser.add_argument("--diagnose-mapillary", type=int, default=0, metavar="N",
+                        help="log the raw Mapillary candidates of N sample places (to $GITHUB_STEP_SUMMARY in CI)")
     args = parser.parse_args()
     ctx = score.candidates(args.city)
-    counts, note = run(ctx, args.max_age_days, os.environ.get("MAPILLARY_TOKEN", "").strip() or None)
+    counts, note = run(ctx, args.max_age_days, os.environ.get("MAPILLARY_TOKEN", "").strip() or None,
+                       diagnose=args.diagnose_mapillary)
     total = sum(sum(c.values()) for c in counts.values())
     have = sum(n for c in counts.values() for s, n in c.items() if s != "none")
     print(f"photos {args.city}: {have}/{total} places have a photo; per category and source: "
