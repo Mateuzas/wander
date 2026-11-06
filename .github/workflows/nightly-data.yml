@@ -128,8 +128,9 @@ jobs:
           PREVIOUS: ${{ steps.previous.outputs.previous }}
         run: |
           set -uo pipefail
-          python3 Data/publish_gate.py --new "$OUT/pois-$CITY.json" --previous "$PREVIOUS" > "$RUNNER_TEMP/gate.md"
-          status=$?
+          # Actions runs bash with -e: capture the exit code so the summary is written on failure too.
+          status=0
+          python3 Data/publish_gate.py --new "$OUT/pois-$CITY.json" --previous "$PREVIOUS" > "$RUNNER_TEMP/gate.md" || status=$?
           {
             echo "## Publish gate: $CITY"
             echo
