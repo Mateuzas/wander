@@ -42,8 +42,10 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     public var localName: String?
     /// Commons category with more photos of this place (no "Category:" prefix). Sights only.
     public var commonsCategory: String?
-    /// A must-see (high score or well known). Sights only; missing means false.
+    /// A must-see; equals `tier == 1` (ADR 012). Any category; missing means false.
     public var popular: Bool?
+    /// Map importance within the category (ADR 012): 1 must-see, 2 notable, 3 detail. Missing in older files.
+    public var tier: Int?
     /// 1–2 factual sentences for the place card (Wikipedia lead or composed from OSM facts).
     public var description: String?
     /// Where `description` came from: "wikipedia" or "osm".
@@ -57,7 +59,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
                 openingHours: String? = nil, commonsImage: String? = nil, localName: String? = nil,
                 commonsCategory: String? = nil, popular: Bool? = nil,
                 description: String? = nil, descriptionSource: String? = nil,
-                descriptionUrl: String? = nil) {
+                descriptionUrl: String? = nil, tier: Int? = nil) {
         self.id = id
         self.name = name
         self.lat = lat
@@ -77,6 +79,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         self.description = description
         self.descriptionSource = descriptionSource
         self.descriptionUrl = descriptionUrl
+        self.tier = tier
     }
 
     public var coordinate: Coordinate { Coordinate(lat: lat, lon: lon) }
@@ -84,7 +87,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
     private enum CodingKeys: String, CodingKey {
         case id, name, lat, lon, category, score, kind, reason
         case type, signals, cuisine, openingHours, commonsImage, localName, commonsCategory, popular
-        case description, descriptionSource, descriptionUrl
+        case description, descriptionSource, descriptionUrl, tier
     }
 
     public init(from decoder: Decoder) throws {
@@ -108,6 +111,7 @@ public struct POI: Codable, Hashable, Identifiable, Sendable {
         description = try c.decodeIfPresent(String.self, forKey: .description)
         descriptionSource = try c.decodeIfPresent(String.self, forKey: .descriptionSource)
         descriptionUrl = try c.decodeIfPresent(String.self, forKey: .descriptionUrl)
+        tier = try c.decodeIfPresent(Int.self, forKey: .tier)
     }
 }
 

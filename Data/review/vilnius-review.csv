@@ -256,34 +256,4 @@ rank,osm_id,name,original_name,category,score,reason,sitelinks,commons,osm_url
 255,osm:node:5613906421,balta balta,balta balta,shop,33,Gift shop,0,21,https://www.openstreetmap.org/node/5613906421
 256,osm:node:10154475417,Drabužiai 50c,Drabužiai 50c,shop,32,Second-hand shop,0,3,https://www.openstreetmap.org/node/10154475417
 257,osm:node:4467105492,Vinilo Studija,Vinilo Studija,shop,32,Record shop,0,3,https://www.openstreetmap.org/node/4467105492
-258,osm:node:6184513986,Lino pagunda,Lino pagunda,shop,28,Gift shop,0,64,https://www.openstreetmap.org/node/6184513986
-259,osm:way:25489015,Europa,PC „Europa“,shop,27,Shopping centre,2,1,https://www.openstreetmap.org/way/25489015
-260,osm:node:9329966333,Lietuviški suvenyrai,Lietuviški suvenyrai,shop,27,Gift shop,0,48,https://www.openstreetmap.org/node/9329966333
-261,osm:node:4596486062,Quilt.lt,Quilt.lt,shop,27,Gift shop,0,1,https://www.openstreetmap.org/node/4596486062
-262,osm:node:5723560121,Suvenyrai,Suvenyrai,shop,27,Gift shop,0,45,https://www.openstreetmap.org/node/5723560121
-263,osm:node:12995555642,VinyloMania,VinyloMania,shop,27,Record shop,0,1,https://www.openstreetmap.org/node/12995555642
-264,osm:node:724284725,J. Masiulio knygynas,J. Masiulio knygynas,shop,26,Bookshop,0,5,https://www.openstreetmap.org/node/724284725
-265,osm:node:1664384350,Žaislų planeta,Žaislų planeta,shop,26,Toy shop,0,5,https://www.openstreetmap.org/node/1664384350
-266,osm:node:7987117408,6stygos.lt,6stygos.lt,shop,25,Musical instrument shop,0,0,https://www.openstreetmap.org/node/7987117408
-267,osm:way:5097813,Akropolis,PLC „Akropolis“,shop,25,Big mall by the Neris with an indoor ice rink,4,0,https://www.openstreetmap.org/way/5097813
-268,osm:node:7840284255,Bottlery,Bottlery,shop,25,Wine shop,0,0,https://www.openstreetmap.org/node/7840284255
-269,osm:node:14031289337,Dizaino Namai,Dizaino Namai,shop,25,Gift shop,0,24,https://www.openstreetmap.org/node/14031289337
-270,osm:way:32674905,Ozas,PPC „Ozas“,shop,25,Shopping centre,0,0,https://www.openstreetmap.org/way/32674905
-271,osm:node:5098467811,Party Inbox,Party Inbox,shop,25,Gift shop,0,0,https://www.openstreetmap.org/node/5098467811
-272,osm:node:8341509354,PhotoLab,PhotoLab,shop,25,Photo shop,0,0,https://www.openstreetmap.org/node/8341509354
-273,osm:node:9653887710,Provincialė,Provincialė,shop,25,Gift shop,0,0,https://www.openstreetmap.org/node/9653887710
-274,osm:node:3660258982,Zodiakas,Zodiakas,shop,25,Bookshop,0,0,https://www.openstreetmap.org/node/3660258982
-275,osm:node:5363183165,ARZA Galerija,ARZA Galerija,shop,24,Art shop,0,3,https://www.openstreetmap.org/node/5363183165
-276,osm:node:268631747,Esea House,Esea House,shop,24,Pottery shop,0,3,https://www.openstreetmap.org/node/268631747
-277,osm:node:3283981096,knygynas,knygynas,shop,19,Bookshop,0,1,https://www.openstreetmap.org/node/3283981096
-278,osm:node:12164104379,Eigirdas Scinskas galerija,Eigirdas Scinskas galerija,shop,17,Art shop,0,0,https://www.openstreetmap.org/node/12164104379
-279,osm:node:12027521091,Foto procentras,Foto procentras,shop,17,Photo shop,0,0,https://www.openstreetmap.org/node/12027521091
-280,osm:node:2725273682,Fotostudija Vilniuje,Fotostudija Vilniuje,shop,17,Photo shop,0,0,https://www.openstreetmap.org/node/2725273682
-281,osm:node:12809947983,Goooods,Goooods,shop,17,Boutique,0,0,https://www.openstreetmap.org/node/12809947983
-282,osm:way:77103757,Mada,Mada,shop,17,Shopping centre,0,0,https://www.openstreetmap.org/way/77103757
-283,osm:node:4665958292,Muzikos faktorius,Muzikos faktorius,shop,17,Musical instrument shop,0,0,https://www.openstreetmap.org/node/4665958292
-284,osm:way:1092409758,Pašilaičiai,PC Pašilaičiai,shop,17,Shopping centre,0,0,https://www.openstreetmap.org/way/1092409758
-285,osm:node:3705250772,Pegasas,Pegasas,shop,17,Bookshop,0,0,https://www.openstreetmap.org/node/3705250772
-286,osm:node:11115701945,The Hedonist,The Hedonist,shop,17,Wine shop,0,0,https://www.openstreetmap.org/node/11115701945
-287,osm:way:943478631,Vilnius Outlet,Vilnius Outlet,shop,17,Shopping centre,0,0,https://www.openstreetmap.org/way/943478631
-288,osm:node:3705246065,Winemaker,Winemaker,shop,17,Wine shop,0,0,https://www.openstreetmap.org/node/3705246065
+258,osm:way:5097813,Akropolis,PLC „Akropolis“,shop,25,Big mall by the Neris with an indoor ice rink,4,0,https://www.openstreetmap.org/way/5097813
