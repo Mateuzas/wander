@@ -16,8 +16,15 @@ name: Nightly data
 #
 # A Pages deploy replaces the whole site, so `site` only runs when every city passed.
 # If any gate fails the run is red and nothing is deployed: the previous files stay live.
-# No secrets: every source is a public API. One Overpass request per city per run
-# (run_nightly), and the caches persist between runs so each night re-fetches only changes.
+# One Overpass request per city per run (run_nightly), and the caches persist between runs
+# so each night re-fetches only changes.
+#
+# Hooks (ADR 015) are written in Claude Code sessions and committed as Data/hooks/<city>.jsonl;
+# CI calls no LLM API and has no Anthropic key.
+# Secret (OPS-9): MAPILLARY_TOKEN, passed as env to the run_nightly step only, never job-wide.
+# Optional so forks and the first runs work: unset means Commons and website photos only,
+# and the step summary says so.
+# Data/cache/<city> (photos.json, first_seen.json, ...) persists via actions/cache.
 
 on:
   schedule:
@@ -30,6 +37,10 @@ on:
         default: true
       allow_growth:
         description: "Publish gate --allow-growth: count increases above +25% pass (decreases stay gated). One-time, for a new source (ADR 014)"
+        type: boolean
+        default: false
+      allow_shrink:
+        description: "Publish gate --allow-shrink: count decreases below -25% pass. One-time, for the first hook-and-photo run (ADR 015)"
         type: boolean
         default: false
 
@@ -74,6 +85,8 @@ jobs:
       REFRESH: ${{ github.event_name == 'schedule' || inputs.refresh }}
       # Scheduled runs never allow growth.
       ALLOW_GROWTH: ${{ github.event_name == 'workflow_dispatch' && inputs.allow_growth }}
+      # Scheduled runs never allow shrinking.
+      ALLOW_SHRINK: ${{ github.event_name == 'workflow_dispatch' && inputs.allow_shrink }}
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -102,11 +115,21 @@ jobs:
           esac
 
       # The live file is also run_nightly's baseline for the review summary (tier-1 new/gone).
+      # The only step that gets a secret. Never print env here (no `env`, `set -x`).
       - name: run_nightly
         env:
           PREVIOUS: ${{ steps.previous.outputs.previous }}
+          MAPILLARY_TOKEN: ${{ secrets.MAPILLARY_TOKEN }}
         run: |
           set -euo pipefail
+          {
+            echo "## Sources: $CITY"
+            echo
+            if [[ -f "Data/hooks/$CITY.jsonl" ]]; then echo "- hooks: Data/hooks/$CITY.jsonl ($(wc -l < "Data/hooks/$CITY.jsonl") lines)"; else echo "- hooks: none committed (no Data/hooks/$CITY.jsonl)"; fi
+            if [[ -n "$MAPILLARY_TOKEN" ]]; then echo "- photos: Mapillary + Commons + website"; else echo "- photos: no Mapillary (no MAPILLARY_TOKEN)"; fi
+            echo
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          if [[ -z "$MAPILLARY_TOKEN" ]]; then echo "::warning::photos: no Mapillary (no MAPILLARY_TOKEN)"; fi
           args=("$CITY" --out "$OUT" --previous "$PREVIOUS")
           if [[ "$REFRESH" == true ]]; then args+=(--refresh); fi
           echo "python3 Data/run_nightly.py ${args[*]}"
@@ -141,11 +164,12 @@ jobs:
           status=0
           args=(--new "$OUT/pois-$CITY.json" --previous "$PREVIOUS")
           if [[ "$ALLOW_GROWTH" == true ]]; then args+=(--allow-growth); fi
+          if [[ "$ALLOW_SHRINK" == true ]]; then args+=(--allow-shrink); fi
           python3 Data/publish_gate.py "${args[@]}" > "$RUNNER_TEMP/gate.md" || status=$?
           {
             echo "## Publish gate: $CITY"
             echo
-            echo "allow_growth: $ALLOW_GROWTH"
+            echo "allow_growth: $ALLOW_GROWTH, allow_shrink: $ALLOW_SHRINK"
             echo
             cat "$RUNNER_TEMP/gate.md"
             echo
