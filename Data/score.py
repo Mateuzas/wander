@@ -17,8 +17,12 @@ import re
 import sys
 import urllib.parse
 from pathlib import Path
+from types import SimpleNamespace
 
+import hooks
 import overture
+import photos
+import website
 from common import DATA, RESOURCES, cache_dir, load_city, metres
 from describe import osm_description, trim_extract
 from enrich import COMMONS_RADIUS_M, TILE_LIMIT, count_near
@@ -325,20 +329,26 @@ def article_key(p, wiki):
     return summary["url"] if summary else title
 
 
+def own_summary(p, wiki, article_uses):
+    """The English Wikipedia summary that describes this place itself, or None.
+
+    An emptied image means the place's Wikidata item is a different place (curation.csv);
+    an article shared by several places (e.g. a museum and its branches) describes only the
+    place it is named after."""
+    title = article_title(p, wiki)
+    own = title and (article_uses.get(article_key(p, wiki), 0) == 1
+                     or re.sub(r"\s*\(.*\)$|,.*$", "", title).casefold() == p["name"].casefold())
+    summary = wiki["summaries"].get(title) if own and p.get("image_override") != "" else None
+    return summary if summary and summary.get("type") != "disambiguation" else None
+
+
 def description(p, typ, popular, wiki, article_uses):
     """(text, source, url) for the place card, or None (CONTRACTS §1 `description`).
 
     The English Wikipedia lead wins wherever there is one; popular places without one get a
     sentence composed from their OSM tags. Nothing is written beyond what the source says."""
-    title = article_title(p, wiki)
-    # An emptied image means the place's Wikidata item is a different place (curation.csv);
-    # an article shared by several places (e.g. a museum and its branches) describes only the
-    # place it is named after.
-    own = title and (article_uses.get(article_key(p, wiki), 0) == 1
-                     or re.sub(r"\s*\(.*\)$|,.*$", "", title).casefold() == p["name"].casefold())
-    usable = own and p.get("image_override") != ""
-    summary = wiki["summaries"].get(title) if usable else None
-    if summary and summary.get("type") != "disambiguation":
+    summary = own_summary(p, wiki, article_uses)
+    if summary:
         text = trim_extract(summary.get("extract"))
         if text:
             return text, "wikipedia", summary["url"]
@@ -423,6 +433,8 @@ def apply_curation(pois, rules):
                 p["reason"] = value
             elif action == "popular":
                 p["popular_override"] = value.strip().lower() in ("yes", "true", "1", "")
+            elif action == "hook":
+                p["hook_override"] = value  # hand-written hook line (ADR 015)
             elif action == "image":
                 p["image_override"] = value  # empty value removes the photo
             else:
@@ -445,13 +457,11 @@ def dedupe(pois):
     return kept
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Score POIs and write pois-<city>.json.")
-    parser.add_argument("city")
-    parser.add_argument("--out", type=Path, help="output file (default: App/Wander/Resources/pois-<city>.json); "
-                                                 "skips the review CSV")
-    args = parser.parse_args()
-    slug = args.city
+def candidates(slug):
+    """Every place that is published if it has a hook and a photo (ADR 015): the scored places
+    after curation, de-duplication, the score floors and generic-name expansion, in output order.
+    photos.py and hooks.py work on exactly this list; main() gates it and computes tiers.
+    Returns a namespace with the places and what main() reports about them."""
     city = load_city(slug)
     pois = json.loads((cache_dir(slug) / "enriched.json").read_text())["pois"]
     ovt_data = overture.load(slug)
@@ -487,30 +497,109 @@ def main():
     pois = [p for p in pois if not below_floor(p)]
     renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
-    tier = tiers(pois)
-    popular = {i for i, t in tier.items() if t == 1}  # `popular` equals tier 1 (ADR 012)
+    for p in pois:
+        p["type"] = poi_type(p)
     wiki = load_wikipedia(slug)
     article_uses = {}  # by resolved article URL: two titles can redirect to one article
     for p in pois:
         if key := article_key(p, wiki):
             article_uses[key] = article_uses.get(key, 0) + 1
+    for p in pois:  # what photos.py and hooks.py read (they never import score.py)
+        p["wiki_summary"] = own_summary(p, wiki, article_uses)
+        p["commons_file"] = commons_image(p)
+        p["commons_cat"] = commons_category(p)
+        p["site_url"] = p.get("website") or overture.website_from_osm(p["tags"])
+    return SimpleNamespace(slug=slug, city=city, pois=pois, pct=pct, ovt_data=ovt_data, ovt_report=ovt_report,
+                           today=today, seen=seen, bootstrap=bootstrap, names_en=names_en, applied=applied,
+                           before_floor=before_floor, renamed=renamed, wiki=wiki, article_uses=article_uses)
+
+
+def gate(ctx):
+    """ADR 015: keep only places with both a hook and a photo, attaching them as `hook_text` and
+    `photo_obj`. A curation `hook` row beats the committed hooks file; `popular yes` does not
+    bypass the gate. Returns (kept places, report)."""
+    hook_rows = hooks.load(ctx.slug)
+    photo_cache = photos.load(ctx.slug)
+    sites = website.load_cache(ctx.slug)
+    report = {"kept": {}, "no_hook": {}, "no_photo": {}, "neither": {}, "stale_hook": 0, "stale_photo": 0,
+              "curated_hook": 0, "bad_curated_hook": []}
+    kept = []
+    for p in ctx.pois:
+        cat = p["category"]
+        hook = None
+        if "hook_override" in p:
+            problem = hooks.problem(p["hook_override"], p["name"])
+            if problem:
+                report["bad_curated_hook"].append(f"{p['id']}: {problem}")
+            else:
+                hook = p["hook_override"]
+                report["curated_hook"] += 1
+        if hook is None:
+            row = hook_rows.get(p["id"])
+            if row:
+                if row.get("facts_hash") == hooks.facts_hash(hooks.facts(p, ctx.city['name'], sites)):
+                    hook = row.get("hook")
+                else:
+                    report["stale_hook"] += 1
+        photo, fresh = photos.photo_for(p, photo_cache)
+        if not fresh:
+            report["stale_photo"] += 1
+        if hook and photo:
+            p["hook_text"], p["photo_obj"] = hook, photo
+            kept.append(p)
+            bucket = "kept"
+        else:
+            bucket = "neither" if not hook and not photo else ("no_hook" if not hook else "no_photo")
+        report[bucket][cat] = report[bucket].get(cat, 0) + 1
+    return kept, report
+
+
+def print_gate(report, slug):
+    def fmt(d):
+        return ", ".join(f"{c} {d.get(c, 0)}" for c in ("photo", "shop", "food"))
+    print(f"  hook+photo gate (ADR 015): kept {fmt(report['kept'])}; dropped: no hook {fmt(report['no_hook'])}; "
+          f"no photo {fmt(report['no_photo'])}; neither {fmt(report['neither'])}")
+    print(f"    {report['curated_hook']} curated hooks; {report['stale_hook']} committed hooks are stale "
+          f"(facts changed: re-export and rewrite, Data/hooks/WRITING.md); "
+          f"{report['stale_photo']} places with no or stale photo cache (run photos.py {slug})")
+    for line in report["bad_curated_hook"]:
+        print(f"  ! curation hook rejected, {line}")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Score POIs and write pois-<city>.json.")
+    parser.add_argument("city")
+    parser.add_argument("--out", type=Path, help="output file (default: App/Wander/Resources/pois-<city>.json); "
+                                                 "skips the review CSV")
+    args = parser.parse_args()
+    slug = args.city
+    ctx = candidates(slug)
+    city, today, pct, wiki, article_uses = ctx.city, ctx.today, ctx.pct, ctx.wiki, ctx.article_uses
+    ovt_data, ovt_report, seen, bootstrap = ctx.ovt_data, ctx.ovt_report, ctx.seen, ctx.bootstrap
+    names_en, applied, before_floor, renamed = ctx.names_en, ctx.applied, ctx.before_floor, ctx.renamed
+    after_floor = {c: sum(p["category"] == c for p in ctx.pois) for c in SCORE_FLOOR}
+    pois, gate_report = gate(ctx)
+    tier = tiers(pois)
+    popular = {i for i, t in tier.items() if t == 1}  # `popular` equals tier 1 (ADR 012)
 
     # A photo shared by several places is a series-level Wikidata image (e.g. one statue
     # standing in for a whole trail of them), so it shows none of them reliably.
     image_uses = {}
-    for p in pois:
+    for p in ctx.pois:
         if p["category"] == "photo" and commons_image(p):
             image_uses[commons_image(p)] = image_uses.get(commons_image(p), 0) + 1
 
     category_uses = {}
-    for p in pois:
+    for p in ctx.pois:
         if p["category"] == "photo" and commons_category(p):
             category_uses[commons_category(p)] = category_uses.get(commons_category(p), 0) + 1
 
     out_pois = []
     for p in pois:
         row = {k: p[k] for k in ("id", "name", "lat", "lon", "category", "score", "kind", "reason")}
-        row["type"] = poi_type(p)
+        row["type"] = p["type"]
+        row["hook"] = p["hook_text"]
+        row["photo"] = p["photo_obj"]
         if p["original_name"] != p["name"]:
             # Local (OSM) name, for matching Apple Maps places, which use it.
             row["localName"] = p["original_name"]
@@ -569,9 +658,10 @@ def main():
                for c in by_cat}
         print(f"  overture-only after floors: {kept} (tier 1-2: {t12}); "
               f"new: {sum('new' in r for r in out_pois)} (first seen on {bootstrap} = bootstrap, never new)")
+    print_gate(gate_report, slug)
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
           f"({applied} curation rules applied, {renamed} generic names expanded)")
-    print("  score floors: " + ", ".join(f"{c} {before_floor[c]} -> {by_cat[c]} (floor {SCORE_FLOOR[c]})"
+    print("  score floors: " + ", ".join(f"{c} {before_floor[c]} -> {after_floor[c]} (floor {SCORE_FLOOR[c]})"
                                          for c in by_cat))
     tiers_by_cat = {c: [sum(p["category"] == c and tier[p["id"]] == t for p in pois) for t in (1, 2, 3)]
                     for c in by_cat}
