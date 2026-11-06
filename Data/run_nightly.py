@@ -1,8 +1,11 @@
 """Unattended nightly pipeline for one city (ADR 013).
 
     python3 Data/run_nightly.py vilnius --out build/data [--refresh] [--previous FILE|URL|none]
+                                [--export-facts FILE.jsonl]
 
-Runs fetch_osm (--refresh passed through), enrich, wikipedia and score, writing
+Runs fetch_osm (--refresh passed through), enrich, wikipedia, photos (ADR 015: Commons, Mapillary
+when MAPILLARY_TOKEN is set, website preview images; also fetches homepage metadata) and score,
+writing
 <out>/pois-<city>.json, never App/Wander/Resources. Score runs twice in separate processes and
 the two files must be byte-identical (determinism, ADR 013). The file must pass
 scripts/validate-pois.py.
@@ -12,6 +15,10 @@ name (names-en/<city>.csv) and the fallback used, tier-1 places new or gone sinc
 (default: the bundled App/Wander/Resources/pois-<city>.json), counts per category and tier, and
 description coverage. A missing English name (no names-en row, no OSM name:en) never fails the run: the sight shows its
 Wikidata English label, else its local name, and is listed.
+
+Hooks (ADR 015) are never written here: score.py reads the committed Data/hooks/<city>.jsonl. With
+--export-facts it also writes the fact bundles of places that need a hook (hooks.py export), for
+the next writing session (Data/hooks/WRITING.md).
 
 Exits non-zero only on real errors: a step failing (e.g. network down after the retries), or an
 output that is invalid or not deterministic.
@@ -123,6 +130,8 @@ def main():
     parser.add_argument("--previous", default=None,
                         help="file or URL for the tier-1 comparison in the review, or 'none' "
                              "(default: the bundled App/Wander/Resources/pois-<city>.json)")
+    parser.add_argument("--export-facts", type=Path, metavar="FILE",
+                        help="also write the fact bundles of places needing a hook (JSON lines, ADR 015)")
     args = parser.parse_args()
     slug = args.city
     load_city(slug)  # exits on an unknown city
@@ -135,6 +144,9 @@ def main():
     step("fetch_osm.py", slug, *(["--refresh"] if args.refresh else []))
     step("enrich.py", slug)
     step("wikipedia.py", slug)
+    step("photos.py", slug)
+    if args.export_facts:
+        step("hooks.py", "export", slug, "--offline", "--out", str(args.export_facts.resolve()))
     step("score.py", slug, "--out", str(out))
     with tempfile.TemporaryDirectory() as tmp:
         again = Path(tmp) / out.name

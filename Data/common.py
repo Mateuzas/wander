@@ -11,7 +11,8 @@ from pathlib import Path
 DATA = Path(__file__).resolve().parent
 ROOT = DATA.parent
 RESOURCES = ROOT / "App" / "Wander" / "Resources"
-USER_AGENT = "WanderMVP/0.1 (personal walking-route prototype)"
+# Wikimedia rate-limits clients without contact details hard (HTTP 429), so name the repo.
+USER_AGENT = "WanderMVP/0.1 (https://github.com/Mateuzas/wander; personal walking-route prototype)"
 
 
 def load_city(slug):

@@ -10,7 +10,8 @@ name: CI
 #                                     .github/workflows/ci.yml
 #   data (Data pipeline compiles)     Data/**, .github/workflows/ci.yml
 #   pois-schema (POI files match      App/Wander/Resources/pois-*.json, docs/schema/**,
-#     schema)                         scripts/validate-pois.py, .github/workflows/ci.yml
+#     schema)                         Data/hooks/** (ADR 015 hook lines), scripts/validate-pois.py,
+#                                     .github/workflows/ci.yml
 #
 # A push to main whose "before" commit is all zeros or unknown runs everything.
 # There are deliberately no workflow-level `paths:` filters: a required check
@@ -71,7 +72,7 @@ jobs:
             case "$f" in Packages/*|scripts/test-engine.sh|scripts/ci-select-xcode.sh) engine=true ;; esac
             case "$f" in App/*|Packages/*|scripts/ci-select-xcode.sh) app=true ;; esac
             case "$f" in Data/*) data=true ;; esac
-            case "$f" in App/Wander/Resources/pois-*.json|docs/schema/*|scripts/validate-pois.py) pois=true ;; esac
+            case "$f" in App/Wander/Resources/pois-*.json|docs/schema/*|Data/hooks/*|scripts/validate-pois.py) pois=true ;; esac
           done <<< "$files"
           if [[ "$all" == true ]]; then engine=true app=true data=true pois=true; fi
           {

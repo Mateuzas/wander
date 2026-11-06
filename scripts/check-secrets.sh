@@ -4,7 +4,7 @@
 #  2. No tracked plaintext secret files (.env, .p8, .p12, profiles, age keys, *.local.xcconfig).
 #  3. No private keys or well-known token formats in tracked text.
 #  4. DEVELOPMENT_TEAM is not hard-coded in tracked project files.
-#  5. If gitleaks is installed, scan the full git history too.
+#  5. If gitleaks is installed, scan the full git history too (default rules + .github/gitleaks.toml).
 set -uo pipefail
 cd "$(git rev-parse --show-toplevel)"
 fail=0
@@ -38,7 +38,8 @@ files=$(git ls-files | grep -E '(^|/)\.env(\..*)?$|\.(p8|p12|cer|mobileprovision
 [[ -z "$files" ]] || bad "tracked plaintext secret files:"$'\n'"$files"
 
 # 3. Key material and common token formats in tracked text files.
-pattern='AGE-SECRET-KEY-1|-----BEGIN ([A-Z]+ )?PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{40,}|sk-[A-Za-z0-9_-]{32,}|xox[abpr]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}'
+# sk-ant- (Anthropic, ANTHROPIC_API_KEY) and MLY| (Mapillary, MAPILLARY_TOKEN) are CI secrets only (ADR 015).
+pattern='AGE-SECRET-KEY-1|sk-ant-[A-Za-z0-9_-]{20,}|MLY[|][0-9]{5,}[|][0-9a-fA-F]{32}|-----BEGIN ([A-Z]+ )?PRIVATE KEY-----|AKIA[0-9A-Z]{16}|gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{40,}|sk-[A-Za-z0-9_-]{32,}|xox[abpr]-[A-Za-z0-9-]{10,}|AIza[0-9A-Za-z_-]{35}'
 hits=$(git grep -nIE "$pattern" -- . ':!scripts/check-secrets.sh' || true)
 [[ -z "$hits" ]] || bad "secret-looking strings:"$'\n'"$hits"
 
@@ -48,7 +49,7 @@ hits=$(git grep -nE 'DEVELOPMENT_TEAM *= *[A-Z0-9]{10}' -- '*.pbxproj' '*.xcconf
 
 # 5. Optional full-history scan.
 if command -v gitleaks >/dev/null; then
-  gitleaks git --redact --no-banner . >&2 || bad "gitleaks found leaks in history"
+  gitleaks git --config .github/gitleaks.toml --redact --no-banner . >&2 || bad "gitleaks found leaks in history"
 fi
 
 if (( fail )); then exit 1; fi
