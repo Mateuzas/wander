@@ -1,12 +1,15 @@
 # POI data pipeline
 
-Python 3, standard library only (except the monthly Overture extract, which needs `duckdb`).
+Python 3, standard library only (except the monthly Overture extract, which needs `duckdb`, and the
+optional hook API writer, which needs `anthropic`).
 Cities and their bounding boxes live in `cities.json`.
 
 ```sh
 python3 fetch_osm.py vilnius   # OSM via Overpass → cache/vilnius/osm.json (raw response cached; --refresh to re-download)
 python3 enrich.py vilnius      # Wikidata sitelinks + Commons photo counts (cached, ~10 min first run)
 python3 wikipedia.py vilnius   # English Wikipedia summaries for place descriptions (cached, ~10 min first run)
+python3 photos.py vilnius      # a photo per place: Commons, Mapillary, website preview (cached; ADR 015)
+python3 hooks.py export vilnius --out /tmp/facts.jsonl   # fact bundles for the hook writer (Data/hooks/WRITING.md)
 python3 score.py vilnius       # scores + curation (+ Overture places) → App/Wander/Resources/pois-vilnius.json, review/vilnius-review.csv
 ```
 
@@ -23,8 +26,8 @@ python3 Data/publish_gate.py --new build/data/pois-vilnius.json --previous <file
     [--curation Data/curation.csv] [--rerun <file>]
 ```
 
-**`run_nightly.py`** runs fetch_osm (`--refresh` passed through), enrich, wikipedia and score for
-the city and writes `<out>/pois-<city>.json`, never `App/Wander/Resources`. It runs score twice in
+**`run_nightly.py`** runs fetch_osm (`--refresh` passed through), enrich, wikipedia, photos and score for
+the city (with `--export-facts <file.jsonl>` also `hooks.py export`, see below) and writes `<out>/pois-<city>.json`, never `App/Wander/Resources`. It runs score twice in
 separate processes and fails if the two files differ, then validates the file against the schema.
 It also writes `<out>/review-<city>.md`, the "needs review" summary: counts per category and tier,
 description coverage, tier-1 places new or gone since `--previous` (default: the bundled file), and
@@ -45,6 +48,10 @@ if any check fails:
 
 `--allow-growth` lets per-category counts grow by more than 25% (decreases are still gated); the
 summary says so in a callout. Use it once, when a new source lands (the first Overture publish).
+
+`--allow-shrink` lets per-category counts fall by any amount and lets tier-1 places go (listed, not
+failed); it prints a warning on stderr and a WARNING callout in the summary. Use it once, for the
+first publish with the hook+photo gate (ADR 015), then drop it.
 
 `--previous none` (first publish) or a 404 from the URL passes, with a note; any other download
 error fails.
@@ -130,6 +137,94 @@ Absent values are left out.
 Vilnius, release 2026-10-21.0: 5,060 places with confidence ≥ 0.7; 983 selected; 422 matched 416 OSM
 places; 554 added before the floors, 276 after (food 177, photo 68, shop 31).
 
+## Hook and photo for every place (ADR 015, BE-14, BE-15)
+
+A place is published only with **both** a `hook` (one factual sentence, at most 80 characters) and
+a `photo` (`{url, source, credit, license?, page?}`). `score.py` drops the rest after curation,
+de-duplication and the floors, before tiers; a curation `popular yes` does not bypass this.
+`score.py` prints what the gate kept and dropped per category, and why (no hook, no photo, stale).
+
+`score.candidates(city)` is the list both steps work on (the places that would be published if
+they had both), so photos and hooks are never fetched or written for places below the floors.
+
+### Photos (`photos.py`, standard library)
+
+Per place, in priority order (ADR 015):
+
+1. **Commons**: the place's own image (OSM `wikimedia_commons`/`image`, Wikidata P18, or a curation
+   `image` row), then a file from its Commons category (no maps, plans, scans, logos; landscape
+   first, then largest). Any category, not only sights. A file used by 3+ places is skipped
+   (a series image). The URL is a Commons thumbnail 1280 px wide from an original at least 800 px
+   wide; credit (author) and licence come from the Commons API `extmetadata`.
+2. **Mapillary** (only when `MAPILLARY_TOKEN` is set; otherwise skipped with a `!!!` line): the
+   image in the OSM `mapillary` tag if a mapper set one, else the closest non-panorama image within
+   40 m whose camera faces the place (compass within ±50° of the bearing from the camera to the
+   place), via the API v4 `images` bbox search (`thumb_1024_url`, `compass_angle`, `captured_at`,
+   `creator`). Licence CC BY-SA 4.0, credit "<username> / Mapillary", page
+   `https://www.mapillary.com/app/?pKey=<id>`.
+3. **Website preview** (`og:image`, `twitter:image`) from the place's own homepage (`website.py`),
+   only where robots.txt allows our user agent; profiles on other platforms (Facebook, Treatwell,
+   Tripadvisor...) are not "own" sites. A range GET of the first 64 KB reads the image size. Never
+   an svg, a likely logo (square-ish under 400 px, or `logo`/`icon`/`favicon` in the path) or an
+   image narrower than 300 px. Credit is the site's domain, page the homepage.
+
+"Better" between 2 and 3: food, shops and venues (theatres, galleries, stadiums...) take a website
+image at least 800 px wide over Mapillary; sights take Mapillary over the website image.
+
+**Mapillary URLs expire.** `thumb_1024_url` is a signed CDN URL whose `oe` query parameter is a
+hex expiry time (typically days to weeks). `photos.py` stores the expiry, refreshes the URL by
+image id when it is within 7 days of expiring (nightly), and drops a Mapillary photo whose URL has
+expired and could not be refreshed. The published `photo.page` carries the stable form
+(`pKey=<image id>`): when the app gets a 403/404 for a Mapillary `url`, it should re-resolve it with
+`GET https://graph.mapillary.com/<id>?fields=thumb_1024_url` (client token), or fall back to the
+placeholder. The bundled file ages, so this matters for the app's bundled data, not the nightly one.
+
+Cache: `cache/<city>/photos.json` (per place id: the inputs key, the date checked, the chosen
+photo and which sources had one; plus the per-source lookups) and `cache/<city>/websites.json`
+(homepage title, description and preview images, per URL). Everything is re-checked after 30 days
+(`--max-age-days`). `score.py` reads only the cache and uses a photo only while the place's inputs
+(Commons file/category, website, position, `mapillary` tag, category, type) are unchanged, so it
+stays deterministic and offline. Network cost: one Commons API call per 50 files plus one per
+category, one homepage (and robots.txt) per website, a 64 KB range GET per preview image, one
+Mapillary call per place without a Commons photo. First Vilnius run: a few minutes.
+
+### Hooks (`hooks.py`, `Data/hooks/<city>.jsonl`)
+
+Hooks are written in a **Claude Code session on the user's subscription** (or a scheduled weekly
+routine), reviewed and committed. The nightly job never calls an API.
+
+- `hooks.py export <city> --out facts.jsonl` writes one fact bundle per place without a current
+  hook: `{id, name, facts_hash, facts}`. The facts are only data we hold: name, local name, kind,
+  type, cuisine, selected OSM tags (artist, architect, start date, heritage, inscription, outdoor
+  seating, diet options...), the Wikidata English label, the English Wikipedia extract (up to 900
+  characters, whole sentences), the Overture category, and the homepage `<title>` and
+  `<meta name=description>` (fetched only where robots.txt allows; cached, see above).
+  `facts_hash` is the first 16 hex characters of sha256 of the facts as sorted JSON.
+  `run_nightly.py --export-facts <file>` does the same from the nightly caches.
+- The writer follows `Data/hooks/WRITING.md` (rules, prompt, input and output format) and merges
+  the answers with `hooks.py merge <city> answers.jsonl --written-by "..."`, which rejects lines
+  that break the rules or whose facts changed since the export.
+- `Data/hooks/<city>.jsonl` (committed, sorted by id) holds one line per place:
+  `{id, name, facts_hash, hook|null, prompt_version, written_by, date}`. `null` means "nothing
+  intriguing and true to say" and keeps the place off the map. `hooks.py validate <file>` checks
+  the format, 10–80 characters, one sentence ending in a full stop, no `!`/`?`, no emoji, no banned
+  hype words, not starting with the place's own name.
+- `score.py` uses a hook only when its `facts_hash` equals the place's current facts hash: when a
+  place's facts change (a new Wikipedia extract, a new homepage title), its hook is stale and the
+  place drops out until the next writing session. `score.py` prints the stale count.
+- A curation `hook` row (below) wins over the file and is checked by the same rules.
+
+**Optional API writer** (off by default, never in CI): `pip install -r Data/requirements-hooks.txt`
+(official `anthropic` SDK, pinned) and `ANTHROPIC_API_KEY`, then
+`python3 Data/hooks.py write vilnius --api [--effort low] [--limit N]`. It sends the WRITING.md
+prompt as the system prompt and the facts as the user message to `claude-opus-5-5` (`MODEL`, one
+constant) with structured output (`output_config.format`, schema `{hook: string|null}`), checks
+`stop_reason` (refusal is stored as null, `max_tokens` is retried next time), validates, and
+merges like `merge`. 50 or more places go through the Batch API (half price). `--compare-effort 20`
+prints `low` and `medium` answers side by side and writes nothing. Cost: a bundle is about
+300–600 input tokens plus thinking and ~30 output tokens; about 1,000 places cost roughly $1–2 at
+Opus 5.5 prices ($4/$20 per MTok), half that with Batch; later runs only pay for changed places.
+
 ## English names (`names-en/<city>.csv`)
 
 Sights are shown in English. OSM rarely has `name:en` and Wikidata labels are unreliable,
@@ -188,10 +283,13 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 | boost   | points (default 20)       | add to its score (max 100)          |
 | rename  | new name                  | replace the display name            |
 | reason  | short text                | replace the auto-drafted reason     |
-| image   | Commons file name, or empty | replace or remove the sight's photo |
-| popular | yes (default) or no       | force tier 1 (popular) on/off, any category; `yes` also passes the score floor |
+| image   | Commons file name, or empty | replace or remove the sight's photo (also the card `photo`, after `photos.py`) |
+| popular | yes (default) or no       | force tier 1 (popular) on/off, any category; `yes` also passes the score floor (not the hook+photo gate) |
+| hook    | one sentence, ≤ 80 chars  | hand-written hook line (ADR 015); beats `Data/hooks/<city>.jsonl` |
 
-`cache/` is not committed. `review/` and the app's `pois-*.json` are.
+`cache/` is not committed. `review/`, `hooks/` and the app's `pois-*.json` are.
+
+Tests for the hook and photo steps and the gate: `python3 Data/tests/test_hooks_photos.py`.
 
 `sources/` is committed (the Overture extract).
 

@@ -338,6 +338,7 @@ def integrate(pois, data, commons_counts):
             report["matched"] += 1
             report["matched_osm"].add(q["id"])
             q["sources"] = ["osm", "overture"]
+            q.setdefault("ovt_category", p.get("basic_category"))  # a fact for the hook (hooks.py)
             if not q.get("website") and not website_from_osm(q["tags"]) and clean_url(p.get("website")):
                 q["website"] = clean_url(p["website"])
                 report["filled_website"] += 1
@@ -353,6 +354,7 @@ def integrate(pois, data, commons_counts):
             "category": category, "tags": synthetic_tags(category, typ, p), "size_m": 0,
             "sitelinks": 0, "wikidata_label_en": None, "wikidata_image": None, "wikidata_category": None,
             "sources": ["overture"], "ovt_quality": quality(p), "ovt_type": typ,
+            "ovt_category": p.get("basic_category"),
         }
         if website := clean_url(p.get("website")):
             poi["website"] = website
