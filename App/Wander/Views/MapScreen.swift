@@ -12,6 +12,8 @@ struct MapScreen: View {
     @State private var location = LocationService()
     @State private var search = SearchService()
     @State private var store = POIStore()
+    /// Fetches the nightly-published places (FE-15, ADR 013).
+    @State private var updater = DataUpdater()
     @State private var recents = RecentDestinations()
     @State private var connectivity: Connectivity
     @State private var planner: PlannerModel
@@ -83,6 +85,7 @@ struct MapScreen: View {
                         recents: recents,
                         locationDenied: location.access == .denied,
                         offline: !connectivity.isOnline,
+                        placesGenerated: store.generated,
                         focusOnAppear: searchFocus,
                         onChoose: choose,
                         onCancel: closeSearch)
@@ -145,7 +148,11 @@ struct MapScreen: View {
             // FE-9: compass on while the map is visible, off in the background.
             .onChange(of: scenePhase, initial: true) { _, phase in
                 location.setHeadingActive(phase == .active)
+                // FE-15: at launch and on foreground (the updater keeps to every 6 h).
+                if phase == .active { checkForFreshPlaces() }
             }
+            // A plan or walk ended: swap in places downloaded meanwhile.
+            .onChange(of: isHome) { applyPendingPlaces() }
             .onDisappear {
                 walk?.tearDown()
                 location.setHeadingActive(false)
@@ -330,6 +337,24 @@ struct MapScreen: View {
             if debugOverlay { tierReadout }
         }
         #endif
+    }
+
+    /// Downloads newer places if the nightly publish has them (FE-15). Silent on
+    /// failure: the current data stays.
+    private func checkForFreshPlaces() {
+        Task {
+            let current = store.pending?.sha256 ?? store.sha256
+            guard let update = await updater.refreshIfDue(currentSHA256: current) else { return }
+            store.stage(update)
+            applyPendingPlaces()
+        }
+    }
+
+    /// Reloads the places only on the home map, so an open plan or walk keeps the
+    /// POIs it was built from; otherwise the update waits until it ends.
+    private func applyPendingPlaces() {
+        guard isHome, store.applyPending() else { return }
+        refreshBeads()
     }
 
     /// Picks the POI beads for the visible region by zoom tier (ADR 012, FE-13).
