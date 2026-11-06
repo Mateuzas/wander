@@ -4,6 +4,7 @@ with its re-key migration. Standard library only.
     python3 -m unittest discover -s Data/tests -t Data
 """
 import gzip
+import io
 import json
 import math
 import struct
@@ -11,6 +12,7 @@ import sys
 import tempfile
 import types
 import unittest
+import urllib.error
 from pathlib import Path
 from unittest import mock
 
@@ -210,7 +212,7 @@ class FetchTests(unittest.TestCase):
         z = photos.TILE_ZOOM
         def tile(t, token):
             return photos.tile_images(encode_tile(scene["images"], *t), *t)
-        data = {"places": {}, "commons_files": {}, "commons_categories": {}, "images": {},
+        data = {"places": {}, "commons_files": {}, "commons_categories": {}, "images": {}, "verified": {},
                 "mapillary": {f"{p['id']}@{p['lat']:.6f},{p['lon']:.6f},": {"checked": "2026-11-06", "photo": None}}}
         ctx = types.SimpleNamespace(slug="test", pois=[p])
         def get(path, params, token):
@@ -228,7 +230,8 @@ class FetchTests(unittest.TestCase):
                     mock.patch.object(photos, "mapillary_get", side_effect=get), \
                     mock.patch.dict("os.environ", {"GITHUB_STEP_SUMMARY": str(summary)}):
                 import datetime
-                counts, note = photos.run(ctx, 30, "secret-token", today=datetime.date(2026, 11, 7), diagnose=1)
+                counts, note = photos.run(ctx, 30, "secret-token", today=datetime.date(2026, 11, 7), diagnose=1,
+                                          check=lambda u: {"ok": True})
             report = summary.read_text()
         self.assertEqual(counts, {"food": {"mapillary": 1}})
         entry = next(iter(data["mapillary"].values()))
@@ -247,6 +250,85 @@ class FetchTests(unittest.TestCase):
         self.assertEqual(f({"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF_NAME": "main"}), 0)
         self.assertEqual(f({"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REF_NAME": "data/x"}),
                          run_nightly.DIAGNOSE_ON_BRANCH)
+
+
+class GraphRequestTests(unittest.TestCase):
+    def test_lookup_url_puts_the_encoded_token_in_the_query(self):
+        seen = {}
+        class Resp:
+            def __enter__(self):
+                return io.BytesIO(b'{"id": "329257085229029"}')
+            def __exit__(self, *a):
+                return False
+        def fake(req, timeout):
+            seen["url"], seen["headers"] = req.full_url, dict(req.header_items())
+            return Resp()
+        with mock.patch("urllib.request.urlopen", side_effect=fake):
+            photos.mapillary_get("329257085229029", {"fields": photos.MAPILLARY_FIELDS}, "MLY|123|abc")
+        self.assertTrue(seen["url"].startswith("https://graph.mapillary.com/329257085229029?"))
+        self.assertIn("access_token=MLY%7C123%7Cabc", seen["url"])
+        self.assertIn("fields=id%2Cthumb_1024_url", seen["url"])
+        self.assertNotIn("Authorization", seen["headers"])
+
+    def test_error_text_shows_the_body_and_redacts(self):
+        exc = urllib.error.HTTPError("u", 400, "Bad Request", {},
+                                     io.BytesIO(b'{"error":{"message":"Invalid token MLY%7C123%7Cabc"}}'))
+        text = photos.error_text(exc, "MLY|123|abc")
+        self.assertIn("Invalid token ***", text)
+        self.assertNotIn("123", text)
+
+
+class PhotoUrlTests(unittest.TestCase):
+    UTM = "?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original"
+    BASE = "https://upload.wikimedia.org/wikipedia/commons/"
+    NAME = "Gedimino_pilis_by_Augustas_Didzgalvis.jpg"
+
+    def test_thumb_url_drops_the_imageinfo_tracking_query(self):
+        url = f"{self.BASE}9/9d/{self.NAME}{self.UTM}"
+        self.assertEqual(photos.thumb_url(url, 4000), f"{self.BASE}thumb/9/9d/{self.NAME}/1280px-{self.NAME}")
+        self.assertEqual(photos.thumb_url(url + "#x", 1000), f"{self.BASE}9/9d/{self.NAME}")
+
+    def test_cached_broken_thumbnail_is_repaired(self):
+        broken = f"{self.BASE}thumb/9/9d/{self.NAME}{self.UTM}/1280px-{self.NAME}{self.UTM}"
+        self.assertEqual(photos.clean_commons_url(broken), f"{self.BASE}thumb/9/9d/{self.NAME}/1280px-{self.NAME}")
+
+    def test_commons_info_url_is_clean(self):
+        page = {"title": "File:G.jpg", "imageinfo": [{"mime": "image/jpeg", "width": 4000, "height": 3000,
+                "url": f"{self.BASE}9/9d/{self.NAME}{self.UTM}", "descriptionurl": "https://c/G"}]}
+        self.assertNotIn("?", photos.commons_info(page)["url"])
+
+    def test_strip_tracking_keeps_other_params(self):
+        self.assertEqual(website.strip_tracking("https://cdn.x/a.jpg?w=1200&utm_source=fb&fbclid=1#top"),
+                         "https://cdn.x/a.jpg?w=1200")
+        signed = "https://scontent.x/t.jpg?stp=dst-jpg&_nc_oc=AbC&oh=00_AbC&oe=6A000000"
+        self.assertEqual(website.strip_tracking(signed), signed)
+
+    def test_failed_verification_falls_through_to_the_next_source(self):
+        sight = {"category": "photo", "type": "church"}
+        commons = {"url": "https://c/1.jpg", "source": "commons"}
+        mly = {"url": "https://m/1.jpg", "source": "mapillary"}
+        good = {"https://m/1.jpg"}
+        self.assertIs(photos.choose(sight, commons, mly, None, lambda c: c["url"] in good), mly)
+        self.assertIsNone(photos.choose(sight, commons, None, None, lambda c: c["url"] in good))
+
+    def test_verify_all_caches_for_a_week(self):
+        import datetime
+        calls = []
+        def check(u):
+            calls.append(u)
+            return {"ok": u.endswith(".jpg")}
+        cache = {"https://a/old.jpg": {"checked": "2026-10-01", "ok": False},
+                 "https://a/new.jpg": {"checked": "2026-11-05", "ok": True}}
+        photos.verify_all(["https://a/old.jpg", "https://a/new.jpg", "https://a/x.html"], cache,
+                          datetime.date(2026, 11, 7), check)
+        self.assertEqual(sorted(calls), ["https://a/old.jpg", "https://a/x.html"])
+        self.assertTrue(cache["https://a/old.jpg"]["ok"])
+        cache2 = {"https://a/ok.jpg": {"checked": "2026-10-01", "ok": True}}
+        photos.verify_all(["https://a/ok.jpg", "https://a/n.jpg"], cache2, datetime.date(2026, 11, 7),
+                          lambda u: {"ok": False, "why": "HTTP 429", "transient": True})
+        self.assertTrue(cache2["https://a/ok.jpg"]["ok"])      # a rate limit keeps the earlier verdict
+        self.assertEqual(cache2["https://a/n.jpg"]["checked"], "")  # and is retried next run
+        self.assertFalse(cache["https://a/x.html"]["ok"])
 
 
 # ---- Facts hash ----------------------------------------------------------------------------

@@ -84,8 +84,12 @@ def cache_path(slug):
 def load(slug):
     path = cache_path(slug)
     data = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
-    for k in ("places", "commons_files", "commons_categories", "mapillary", "images"):
+    for k in ("places", "commons_files", "commons_categories", "mapillary", "images", "verified"):
         data.setdefault(k, {})
+    for k in ("commons_files", "commons_categories"):  # repair Commons URLs cached before BE-17
+        for entry in data[k].values():
+            if (entry or {}).get("photo"):
+                entry["photo"]["url"] = clean_commons_url(entry["photo"]["url"])
     return data
 
 
@@ -142,11 +146,19 @@ def commons_info(page):
     return out
 
 
+def clean_commons_url(url):
+    """An upload.wikimedia.org URL without any query or fragment. imageinfo URLs carry tracking
+    parameters (`?utm_source=commons.wikimedia.org&...`); a thumbnail built from such a URL had the
+    query in the middle of its path and returned HTTP 400 (BE-17). Also repairs those stored URLs."""
+    return re.sub(r"[?#][^/]*", "", url) if url else url
+
+
 def thumb_url(url, width):
     """The standard Commons thumbnail THUMB_WIDTH wide for an original upload URL (the original
     when it is not wider). Built from the URL instead of asking the API (`iiurlwidth`), which
     renders thumbnails and is rate limited."""
     prefix = "https://upload.wikimedia.org/wikipedia/commons/"
+    url = clean_commons_url(url)
     if not url or not url.startswith(prefix):
         return None
     if width <= THUMB_WIDTH:
@@ -240,10 +252,24 @@ def thumb_expiry(url):
 
 
 def mapillary_get(path, params, token):
-    url = f"{MAPILLARY_API}/{path}?{urllib.parse.urlencode(params)}"
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Authorization": f"OAuth {token}"})
+    """A Graph API GET. The token goes in `access_token` (percent-encoded, `MLY%7C...`), as for the
+    tiles: with only `Authorization: OAuth <token>` the first nightlies got HTTP 400 on every image
+    lookup and empty bbox searches (BE-17, run 42298394117), while the tiles answered."""
+    url = f"{MAPILLARY_API}/{urllib.parse.quote(str(path))}?{urllib.parse.urlencode({**params, 'access_token': token})}"
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
     with urllib.request.urlopen(req, timeout=30) as resp:
         return json.load(resp)
+
+
+def error_text(exc, token):
+    """An exception as loggable text, with the first 300 bytes of an HTTP error body; token redacted."""
+    body = ""
+    if isinstance(exc, urllib.error.HTTPError):
+        try:
+            body = " " + exc.read(300).decode("utf-8", "replace")
+        except Exception:
+            pass
+    return redact(f"{type(exc).__name__}: {exc}{body}", token)
 
 
 def image_point(img):
@@ -509,7 +535,11 @@ def refresh_mapillary_url(cand, token):
 
 
 def redact(text, token):
-    return str(text).replace(token, "***") if token else str(text)
+    text = str(text)
+    if token:
+        for form in (token, urllib.parse.quote(token, safe=""), urllib.parse.quote_plus(token)):
+            text = text.replace(form, "***")
+    return text
 
 
 def diagnose_mapillary(sample, tile_cache, token):
@@ -546,13 +576,7 @@ def diagnose_mapillary(sample, tile_cache, token):
             lines += [f"Graph API bbox search: {len(raw)} images returned"
                       + (f"; fields on the first: {sorted(raw[0])}" if raw else ""), ""] + table(rows) + [""]
         except Exception as exc:
-            body = ""
-            if isinstance(exc, urllib.error.HTTPError):
-                try:
-                    body = exc.read(300).decode("utf-8", "replace")
-                except Exception:
-                    pass
-            lines += [f"Graph API bbox search failed: {redact(exc, token)} {redact(body, token)}", ""]
+            lines += [f"Graph API bbox search failed: {error_text(exc, token)}", ""]
         try:
             stats = {}
             imgs = [i for t in tiles for i in (tile_cache.get(t) or [])] if all(tile_cache.get(t) is not None
@@ -561,7 +585,7 @@ def diagnose_mapillary(sample, tile_cache, token):
             lines += [f"Result: {cand['page'] + ' at ' + str(cand.get('distance_m')) + ' m' if cand else 'none'} "
                       f"{stats}", ""]
         except Exception as exc:
-            lines += [f"Result: error {redact(exc, token)}", ""]
+            lines += [f"Result: error {error_text(exc, token)}", ""]
     return "\n".join(lines) + "\n"
 
 
@@ -591,7 +615,7 @@ def website_candidate(p, site_entry, images, shared=frozenset()):
         if probe is None:
             continue  # not probed yet (photos.py probes first)
         if probe.get("ok") and not looks_like_logo(url, probe):
-            out = {"url": url, "source": "website", "credit": website.domain(p["site_url"]), "page": p["site_url"]}
+            out = {"url": website.strip_tracking(url), "source": "website", "credit": website.domain(p["site_url"]), "page": p["site_url"]}
             if probe.get("width"):
                 out["width"], out["height"] = probe["width"], probe.get("height")
             return out
@@ -600,15 +624,74 @@ def website_candidate(p, site_entry, images, shared=frozenset()):
 
 # ---- Choice -----------------------------------------------------------------------------
 
-def choose(p, commons, mapillary, site):
-    """The photo to publish (ADR 015): Commons first; then food, shops and venues prefer a large
-    website photo over Mapillary, and sights prefer Mapillary over the website."""
-    if commons:
-        return commons
+def ranked(p, commons, mapillary, site):
+    """The photo candidates in the order to publish them (ADR 015): Commons first; then food, shops
+    and venues prefer a large website photo over Mapillary, and sights prefer Mapillary."""
     venue_like = p["category"] in ("food", "shop") or p.get("type") in VENUE_TYPES
     large_site = site if site and (site.get("width") or 0) >= WEBSITE_LARGE else None
-    order = [large_site, mapillary, site] if venue_like else [mapillary, site]
-    return next((c for c in order if c), None)
+    order = [commons] + ([large_site, mapillary, site] if venue_like else [mapillary, site])
+    out = []
+    for c in order:
+        if c and c not in out:
+            out.append(c)
+    return out
+
+
+def choose(p, commons, mapillary, site, ok=lambda c: True):
+    """The first candidate whose URL passes `ok` (verify_url), or None."""
+    return next((c for c in ranked(p, commons, mapillary, site) if ok(c)), None)
+
+
+# ---- Verification before publishing ---------------------------------------------------------
+
+VERIFY_DAYS = 7
+VERIFY_WORKERS = 4
+
+
+def verify_url(url, attempts=4):
+    """{ok, why?, transient?}: a ranged GET of the first bytes must answer 200/206 with an image/*
+    type. 429 and 5xx are retried with backoff (Retry-After honoured); if they persist the result
+    is transient: not a broken URL, checked again next run."""
+    if not url or not url.startswith("https://"):
+        return {"ok": False, "why": "not https"}
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Range": "bytes=0-1023"})
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                ctype = resp.headers.get("Content-Type", "").split(";")[0].strip().lower()
+                resp.read(1024)
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code != 429 and exc.code < 500:
+                return {"ok": False, "why": f"HTTP {exc.code}"}
+            if attempt == attempts - 1:
+                return {"ok": False, "why": f"HTTP {exc.code}", "transient": True}
+            wait = exc.headers.get("Retry-After", "") if exc.headers else ""
+            time.sleep(min(30, int(wait)) if wait.isdigit() else 2 * 3 ** attempt)
+        except Exception as exc:
+            if attempt == attempts - 1:
+                return {"ok": False, "why": f"error: {type(exc).__name__}", "transient": True}
+            time.sleep(2 * 3 ** attempt)
+    if not ctype.startswith("image/"):
+        return {"ok": False, "why": f"type {ctype or 'none'}"}
+    return {"ok": True}
+
+
+def verify_all(urls, cache, today, check=None):
+    """Check every URL not verified in the last VERIFY_DAYS (cache: {url: {checked, ok, why?}})."""
+    check = check or verify_url
+    limit = (today - datetime.timedelta(days=VERIFY_DAYS)).isoformat()
+    todo = sorted({u for u in urls if u and (cache.get(u) or {}).get("checked", "") < limit})
+    if todo:
+        print(f"  verifying {len(todo)} photo URLs", flush=True)
+        with concurrent.futures.ThreadPoolExecutor(VERIFY_WORKERS) as pool:
+            for url, res in zip(todo, pool.map(check, todo)):
+                if res.get("transient"):
+                    # Rate limited or down: keep an earlier verdict, else unverified (retried next run).
+                    cache[url] = cache.get(url) or {"checked": "", "ok": False, "why": res.get("why")}
+                else:
+                    cache[url] = {"checked": today.isoformat(), **res}
+    return cache
 
 
 def public(photo):
@@ -618,7 +701,7 @@ def public(photo):
     return {k: photo[k] for k in ("url", "source", "credit", "license", "page") if photo.get(k)}
 
 
-def run(ctx, max_age_days, token, today=None, diagnose=0):
+def run(ctx, max_age_days, token, today=None, diagnose=0, check=None):
     slug, pois = ctx.slug, ctx.pois
     today = today or datetime.date.today()
     stale = (today - datetime.timedelta(days=max_age_days)).isoformat()
@@ -667,7 +750,7 @@ def run(ctx, max_age_days, token, today=None, diagnose=0):
     def mkey(p):
         return f"{p['id']}@{p['lat']:.6f},{p['lon']:.6f},{p['tags'].get('mapillary', '')}"
 
-    mly_note, mly_report = None, ""
+    mly_note, mly_report, mly_report_head = None, "", []
     if token:
         need = [p for p in pois if not commons_for(p)]
         soon = (datetime.datetime.combine(today, datetime.time()) +
@@ -682,11 +765,13 @@ def run(ctx, max_age_days, token, today=None, diagnose=0):
         tiles = sorted({t for p in todo + sample for t in tiles_around(p["lat"], p["lon"])})
         print(f"  mapillary: {len(todo)} searches in {len(tiles)} coverage tiles, {len(refresh)} URL refreshes",
               flush=True)
-        errors = {}
+        errors, bodies = {}, []
 
         def note(exc):
             msg = redact(f"{type(exc).__name__}: {exc}", token)[:120]
             errors[msg] = errors.get(msg, 0) + 1
+            if isinstance(exc, urllib.error.HTTPError) and len(bodies) < 3:
+                bodies.append(error_text(exc, token)[:400])
 
         def get_tile(t):
             try:
@@ -728,8 +813,13 @@ def run(ctx, max_age_days, token, today=None, diagnose=0):
         if errors:
             print(f"  ! mapillary: {sum(errors.values())} requests failed (retried next run): "
                   + "; ".join(f"{m} (x{n})" for m, n in sorted(errors.items(), key=lambda e: -e[1])[:5]))
+            for b in bodies:
+                print(f"    first failures: {b}")
+            if bodies and diagnose:
+                mly_report_head.append("First failed requests (body, token redacted):\n\n" +
+                                       "\n".join(f"- `{b}`" for b in bodies) + "\n")
         if sample:
-            mly_report = diagnose_mapillary(sample, tile_cache, token)
+            mly_report = diagnose_mapillary(sample, tile_cache, token) + "".join(mly_report_head)
     else:
         mly_note = "MAPILLARY_TOKEN not set: Mapillary skipped (cached Mapillary photos still used until they expire)"
 
@@ -739,21 +829,38 @@ def run(ctx, max_age_days, token, today=None, diagnose=0):
         for img in sites.get(url, {}).get("images", []):
             image_sites.setdefault(img, set()).add(website.domain(url))
     shared = frozenset(img for img, domains in image_sites.items() if len(domains) > 1)
-    counts = {}
+    counts, found = {}, {}
     for p in pois:
         commons = commons_for(p)
         mly = (data["mapillary"].get(mkey(p)) or {}).get("photo")
         if mly and mly.get("expires") and mly["expires"] < now:
             mly = None  # signed URL already expired and could not be refreshed
         site = website_candidate(p, sites.get(p.get("site_url") or ""), data["images"], shared)
-        chosen = choose(p, commons, mly, site)
+        found[p["id"]] = (commons, mly, site)
+
+    # Verify before publishing: every candidate URL must load as an image (BE-17: all Commons URLs
+    # were malformed and nothing caught it). A failed one falls through to the next source.
+    verify_all([c["url"] for p in pois for c in ranked(p, *found[p["id"]])], data["verified"], today, check)
+    verified = {}
+
+    def ok(c):
+        good = bool((data["verified"].get(c["url"]) or {}).get("ok"))
+        verified.setdefault(c["source"], {"verified": 0, "failed": 0})["verified" if good else "failed"] += 1
+        return good
+    for p in pois:
+        commons, mly, site = found[p["id"]]
+        chosen = choose(p, commons, mly, site, ok)
         data["places"][p["id"]] = {"key": input_key(p), "checked": today.isoformat(), "photo": public(chosen),
                                    "available": [s for s, c in (("commons", commons), ("mapillary", mly),
                                                                 ("website", site)) if c]}
         src = chosen["source"] if chosen else "none"
         counts.setdefault(p["category"], {}).setdefault(src, 0)
         counts[p["category"]][src] += 1
+    data["verified"] = {u: v for u, v in data["verified"].items() if v.get("checked", "") >= stale
+                        or not v.get("checked")}
     save(slug, data)
+    print("  photos verified by source: " + "; ".join(f"{s} {v['verified']} ok, {v['failed']} failed"
+                                                       for s, v in sorted(verified.items())))
     if mly_report:
         summary = os.environ.get("GITHUB_STEP_SUMMARY")
         if summary:
