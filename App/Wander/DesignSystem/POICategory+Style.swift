@@ -20,8 +20,9 @@ extension POICategory {
         }
     }
 
-    /// Every glyph a bead can show, checked in debug builds (a missing SF Symbol renders blank).
+    /// Every glyph a bead or mood chip can show, checked in debug builds (a missing SF Symbol renders blank).
     static let allGlyphs: [String] = POICategory.allCases.map(\.glyph) + POI.foodGlyphs.map(\.glyph) + [POI.foodFallbackGlyph]
+        + Mood.allCases.map(\.symbol)
 
     /// Spoken by VoiceOver before the place name ("Photo spot, Mural on Stiklių").
     var spokenName: String {

@@ -7,8 +7,8 @@ import RouteEngine
 /// Plans for the chosen destination (PLAN.md §7.2). Direct and Recommended
 /// are planned together in one `Planner.plans` call (Recommended's extra time is
 /// the engine's choice) and kept, so switching between them is instant.
-/// Interests, route style and removed or added stops re-plan both; interest and
-/// style changes are debounced, and the selected option is kept.
+/// The mood and removed or added stops re-plan both; mood changes are
+/// debounced, and the selected option is kept.
 @MainActor
 @Observable
 final class PlannerModel {
@@ -44,12 +44,11 @@ final class PlannerModel {
     /// The selected option. Set by the user through `select(_:)`; until then it
     /// follows the default (Recommended, or Direct when no detour is worth it).
     private(set) var mode: Mode = .recommended
-    var interests: Set<POICategory> = Set(POICategory.allCases) {
-        didSet { if interests != oldValue { invalidate(debounced: true) } }
+    /// The plan sheet's mood (FE-18): sets the interests and the engine weights.
+    var mood: Mood = .bestOf {
+        didSet { if mood != oldValue { invalidate(debounced: true) } }
     }
-    var profile: WeightPreset = .balanced {
-        didSet { if profile != oldValue { invalidate(debounced: true) } }
-    }
+    var interests: Set<POICategory> { mood.interests }
 
     /// POIs the user removed from the walk; left out of every plan.
     private(set) var excluded: Set<String> = []
@@ -70,7 +69,7 @@ final class PlannerModel {
     @ObservationIgnored private var task: Task<Void, Never>?
     @ObservationIgnored private var userChoseMode = false
 
-    /// Wait after a chip or style change before re-planning, so quick taps plan once.
+    /// Wait after a mood change before re-planning, so quick taps plan once.
     static let debounce: Duration = .milliseconds(400)
 
     init(connectivity: Connectivity) {
@@ -188,7 +187,7 @@ final class PlannerModel {
 
         let request = PlanRequest(
             origin: origin, destination: Coordinate(destination.coordinate), budget: 0,
-            interests: interests, weights: profile.weights, pois: activePOIs,
+            interests: interests, weights: mood.preset.weights, pois: activePOIs,
             time: Date(), timeZone: timeZone)
         let pinned = self.pinned, interests = self.interests, provider = self.provider
         let gen = generation
