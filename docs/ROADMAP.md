@@ -30,6 +30,11 @@ Split into separate features:
 4. **Michelin Guide places** (BE-11): starred, Bib Gourmand and selected restaurants as their own layer. Check the source terms before any scraping.
 5. **Source discovery for new cities:** an open problem; research later.
 
+## 4b. Swipe walks (ADR 016) and crowd ratings (ADR 017)
+- After the hooks and photos batch: choose kinds → area by time → swipe deck (love, like, nope) until the time is full →
+  engine orders the walk → optional coffee or shop add-on → walk. Replaces Direct, Recommended and moods.
+- Then crowd ratings: anonymous swipe counts to a small server, blended into scoring.
+
 ## 5. Perfect the engine
 With fresh data in place: recommendation quality, variety, "seen" memory (FE-3), and time budgets learned from walks.
 
