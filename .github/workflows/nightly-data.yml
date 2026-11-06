@@ -19,11 +19,12 @@ name: Nightly data
 # One Overpass request per city per run (run_nightly), and the caches persist between runs
 # so each night re-fetches only changes.
 #
-# Secrets (OPS-9 / ADR 015), passed as env to the run_nightly step only, never job-wide:
-#   ANTHROPIC_API_KEY  hooks (Data/hooks.py). Unset: cached hooks only, uncached places dropped.
-#   MAPILLARY_TOKEN    Mapillary photos. Unset: Commons and website photos only.
-# Both are optional so forks and the first runs work; the step summary says which were missing.
-# Data/cache/<city> (hooks.json, photos.json, first_seen.json, ...) persists via actions/cache.
+# Hooks (ADR 015) are written in Claude Code sessions and committed as Data/hooks/<city>.jsonl;
+# CI calls no LLM API and has no Anthropic key.
+# Secret (OPS-9): MAPILLARY_TOKEN, passed as env to the run_nightly step only, never job-wide.
+# Optional so forks and the first runs work: unset means Commons and website photos only,
+# and the step summary says so.
+# Data/cache/<city> (photos.json, first_seen.json, ...) persists via actions/cache.
 
 on:
   schedule:
@@ -91,14 +92,6 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.x"
-          cache: pip
-          cache-dependency-path: Data/requirements-hooks.txt
-
-      - name: Install pinned requirements (hooks)
-        run: |
-          set -euo pipefail
-          python3 -m pip install -r Data/requirements-hooks.txt
-          python3 -m pip list 2>/dev/null | grep -i '^anthropic '
 
       - name: Restore cache
         id: cache
@@ -122,22 +115,20 @@ jobs:
           esac
 
       # The live file is also run_nightly's baseline for the review summary (tier-1 new/gone).
-      # The only step that gets the API secrets. Never print env here (no `env`, `set -x`).
+      # The only step that gets a secret. Never print env here (no `env`, `set -x`).
       - name: run_nightly
         env:
           PREVIOUS: ${{ steps.previous.outputs.previous }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           MAPILLARY_TOKEN: ${{ secrets.MAPILLARY_TOKEN }}
         run: |
           set -euo pipefail
           {
             echo "## Sources: $CITY"
             echo
-            if [[ -n "$ANTHROPIC_API_KEY" ]]; then echo "- hooks: Anthropic API"; else echo "- hooks: cache only (no ANTHROPIC_API_KEY)"; fi
+            if [[ -f "Data/hooks/$CITY.jsonl" ]]; then echo "- hooks: Data/hooks/$CITY.jsonl ($(wc -l < "Data/hooks/$CITY.jsonl") lines)"; else echo "- hooks: none committed (no Data/hooks/$CITY.jsonl)"; fi
             if [[ -n "$MAPILLARY_TOKEN" ]]; then echo "- photos: Mapillary + Commons + website"; else echo "- photos: no Mapillary (no MAPILLARY_TOKEN)"; fi
             echo
           } | tee -a "$GITHUB_STEP_SUMMARY"
-          if [[ -z "$ANTHROPIC_API_KEY" ]]; then echo "::warning::hooks: cache only (no ANTHROPIC_API_KEY); uncached places are dropped"; fi
           if [[ -z "$MAPILLARY_TOKEN" ]]; then echo "::warning::photos: no Mapillary (no MAPILLARY_TOKEN)"; fi
           args=("$CITY" --out "$OUT" --previous "$PREVIOUS")
           if [[ "$REFRESH" == true ]]; then args+=(--refresh); fi
