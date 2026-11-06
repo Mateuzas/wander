@@ -39,6 +39,8 @@ struct POIDetail: View {
     var onNext: (() -> Void)?
     /// The sheet height the card needs to show everything (FE-17).
     var onHeight: ((CGFloat) -> Void)?
+    /// A square thumbnail beside the name instead of the hero photo (food nearby, FE-22).
+    var compact = false
 
     @State private var adding = false
     @State private var addMessage: String?
@@ -48,15 +50,27 @@ struct POIDetail: View {
     @State private var photoFailed = false
 
     /// A photo (or its placeholder) leads the card; the close button floats over it.
-    private var hasPhoto: Bool {
-        // A notice heads the card instead of the photo, and the close button sits by it.
-        guard notice == nil else { return false }
-        return connectivity.isOnline && !photoFailed && (poi.commonsImage != nil || poi.commonsCategory != nil)
+    private var hasPhoto: Bool { showsPhotoView && !photoFailed }
+
+    /// The hero view is in the card: the place's own photo (tried even offline, it may be
+    /// cached), or Commons photos when online. Not with a notice or in the compact layout.
+    private var showsPhotoView: Bool {
+        guard notice == nil, !compact else { return false }
+        return poi.photo != nil
+            || connectivity.isOnline && (poi.commonsImage != nil || poi.commonsCategory != nil)
     }
 
     /// Directions, add/remove and Skip: pinned at the bottom, always on screen.
     private var hasActions: Bool {
         onDirections != nil || onNext != nil || action != .none || walkSkip != nil
+    }
+
+    /// The small line under the pitch: the caller's subtitle, else the reason (the type)
+    /// when the hook took the pitch's place, else the category.
+    private var captionLine: String {
+        if let subtitle { return subtitle }
+        if poi.hookLine != nil, !poi.reason.isEmpty { return poi.reason }
+        return poi.category.spokenName
     }
 
     var body: some View {
@@ -70,34 +84,13 @@ struct POIDetail: View {
                         .padding(.trailing, Layout.minTouch)
                         .accessibilityAddTraits(.isHeader)
                 }
-                if connectivity.isOnline, poi.commonsImage != nil || poi.commonsCategory != nil {
-                    CommonsPhotoView(fileName: poi.commonsImage, category: poi.commonsCategory,
-                                     failed: $photoFailed)
+                if showsPhotoView {
+                    PlacePhotoView(lead: poi.photo, fileName: poi.commonsImage,
+                                   category: poi.commonsCategory, glyph: poi.glyph,
+                                   failed: $photoFailed)
                 }
 
-                HStack(alignment: .top, spacing: Layout.grid * 1.5) {
-                    Bead(category: poi.category, glyph: poi.glyph, isPopular: poi.mapTier == 1)
-                        .padding(.top, 2)
-                    VStack(alignment: .leading, spacing: Layout.grid / 2) {
-                        Text(poi.name)
-                            .font(WanderFont.heading)
-                            .foregroundStyle(.ink)
-                        Text(subtitle ?? poi.category.spokenName)
-                            .font(WanderFont.caption)
-                            .foregroundStyle(.inkMuted)
-                    }
-                    Spacer(minLength: 0)
-                }
-                // Room for the close button when there is no photo to float it over.
-                .padding(.trailing, hasPhoto || notice != nil ? 0 : Layout.minTouch)
-                .accessibilityElement(children: .contain)
-
-                if !poi.reason.isEmpty {
-                    Text(poi.reason)
-                        .font(WanderFont.body)
-                        .foregroundStyle(.ink)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
+                if compact { compactHeader } else { header }
 
                 descriptionView
                 placeInfo
@@ -124,6 +117,75 @@ struct POIDetail: View {
         .task(id: poi.id) { await loadPlaceInfo() }
     }
 
+    // MARK: - Name, hook and type (FE-22)
+
+    /// Under the hero: the name, the hook as the card's headline line, the type as a caption.
+    /// Without a hook (older data) the reason takes the pitch line, as before.
+    private var header: some View {
+        VStack(alignment: .leading, spacing: Layout.grid) {
+            HStack(alignment: .firstTextBaseline, spacing: Layout.grid) {
+                Bead(category: poi.category, glyph: poi.glyph, isPopular: poi.mapTier == 1)
+                    .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 7 }
+                Text(poi.name)
+                    .font(WanderFont.title)
+                    .foregroundStyle(.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                Spacer(minLength: 0)
+            }
+            // Room for the close button when there is no photo to float it over.
+            .padding(.trailing, hasPhoto || notice != nil ? 0 : Layout.minTouch)
+            pitchText
+            Text(captionLine)
+                .font(WanderFont.caption)
+                .foregroundStyle(.inkMuted)
+        }
+        .accessibilityElement(children: .contain)
+    }
+
+    /// Food nearby: a square photo beside the name, the pitch and "Coffee · 6 min walk".
+    private var compactHeader: some View {
+        HStack(alignment: .top, spacing: Layout.grid * 1.5) {
+            PlaceThumbnail(poi: poi, size: 72)
+            VStack(alignment: .leading, spacing: Layout.grid / 2) {
+                Text(poi.name)
+                    .font(WanderFont.heading)
+                    .foregroundStyle(.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityAddTraits(.isHeader)
+                if let pitch = poi.pitch {
+                    Text(pitch)
+                        .font(WanderFont.body)
+                        .foregroundStyle(.ink)
+                        .lineLimit(2)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Text(captionLine)
+                    .font(WanderFont.caption)
+                    .foregroundStyle(.inkMuted)
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.trailing, notice != nil ? 0 : Layout.minTouch)
+        .accessibilityElement(children: .contain)
+    }
+
+    /// The hook in the emphasised body style, or the reason in plain body for older data.
+    @ViewBuilder
+    private var pitchText: some View {
+        if let hook = poi.hookLine {
+            Text(hook)
+                .font(WanderFont.hook)
+                .foregroundStyle(.ink)
+                .fixedSize(horizontal: false, vertical: true)
+        } else if !poi.reason.isEmpty {
+            Text(poi.reason)
+                .font(WanderFont.body)
+                .foregroundStyle(.ink)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
     /// 44 × 44 pt hit area with a small material disc, readable on any photo.
     private var closeButton: some View {
         Button(action: onClose) {
@@ -144,7 +206,7 @@ struct POIDetail: View {
 
     // MARK: - Description (FE-17)
 
-    /// The longer description from the data, under the reason. Wikipedia text is
+    /// The longer description from the data, under the hook. Wikipedia text is
     /// CC BY-SA, so it carries a "From Wikipedia" link to the article. Nothing
     /// shows when the place has no description.
     @ViewBuilder
