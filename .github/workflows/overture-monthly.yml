@@ -1,0 +1,180 @@
+name: Overture monthly
+
+# OPS-8 / ADR 014: refresh Data/sources/overture/<city>.json for every city in
+# Data/cities.json from the latest (or a chosen) Overture Maps release, and open a
+# PR with the change. Overture data never auto-merges: a person reviews and merges it.
+#
+#   python3 Data/overture_extract.py <city> --release <release> --out Data/sources/overture/<city>.json
+#
+# "latest" is resolved to a concrete release (stac.overturemaps.org, the entry marked
+# latest) before extracting, so every city in one run uses the same release and the
+# branch is named after it: data/overture-<release>. If the files are unchanged the run
+# ends green with a summary and opens nothing. If the branch already has an open PR
+# (a re-run), the branch is force-pushed and the PR body updated.
+#
+# The PR is opened with this job's GITHUB_TOKEN (no PAT). GitHub does not start other
+# workflows for events caused by GITHUB_TOKEN, so CI and the secret scan do NOT run on
+# that PR by themselves. To run them: push an empty commit to the branch
+#   git commit --allow-empty -m "ci: run checks" && git push
+# or close and reopen the PR.
+#
+# Overture's monthly release usually lands around the third week; the 3rd of the next
+# month leaves margin. Data is read anonymously from Overture's public S3 bucket.
+
+on:
+  schedule:
+    - cron: "0 4 3 * *"
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Overture release: "latest" or YYYY-MM-DD.N'
+        type: string
+        default: latest
+
+concurrency:
+  group: overture-monthly
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  extract:
+    name: Extract and open PR
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      # Scheduled runs have no inputs.
+      RELEASE_INPUT: ${{ inputs.release || 'latest' }}
+      BASE: ${{ github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+          cache: pip
+          cache-dependency-path: Data/requirements-overture.txt
+      - name: Install pinned requirements
+        run: |
+          set -euo pipefail
+          python3 -m pip install -r Data/requirements-overture.txt
+          python3 -m pip list 2>/dev/null | grep -i duckdb
+
+      - name: Resolve release
+        id: release
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_INPUT" =~ ^(latest|[0-9]{4}-[0-9]{2}-[0-9]{2}\.[0-9]+)$ ]]; then
+            echo "::error::release must be \"latest\" or YYYY-MM-DD.N, got: $RELEASE_INPUT"; exit 1
+          fi
+          release="$RELEASE_INPUT"
+          if [[ "$release" == latest ]]; then
+            release="$(curl -sS -L --retry 3 --retry-all-errors https://stac.overturemaps.org/catalog.json \
+              | python3 -c 'import json,sys; print(next(l["href"].rstrip("/").split("/")[-2] for l in json.load(sys.stdin)["links"] if l.get("latest")))')"
+          fi
+          [[ "$release" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}\.[0-9]+$ ]] || { echo "::error::could not resolve release: $release"; exit 1; }
+          echo "Release: $release (input: $RELEASE_INPUT)"
+          echo "release=$release" >> "$GITHUB_OUTPUT"
+
+      - name: Extract every city
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+        run: |
+          set -euo pipefail
+          mkdir -p Data/sources/overture
+          for city in $(python3 -c 'import json; print(" ".join(sorted(json.load(open("Data/cities.json")))))'); do
+            out="Data/sources/overture/$city.json"
+            echo "::group::$city"
+            echo "python3 Data/overture_extract.py $city --release $RELEASE --out $out"
+            python3 Data/overture_extract.py "$city" --release "$RELEASE" --out "$out"
+            ls -l "$out"
+            echo "::endgroup::"
+          done
+
+      # Per city: place count and size, before (HEAD) and after. Written to the step
+      # summary and reused as the PR body.
+      - name: Summarise
+        id: summary
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+        run: |
+          set -euo pipefail
+          git add -A Data/sources/overture
+          changed="$(git diff --cached --name-only -- Data/sources/overture | wc -l | tr -d ' ')"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          python3 - "$RELEASE" "$changed" > "$RUNNER_TEMP/summary.md" <<'PY'
+          import json, os, subprocess, sys
+          release, changed = sys.argv[1], int(sys.argv[2])
+
+          def count(raw):
+              if raw is None:
+                  return None
+              data = json.loads(raw)
+              if isinstance(data, dict):
+                  data = data.get("places", next((v for v in data.values() if isinstance(v, list)), []))
+              return len(data)
+
+          def head(path):
+              r = subprocess.run(["git", "show", f"HEAD:{path}"], capture_output=True)
+              return r.stdout if r.returncode == 0 else None
+
+          def fmt(n):
+              return "–" if n is None else f"{n:,}"
+
+          def delta(a, b):
+              return "new" if a is None else f"{b - a:+,}"
+
+          cities = sorted(json.load(open("Data/cities.json")))
+          print(f"## Overture places {release}\n")
+          print("| city | places | Δ places | size (bytes) | Δ size |")
+          print("|---|---:|---:|---:|---:|")
+          for c in cities:
+              p = f"Data/sources/overture/{c}.json"
+              old, new = head(p), open(p, "rb").read()
+              oc, nc = count(old), count(new)
+              os_, ns = (None if old is None else len(old)), len(new)
+              print(f"| {c} | {fmt(nc)} | {delta(oc, nc)} | {fmt(ns)} | {delta(os_, ns)} |")
+          print()
+          print(f"{changed} file(s) changed." if changed else "No changes: nothing to open.")
+          PY
+          cat "$RUNNER_TEMP/summary.md" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Open PR
+        if: steps.summary.outputs.changed != '0'
+        env:
+          RELEASE: ${{ steps.release.outputs.release }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          branch="data/overture-$RELEASE"
+          title="data: Overture places $RELEASE"
+          {
+            cat "$RUNNER_TEMP/summary.md"
+            echo
+            echo "Extracted by [Overture monthly]($RUN_URL) from \`$BASE\` with \`Data/overture_extract.py --release $RELEASE\` (ADR 014, OPS-8)."
+            echo "Overture data never auto-merges: review the counts and merge by hand."
+            echo
+            echo "**CI has not run on this PR.** It was opened with the workflow's GITHUB_TOKEN, and GitHub does not start"
+            echo "other workflows for that. To run the checks, push an empty commit to \`$branch\`"
+            echo "(\`git commit --allow-empty -m \"ci: run checks\" && git push\`) or close and reopen this PR."
+          } > "$RUNNER_TEMP/body.md"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git switch -c "$branch"
+          git commit -q -m "$title" -m "Data/sources/overture refreshed by $RUN_URL"
+          git push --force origin "$branch"
+
+          existing="$(gh pr list --head "$branch" --base "$BASE" --state open --json url --jq '.[0].url')"
+          if [[ -n "$existing" ]]; then
+            gh pr edit "$existing" --title "$title" --body-file "$RUNNER_TEMP/body.md"
+            url="$existing"
+          else
+            url="$(gh pr create --base "$BASE" --head "$branch" --title "$title" --body-file "$RUNNER_TEMP/body.md")"
+          fi
+          echo "PR: $url"
+          { echo; echo "PR: $url"; } >> "$GITHUB_STEP_SUMMARY"
