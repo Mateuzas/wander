@@ -51,6 +51,8 @@ struct SearchPanel: View {
     let onChoose: (Destination) -> Void
     /// A "Nearby" kind, and for a restaurant the cuisine (nil means any).
     var onFood: (FoodKind, String?) -> Void = { _, _ in }
+    /// False while picking a swipe walk's destination: no "Nearby" food row.
+    var showsNearby = true
     let onCancel: () -> Void
 
     /// Recents shown in the island (FE-20).
@@ -132,7 +134,7 @@ struct SearchPanel: View {
             } else {
                 if let cuisines {
                     cuisineStep(cuisines)
-                } else {
+                } else if showsNearby {
                     nearbyRow
                 }
                 if !recents.items.isEmpty {
