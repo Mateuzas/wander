@@ -157,6 +157,9 @@ public enum RejectionReason: String, Hashable, Sendable {
     case onTheWay
     /// Every insertion that fits the budget would make the route backtrack.
     case backtracks
+    /// Recommended only: verified, but its value per real extra minute is
+    /// below `PlannerConfig.minValuePerMinute`.
+    case notWorthIt
     /// Chosen by the estimate, then dropped because real routing went over budget.
     case failedVerification
     /// Lay on the fast route, but the chosen detour no longer passes it.
