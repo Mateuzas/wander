@@ -1,8 +1,8 @@
 import RouteEngine
 import SwiftUI
 
-/// The food-nearby result in the sheet (FE-19): the usual place card with
-/// "N min walk", Directions and "Next option"; "Nothing open nearby" with the
+/// The food-nearby result in the sheet (FE-19): the compact place card (a square
+/// photo, the hook and "N min walk", FE-22) with Directions and "Next option"; "Nothing open nearby" with the
 /// nearest closed place; or a short status while it looks.
 struct FoodCard: View {
     let finder: FoodFinder
@@ -20,7 +20,8 @@ struct FoodCard: View {
                 onClose: onClose,
                 subtitle: "\(kindLine(for: result.poi)) · \(result.minutes) min walk",
                 onNext: finder.hasNext ? { finder.next() } : nil,
-                onHeight: onHeight)
+                onHeight: onHeight,
+                compact: true)
             .id(result.poi.id)
             .transition(.opacity)
         case .nothingOpen(let closed?):
@@ -30,7 +31,8 @@ struct FoodCard: View {
                 onClose: onClose,
                 subtitle: closedLine(for: closed),
                 notice: "Nothing open nearby",
-                onHeight: onHeight)
+                onHeight: onHeight,
+                compact: true)
         case .nothingOpen(nil):
             status(heading: "Nothing open nearby") {
                 Text("No \(request.cuisine == nil ? request.title.lowercased() : request.title) places within a short walk.")

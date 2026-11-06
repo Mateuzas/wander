@@ -24,6 +24,8 @@ enum WanderFont {
     static var title: Font { custom(24, .semibold, relativeTo: .title2) }
     /// 18 / 600. Highlight names.
     static var heading: Font { custom(18, .semibold, relativeTo: .headline) }
+    /// 18 / 400. A place's hook line (FE-22): the body style a step up, under the place's name.
+    static var hook: Font { custom(18, .regular, relativeTo: .body) }
     /// 16 / 400. Reasons, instructions.
     static var body: Font { custom(16, .regular, relativeTo: .body) }
     /// 13 / 500, tabular. Distances, secondary details.
