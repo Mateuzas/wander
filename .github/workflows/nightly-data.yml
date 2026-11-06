@@ -86,7 +86,7 @@ jobs:
         run: |
           set -euo pipefail
           args=("$CITY" --out "$OUT")
-          [[ "$REFRESH" == true ]] && args+=(--refresh)
+          if [[ "$REFRESH" == true ]]; then args+=(--refresh); fi
           echo "python3 Data/run_nightly.py ${args[*]}"
           python3 Data/run_nightly.py "${args[@]}"
           ls -l "$OUT"
