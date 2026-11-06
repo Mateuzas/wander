@@ -5,8 +5,12 @@ import Testing
 struct WalkTrackerTests {
     // MARK: Golden-route walks
 
-    @Test(arguments: Array(0..<20)) func noisyWalkAlongGoldenRoute(seed: Int) async throws {
-        let plan = try await Golden.detourPlan(seed % 10)
+    /// Seeds for the walks on Recommended golden plans: 10 per route, a
+    /// stress run over noise, with and without a course.
+    static let walkSeeds = Array(0..<100)
+
+    @Test(arguments: walkSeeds) func noisyWalkAlongGoldenRoute(seed: Int) async throws {
+        let plan = try await Golden.recommendedPlan(seed % 10)
         #expect(plan.waypoints.count > 0)
         var tracker = WalkTracker(plan: plan)
         var noise = GPSNoise(rng: SplitMix64(seed: UInt64(seed)), sigma: 8)
@@ -60,26 +64,19 @@ struct WalkTrackerTests {
         #expect(Double(errors.filter { $0 < 25 }.count) / Double(errors.count) > 0.99)
     }
 
-    @Test(arguments: Array(0..<20)) func wrongTurnTriggersOffRouteExactlyOnce(seed: Int) async throws {
-        let plan = try await Golden.detourPlan(seed % 10)
+    @Test(arguments: walkSeeds) func wrongTurnTriggersOffRouteExactlyOnce(seed: Int) async throws {
+        let plan = try await Golden.recommendedPlan(seed % 10)
         var tracker = WalkTracker(plan: plan)
         let route = samples(along: plan.polyline, every: 1.4)
-        let turnAt = route.count * 2 / 5
 
-        // Walk off sideways for 200 m (whichever side leads away from the route),
-        // wait, then walk back to the same spot.
-        let line = MeasuredPolyline(plan.polyline, projection: LocalProjection(origin: plan.polyline[0]))
-        let a = route[turnAt], b = route[turnAt + 5]
-        let east = (b.lon - a.lon) * cos(a.lat * .pi / 180), north = b.lat - a.lat
-        let norm = (east * east + north * north).squareRoot()
-        let sides = [1.0, -1.0].map { s in offset(a, east: -north / norm * 200 * s, north: east / norm * 200 * s) }
-        let away = sides.max { line.nearest(to: $0).distance < line.nearest(to: $1).distance }!
-        #expect(line.nearest(to: away).distance > 120)
-        let out = samples(along: [a, away], every: 1.4)
-        let detour = out + Array(repeating: away, count: 20) + out.reversed()
+        // Walk off the route (in a direction and for a length worked out from
+        // the route, so the walker really ends up more than 120 m from all of
+        // it), wait, then walk back to the same spot and carry on.
+        let turn = try #require(wrongTurn(off: route, from: route.count * 2 / 5, polyline: plan.polyline))
+        let detour = turn.path + Array(repeating: turn.path.last!, count: 20) + turn.path.reversed()
 
         var noise = GPSNoise(rng: SplitMix64(seed: UInt64(seed) + 100), sigma: 8)
-        let points = (Array(route[..<turnAt]) + detour + Array(route[turnAt...])).map { noise.jitter($0) }
+        let points = (Array(route[..<turn.at]) + detour + Array(route[turn.at...])).map { noise.jitter($0) }
         let updates = walk(&tracker, through: points)
         let events = updates.flatMap(\.events)
 
@@ -90,6 +87,19 @@ struct WalkTrackerTests {
         for update in updates where update.isOffRoute {
             #expect(!update.events.contains { if case .nudgeShown = $0 { true } else { false } })
         }
+        // Nudges shown once each.
+        let shown = events.compactMap { event -> String? in
+            if case .nudgeShown(let nudge) = event { return nudge.highlight.poi.id }
+            return nil
+        }
+        #expect(Set(shown).count == shown.count)
+        // Before the turn and after rejoining, progress tracks the walker.
+        let rejoined = turn.at + detour.count
+        let errors = (0..<turn.at).map { abs(updates[$0].progress - Double($0) * 1.4) }
+            + (rejoined..<points.count).map { i in
+                abs(updates[i].progress - min(Double(i - detour.count) * 1.4, updates[i].routeLength))
+            }
+        #expect(errors.max()! < 60)
     }
 
     // MARK: Off route
