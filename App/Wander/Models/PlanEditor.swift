@@ -5,7 +5,8 @@ import RouteEngine
 ///
 /// RouteEngine has no input for "this POI must be a waypoint", so this inserts
 /// it at the cheapest position, routes the changed legs for real, and keeps it
-/// only if the walk stays within budget, using the engine's own limits (per-mode stop cap, verification tolerance).
+/// only if the walk stays within Recommended's limits: the engine's
+/// `recommendedMaxExtra` cap (with its verification tolerance) and 5 stops.
 enum PlanEditor {
     enum Outcome {
         case added(WanderPlan)
@@ -14,6 +15,9 @@ enum PlanEditor {
     }
 
     static var config: PlannerConfig { .default }
+
+    /// Most stops a Recommended walk may have (contract: "at most 5 stops").
+    static var maxStops: Int { Mode.recommended.maxWaypoints }
 
     /// Cheapest insertion index for `poi` among the plan's waypoints, and its
     /// estimated extra seconds (haversine, like the engine's estimate).
@@ -30,20 +34,20 @@ enum PlanEditor {
         return best
     }
 
-    /// Real-time limit for a plan: baseline plus budget, with the engine's verification tolerance.
-    static func limit(for plan: WanderPlan, budget: TimeInterval) -> TimeInterval {
-        plan.baseline.duration + budget * (1 + config.verificationTolerance)
+    /// Real-time limit for a Recommended plan: baseline plus the recommended
+    /// cap, with the engine's verification tolerance.
+    static func limit(for plan: WanderPlan) -> TimeInterval {
+        plan.baseline.duration + config.recommendedMaxExtra * (1 + config.verificationTolerance)
     }
 
     /// Quick offline check, for deciding whether to offer "Add to walk".
-    static func estimateFits(_ poi: POI, in plan: WanderPlan, budget: TimeInterval) -> Bool {
-        plan.totalTime + bestInsertion(of: poi, in: plan).extra <= limit(for: plan, budget: budget)
+    static func estimateFits(_ poi: POI, in plan: WanderPlan) -> Bool {
+        plan.totalTime + bestInsertion(of: poi, in: plan).extra <= limit(for: plan)
     }
 
-    static func adding(_ poi: POI, to plan: WanderPlan, mode: Mode, pois: [POI],
+    static func adding(_ poi: POI, to plan: WanderPlan, pois: [POI],
                        interests: Set<POICategory>, provider: WalkingTimeProvider) async throws -> Outcome {
-        guard plan.waypoints.count < mode.maxWaypoints else { return .full }
-        let budget = mode.budget
+        guard plan.waypoints.count < maxStops else { return .full }
         var waypoints = plan.waypoints
         waypoints.insert(poi, at: bestInsertion(of: poi, in: plan).index)
 
@@ -53,7 +57,7 @@ enum PlanEditor {
             legs.append(try await provider.leg(from: stops[i - 1], to: stops[i]))
         }
         let total = legs.reduce(0) { $0 + $1.duration }
-        guard total <= limit(for: plan, budget: budget) else { return .doesntFit }
+        guard total <= limit(for: plan) else { return .doesntFit }
 
         var result = WanderPlan(
             baseline: plan.baseline, waypoints: waypoints, legs: legs, totalTime: total,
