@@ -61,7 +61,7 @@ struct SwipeWalkTests {
         #expect(ids(result) == ["t1", "a90", "c60", "b50", "a89", "a88", "t3"])
     }
 
-    @Test func deckUsesAffinityAsTiebreak() {
+    @Test func deckBreaksEqualScoresByAffinity() {
         let pois = [
             poi("a", east: 0, north: 0, type: "church"),
             poi("b", east: 1000, north: 0, type: "mural"),
@@ -116,14 +116,23 @@ struct SwipeWalkTests {
         #expect(own.affinity(for: mural, now: now) == 0)
     }
 
-    @Test func affinityNeverBeatsTierOrScore() {
+    @Test func lovedTypeMovesUpWithinItsTierOnly() {
         let pois = [poi("t1", east: 0, north: 0, score: 50, tier: 1, type: "church"),
-                    poi("t2", east: 1000, north: 0, score: 90, tier: 2, type: "mural"),
-                    poi("t2b", east: -1000, north: 0, score: 60, tier: 2, type: "mural")]
+                    poi("church2", east: 1000, north: 0, score: 85, tier: 2, type: "church"),
+                    poi("mural2", east: -1000, north: 0, score: 80, tier: 2, type: "mural"),
+                    poi("mural3", east: 0, north: 1000, score: 100, tier: 3, type: "mural")]
+        let before = deck(pois: pois, area: everything, kinds: [.sights], memory: SwipeMemory(), seen: [], now: now)
+        #expect(ids(before) == ["t1", "church2", "mural2", "mural3"])
         var memory = SwipeMemory()
-        for i in 0..<10 { memory.record(.love, for: poi("f\(i)", east: 0, north: 0, type: "church"), at: now) }
-        let result = deck(pois: pois, area: everything, kinds: [.sights], memory: memory, seen: [], now: now)
-        #expect(ids(result) == ["t1", "t2", "t2b"])
+        for i in 0..<3 { memory.record(.love, for: poi("f\(i)", east: 0, north: 0, type: "mural"), at: now) }
+        let after = deck(pois: pois, area: everything, kinds: [.sights], memory: memory, seen: [], now: now)
+        // The loved type passes a 5-point higher place in tier 2, but tiers never cross.
+        #expect(ids(after) == ["t1", "mural2", "church2", "mural3"])
+        // The same cell: the effective score picks which place goes first.
+        let cell = [poi("church", east: 10, north: 10, score: 85, type: "church"),
+                    poi("mural", east: 20, north: 20, score: 80, type: "mural")]
+        #expect(ids(deck(pois: cell, area: everything, kinds: [.sights], memory: memory, seen: [], now: now))
+                == ["mural", "church"])
     }
 
     @Test func memoryHidesNopesFor90Days() {

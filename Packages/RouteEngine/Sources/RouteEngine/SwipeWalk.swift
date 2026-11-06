@@ -199,6 +199,10 @@ public struct WalkPlan: Hashable, Sendable {
     }
 }
 
+/// Score points per unit of `SwipeMemory` affinity in deck order, so loved
+/// kinds rank higher next time (ADR 016). Never crosses tiers.
+let deckAffinityPoints = 20.0
+
 /// Grid cell size in metres for spreading a deck across its area.
 let deckCellSize = 150.0
 
@@ -207,8 +211,8 @@ let deckCellSize = 150.0
 /// Keeps places of the chosen `kinds` inside `area`, drops places noped in the
 /// last 90 days, and orders tier 1, then 2, then 3. Within a tier the deck is
 /// spread over ~150 m grid cells: the best place of every cell, then the
-/// second best of every cell, and so on; within a round higher score first,
-/// then higher `memory.affinity`, then id. Places in `seen` go to the end
+/// second best of every cell, and so on. "Best" is the effective score,
+/// `score + 20 × memory.affinity` (−6…+10 points), then score, then id. Places in `seen` go to the end
 /// (same order rules). Deterministic.
 public func deck(pois: [POI], area: DeckArea, kinds: Set<DeckKind>, memory: SwipeMemory,
                  seen: Set<String>, now: Date) -> [POI] {
@@ -219,10 +223,13 @@ public func deck(pois: [POI], area: DeckArea, kinds: Set<DeckKind>, memory: Swip
         !hidden.contains(poi.id) && kinds.contains { $0.matches(poi) }
             && area.contains(poi.coordinate) && unique.insert(poi.id).inserted
     }
-    struct Card { var poi: POI; var affinity: Double; var cell: SIMD2<Int> }
+    struct Card { var poi: POI; var affinity: Double; var cell: SIMD2<Int>
+        /// Score plus `deckAffinityPoints` × affinity (−6…+10 points by default).
+        var effective: Double { Double(poi.score) + deckAffinityPoints * affinity }
+    }
     func better(_ a: Card, _ b: Card) -> Bool {
+        if a.effective != b.effective { return a.effective > b.effective }
         if a.poi.score != b.poi.score { return a.poi.score > b.poi.score }
-        if a.affinity != b.affinity { return a.affinity > b.affinity }
         return a.poi.id < b.poi.id
     }
     let cards = kept.map { poi -> Card in
