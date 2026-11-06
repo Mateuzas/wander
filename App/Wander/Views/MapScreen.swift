@@ -31,6 +31,8 @@ struct MapScreen: View {
     @State private var cardHeight: CGFloat = 0
     @State private var debugOverlay = false
     @AppStorage(WanderMapStyle.storageKey) private var mapStyle = WanderMapStyle.map
+    /// The plan sheet's mood (FE-18), kept between launches.
+    @AppStorage(Mood.storageKey) private var mood = Mood.bestOf
     @State private var walk: WalkModel?
     @State private var rotation = MapRotation()
 
@@ -321,7 +323,8 @@ struct MapScreen: View {
             search.region = context.region
             refreshBeads()
         }
-        .onChange(of: planner.interests) { refreshBeads() }
+        .onChange(of: beadInterests) { refreshBeads() }
+        .onChange(of: mood) { planner.mood = mood }
         #if DEBUG
         .overlay(alignment: .topLeading) {
             if debugOverlay { tierReadout }
@@ -333,7 +336,12 @@ struct MapScreen: View {
     private func refreshBeads() {
         guard let region = visibleRegion else { return }
         visiblePOIs = store.beads(in: region, viewSize: mapSize, keeping: Set(visiblePOIs.map(\.id)),
-                                  interests: planner.interests)
+                                  interests: beadInterests)
+    }
+
+    /// While a plan or walk shows, beads follow the mood (FE-18); the home map shows every category.
+    private var beadInterests: Set<POICategory> {
+        isHome ? Set(POICategory.allCases) : planner.interests
     }
 
     private struct BeadItem: Identifiable {
@@ -538,10 +546,10 @@ struct MapScreen: View {
 
     private func planSheet(_ destination: Destination) -> some View {
         #if DEBUG
-        PlanSheet(planner: planner, destination: destination, onClose: closePlan,
+        PlanSheet(planner: planner, destination: destination, mood: $mood, onClose: closePlan,
                   onFocus: focus, onStartWalk: startWalk, debugOverlay: $debugOverlay)
         #else
-        PlanSheet(planner: planner, destination: destination, onClose: closePlan,
+        PlanSheet(planner: planner, destination: destination, mood: $mood, onClose: closePlan,
                   onFocus: focus, onStartWalk: startWalk)
         #endif
     }
@@ -567,6 +575,7 @@ struct MapScreen: View {
         recents.add(place)
         selectedPOI = nil
         clearPin()
+        planner.mood = mood
         planner.start(
             destination: place,
             origin: location.location.map { Coordinate($0.coordinate) },

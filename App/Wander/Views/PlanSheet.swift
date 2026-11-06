@@ -5,6 +5,8 @@ import SwiftUI
 struct PlanSheet: View {
     @Bindable var planner: PlannerModel
     let destination: Destination
+    /// The last mood, remembered between launches by the map screen.
+    @Binding var mood: Mood
     let onClose: () -> Void
     let onFocus: (POI) -> Void
     let onStartWalk: (WanderPlan) -> Void
@@ -19,7 +21,7 @@ struct PlanSheet: View {
             header.sheetRow(top: Layout.margin + Layout.grid)
             modeControl.sheetRow()
             summary.sheetRow(top: Layout.grid)
-            preferences.sheetRow(top: Layout.grid)
+            MoodRow(selection: $mood).sheetRow(top: Layout.grid)
             actions.sheetRow(top: Layout.grid)
             highlightList
             #if DEBUG
@@ -112,54 +114,6 @@ struct PlanSheet: View {
                         .foregroundStyle(.inkMuted)
                 }
             }
-        }
-    }
-
-    // MARK: - Interests and style
-
-    /// Chip order from the approved design: Sights, Food & drink, Shops.
-    private static let chipOrder: [POICategory] = [.photo, .food, .shop]
-
-    private var preferences: some View {
-        VStack(alignment: .leading, spacing: Layout.grid) {
-            ViewThatFits(in: .horizontal) {
-                HStack(spacing: Layout.grid) { chips(Self.chipOrder) }
-                VStack(alignment: .leading, spacing: Layout.grid) {
-                    HStack(spacing: Layout.grid) { chips(Array(Self.chipOrder.prefix(2))) }
-                    HStack(spacing: Layout.grid) { chips(Array(Self.chipOrder.dropFirst(2))) }
-                }
-            }
-            HStack(spacing: Layout.grid) {
-                Text("Style")
-                    .font(WanderFont.body)
-                    .foregroundStyle(.ink)
-                Menu {
-                    Picker("Style", selection: $planner.profile) {
-                        ForEach(WeightPreset.allCases) { Text($0.title).tag($0) }
-                    }
-                } label: {
-                    HStack(spacing: Layout.grid / 2) {
-                        Text(planner.profile.title)
-                            .font(WanderFont.body)
-                        Image(systemName: "chevron.down")
-                            .font(.system(size: 12, weight: .semibold))
-                    }
-                    .foregroundStyle(.wander)
-                    .frame(minHeight: Layout.minTouch)
-                    .contentShape(Rectangle())
-                }
-                .accessibilityLabel("Style, \(planner.profile.title)")
-            }
-        }
-    }
-
-    private func chips(_ categories: [POICategory]) -> some View {
-        ForEach(categories, id: \.self) { category in
-            InterestChip(category: category, isOn: Binding(
-                get: { planner.interests.contains(category) },
-                set: { on in
-                    if on { planner.interests.insert(category) } else { planner.interests.remove(category) }
-                }))
         }
     }
 
