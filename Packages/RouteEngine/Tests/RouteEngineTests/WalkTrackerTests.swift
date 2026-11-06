@@ -95,10 +95,13 @@ struct WalkTrackerTests {
         #expect(Set(shown).count == shown.count)
         // Before the turn and after rejoining, progress tracks the walker.
         let rejoined = turn.at + detour.count
-        let errors = (0..<turn.at).map { abs(updates[$0].progress - Double($0) * 1.4) }
-            + (rejoined..<points.count).map { i in
-                abs(updates[i].progress - min(Double(i - detour.count) * 1.4, updates[i].routeLength))
-            }
+        let before: [Double] = (0..<turn.at).map { (i: Int) -> Double in
+            abs(updates[i].progress - Double(i) * 1.4)
+        }
+        let after: [Double] = (rejoined..<points.count).map { (i: Int) -> Double in
+            abs(updates[i].progress - min(Double(i - detour.count) * 1.4, updates[i].routeLength))
+        }
+        let errors = before + after
         #expect(errors.max()! < 60)
     }
 
