@@ -157,10 +157,25 @@ def instagram_from_osm(tags):
     return m.group(1) if m and m.group(1).lower() not in ("p", "reel", "explore") else None
 
 
+TRACKING_PARAMS = re.compile(r"^(utm_.*|fbclid|gclid|dclid|msclkid|igshid|rwg_token|y_source|mc_[a-z]+|_ga)$", re.I)
+
+
+def clean_url(url):
+    """The URL without tracking parameters (utm_*, fbclid, Google's rwg_token...), or None if not http(s)."""
+    url = (url or "").strip()
+    if not re.match(r"https?://\S+$", url):
+        return None
+    parts = urllib.parse.urlsplit(url)
+    if not parts.query:
+        return url
+    query = [(k, v) for k, v in urllib.parse.parse_qsl(parts.query, keep_blank_values=True)
+             if not TRACKING_PARAMS.match(k)]
+    return urllib.parse.urlunsplit(parts._replace(query=urllib.parse.urlencode(query)))
+
+
 def website_from_osm(tags):
     for key in ("website", "contact:website", "url"):
-        v = (tags.get(key) or "").strip()
-        if re.match(r"https?://\S+$", v):
+        if v := clean_url(tags.get(key)):
             return v
     return None
 
@@ -255,8 +270,8 @@ def synthetic_tags(category, typ, place):
         tags["tourism"] = "gallery"
     else:
         tags["amenity"] = typ
-    if "website" in place:
-        tags["website"] = place["website"]
+    if website := clean_url(place.get("website")):
+        tags["website"] = website
     return tags
 
 
@@ -323,8 +338,8 @@ def integrate(pois, data, commons_counts):
             report["matched"] += 1
             report["matched_osm"].add(q["id"])
             q["sources"] = ["osm", "overture"]
-            if not q.get("website") and not website_from_osm(q["tags"]) and p.get("website"):
-                q["website"] = p["website"]
+            if not q.get("website") and not website_from_osm(q["tags"]) and clean_url(p.get("website")):
+                q["website"] = clean_url(p["website"])
                 report["filled_website"] += 1
             if not q.get("instagram") and not instagram_from_osm(q["tags"]) and p.get("instagram"):
                 q["instagram"] = p["instagram"]
@@ -339,8 +354,8 @@ def integrate(pois, data, commons_counts):
             "sitelinks": 0, "wikidata_label_en": None, "wikidata_image": None, "wikidata_category": None,
             "sources": ["overture"], "ovt_quality": quality(p), "ovt_type": typ,
         }
-        if p.get("website"):
-            poi["website"] = p["website"]
+        if website := clean_url(p.get("website")):
+            poi["website"] = website
         if p.get("instagram"):
             poi["instagram"] = p["instagram"]
         ovt.add(poi, p["lat"], p["lon"], names, site)
