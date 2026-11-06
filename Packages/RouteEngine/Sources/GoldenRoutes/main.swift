@@ -9,8 +9,8 @@ import RouteEngine
 //   --preset   a WeightPreset: balanced, photoSpots, famousSights, hiddenGems
 //   --streets  verify on L-shaped streets (like real routing, often shorter than the
 //              planner's 1.3× straight-line estimate) instead of the estimate itself
-//   --passes   also list the free pass-by highlights on each Explorer route
-//   --sequence walk the routes in order on one day: each route's Explorer stops
+//   --passes   also list the free pass-by highlights on each Recommended route
+//   --sequence walk the routes in order on one day: each route's Recommended stops
 //              are added to PlanRequest.seen for the routes after it
 //   --weights  value POIs by signals instead of score (keys: photos, fame, quality, independent)
 //   --time     local time in the file's time zone; skips POIs closed then
@@ -119,31 +119,30 @@ func glyph(_ c: POICategory) -> String {
 let withHours = file.pois.compactMap(\.openingHours)
 let parsed = withHours.filter { OpeningHours($0) != nil }.count
 print("Golden routes: \(golden.city), \(file.pois.count) POIs (generated \(file.generated)), \(useStreets ? "L-shaped street" : "haversine") provider"
-      + (sequence ? ", one day in sequence (earlier Explorer stops are seen)" : ""))
+      + (sequence ? ", one day in sequence (earlier Recommended stops are seen)" : ""))
 print("Value: " + (presetArg.map { "preset \($0), " } ?? "") + (weights.map { "signals × weights \($0)" } ?? "score")
       + " · time: " + (timeArg.map { "\($0) \(golden.timeZone)" } ?? "not checked")
       + " · opening hours parsed: \(parsed)/\(withHours.count)\n")
-print(pad("#", 3) + pad("Route", 36) + pad("Mode", 9) + lpad("Fast", 6) + lpad("Total", 7) + lpad("Extra", 7)
-      + lpad("Used", 6) + lpad("Wp", 4) + lpad("Hl", 4) + "  Waypoints (value, +min)")
+print(pad("#", 3) + pad("Route", 36) + pad("Mode", 12) + lpad("Fast", 6) + lpad("Total", 7) + lpad("Extra", 7)
+      + lpad("Wp", 4) + lpad("Hl", 4) + "  Waypoints (value, +min)")
 print(String(repeating: "─", count: 140))
 
 let planner = Planner()
+let cap = planner.config.recommendedMaxExtra
 let provider: WalkingTimeProvider = useStreets ? StreetWalkingTime() : HaversineWalkingTime()
-var explorerWithin = 0, explorerTwoHighlights = 0, noFit: [String] = []
+var withinCap = 0, twoHighlights = 0, noFit: [String] = []
 var reasonCounts: [String: Int] = [:]
 var waypointCounts: [String: Int] = [:]
 var foodPerRoute: [Int] = []
-var sameRelaxedExplorer: [String] = []
-var budgetUse: [Mode: [Double]] = [:]
+var stopsPerRoute: [Int] = []
+var extras: [Double] = []
 var seen: Set<String> = []
 var seenAgain = 0
 
 for (index, route) in golden.routes.enumerated() {
     let origin = Coordinate(lat: route.from[0], lon: route.from[1])
     let destination = Coordinate(lat: route.to[0], lon: route.to[1])
-    var explorerPlan: WanderPlan?
-    var waypointSets: [Mode: Set<String>] = [:]
-    // All modes in one call, as the app does: Explorer must differ from Relaxed.
+    // Both modes in one call, as the app does.
     let modePlans = try await planner.plans(
         PlanRequest(origin: origin, destination: destination, mode: .direct, weights: weights,
                     pois: file.pois, time: time, timeZone: timeZone, seen: sequence ? seen : []),
@@ -156,56 +155,51 @@ for (index, route) in golden.routes.enumerated() {
             return "\(glyph(poi.category)) \(poi.name) (\(Int((d?.value ?? 0).rounded())), +\(minutes(d?.estimatedExtraTime ?? 0)))"
         }.joined(separator: " · ")
         print(pad(mode == .direct ? "\(index + 1)" : "", 3) + pad(mode == .direct ? route.name : "", 36)
-              + pad(mode.rawValue, 9)
+              + pad(mode.rawValue, 12)
               + lpad(minutes(plan.baseline.duration), 6) + lpad(minutes(plan.totalTime), 7)
               + lpad("+" + minutes(plan.extraTime), 7)
-              + lpad(mode.budget > 0 ? "\(Int((plan.extraTime / mode.budget * 100).rounded()))%" : "", 6)
               + lpad("\(plan.waypoints.count)", 4)
               + lpad("\(plan.highlights.count)", 4) + "  "
-              + (plan.noDetourFit ? "(no detour fits)" : names))
-        if mode == .explorer {
-            explorerPlan = plan
-            for poi in plan.waypoints { waypointCounts["\(glyph(poi.category)) \(poi.name)", default: 0] += 1 }
-            foodPerRoute.append(plan.waypoints.filter { $0.category == .food }.count)
-            if plan.extraTime <= mode.budget * 1.1 { explorerWithin += 1 }
-            if plan.highlights.count >= 2 { explorerTwoHighlights += 1 }
-            for c in plan.candidates {
-                if case .rejected(let reason) = c.status { reasonCounts[reason.rawValue, default: 0] += 1 }
-            }
-        }
-        if plan.noDetourFit { noFit.append("\(index + 1) \(mode.rawValue)") }
-        waypointSets[mode] = Set(plan.waypoints.map(\.id))
-        if mode.budget > 0 { budgetUse[mode, default: []].append(plan.extraTime / mode.budget) }
+              + (plan.noDetourFit ? "(nothing worth a detour)" : names))
+        if plan.noDetourFit { noFit.append("\(index + 1)") }
     }
-    if waypointSets[.relaxed] == waypointSets[.explorer] { sameRelaxedExplorer.append("\(index + 1)") }
-    let explorerStops = modePlans[.explorer]!.waypoints.map(\.id)
-    seenAgain += explorerStops.filter { seen.contains($0) }.count
-    seen.formUnion(explorerStops)
-    // Pass-by highlights on the Explorer route, for eyeballing.
-    let passby = (explorerPlan?.highlights ?? []).filter { $0.role == .passby }.map { "\($0.poi.name) (\($0.poi.score))" }
+    let plan = modePlans[.recommended]!
+    for poi in plan.waypoints { waypointCounts["\(glyph(poi.category)) \(poi.name)", default: 0] += 1 }
+    foodPerRoute.append(plan.waypoints.filter { $0.category == .food }.count)
+    stopsPerRoute.append(plan.waypoints.count)
+    extras.append(plan.extraTime)
+    if plan.extraTime <= cap * 1.1 { withinCap += 1 }
+    if plan.highlights.count >= 2 { twoHighlights += 1 }
+    for c in plan.candidates {
+        if case .rejected(let reason) = c.status { reasonCounts[reason.rawValue, default: 0] += 1 }
+    }
+    let stops = plan.waypoints.map(\.id)
+    seenAgain += stops.filter { seen.contains($0) }.count
+    seen.formUnion(stops)
+    // Pass-by highlights on the Recommended route, for eyeballing.
+    let passby = plan.highlights.filter { $0.role == .passby }.map { "\($0.poi.name) (\($0.poi.score))" }
     if showPasses, !passby.isEmpty {
-        print(pad("", 48) + "explorer passes: " + passby.prefix(6).joined(separator: ", ")
+        print(pad("", 51) + "recommended passes: " + passby.prefix(6).joined(separator: ", ")
               + (passby.count > 6 ? ", +\(passby.count - 6) more" : ""))
     }
     print("")
 }
 
 let n = golden.routes.count
-print("Explorer within budget (+10%): \(explorerWithin)/\(n)   (target: all)")
-print("Explorer with ≥2 highlights:   \(explorerTwoHighlights)/\(n)   (target: ≥8)")
-print("No detour fits: \(noFit.isEmpty ? "none" : noFit.joined(separator: ", "))")
-print("Relaxed and Explorer pick the same stops: " + (sameRelaxedExplorer.isEmpty ? "never" : "routes " + sameRelaxedExplorer.joined(separator: ", ")))
-for mode in [Mode.relaxed, .explorer] {
-    let uses = (budgetUse[mode] ?? []).sorted()
-    guard !uses.isEmpty else { continue }
-    print("\(mode.rawValue.capitalized) budget used: median \(Int((uses[uses.count / 2] * 100).rounded()))%, "
-          + "min \(Int((uses.first! * 100).rounded()))%, under 70% on \(uses.filter { $0 < 0.7 }.count)/\(uses.count)")
-}
+let sortedExtras = extras.sorted()
+let median = n % 2 == 1 ? sortedExtras[n / 2] : (sortedExtras[n / 2 - 1] + sortedExtras[n / 2]) / 2
+print("Constants: recommendedMaxExtra \(minutes(cap)) min, minValuePerMinute \(planner.config.minValuePerMinute)")
+print("Recommended extra time: min \(minutes(sortedExtras.first!)), median \(minutes(median)), max \(minutes(sortedExtras.last!)) min"
+      + "   (target: median 8–18, max ≤ \(minutes(cap * 1.1)))")
+print("Recommended within cap (+10%):    \(withinCap)/\(n)   (target: all)")
+print("Recommended with ≥2 highlights:   \(twoHighlights)/\(n)   (target: ≥8)")
+print("Recommended stops per route: " + stopsPerRoute.map(String.init).joined(separator: " "))
+print("Nothing worth a detour: " + (noFit.isEmpty ? "none" : "routes " + noFit.joined(separator: ", ")))
 let repeated = waypointCounts.filter { $0.value > 1 }.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
-print("Explorer waypoints used on 2+ routes: " + (repeated.isEmpty ? "none"
+print("Recommended stops used on 2+ routes: " + (repeated.isEmpty ? "none"
     : repeated.map { "\($0.key) ×\($0.value)" }.joined(separator: ", ")))
-print("Explorer stops already used on an earlier route: \(seenAgain) of \(waypointCounts.values.reduce(0, +))")
-print("Explorer food waypoints per route: " + foodPerRoute.map(String.init).joined(separator: " ")
-      + "   (distinct waypoints: \(waypointCounts.count))")
-print("Explorer rejections: " + reasonCounts.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
+print("Recommended stops already used on an earlier route: \(seenAgain) of \(waypointCounts.values.reduce(0, +))")
+print("Recommended food stops per route: " + foodPerRoute.map(String.init).joined(separator: " ")
+      + "   (distinct stops: \(waypointCounts.count))")
+print("Recommended rejections: " + reasonCounts.sorted { ($0.value, $1.key) > ($1.value, $0.key) }
     .map { "\($0.key) \($0.value)" }.joined(separator: ", "))

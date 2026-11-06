@@ -45,12 +45,23 @@ then the Wikidata English label, then its own name; `score.py` lists any sight s
 Sights named only by their kind ("Mural", "Sculpture") are expanded automatically to
 "Mural by <artist>" or "Mural near <nearest well-known sight>" (within 250 m).
 
-## Popular places
+## Score floors and map tiers (ADR 012)
 
-`score.py` marks the best places in every category with `"popular": true` (a map marker):
-the top `POPULAR_SHARE` (5%) of each category's places in the app file, by score
-(at least one per non-empty category; ties by id), plus sights whose fame signal is at least
-`POPULAR_FAME` (0.6). A `popular` curation rule overrides both.
+**Floors.** After curation (boosts count) and de-duplication, `score.py` drops places below their
+category's floor, `SCORE_FLOOR`: photo < 30, shop < 30, food < 35. A curation `popular yes` keeps a
+place under the floor. Vilnius: photo 383 → 268, shop 82 → 33, food 742 → 235.
+
+**Tiers.** Every place gets a `tier` within its category (the map shows tier 1 when zoomed out):
+
+- **1, must-see**: the top `TIER1_SHARE` (4%) by score, at least one (round half up; ties by id),
+  plus sights whose fame signal is at least `TIER1_FAME` (0.8). Sights are capped at
+  `TIER1_PHOTO_CAP` (25), keeping the highest scores.
+- **2, notable**: the next `TIER2_SHARE` (15% of the category, by count).
+- **3, detail**: the rest.
+
+A `popular` curation rule overrides tier 1: `yes` forces it, `no` turns it off (tier 2).
+`"popular": true` is written exactly when `tier` is 1, for compatibility.
+`score.py` prints the counts before and after the floors and the tiers per category.
 
 ## Descriptions (BE-10)
 
@@ -83,7 +94,7 @@ One row per rule; ids look like `osm:node:123` (copy them from the review CSV).
 | rename  | new name                  | replace the display name            |
 | reason  | short text                | replace the auto-drafted reason     |
 | image   | Commons file name, or empty | replace or remove the sight's photo |
-| popular | yes (default) or no       | force the "popular" marker on/off (any category) |
+| popular | yes (default) or no       | force tier 1 (popular) on/off, any category; `yes` also passes the score floor |
 
 `cache/` is not committed. `review/` and the app's `pois-*.json` are.
 

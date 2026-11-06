@@ -1,29 +1,18 @@
 import Foundation
 
-/// Detour budget presets (PLAN.md section 6, Inputs).
+/// Route options (ADR 008, CONTRACTS §2 "Direct + Recommended").
 public enum Mode: String, CaseIterable, Codable, Hashable, Sendable {
+    /// The fastest route. No detour stops; highlights on the way are still listed.
     case direct
-    case relaxed
-    case explorer
-
-    /// Extra minutes allowed over the fast route.
-    public var extraMinutes: Int {
-        switch self {
-        case .direct: 0
-        case .relaxed: 10
-        case .explorer: 25
-        }
-    }
-
-    /// Extra time allowed over the fast route, in seconds.
-    public var budget: TimeInterval { TimeInterval(extraMinutes) * 60 }
+    /// A detour the engine sizes itself: up to `PlannerConfig.recommendedMaxExtra`
+    /// extra, keeping only stops worth their minutes (`minValuePerMinute`).
+    case recommended
 
     /// Most stops the route may be bent to visit.
     public var maxWaypoints: Int {
         switch self {
         case .direct: 0
-        case .relaxed: 3
-        case .explorer: 5
+        case .recommended: 5
         }
     }
 }
@@ -51,6 +40,10 @@ public struct PlanRequest: Sendable {
     /// Most waypoints for this plan. Nil uses `PlannerConfig.maxWaypoints`;
     /// the `mode:` initializer sets it from the mode.
     public var maxWaypoints: Int?
+    /// The route option, when planned by mode. The planner then takes the
+    /// budget from its config (`PlannerConfig.budget(for:)`) and, for
+    /// `.recommended`, keeps only stops worth their extra minutes.
+    public var mode: Mode?
 
     public init(origin: Coordinate, destination: Coordinate, budget: TimeInterval,
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
@@ -72,9 +65,10 @@ public struct PlanRequest: Sendable {
                 interests: Set<POICategory> = Set(POICategory.allCases), weights: SignalWeights? = nil,
                 pois: [POI], time: Date? = nil,
                 timeZone: TimeZone = .current, seen: Set<String> = []) {
-        self.init(origin: origin, destination: destination, budget: mode.budget,
+        self.init(origin: origin, destination: destination, budget: PlannerConfig.default.budget(for: mode),
                   interests: interests, weights: weights, pois: pois, time: time, timeZone: timeZone,
                   maxWaypoints: mode.maxWaypoints, seen: seen)
+        self.mode = mode
     }
 }
 
@@ -203,11 +197,12 @@ public struct WanderPlan: Hashable, Sendable {
     public var legs: [Leg]
     /// Seconds, sum of `legs`.
     public var totalTime: TimeInterval
-    /// Seconds over the baseline.
+    /// Seconds over the baseline. For Recommended, the engine's choice.
     public var extraTime: TimeInterval
     /// Waypoints and pass-by POIs, ordered along the route.
     public var highlights: [Highlight]
-    /// True when the budget allowed a detour but none fit.
+    /// True when the budget allowed a detour but none fit (for Recommended:
+    /// no stop was worth its extra minutes, so the plan equals Direct).
     public var noDetourFit: Bool
     /// One record per POI in the request, in the request's order.
     public var candidates: [CandidateDebug]

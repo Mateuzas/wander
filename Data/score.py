@@ -37,10 +37,12 @@ DEFAULT_BOOST = 20         # points added by a curation "boost" with no value
 DUPLICATE_RADIUS_M = 40    # same name this close = same place
 NEAR_RADIUS_M = 250        # "Mural near X": how far X may be from a generically named sight
 NEAR_MIN_SCORE = 40        # X must be a sight at least this good, so tourists know it
-MIN_SCORE = 15              # drop anything below this from the app file
+SCORE_FLOOR = {"photo": 30, "shop": 30, "food": 35}  # drop places scoring below this, after curation (ADR 012)
 MAX_IMAGE_SHARES = 3       # a photo used by this many places is too generic to show
-POPULAR_SHARE = 0.05       # top share of each category (by score) marked popular on the map...
-POPULAR_FAME = 0.6         # ...plus sights this well-known (fame signal), whatever their score
+TIER1_SHARE = 0.04         # tier 1 (must-see): top share of each category by score, at least one...
+TIER1_FAME = 0.8           # ...plus sights this well-known (fame signal), whatever their score...
+TIER1_PHOTO_CAP = 25       # ...but at most this many sights (highest scores kept)
+TIER2_SHARE = 0.15         # tier 2 (notable): the next share of each category by score; the rest are tier 3
 REVIEW_PER_CATEGORY = {"photo": 150, "food": 75, "shop": 75}  # rows in the hand-review sheet
 # ------------------------------------------------------------------------------------------
 
@@ -213,20 +215,41 @@ def commons_category(p):
     return p.get("wikidata_category")
 
 
-def popular_ids(pois):
-    """Ids marked popular: the top POPULAR_SHARE of each category by score (at least one),
-    plus well-known sights; curation overrides win over both."""
-    ids = set()
+def round_half_up(x):
+    return math.floor(x + 0.5)
+
+
+def below_floor(p):
+    """Under its category's score floor; a curation `popular yes` rescues a known gem (ADR 012)."""
+    return p["score"] < SCORE_FLOOR[p["category"]] and not p.get("popular_override")
+
+
+def tiers(pois):
+    """Map tier per id, within each category (ADR 012): 1 must-see, 2 notable, 3 detail.
+
+    Tier 1 is the top TIER1_SHARE by score (at least one; ties by id), plus sights with fame of
+    at least TIER1_FAME, with sights capped at TIER1_PHOTO_CAP. Tier 2 is the next TIER2_SHARE.
+    A curation `popular yes` forces tier 1, `popular no` turns tier 1 off (tier 2)."""
+    tier = {}
     for cat in ("photo", "shop", "food"):
         ranked = sorted((p for p in pois if p["category"] == cat), key=lambda p: (-p["score"], p["id"]))
-        if ranked:
-            k = max(1, math.floor(POPULAR_SHARE * len(ranked) + 0.5))  # round half up
-            ids.update(p["id"] for p in ranked[:k])
-    ids.update(p["id"] for p in pois if p["category"] == "photo" and fame_signal(p) >= POPULAR_FAME)
-    for p in pois:
-        if "popular_override" in p:
-            (ids.add if p["popular_override"] else ids.discard)(p["id"])
-    return ids
+        if not ranked:
+            continue
+        k = max(1, round_half_up(TIER1_SHARE * len(ranked)))
+        top = [p for i, p in enumerate(ranked)
+               if i < k or (cat == "photo" and fame_signal(p) >= TIER1_FAME)]
+        if cat == "photo":
+            top = top[:TIER1_PHOTO_CAP]  # ranked order, so the highest scores stay
+        top_ids = {p["id"] for p in top}
+        for p in ranked:
+            if "popular_override" in p:
+                (top_ids.add if p["popular_override"] else top_ids.discard)(p["id"])
+        rest = [p for p in ranked if p["id"] not in top_ids]
+        m = round_half_up(TIER2_SHARE * len(ranked))
+        for i, p in enumerate(rest):
+            tier[p["id"]] = 2 if i < m or p.get("popular_override") is False else 3
+        tier.update((i, 1) for i in top_ids)
+    return tier
 
 
 def load_wikipedia(slug):
@@ -402,11 +425,12 @@ def main():
 
     pois, applied = apply_curation(pois, load_curation())
     pois = dedupe(pois)
-    before_cut = len(pois)
-    pois = [p for p in pois if p["score"] >= MIN_SCORE]
+    before_floor = {c: sum(p["category"] == c for p in pois) for c in SCORE_FLOOR}
+    pois = [p for p in pois if not below_floor(p)]
     renamed = name_generic_sights(pois)
     pois.sort(key=lambda p: (-p["score"], p["name"]))
-    popular = popular_ids(pois)
+    tier = tiers(pois)
+    popular = {i for i, t in tier.items() if t == 1}  # `popular` equals tier 1 (ADR 012)
     wiki = load_wikipedia(slug)
     article_uses = {}  # by resolved article URL: two titles can redirect to one article
     for p in pois:
@@ -442,6 +466,7 @@ def main():
         cuisine = p["tags"].get("cuisine")
         if p["category"] == "food" and cuisine:
             row["cuisine"] = [c.strip() for c in cuisine.split(";") if c.strip()]
+        row["tier"] = tier[p["id"]]
         if p["id"] in popular:
             row["popular"] = True
         category = commons_category(p) if p["category"] == "photo" else None
@@ -483,7 +508,13 @@ def main():
 
     by_cat = {c: sum(p["category"] == c for p in pois) for c in ("photo", "shop", "food")}
     print(f"{city['name']}: {len(pois)} POIs {by_cat} "
-          f"({before_cut - len(pois)} below score {MIN_SCORE}, {applied} curation rules applied, {renamed} generic names expanded)")
+          f"({applied} curation rules applied, {renamed} generic names expanded)")
+    print("  score floors: " + ", ".join(f"{c} {before_floor[c]} -> {by_cat[c]} (floor {SCORE_FLOOR[c]})"
+                                         for c in by_cat))
+    tiers_by_cat = {c: [sum(p["category"] == c and tier[p["id"]] == t for p in pois) for t in (1, 2, 3)]
+                    for c in by_cat}
+    print("  tiers 1/2/3 per category: " + ", ".join(f"{c} {'/'.join(map(str, n))}"
+                                                     for c, n in tiers_by_cat.items()))
     untranslated = [p for p in pois if p["category"] == "photo" and p["id"] not in names_en
                     and not p["tags"].get("name:en")]
     if untranslated:
