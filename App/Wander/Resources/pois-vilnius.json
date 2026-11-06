@@ -1658,7 +1658,7 @@
     "quality": 0.6,
     "independent": true
    },
-   "tier": 2,
+   "tier": 3,
    "sources": [
     "overture"
    ],
@@ -1802,7 +1802,7 @@
     "quality": 0.2,
     "independent": true
    },
-   "tier": 3
+   "tier": 2
   },
   {
    "id": "osm:node:2769135714",

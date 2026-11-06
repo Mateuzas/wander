@@ -117,7 +117,9 @@ Absent values are left out.
   one source dataset), photos from the same Commons tiles (ranked against the OSM distribution, so OSM
   scores do not move), independent. Then the same curation, floors, tiers and descriptions. Their
   names are proper names and stay as they are; `reason` is the kind ("Bar", "Italian restaurant",
-  "Art gallery"). Curation rows work with `ovt:` ids too.
+  "Art gallery"). Curation rows work with `ovt:` ids too. Overture-only galleries (mostly
+  commercial) stay tier 3 unless they have a Wikidata link or a curation `popular yes` (Architect
+  decision, BE-7 follow-up); matched ones are OSM places and tier normally.
 - **`new`**: `cache/<city>/first_seen.json` (git-ignored) keeps the first date each id was seen;
   ids first seen in the last 60 days get `new: true`. The run that creates the file is the bootstrap:
   everything is first seen that day, so nothing is flagged until later runs. The CI cache must keep

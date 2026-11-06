@@ -259,18 +259,33 @@ def below_floor(p):
     return p["score"] < SCORE_FLOOR[p["category"]] and not p.get("popular_override")
 
 
+def tier3_only(p):
+    """Overture-only galleries stay tier 3 (Architect decision, BE-7 follow-up to ADR 014): Overture's
+    art_gallery-like categories are mostly commercial (jewellery schools, shops), so without an OSM
+    match (which would make it an osm: place) or a Wikidata link they never show at city or
+    neighbourhood zoom. A curation `popular yes` still overrides this."""
+    return (p["id"].startswith("ovt:") and p["category"] == "photo" and p.get("ovt_type") == "gallery"
+            and not p["tags"].get("wikidata") and not p.get("popular_override"))
+
+
 def tiers(pois):
     """Map tier per id, within each category (ADR 012): 1 must-see, 2 notable, 3 detail.
 
     Tier 1 is the top TIER1_SHARE by score (at least one; ties by id), plus sights with fame of
     at least TIER1_FAME, with sights capped at TIER1_PHOTO_CAP. Tier 2 is the next TIER2_SHARE.
-    A curation `popular yes` forces tier 1, `popular no` turns tier 1 off (tier 2)."""
+    A curation `popular yes` forces tier 1, `popular no` turns tier 1 off (tier 2).
+    Overture-only galleries are always tier 3 (see tier3_only)."""
     tier = {}
     for cat in ("photo", "shop", "food"):
         ranked = sorted((p for p in pois if p["category"] == cat), key=lambda p: (-p["score"], p["id"]))
         if not ranked:
             continue
-        k = max(1, round_half_up(TIER1_SHARE * len(ranked)))
+        n = len(ranked)  # shares count every place in the category...
+        capped = [p for p in ranked if tier3_only(p)]  # ...but these never take a tier 1-2 slot
+        for p in capped:
+            tier[p["id"]] = 3
+        ranked = [p for p in ranked if not tier3_only(p)]
+        k = max(1, round_half_up(TIER1_SHARE * n))
         top = [p for i, p in enumerate(ranked)
                if i < k or (cat == "photo" and fame_signal(p) >= TIER1_FAME)]
         if cat == "photo":
@@ -280,7 +295,7 @@ def tiers(pois):
             if "popular_override" in p:
                 (top_ids.add if p["popular_override"] else top_ids.discard)(p["id"])
         rest = [p for p in ranked if p["id"] not in top_ids]
-        m = round_half_up(TIER2_SHARE * len(ranked))
+        m = round_half_up(TIER2_SHARE * n)
         for i, p in enumerate(rest):
             tier[p["id"]] = 2 if i < m or p.get("popular_override") is False else 3
         tier.update((i, 1) for i in top_ids)
