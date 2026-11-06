@@ -1,12 +1,13 @@
 """Publish gate for a nightly POI file (ADR 013, CONTRACTS §3b).
 
     python3 Data/publish_gate.py --new build/pois-vilnius.json --previous <file|URL|none>
-                                 [--curation Data/curation.csv] [--rerun <file>]
+                                 [--curation Data/curation.csv] [--rerun <file>] [--allow-growth]
 
 Checks, each reported in a Markdown summary on stdout (fit for $GITHUB_STEP_SUMMARY):
 - the new file validates against docs/schema/pois.schema.json (scripts/validate-pois.py)
 - city and file structure are unchanged: same `city`, same top-level keys, no POI field dropped
-- POI count per category is within ±25% of the previous file
+- POI count per category is within ±25% of the previous file; with --allow-growth (a new source,
+  ADR 014) increases of any size pass, decreases are still limited to -25%
 - every previous tier-1 id is still tier 1, or has a curation row (`exclude`, or `popular no`)
 - with --rerun: a second build from the same inputs is byte-identical, ignoring `generated`
 
@@ -156,8 +157,9 @@ def run(args):
                 gate.add(f"Count: {cat}", True, f"{n_new} (previous had none)")
                 continue
             change = (n_new - n_old) / n_old
-            ok = abs(change) <= COUNT_TOLERANCE
-            gate.add(f"Count: {cat}", ok, f"{n_old} -> {n_new} ({change:+.1%}; limit ±{COUNT_TOLERANCE:.0%})")
+            ok = abs(change) <= COUNT_TOLERANCE or (args.allow_growth and change > 0)
+            limit = f"-{COUNT_TOLERANCE:.0%}, growth allowed" if args.allow_growth else f"±{COUNT_TOLERANCE:.0%}"
+            gate.add(f"Count: {cat}", ok, f"{n_old} -> {n_new} ({change:+.1%}; limit {limit})")
 
         curation = load_curation(args.curation)
         now = {p.get("id"): p for p in new_pois}
@@ -203,7 +205,11 @@ def markdown(gate, notes, new, args):
     n = len(new.get("pois", [])) if isinstance(new, dict) else "?"
     lines = [f"## Publish gate: {'PASS' if ok else 'FAIL'}", "",
              f"`{args.new}`: {city}, {n} POIs, generated {new.get('generated', '?') if isinstance(new, dict) else '?'}.",
-             "", "| Check | Result | Detail |", "|---|---|---|"]
+             ""]
+    if args.allow_growth:
+        lines += ["> **--allow-growth is on:** count increases above +25% pass this run (a new source, ADR 014). "
+                  "Decreases are still limited to -25%.", ""]
+    lines += ["| Check | Result | Detail |", "|---|---|---|"]
     for check, passed, detail in gate.rows:
         lines.append(f"| {check} | {'pass' if passed else '**FAIL**'} | {str(detail).replace('|', '/')} |")
     if notes:
@@ -220,6 +226,8 @@ def main():
     parser.add_argument("--previous", required=True, help="last published file: path, URL, or 'none'")
     parser.add_argument("--curation", default=str(ROOT / "Data" / "curation.csv"), help="curation.csv to consult")
     parser.add_argument("--rerun", help="optional second build from the same inputs (determinism check)")
+    parser.add_argument("--allow-growth", action="store_true",
+                        help="let per-category counts grow by more than 25%% (e.g. a new source); decreases are still gated")
     args = parser.parse_args()
     gate, notes, new = run(args)
     sys.stdout.write(markdown(gate, notes, new, args))

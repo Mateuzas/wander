@@ -48,6 +48,8 @@ def name_fallbacks(slug, pois):
     for p in pois:
         if p["category"] != "photo" or p["id"] in names_en or p["id"] in renamed:
             continue
+        if p["id"].startswith("ovt:"):
+            continue  # Overture-only galleries and venues keep their own (proper) names
         src = enriched.get(p["id"], {})
         if src.get("tags", {}).get("name:en"):
             continue  # tagged in OSM by a mapper; score.py treats it as English too
