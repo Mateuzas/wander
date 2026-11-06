@@ -60,7 +60,7 @@ struct POIDetail: View {
                 }
 
                 HStack(alignment: .top, spacing: Layout.grid * 1.5) {
-                    Bead(category: poi.category, glyph: poi.glyph, isPopular: poi.popular ?? false)
+                    Bead(category: poi.category, glyph: poi.glyph, isPopular: poi.mapTier == 1)
                         .padding(.top, 2)
                     VStack(alignment: .leading, spacing: Layout.grid / 2) {
                         Text(poi.name)

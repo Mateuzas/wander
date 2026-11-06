@@ -3,14 +3,14 @@ import RouteEngine
 // User-facing words for RouteEngine types.
 
 /// Route-style picker labels for the engine's presets.
-extension WeightPreset: Identifiable {
+extension WeightPreset: @retroactive Identifiable {
     public var id: Self { self }
 
     var title: String {
         switch self {
         case .balanced: "Balanced"
         case .photoSpots: "Photo spots"
-        case .famousSights: "Famous sights"
+        case .famousSights: "Famous"
         case .hiddenGems: "Hidden gems"
         }
     }
@@ -20,12 +20,9 @@ extension Mode {
     var title: String {
         switch self {
         case .direct: "Direct"
-        case .relaxed: "Relaxed"
-        case .explorer: "Explorer"
+        case .recommended: "Recommended"
         }
     }
-
-    var budgetLabel: String { "+\(extraMinutes) min" }
 }
 
 extension POICategory {
@@ -34,7 +31,7 @@ extension POICategory {
         switch self {
         case .photo: "Sights"
         case .shop: "Shops"
-        case .food: "Food"
+        case .food: "Food & drink"
         }
     }
 }

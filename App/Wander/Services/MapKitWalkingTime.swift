@@ -11,7 +11,7 @@ enum RoutingError: Error {
 /// MKDirections is rate-limited (about 50 requests a minute, §6). This provider
 /// caches every leg, shares in-flight requests, and spaces requests so no more
 /// than `requestsPerMinute` go out in any 60 s window. A plan costs about 4–6
-/// requests, so all three modes for one destination fit comfortably.
+/// requests, so both options for one destination fit comfortably.
 actor MapKitWalkingTime: WalkingTimeProvider {
     static let requestsPerMinute = 40
 

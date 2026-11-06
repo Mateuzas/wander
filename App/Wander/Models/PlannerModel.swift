@@ -4,11 +4,11 @@ import MapKit
 import Observation
 import RouteEngine
 
-/// Plans for the chosen destination (PLAN.md §7.2). All three modes are planned
-/// in one pass, smallest budget first, each kept distinct from the smaller ones
-/// (RouteEngine `distinctFrom`), and cached, so switching modes is instant.
-/// Interests, route style and removed or added stops change every mode, so
-/// they clear the cache.
+/// Plans for the chosen destination (PLAN.md §7.2). Direct and Recommended
+/// are planned together in one `Planner.plans` call (Recommended's extra time is
+/// the engine's choice) and kept, so switching between them is instant.
+/// Interests, route style and removed or added stops re-plan both; interest and
+/// style changes are debounced, and the selected option is kept.
 @MainActor
 @Observable
 final class PlannerModel {
@@ -28,7 +28,6 @@ final class PlannerModel {
     /// What tapping an unplanned bead can offer.
     enum AddOption: Equatable {
         case add
-        case directMode
         case full
         case doesntFit
     }
@@ -42,24 +41,25 @@ final class PlannerModel {
     private(set) var destination: Destination?
     private(set) var origin: Coordinate?
 
-    var mode: Mode = .relaxed
+    /// The selected option. Set by the user through `select(_:)`; until then it
+    /// follows the default (Recommended, or Direct when no detour is worth it).
+    private(set) var mode: Mode = .recommended
     var interests: Set<POICategory> = Set(POICategory.allCases) {
-        didSet { if interests != oldValue { invalidate() } }
+        didSet { if interests != oldValue { invalidate(debounced: true) } }
     }
     var profile: WeightPreset = .balanced {
-        didSet { if profile != oldValue { invalidate() } }
+        didSet { if profile != oldValue { invalidate(debounced: true) } }
     }
 
     /// POIs the user removed from the walk; left out of every plan.
     private(set) var excluded: Set<String> = []
-    /// POIs the user added; re-inserted into each mode's plan when they fit.
+    /// POIs the user added; re-inserted into the Recommended plan when they fit.
     private(set) var pinned: [POI] = []
 
     private(set) var plans: [Mode: WanderPlan] = [:]
-    private(set) var phases: [Mode: Phase] = [:]
+    private(set) var phase: Phase = .loading
 
     var plan: WanderPlan? { plans[mode] }
-    var phase: Phase { phases[mode] ?? .loading }
 
     let provider = MapKitWalkingTime()
     let connectivity: Connectivity
@@ -68,6 +68,10 @@ final class PlannerModel {
     @ObservationIgnored private var timeZone: TimeZone = .current
     @ObservationIgnored private var generation = 0
     @ObservationIgnored private var task: Task<Void, Never>?
+    @ObservationIgnored private var userChoseMode = false
+
+    /// Wait after a chip or style change before re-planning, so quick taps plan once.
+    static let debounce: Duration = .milliseconds(400)
 
     init(connectivity: Connectivity) {
         self.connectivity = connectivity
@@ -84,20 +88,22 @@ final class PlannerModel {
         self.timeZone = timeZone
         excluded = []
         pinned = []
-        planModes()
+        mode = .recommended
+        userChoseMode = false
+        planModes(debounced: false)
     }
 
     /// Supplies the start point when the first location fix arrives after `start`.
     func setOrigin(_ coordinate: Coordinate) {
         guard destination != nil, origin == nil else { return }
         origin = coordinate
-        invalidate()
+        invalidate(debounced: false)
     }
 
     /// Location became unavailable before there was a start point.
     func originUnavailable() {
         guard destination != nil, origin == nil else { return }
-        for mode in Mode.allCases { phases[mode] = .failed(.noLocation) }
+        phase = .failed(.noLocation)
     }
 
     func close() {
@@ -109,7 +115,13 @@ final class PlannerModel {
     }
 
     func retry() {
-        invalidate()
+        invalidate(debounced: false)
+    }
+
+    /// The user picked an option; it is kept across re-plans.
+    func select(_ mode: Mode) {
+        userChoseMode = true
+        self.mode = mode
     }
 
     // MARK: - Editing
@@ -117,33 +129,30 @@ final class PlannerModel {
     func remove(_ poi: POI) {
         excluded.insert(poi.id)
         pinned.removeAll { $0.id == poi.id }
-        invalidate()
+        invalidate(debounced: false)
     }
 
+    /// Stops are always added to the Recommended plan. In Direct, a successful
+    /// add switches to Recommended so the user sees the stop on the walk.
     func addOption(for poi: POI) -> AddOption {
-        guard let plan else { return .doesntFit }
-        if mode == .direct { return .directMode }
-        if plan.waypoints.count >= mode.maxWaypoints { return .full }
-        return PlanEditor.estimateFits(poi, in: plan, budget: mode.budget) ? .add : .doesntFit
+        guard let plan = plans[.recommended] else { return .doesntFit }
+        if plan.waypoints.count >= PlanEditor.maxStops { return .full }
+        return PlanEditor.estimateFits(poi, in: plan) ? .add : .doesntFit
     }
 
     func add(_ poi: POI) async -> AddResult {
-        guard let plan else { return .failed }
-        let mode = self.mode, gen = generation
-        excluded.remove(poi.id)
+        guard let plan = plans[.recommended] else { return .failed }
+        let gen = generation
         do {
             let outcome = try await PlanEditor.adding(
-                poi, to: plan, mode: mode, pois: activePOIs, interests: interests, provider: provider)
-            guard gen == generation, mode == self.mode else { return .failed }
+                poi, to: plan, pois: activePOIs, interests: interests, provider: provider)
+            guard gen == generation else { return .failed }
             switch outcome {
             case .added(let newPlan):
+                excluded.remove(poi.id)
                 pinned.append(poi)
-                // Other modes recompute with the new stop; this one keeps the edited plan.
-                generation += 1
-                cancelAll()
-                plans = [mode: newPlan]
-                phases = [mode: .ready]
-                planModes()
+                plans[.recommended] = newPlan
+                select(.recommended)
                 return .added
             case .doesntFit, .full:
                 return .doesntFit
@@ -157,29 +166,27 @@ final class PlannerModel {
 
     private var activePOIs: [POI] { pois.filter { !excluded.contains($0.id) } }
 
-    private func invalidate() {
+    private func invalidate(debounced: Bool) {
         generation += 1
         cancelAll()
-        planModes()
+        planModes(debounced: debounced)
     }
 
     private func cancelAll() {
         task?.cancel()
         task = nil
         plans = [:]
-        phases = [:]
+        phase = .loading
     }
 
-    /// Plans every mode not yet in `plans`, smallest budget first, publishing
-    /// each as it arrives. Plans already present (an edited one) are kept and
-    /// still count for `distinctFrom`.
-    private func planModes() {
+    /// Plans Direct and Recommended together, then re-inserts the user's added
+    /// stops into Recommended.
+    private func planModes(debounced: Bool) {
         guard let destination, task == nil else { return }
-        let modes = Mode.allCases.sorted { $0.budget < $1.budget }
-        for mode in modes where plans[mode] == nil { phases[mode] = .loading }
+        phase = .loading
         guard let origin else { return }
 
-        let base = PlanRequest(
+        let request = PlanRequest(
             origin: origin, destination: Coordinate(destination.coordinate), budget: 0,
             interests: interests, weights: profile.weights, pois: activePOIs,
             time: Date(), timeZone: timeZone)
@@ -187,41 +194,38 @@ final class PlannerModel {
         let gen = generation
 
         task = Task {
-            var smaller: [WanderPlan] = []
-            for (index, mode) in modes.enumerated() {
-                if let existing = self.plans[mode] {
-                    smaller.append(existing)
-                    continue
-                }
-                var request = base
-                request.budget = mode.budget
-                request.maxWaypoints = mode.maxWaypoints
-                do {
-                    let engine = try await Planner().plan(request, provider: provider, distinctFrom: smaller)
-                    smaller.append(engine)
-                    var plan = engine
-                    for poi in pinned where !plan.waypoints.contains(where: { $0.id == poi.id }) {
+            if debounced {
+                try? await Task.sleep(for: Self.debounce)
+                guard gen == self.generation, !Task.isCancelled else { return }
+            }
+            do {
+                var plans = try await Planner().plans(request, provider: provider)
+                if var recommended = plans[.recommended] {
+                    for poi in pinned where !recommended.waypoints.contains(where: { $0.id == poi.id }) {
                         if case .added(let edited) = try await PlanEditor.adding(
-                            poi, to: plan, mode: mode, pois: request.pois,
+                            poi, to: recommended, pois: request.pois,
                             interests: interests, provider: provider) {
-                            plan = edited
+                            recommended = edited
                         }
                     }
-                    guard gen == self.generation, !Task.isCancelled else { return }
-                    self.plans[mode] = plan
-                    self.phases[mode] = .ready
-                } catch {
-                    guard gen == self.generation, !Task.isCancelled else { return }
-                    let failure = self.classify(error)
-                    for later in modes[index...] where self.plans[later] == nil {
-                        self.phases[later] = .failed(failure)
-                    }
-                    break
+                    plans[.recommended] = recommended
                 }
+                guard gen == self.generation, !Task.isCancelled else { return }
+                self.plans = plans
+                self.phase = .ready
+                if !self.userChoseMode {
+                    self.mode = self.noDetourFit ? .direct : .recommended
+                }
+            } catch {
+                guard gen == self.generation, !Task.isCancelled else { return }
+                self.phase = .failed(self.classify(error))
             }
             if gen == self.generation { self.task = nil }
         }
     }
+
+    /// No stop is worth a detour: Recommended is the same walk as Direct.
+    var noDetourFit: Bool { plans[.recommended]?.noDetourFit ?? false }
 
     private func classify(_ error: Error) -> Failure {
         if !connectivity.isOnline { return .offline }

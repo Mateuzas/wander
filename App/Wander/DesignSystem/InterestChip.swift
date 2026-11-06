@@ -1,7 +1,7 @@
 import RouteEngine
 import SwiftUI
 
-/// Sights / Shops / Food toggle. The category color appears only on the glyph (§10).
+/// Sights / Food & drink / Shops toggle. The category color appears only on the glyph (§10).
 /// On: raised surface, ink text. Off: no fill, muted text and glyph.
 struct InterestChip: View {
     let category: POICategory

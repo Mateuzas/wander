@@ -35,7 +35,7 @@ struct Validator {
 
     /// Index of the waypoint with the lowest `value / extraTime`, where extra
     /// time is its estimated marginal cost in the current route. Drops that
-    /// would leave a smaller mode's stops (or a subset) are avoided when
+    /// would leave a `taken` plan's stops (or a subset) are avoided when
     /// another drop is possible.
     private func weakestIndex(origin: Coordinate, destination: Coordinate, waypoints: [POI],
                               taken: TakenStops) -> Int {
@@ -62,9 +62,9 @@ func waypointKey(_ waypoints: [POI]) -> String {
     waypoints.map(\.id).sorted().joined(separator: "|")
 }
 
-/// Stop sets already used by smaller modes. A set is new only if it has a
-/// stop none of them has: the same stops, or a subset of them, would make a
-/// bigger mode the same walk or a worse one.
+/// Stop sets of plans to differ from (`plan(_:provider:distinctFrom:)`). A
+/// set is new only if it has a stop none of them has: the same stops, or a
+/// subset of them, would be the same walk or a worse one.
 struct TakenStops: Sendable {
     var sets: [Set<String>] = []
 

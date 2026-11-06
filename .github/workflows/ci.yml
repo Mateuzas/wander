@@ -1,5 +1,23 @@
 name: CI
 
+# Path-based jobs (OPS-7). The first job, `changes`, lists the files a push or
+# PR changes and each other job runs only when its paths are touched:
+#
+#   job (check name)                  runs when a change touches
+#   engine (RouteEngine tests)        Packages/**, scripts/test-engine.sh,
+#                                     scripts/ci-select-xcode.sh, .github/workflows/ci.yml
+#   app (iOS Simulator build)         App/**, Packages/**, scripts/ci-select-xcode.sh,
+#                                     .github/workflows/ci.yml
+#   data (Data pipeline compiles)     Data/**, .github/workflows/ci.yml
+#   pois-schema (POI files match      App/Wander/Resources/pois-*.json, docs/schema/**,
+#     schema)                         scripts/validate-pois.py, .github/workflows/ci.yml
+#
+# A push to main whose "before" commit is all zeros or unknown runs everything.
+# There are deliberately no workflow-level `paths:` filters: a required check
+# whose workflow never starts blocks the merge forever, while a job skipped by
+# `if:` reports "skipped", which satisfies a required check.
+# The secret scan lives in secrets.yml and runs on every PR and push to main.
+
 on:
   pull_request:
   push:
@@ -9,9 +27,61 @@ concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  changes:
+    name: Detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      engine: ${{ steps.filter.outputs.engine }}
+      app: ${{ steps.filter.outputs.app }}
+      data: ${{ steps.filter.outputs.data }}
+      pois: ${{ steps.filter.outputs.pois }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Classify changed files
+        id: filter
+        env:
+          EVENT: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          engine=false app=false data=false pois=false all=false
+          if [[ "$EVENT" == pull_request ]]; then
+            files="$(git diff --name-only "$BASE_SHA...$HEAD_SHA")"
+          elif [[ -z "$BEFORE" || "$BEFORE" =~ ^0+$ ]] || ! git cat-file -e "$BEFORE^{commit}" 2>/dev/null; then
+            echo "No usable 'before' commit: running every job."
+            files="" all=true
+          else
+            files="$(git diff --name-only "$BEFORE" "$AFTER")"
+          fi
+          echo "Changed files:"; echo "${files:-(none)}" | sed 's/^/  /'
+          while IFS= read -r f; do
+            [[ -n "$f" ]] || continue
+            case "$f" in .github/workflows/ci.yml) engine=true app=true data=true pois=true ;; esac
+            case "$f" in Packages/*|scripts/test-engine.sh|scripts/ci-select-xcode.sh) engine=true ;; esac
+            case "$f" in App/*|Packages/*|scripts/ci-select-xcode.sh) app=true ;; esac
+            case "$f" in Data/*) data=true ;; esac
+            case "$f" in App/Wander/Resources/pois-*.json|docs/schema/*|scripts/validate-pois.py) pois=true ;; esac
+          done <<< "$files"
+          if [[ "$all" == true ]]; then engine=true app=true data=true pois=true; fi
+          {
+            echo "engine=$engine"; echo "app=$app"; echo "data=$data"; echo "pois=$pois"
+          } | tee -a "$GITHUB_OUTPUT"
+
   engine:
     name: RouteEngine tests
+    needs: changes
+    if: needs.changes.outputs.engine == 'true'
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v7
@@ -22,6 +92,8 @@ jobs:
 
   app:
     name: iOS Simulator build
+    needs: changes
+    if: needs.changes.outputs.app == 'true'
     runs-on: macos-26
     steps:
       - uses: actions/checkout@v7
@@ -37,6 +109,8 @@ jobs:
 
   data:
     name: Data pipeline compiles
+    needs: changes
+    if: needs.changes.outputs.data == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -45,9 +119,9 @@ jobs:
 
   pois-schema:
     name: POI files match schema
+    needs: changes
+    if: needs.changes.outputs.pois == 'true'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v7
       - name: validate-pois
