@@ -57,21 +57,19 @@ struct RemoteImage: View {
     }
 }
 
-/// A small square photo of a place for compact cards (food nearby, "Up ahead"):
-/// `photo` first, else the place's own Commons image, else the glyph placeholder.
-struct PlaceThumbnail: View {
+/// A place's photo filling the caller's frame: `photo` first, else the place's own
+/// Commons image, else the glyph placeholder (never an empty frame).
+struct PlaceImage: View {
     let poi: POI
-    var size: CGFloat = 56
     var placeholder: Color = .surfaceRaised
+    var glyphSize: CGFloat = 22
 
     @State private var commonsURL: URL?
 
     private var url: URL? { poi.photo.flatMap { URL(string: $0.url) } ?? commonsURL }
 
     var body: some View {
-        RemoteImage(url: url, glyph: poi.glyph, placeholder: placeholder, glyphSize: size * 0.36)
-            .frame(width: size, height: size)
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        RemoteImage(url: url, glyph: poi.glyph, placeholder: placeholder, glyphSize: glyphSize)
             .task(id: poi.id) {
                 commonsURL = nil
                 guard poi.photo == nil, let file = poi.commonsImage else { return }
@@ -79,6 +77,19 @@ struct PlaceThumbnail: View {
                 guard !Task.isCancelled else { return }
                 commonsURL = photo?.imageURL
             }
+    }
+}
+
+/// A small square photo of a place for compact cards (food nearby, "Up ahead").
+struct PlaceThumbnail: View {
+    let poi: POI
+    var size: CGFloat = 56
+    var placeholder: Color = .surfaceRaised
+
+    var body: some View {
+        PlaceImage(poi: poi, placeholder: placeholder, glyphSize: size * 0.36)
+            .frame(width: size, height: size)
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }
 

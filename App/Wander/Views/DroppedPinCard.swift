@@ -30,11 +30,14 @@ struct DroppedPin: Equatable {
     }
 }
 
-/// Sheet card for a dropped pin: name or coordinates, and "Directions".
+/// Sheet card for a dropped pin: name or coordinates, "Walk here", and "Start a walk
+/// from here" (a swipe walk whose circle is centred on the pin, ADR 016).
 struct DroppedPinCard: View {
     let pin: DroppedPin
     /// Plans a walk to the pin. Nil hides the button.
-    var onDirections: (() -> Void)?
+    var onWalkHere: (() -> Void)?
+    /// Starts a swipe walk from the pin. Nil hides it.
+    var onStartWalk: (() -> Void)?
     let onClose: () -> Void
     /// The sheet height the card needs to show everything (FE-17).
     var onHeight: ((CGFloat) -> Void)?
@@ -42,7 +45,7 @@ struct DroppedPinCard: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        SheetCard(hasActions: onDirections != nil, onHeight: onHeight) {
+        SheetCard(hasActions: onWalkHere != nil, onHeight: onHeight) {
             VStack(alignment: .leading, spacing: Layout.grid * 1.5) {
                 HStack(alignment: .top, spacing: Layout.grid * 1.5) {
                     PinGlyph()
@@ -70,10 +73,14 @@ struct DroppedPinCard: View {
             .padding(.top, Layout.margin + Layout.grid)
             .padding(.bottom, Layout.grid)
         } actions: {
-            if let onDirections {
-                Button("Directions", action: onDirections)
+            if let onWalkHere {
+                Button("Walk here", action: onWalkHere)
                     .buttonStyle(.primary)
-                    .accessibilityLabel("Directions to \(pin.title)")
+                    .accessibilityLabel("Walk to \(pin.title)")
+            }
+            if let onStartWalk {
+                Button("Start a walk from here", action: onStartWalk)
+                    .buttonStyle(.textAction)
             }
         }
         .overlay(alignment: .topTrailing) { closeButton }

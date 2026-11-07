@@ -3,8 +3,8 @@ import RouteEngine
 import SwiftUI
 
 /// Shown in the sheet when a bead on the map is tapped: name, category, reason,
-/// "Directions" (the card's one primary action), and an add or remove action
-/// when there is a plan. During a walk: no Directions or add/remove, only Skip.
+/// "Walk here" (the card's one primary action), and "Add to walk" or "Remove from
+/// walk" while a walk is being built. During a walk: no Walk here or add/remove, only Skip.
 struct POIDetail: View {
     /// Skip for a walk highlight (FE-10).
     enum WalkSkip {
@@ -26,8 +26,9 @@ struct POIDetail: View {
     let action: Action
     let onAdd: () async -> PlannerModel.AddResult
     let onRemove: () -> Void
-    /// Plans a walk to this place, as if picked from "Where to?". Nil hides the button (while walking).
-    var onDirections: (() -> Void)?
+    /// "Walk here" (ADR 016): a walk to this place, no swipes. Nil hides the button
+    /// (while walking, and while a swipe walk is being built).
+    var onWalkHere: (() -> Void)?
     /// Set during a walk for one of its highlights; nil hides it.
     var walkSkip: WalkSkip?
     let onClose: () -> Void
@@ -35,7 +36,7 @@ struct POIDetail: View {
     var subtitle: String?
     /// A line above the card (FE-19: "Nothing open nearby").
     var notice: String?
-    /// "Next option" under Directions (FE-19); nil hides it.
+    /// "Next option" under Walk here (FE-19); nil hides it.
     var onNext: (() -> Void)?
     /// The sheet height the card needs to show everything (FE-17).
     var onHeight: ((CGFloat) -> Void)?
@@ -60,9 +61,9 @@ struct POIDetail: View {
             || connectivity.isOnline && (poi.commonsImage != nil || poi.commonsCategory != nil)
     }
 
-    /// Directions, add/remove and Skip: pinned at the bottom, always on screen.
+    /// Walk here, add/remove and Skip: pinned at the bottom, always on screen.
     private var hasActions: Bool {
-        onDirections != nil || onNext != nil || action != .none || walkSkip != nil
+        onWalkHere != nil || onNext != nil || action != .none || walkSkip != nil
     }
 
     /// The small line under the pitch: the caller's subtitle, else the reason (the type)
@@ -99,10 +100,10 @@ struct POIDetail: View {
             .padding(.top, Layout.margin + Layout.grid)
             .padding(.bottom, Layout.grid)
         } actions: {
-            if let onDirections {
-                Button("Directions", action: onDirections)
+            if let onWalkHere {
+                Button("Walk here", action: onWalkHere)
                     .buttonStyle(.primary)
-                    .accessibilityLabel("Directions to \(poi.name)")
+                    .accessibilityLabel("Walk to \(poi.name)")
             }
             if let onNext {
                 Button("Next option", action: onNext)
@@ -270,6 +271,18 @@ struct POIDetail: View {
         }
     }
 
+    private func runAdd() {
+        adding = true
+        Task {
+            let result = await onAdd()
+            adding = false
+            switch result {
+            case .added: break
+            case .failed: addMessage = "Couldn't add this stop. Try again in a moment."
+            }
+        }
+    }
+
     @ViewBuilder
     private var actionView: some View {
         switch action {
@@ -277,6 +290,11 @@ struct POIDetail: View {
             EmptyView()
         case .remove:
             Button("Remove from walk", action: onRemove).buttonStyle(.textAction)
+        case .add where onWalkHere == nil:
+            // No Walk here (a swipe walk is being built): adding is the card's main action.
+            Button("Add to walk") { runAdd() }
+                .buttonStyle(.primary)
+                .disabled(adding)
         case .add:
             if let addMessage {
                 Text(addMessage)
@@ -284,18 +302,7 @@ struct POIDetail: View {
                     .foregroundStyle(.inkMuted)
             } else {
                 HStack(spacing: Layout.grid) {
-                    Button("Add to walk") {
-                        adding = true
-                        Task {
-                            let result = await onAdd()
-                            adding = false
-                            switch result {
-                            case .added: break
-                            case .doesntFit: addMessage = "Doesn't fit this walk once real streets are counted."
-                            case .failed: addMessage = "Couldn't add this stop. Try again in a moment."
-                            }
-                        }
-                    }
+                    Button("Add to walk", action: runAdd)
                     .buttonStyle(.textAction)
                     .disabled(adding)
                     if adding { ProgressView() }
