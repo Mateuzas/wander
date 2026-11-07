@@ -130,7 +130,12 @@ struct MapScreen: View {
     }
 
     var body: some View {
-        screen
+        chainTwo(chainOne(screen))
+    }
+
+    /// Split from `body`: one long modifier chain is too much for the type checker.
+    private func chainOne(_ v: some View) -> some View {
+        v
             .onChange(of: sheetKind) {
                 if !sheetDetents.contains(detent) { detent = isCard ? cardDetent : .medium }
             }
@@ -169,6 +174,10 @@ struct MapScreen: View {
                     session?.userMoved(to: Coordinate(fix.coordinate))
                 }
             }
+    }
+
+    private func chainTwo(_ v: some View) -> some View {
+        v
             // The area step: frame the circle (or band) when the time or the end changes.
             .onChange(of: session?.length) { frameArea() }
             .onChange(of: session?.destination) { frameArea() }
